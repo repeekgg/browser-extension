@@ -1,3 +1,5 @@
+console.log('FACEIT Enhancer: Started')
+
 const observer = new MutationObserver(() => {
   const [ready] = document.querySelectorAll('button[translate-once="ACCEPT"]')
   if (ready) {
