@@ -4,24 +4,20 @@ import AppBar from './components/AppBar'
 import Tabs from './components/Tabs';
 import OptionSwitch from './components/OptionSwitch'
 import Loading from './components/Loading'
+import storage from '../storage'
 
 export default class App extends React.Component {
   state = {
-    options: {
-      autoReadyMatch: false,
-      autoAcceptPartyInvite: false
-    },
+    options: {},
     loading: true,
     edited: false,
     saved: false,
     tabIndex: 0
   }
 
-  componentDidMount() {
-    chrome.storage.sync.get(this.state.options, items => this.setState({
-      loading: false,
-      options: items
-    }))
+  async componentDidMount() {
+    const options = await storage.get()
+    this.setState({ options, loading: false })
   }
 
   onChangeOption = value => () => {

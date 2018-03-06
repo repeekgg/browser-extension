@@ -1,11 +1,13 @@
-import settings from './settings'
 import { select } from './utils'
+import storage from '../storage'
 
-export default function clickIf(option, selector) {
-  if (settings[option]) {
+async function clickIf(option, selector) {
+  if (await storage.get(option)) {
     const el = select(selector)
     if (el) {
       el.click()
     }
   }
 }
+
+export default clickIf

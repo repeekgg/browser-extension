@@ -1,6 +1,5 @@
 import clickIf from './clickIf'
 import addMatchTeamInfo from './addMatchTeamInfo'
-import settings, { settingsLoaded } from './settings'
 
 console.log('FACEIT Enhancer: Started')
 
@@ -11,16 +10,12 @@ function run(mutations) {
   addMatchTeamInfo()
 }
 
-function init() {
-  const observer = new MutationObserver(run)
+const observer = new MutationObserver(run)
 
-  const observerConfig = {
-    childList: true
-  }
-
-  const targetNode = document.body
-
-  observer.observe(targetNode, observerConfig)
+const observerConfig = {
+  childList: true
 }
 
-settingsLoaded.then(init)
+const targetNode = document.body
+
+observer.observe(targetNode, observerConfig)
