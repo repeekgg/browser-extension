@@ -49,20 +49,22 @@ export default function addMatchTeamInfo() {
       }
     }))
 
-    const teamNameEl = select(`h2[ng-bind="${faction}_nickname"]`)
+    if (elos.length) {
+      const teamNameEl = select(`h2[ng-bind="${faction}_nickname"]`)
 
-    if (teamNameEl.hasAttribute('faceit-enhancer')) {
-      return
+      if (teamNameEl.hasAttribute('faceit-enhancer')) {
+        return
+      }
+
+      teamNameEl.setAttribute('faceit-enhancer', 'true')
+
+      const totalElo = elos.reduce((acc, curr) => acc + curr, 0)
+      const teamEloEl = document.createElement('span')
+      teamEloEl.classList.add('text-muted')
+      teamEloEl.setAttribute('style', 'display: block; margin-top: 6px; font-size: 14px;')
+      teamEloEl.innerHTML = `Avg. ELO: ${Math.round(totalElo / 5)}<br />Total ELO: ${totalElo}`
+
+      teamNameEl.append(teamEloEl)
     }
-
-    teamNameEl.setAttribute('faceit-enhancer', 'true')
-
-    const totalElo = elos.reduce((acc, curr) => acc + curr, 0)
-    const teamEloEl = document.createElement('span')
-    teamEloEl.classList.add('text-muted')
-    teamEloEl.setAttribute('style', 'display: block; margin-top: 6px; font-size: 14px;')
-    teamEloEl.innerHTML = `Avg. ELO: ${Math.round(totalElo / 5)}<br />Total ELO: ${totalElo}`
-
-    teamNameEl.append(teamEloEl)
   })
 }
