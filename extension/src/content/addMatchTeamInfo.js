@@ -14,6 +14,8 @@ export default function addMatchTeamInfo() {
 
     team.setAttribute('faceit-enhancer', 'true')
 
+    const faction = team.getAttribute('members')
+
     const elos = []
 
     const teamMembers = Array.from(team.querySelectorAll('div.match-team-member__details__name'))
@@ -28,19 +30,23 @@ export default function addMatchTeamInfo() {
       const flag = document.createElement('img')
       flag.classList.add('flag--14')
       flag.setAttribute('src', `https://cdn.faceit.com/frontend/561/assets/images/flags/${playerCountry}.png`)
-      member.prepend(flag)
+      if (faction.includes('faction1')) {
+        flag.setAttribute('style', 'margin-right: 6px')
+        nicknameEl.prepend(flag)
+      } else {
+        flag.setAttribute('style', 'margin-left: 6px')
+        nicknameEl.append(flag)
+      }
 
       const playerElo = player.games.csgo.faceit_elo
       const elo = document.createElement('span')
       elo.classList.add('text-muted', 'ellipsis-b')
       elo.innerHTML = `ELO: ${playerElo || '–'}`
-      member.append(elo)
       if (playerElo) {
         elos.push(playerElo)
       }
     }))
 
-    const faction = team.getAttribute('members')
 
     const teamNameEl = select(`h2[ng-bind="${faction}_nickname"]`)
 
