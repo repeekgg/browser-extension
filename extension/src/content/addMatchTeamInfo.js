@@ -8,12 +8,6 @@ export default function addMatchTeamInfo() {
   const team2Elos = []
 
   teams.forEach(async team => {
-    if (team.hasAttribute('faceit-enhancer')) {
-      return
-    }
-
-    team.setAttribute('faceit-enhancer', 'true')
-
     const faction = team.getAttribute('members')
 
     const elos = []
@@ -22,6 +16,13 @@ export default function addMatchTeamInfo() {
 
     await Promise.all(await teamMembers.map(async member => {
       const nicknameEl = member.querySelector('strong[ng-bind="::teamMember.nickname"]')
+
+      if (nicknameEl.hasAttribute('faceit-enhancer')) {
+        return
+      }
+
+      nicknameEl.setAttribute('faceit-enhancer', 'true')
+
       const { innerHTML: nickname } = nicknameEl
 
       const player = await getPlayer(nickname)
@@ -48,8 +49,13 @@ export default function addMatchTeamInfo() {
       }
     }))
 
-
     const teamNameEl = select(`h2[ng-bind="${faction}_nickname"]`)
+
+    if (teamNameEl.hasAttribute('faceit-enhancer')) {
+      return
+    }
+
+    teamNameEl.setAttribute('faceit-enhancer', 'true')
 
     const totalElo = elos.reduce((acc, curr) => acc + curr, 0)
     const teamEloEl = document.createElement('span')
