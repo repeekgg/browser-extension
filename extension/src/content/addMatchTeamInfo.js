@@ -42,6 +42,7 @@ export default function addMatchTeamInfo() {
       const elo = document.createElement('span')
       elo.classList.add('text-muted', 'ellipsis-b')
       elo.innerHTML = `ELO: ${playerElo || '–'}`
+      member.append(elo)
       if (playerElo) {
         elos.push(playerElo)
       }
