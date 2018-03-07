@@ -22,14 +22,29 @@ async function getData(path, cache, key) {
     return cache.get(key)
   }
 
-  const res = await fetchApi(path)
+  try {
+    const res = await fetchApi(path)
 
-  cache.set(key, res)
+    cache.set(key, res)
 
-  return res
+    return res
+  } catch (err) {
+    console.error('FACEIT Enhancer:', err)
+  }
 }
 
 const playersCache = new Map()
-
 export const getPlayer = nickname =>
   getData(`/core/v1/nicknames/${nickname}`, playersCache, nickname)
+
+const playerStatsCache = new Map()
+export const getPlayerStats = userId =>
+  getData(
+    `/stats/v1/stats/users/${userId}/games/csgo`,
+    playerStatsCache,
+    userId
+  )
+
+const matchesCache = new Map()
+export const getMatch = matchId =>
+  getData(`/core/v1/matches/${matchId}`, matchesCache, matchId)

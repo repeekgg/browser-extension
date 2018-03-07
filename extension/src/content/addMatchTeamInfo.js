@@ -1,80 +1,117 @@
-import { getPlayer } from './lib/faceit'
-import { select } from './utils'
+import stringToColor from 'string-to-color'
+import { getPlayer, getMatch } from './lib/faceit'
+import { select, checkIfEnhanced } from './utils'
+
+function addPlayerCountryFlagElement(country, alignedLeft, target) {
+  const element = document.createElement('img')
+
+  element.classList.add('flag--14')
+
+  element.setAttribute(
+    'src',
+    `https://cdn.faceit.com/frontend/561/assets/images/flags/${country}.png`
+  )
+
+  element.setAttribute(
+    'style',
+    `margin-${alignedLeft ? 'right' : 'left'}: 6px; margin-bottom: 5px;`
+  )
+
+  target[alignedLeft ? 'prepend' : 'append'](element)
+}
+
+function addPlayerELOElement(elo, target) {
+  const element = document.createElement('span')
+
+  element.classList.add('text-muted', 'ellipsis-b')
+
+  element.innerHTML = `ELO: ${elo || '–'}`
+
+  target.append(element)
+}
+
+function addTeamELOElement(elo, target) {
+  const element = document.createElement('span')
+
+  element.classList.add('text-muted')
+
+  element.setAttribute(
+    'style',
+    'display: block; margin-top: 6px; font-size: 14px;'
+  )
+
+  const totalElo = elo.reduce((acc, curr) => acc + curr, 0)
+  const averageElo = Math.round(totalElo / 5)
+  element.innerHTML = `Avg. ELO: ${averageElo}<br />Total ELO: ${totalElo}`
+
+  target.append(element)
+}
+
+function addPlayerPartyColorElement(partyId, alignedLeft, target) {
+  const color = stringToColor(partyId)
+
+  target.setAttribute(
+    'style',
+    `border-${alignedLeft ? 'left' : 'right'}: 2px solid ${color}`
+  )
+}
 
 export default function addMatchTeamInfo(target) {
-  const teams = Array.from(target.getElementsByTagName('match-team'))
+  const teamsElements = Array.from(target.getElementsByTagName('match-team'))
 
-  teams.forEach(async team => {
-    const faction = team.getAttribute('members')
+  teamsElements.forEach(async teamElement => {
+    const faction = teamElement.getAttribute('members').split('match.')[1]
+    const alignedLeft = teamElement.getAttribute('member-align') !== 'right'
+    const teamELO = []
 
-    const elos = []
-
-    const teamMembers = Array.from(
-      team.querySelectorAll('div.match-team-member__details__name')
+    const teamMembersElements = Array.from(
+      teamElement.querySelectorAll('div.match-team-member__details__name')
     )
 
     await Promise.all(
-      await teamMembers.map(async member => {
-        const nicknameEl = member.querySelector(
+      await teamMembersElements.map(async memberElement => {
+        const nicknameElement = memberElement.querySelector(
           'strong[ng-bind="::teamMember.nickname"]'
         )
 
-        if (nicknameEl.hasAttribute('faceit-enhancer')) {
+        if (checkIfEnhanced(nicknameElement)) {
           return
         }
 
-        nicknameEl.setAttribute('faceit-enhancer', 'true')
-
-        const { innerHTML: nickname } = nicknameEl
-
+        const nickname = nicknameElement.innerHTML
         const player = await getPlayer(nickname)
 
         const playerCountry = player.country.toUpperCase()
-        const flag = document.createElement('img')
-        flag.classList.add('flag--14')
-        flag.setAttribute(
-          'src',
-          `https://cdn.faceit.com/frontend/561/assets/images/flags/${playerCountry}.png`
-        )
-        const isFaction1 = faction.includes('faction1')
-        flag.setAttribute(
-          'style',
-          `margin-${isFaction1 ? 'right' : 'left'}: 6px; margin-bottom: 4px;`
-        )
-        nicknameEl[isFaction1 ? 'prepend' : 'append'](flag)
+        addPlayerCountryFlagElement(playerCountry, alignedLeft, nicknameElement)
 
-        const playerElo = player.games.csgo.faceit_elo
-        const elo = document.createElement('span')
-        elo.classList.add('text-muted', 'ellipsis-b')
-        elo.innerHTML = `ELO: ${playerElo || '–'}`
-        member.append(elo)
-        if (playerElo) {
-          elos.push(playerElo)
+        const playerELO = player.games.csgo.faceit_elo
+        addPlayerELOElement(playerELO, memberElement)
+        if (playerELO) {
+          teamELO.push(playerELO)
         }
+
+        const matchId = window.location.pathname.split('room/')[1]
+        const match = await getMatch(matchId)
+        const team = match[faction]
+        const playerPartyId = team.find(
+          teamMember => teamMember.guid === player.guid
+        ).active_team_id
+        addPlayerPartyColorElement(
+          playerPartyId,
+          alignedLeft,
+          memberElement.parentElement.parentElement
+        )
       })
     )
 
-    if (elos.length) {
-      const teamNameEl = select(`h2[ng-bind="${faction}_nickname"]`)
+    if (teamELO.length) {
+      const teamNameElement = select(`h2[ng-bind="match.${faction}_nickname"]`)
 
-      if (teamNameEl.hasAttribute('faceit-enhancer')) {
+      if (checkIfEnhanced(teamNameElement)) {
         return
       }
 
-      teamNameEl.setAttribute('faceit-enhancer', 'true')
-
-      const totalElo = elos.reduce((acc, curr) => acc + curr, 0)
-      const teamEloEl = document.createElement('span')
-      teamEloEl.classList.add('text-muted')
-      teamEloEl.setAttribute(
-        'style',
-        'display: block; margin-top: 6px; font-size: 14px;'
-      )
-      teamEloEl.innerHTML = `Avg. ELO: ${Math.round(
-        totalElo / 5
-      )}<br />Total ELO: ${totalElo}`
-
-      teamNameEl.append(teamEloEl)
+      addTeamELOElement(teamELO, teamNameElement)
     }
   })
 }
