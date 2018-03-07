@@ -1,5 +1,6 @@
 const path = require('path')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const CleanWebpackPlugin = require('clean-webpack-plugin')
 
 module.exports = {
   devtool: 'sourcemap',
@@ -35,5 +36,6 @@ module.exports = {
         }
       })
     ]
-  }
+  },
+  plugins: [new CleanWebpackPlugin(['extension/dist'])]
 }
