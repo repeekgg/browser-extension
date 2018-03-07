@@ -1,10 +1,10 @@
 const BASE_URL = 'https://api.faceit.com'
 
-const cache = new Map()
+const playersCache = new Map()
 
 export async function getPlayer(nickname) {
-  if (cache.has(nickname)) {
-    return cache.get(nickname)
+  if (playersCache.has(nickname)) {
+    return playersCache.get(nickname)
   }
 
   const res = await fetch(`${BASE_URL}/core/v1/nicknames/${nickname}`)
@@ -14,7 +14,7 @@ export async function getPlayer(nickname) {
     throw new Error(json)
   }
 
-  cache.set(nickname, payload)
+  playersCache.set(nickname, payload)
 
   return payload
 }
