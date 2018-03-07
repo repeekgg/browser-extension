@@ -1,4 +1,4 @@
-import { createMuiTheme } from 'material-ui/styles';
+import { createMuiTheme } from 'material-ui/styles'
 
 export default createMuiTheme({
   palette: {
@@ -15,5 +15,5 @@ export default createMuiTheme({
     background: {
       default: '#1E2222'
     }
-  },
+  }
 })

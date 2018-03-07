@@ -8,7 +8,7 @@ export async function getPlayer(nickname) {
   }
 
   const res = await fetch(`${BASE_URL}/core/v1/nicknames/${nickname}`)
-  const { result, payload } =  await res.json()
+  const { result, payload } = await res.json()
 
   if (result !== 'ok') {
     throw new Error(json)

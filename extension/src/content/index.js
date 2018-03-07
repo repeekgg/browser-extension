@@ -4,7 +4,10 @@ import addMatchTeamInfo from './addMatchTeamInfo'
 console.log('FACEIT Enhancer: Started')
 
 function run(mutations) {
-  clickIf('autoReadyMatch', 'button[ng-click="close()"][translate-once="ACCEPT"]')
+  clickIf(
+    'autoReadyMatch',
+    'button[ng-click="close()"][translate-once="ACCEPT"]'
+  )
   clickIf('autoAcceptPartyInvite', 'button[ng-click="acceptInvite()"]')
 
   addMatchTeamInfo()

@@ -4,15 +4,17 @@ const DEFAULTS = {
 }
 
 export default {
-  get: item => new Promise(resolve => {
-    chrome.storage.sync.get(item || DEFAULTS, items => {
-      if (item) {
-        resolve(items[item])
-      }
-      resolve(items)
+  get: item =>
+    new Promise(resolve => {
+      chrome.storage.sync.get(item || DEFAULTS, items => {
+        if (item) {
+          resolve(items[item])
+        }
+        resolve(items)
+      })
+    }),
+  set: obj =>
+    new Promise(resolve => {
+      chrome.storage.sync.set(obj, resolve)
     })
-  }),
-  set: obj => new Promise(resolve => {
-    chrome.storage.sync.set(obj, resolve)
-  })
 }

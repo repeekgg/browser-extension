@@ -1,7 +1,7 @@
 import React from 'react'
 import List from 'material-ui/List'
 import AppBar from './components/AppBar'
-import Tabs from './components/Tabs';
+import Tabs from './components/Tabs'
 import OptionSwitch from './components/OptionSwitch'
 import Loading from './components/Loading'
 import storage from '../storage'
@@ -32,7 +32,9 @@ export default class App extends React.Component {
   }
 
   onSave = () => {
-    chrome.storage.sync.set(this.state.options, () => this.setState({ saved: true, edited: false }))
+    chrome.storage.sync.set(this.state.options, () =>
+      this.setState({ saved: true, edited: false })
+    )
   }
 
   onChangeTab = (e, value) => this.setState(() => ({ tabIndex: value }))
@@ -43,7 +45,11 @@ export default class App extends React.Component {
     const { tabIndex, loading, edited, saved } = this.state
     return (
       <React.Fragment>
-        <AppBar onClickSave={this.onSave} saved={saved} savedDisabled={!edited} />
+        <AppBar
+          onClickSave={this.onSave}
+          saved={saved}
+          savedDisabled={!edited}
+        />
         {loading ? (
           <Loading />
         ) : (
