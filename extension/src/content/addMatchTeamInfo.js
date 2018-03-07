@@ -1,11 +1,8 @@
 import { getPlayer } from './lib/faceit'
 import { select } from './utils'
 
-export default function addMatchTeamInfo() {
-  const teams = Array.from(document.getElementsByTagName('match-team'))
-
-  const team1Elos = []
-  const team2Elos = []
+export default function addMatchTeamInfo(target) {
+  const teams = Array.from(target.getElementsByTagName('match-team'))
 
   teams.forEach(async team => {
     const faction = team.getAttribute('members')

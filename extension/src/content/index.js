@@ -4,12 +4,12 @@ import { select } from './utils'
 
 console.log('FACEIT Enhancer: Started')
 
-function observeMainContent(target) {
+function observeMainContent(element) {
   const observer = new MutationObserver(() => {
-    addMatchTeamInfo()
+    addMatchTeamInfo(element)
   })
 
-  observer.observe(target, { childList: true, subtree: true })
+  observer.observe(element, { childList: true, subtree: true })
 }
 
 function observeBody() {
