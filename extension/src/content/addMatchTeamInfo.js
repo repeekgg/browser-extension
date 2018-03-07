@@ -39,13 +39,12 @@ export default function addMatchTeamInfo() {
           'src',
           `https://cdn.faceit.com/frontend/561/assets/images/flags/${playerCountry}.png`
         )
-        if (faction.includes('faction1')) {
-          flag.setAttribute('style', 'margin-right: 6px')
-          nicknameEl.prepend(flag)
-        } else {
-          flag.setAttribute('style', 'margin-left: 6px')
-          nicknameEl.append(flag)
-        }
+        const isFaction1 = faction.includes('faction1')
+        flag.setAttribute(
+          'style',
+          `margin-${isFaction1 ? 'right' : 'left'}: 6px; margin-bottom: 4px;`
+        )
+        nicknameEl[isFaction1 ? 'prepend' : 'append'](flag)
 
         const playerElo = player.games.csgo.faceit_elo
         const elo = document.createElement('span')
