@@ -7,7 +7,7 @@ module.exports = {
   context: path.resolve(__dirname, 'extension', 'src'),
   entry: {
     content: './content/index.js',
-    options: './options/index.js'
+    popup: './popup/index.js'
   },
   output: {
     path: path.resolve(__dirname, 'extension', 'dist'),

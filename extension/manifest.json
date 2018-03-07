@@ -17,8 +17,7 @@
       "js": ["dist/content.js"]
     }
   ],
-  "options_ui": {
-    "page": "options.html",
-    "open_in_tab": true
+  "browser_action": {
+    "default_popup": "popup.html"
   }
 }
