@@ -1,24 +1,44 @@
 import clickIf from './clickIf'
 import addMatchTeamInfo from './addMatchTeamInfo'
+import { select } from './utils'
 
 console.log('FACEIT Enhancer: Started')
 
-function run(mutations) {
-  clickIf(
-    'autoReadyMatch',
-    'button[ng-click="close()"][translate-once="ACCEPT"]'
-  )
-  clickIf('autoAcceptPartyInvite', 'button[ng-click="acceptInvite()"]')
+function observeMainContent(target) {
+  const observer = new MutationObserver(() => {
+    addMatchTeamInfo()
+  })
 
-  addMatchTeamInfo()
+  observer.observe(target, { childList: true, subtree: true })
 }
 
-const observer = new MutationObserver(run)
+function observeBody() {
+  const observer = new MutationObserver(() => {
+    if (document.body.classList.contains('modal-open')) {
+      clickIf(
+        'autoReadyMatch',
+        'button[ng-click="close()"][translate-once="ACCEPT"]'
+      )
+      clickIf('autoAcceptPartyInvite', 'button[ng-click="acceptInvite()"]')
+    }
+  })
 
-const observerConfig = {
-  childList: true
+  observer.observe(document.body, { attributes: true })
 }
 
-const targetNode = document.body
+function initObservers() {
+  observeBody()
 
-observer.observe(targetNode, observerConfig)
+  const findMainContentElement = new MutationObserver(() => {
+    const mainContentElement = select('#main-content')
+
+    if (mainContentElement) {
+      findMainContentElement.disconnect()
+      observeMainContent(mainContentElement)
+    }
+  })
+
+  findMainContentElement.observe(document.body, { childList: true })
+}
+
+initObservers()
