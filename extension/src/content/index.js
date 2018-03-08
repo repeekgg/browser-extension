@@ -14,16 +14,27 @@ function observeMainContent(element) {
 
 function observeBody() {
   const observer = new MutationObserver(() => {
-    if (document.body.classList.contains('modal-open')) {
+    const modalElement = select('.modal-dialog')
+
+    if (modalElement) {
       clickIf(
         'autoReadyMatch',
-        'button[ng-click="close()"][translate-once="ACCEPT"]'
+        [
+          'button[ng-click="close()"][translate-once="CONTINUE"]',
+          'button[ng-click="close()"][translate-once="ACCEPT"]'
+        ],
+        modalElement
       )
-      clickIf('autoAcceptPartyInvite', 'button[ng-click="acceptInvite()"]')
+
+      clickIf(
+        'autoAcceptPartyInvite',
+        'button[ng-click="acceptInvite()"][translate-once="ACCEPT"]',
+        modalElement
+      )
     }
   })
 
-  observer.observe(document.body, { attributes: true })
+  observer.observe(document.body, { childList: true })
 }
 
 function initObservers() {

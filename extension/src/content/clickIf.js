@@ -1,12 +1,19 @@
 import { select } from './utils'
 import storage from '../storage'
 
-async function clickIf(option, selector) {
+function clickElement(selector, target) {
+  const element = target.querySelector(selector)
+
+  if (element) {
+    element.click()
+  }
+}
+
+async function clickIf(option, selector, target) {
   if (await storage.get(option)) {
-    const el = select(selector)
-    if (el) {
-      el.click()
-    }
+    Array.isArray(selector)
+      ? selector.forEach(selector => clickElement(selector, target))
+      : clickElement(selector, target)
   }
 }
 
