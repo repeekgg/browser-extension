@@ -1,8 +1,8 @@
+import log from 'loglevel'
 import clickIf from './clickIf'
 import addMatchTeamInfo from './addMatchTeamInfo'
 import { select } from './utils'
-
-console.log('FACEIT Enhancer: Started')
+import storage from '../storage'
 
 function observeMainContent(element) {
   const observer = new MutationObserver(() => {
@@ -41,4 +41,20 @@ function initObservers() {
   findMainContentElement.observe(document.body, { childList: true })
 }
 
-initObservers()
+storage.get('debug').then(debug => {
+  initObservers()
+
+  const originalMethod = log.methodFactory
+
+  log.methodFactory = (methodName, logLevel, loggerName) => {
+    const rawMethod = originalMethod(methodName, logLevel, loggerName)
+    return message =>
+      rawMethod(`[${methodName.toUpperCase()}] FACEIT Enhancer: ${message}`)
+  }
+
+  if (debug) {
+    log.setLevel(0, false)
+  }
+
+  log.info('Started')
+})

@@ -20,7 +20,7 @@ export default class App extends React.Component {
     this.setState({ options, loading: false })
   }
 
-  onChangeOption = value => () => {
+  onSwitchOption = value => () => {
     this.setState(({ options }) => ({
       options: {
         ...options,
@@ -55,7 +55,7 @@ export default class App extends React.Component {
         ) : (
           <React.Fragment>
             <Tabs
-              tabs={['General']}
+              tabs={['General', 'Advanced']}
               activeIndex={tabIndex}
               onChange={this.onChangeTab}
             />
@@ -64,13 +64,22 @@ export default class App extends React.Component {
                 <List>
                   <OptionSwitch
                     label="Auto Accept Party Invite"
-                    onClick={this.onChangeOption('autoAcceptPartyInvite')}
+                    onClick={this.onSwitchOption('autoAcceptPartyInvite')}
                     checked={this.state.options.autoAcceptPartyInvite}
                   />
                   <OptionSwitch
                     label="Auto Ready Match"
-                    onClick={this.onChangeOption('autoReadyMatch')}
+                    onClick={this.onSwitchOption('autoReadyMatch')}
                     checked={this.state.options.autoReadyMatch}
+                  />
+                </List>
+              )}
+              {this.isTabIndex(1) && (
+                <List>
+                  <OptionSwitch
+                    label="Debug Mode"
+                    onClick={this.onSwitchOption('debug')}
+                    checked={this.state.options.debug}
                   />
                 </List>
               )}
