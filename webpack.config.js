@@ -28,6 +28,25 @@ module.exports = {
             ]
           }
         }
+      },
+      {
+        test: /\.js$/,
+        include: /content/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            plugins: [
+              [
+                'transform-react-jsx',
+                {
+                  pragma: 'h',
+                  useBuiltIns: true
+                }
+              ],
+              'transform-object-rest-spread'
+            ]
+          }
+        }
       }
     ]
   },

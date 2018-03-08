@@ -1,48 +1,43 @@
+import { h } from 'dom-chef'
 import stringToColor from 'string-to-color'
 import { getPlayer, getMatch } from './lib/faceit'
 import { select, checkIfEnhanced, matchesPath } from './utils'
 
 function addPlayerCountryFlagElement(country, alignedLeft, target) {
-  const element = document.createElement('img')
-
-  element.classList.add('flag--14')
-
-  element.setAttribute(
-    'src',
-    `https://cdn.faceit.com/frontend/561/assets/images/flags/${country}.png`
-  )
-
-  element.setAttribute(
-    'style',
-    `margin-${alignedLeft ? 'right' : 'left'}: 6px; margin-bottom: 5px;`
+  const element = (
+    <img
+      src={`https://cdn.faceit.com/frontend/561/assets/images/flags/${country}.png`}
+      class="flag--14"
+      style={{
+        [`margin-${alignedLeft ? 'right' : 'left'}`]: 6,
+        'margin-bottom': 5
+      }}
+    />
   )
 
   target[alignedLeft ? 'prepend' : 'append'](element)
 }
 
 function addPlayerELOElement(elo, target) {
-  const element = document.createElement('span')
-
-  element.classList.add('text-muted', 'ellipsis-b')
-
-  element.innerHTML = `ELO: ${elo || '–'}`
+  const element = <span class="text-muted ellipsis-b">ELO: {elo || '–'}</span>
 
   target.append(element)
 }
 
 function addTeamELOElement(elo, target) {
-  const element = document.createElement('span')
-
-  element.classList.add('text-muted')
-
-  element.setAttribute(
-    'style',
-    'display: block; margin-top: 6px; font-size: 14px;'
-  )
-
   const totalElo = elo.reduce((acc, curr) => acc + curr, 0)
   const averageElo = Math.round(totalElo / 5)
-  element.innerHTML = `Avg. ELO: ${averageElo}<br />Total ELO: ${totalElo}`
+
+  const element = (
+    <span
+      class="text-muted"
+      style={{ display: 'block', 'margin-top': 6, 'font-size': 14 }}
+    >
+      Avg. ELO: {averageElo}
+      <br />
+      Total ELO: {totalElo}
+    </span>
+  )
 
   target.append(element)
 }
@@ -65,7 +60,14 @@ export default target =>
     const teamsElements = Array.from(target.getElementsByTagName('match-team'))
 
     teamsElements.forEach(async teamElement => {
-      const faction = teamElement.getAttribute('members').split('match.')[1]
+      const membersAttribute = teamElement.getAttribute('members')
+
+      if (!membersAttribute) {
+        return
+      }
+
+      const faction = membersAttribute.split('match.')[1]
+
       const alignedLeft = teamElement.getAttribute('member-align') !== 'right'
       const teamELO = []
 
