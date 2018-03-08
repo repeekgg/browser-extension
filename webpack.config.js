@@ -42,8 +42,7 @@ module.exports = {
                   pragma: 'h',
                   useBuiltIns: true
                 }
-              ],
-              'transform-object-rest-spread'
+              ]
             ]
           }
         }
