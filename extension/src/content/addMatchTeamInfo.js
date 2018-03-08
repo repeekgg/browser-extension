@@ -86,28 +86,30 @@ export default target =>
           const nickname = nicknameElement.innerHTML
           const player = await getPlayer(nickname)
 
-          const playerCountry = player.country.toUpperCase()
-          addPlayerCountryFlagElement(
-            playerCountry,
-            alignedLeft,
-            nicknameElement
-          )
+          if (player) {
+            const playerCountry = player.country.toUpperCase()
+            addPlayerCountryFlagElement(
+              playerCountry,
+              alignedLeft,
+              nicknameElement
+            )
 
-          const playerELO = player.games.csgo.faceit_elo
-          addPlayerELOElement(playerELO, memberElement)
-          if (playerELO) {
-            teamELO.push(playerELO)
+            const playerELO = player.games.csgo.faceit_elo
+            addPlayerELOElement(playerELO, memberElement)
+            if (playerELO) {
+              teamELO.push(playerELO)
+            }
+
+            const team = match[faction]
+            const playerPartyId = team.find(
+              teamMember => teamMember.guid === player.guid
+            ).active_team_id
+            addPlayerPartyColorElement(
+              playerPartyId,
+              alignedLeft,
+              memberElement.parentElement.parentElement
+            )
           }
-
-          const team = match[faction]
-          const playerPartyId = team.find(
-            teamMember => teamMember.guid === player.guid
-          ).active_team_id
-          addPlayerPartyColorElement(
-            playerPartyId,
-            alignedLeft,
-            memberElement.parentElement.parentElement
-          )
         })
       )
 

@@ -7,32 +7,37 @@ async function fetchApi(path) {
     throw new TypeError(`Expected \`path\` to be a string, got ${typeof path}`)
   }
 
-  const token = localStorage.getItem('token')
-  const options = { headers: {} }
+  try {
+    const token = localStorage.getItem('token')
+    const options = { headers: {} }
 
-  if (token) {
-    options.headers.Authorization = `Bearer ${token}`
+    if (token) {
+      options.headers.Authorization = `Bearer ${token}`
+    }
+
+    let response
+
+    if (cache.has(path)) {
+      response = cache.get(path)
+    } else {
+      response = fetch(`${BASE_URL}${path}`, options)
+      cache.set(path, response)
+    }
+
+    response = await response
+
+    const json = await response.clone().json()
+    const { result, payload } = json
+
+    if (result !== 'ok') {
+      throw json
+    }
+
+    return payload
+  } catch (err) {
+    console.error(err)
+    return null
   }
-
-  let response
-
-  if (cache.has(path)) {
-    response = cache.get(path)
-  } else {
-    response = fetch(`${BASE_URL}${path}`, options)
-    cache.set(path, response)
-  }
-
-  response = await response
-
-  const json = await response.clone().json()
-  const { result, payload } = json
-
-  if (result !== 'ok') {
-    throw new Error(json)
-  }
-
-  return payload
 }
 
 export const getPlayer = nickname => fetchApi(`/core/v1/nicknames/${nickname}`)
