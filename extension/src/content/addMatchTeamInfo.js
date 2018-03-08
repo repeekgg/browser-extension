@@ -1,6 +1,6 @@
 import stringToColor from 'string-to-color'
 import { getPlayer, getMatch } from './lib/faceit'
-import { select, checkIfEnhanced } from './utils'
+import { select, checkIfEnhanced, matchesPath } from './utils'
 
 function addPlayerCountryFlagElement(country, alignedLeft, target) {
   const element = document.createElement('img')
@@ -56,62 +56,71 @@ function addPlayerPartyColorElement(partyId, alignedLeft, target) {
   )
 }
 
-export default function addMatchTeamInfo(target) {
-  const teamsElements = Array.from(target.getElementsByTagName('match-team'))
+const roomPathRegExp = /room\/(.+)$/
 
-  teamsElements.forEach(async teamElement => {
-    const faction = teamElement.getAttribute('members').split('match.')[1]
-    const alignedLeft = teamElement.getAttribute('member-align') !== 'right'
-    const teamELO = []
+export default target =>
+  matchesPath(roomPathRegExp, async matchId => {
+    const match = await getMatch(matchId)
 
-    const teamMembersElements = Array.from(
-      teamElement.querySelectorAll('div.match-team-member__details__name')
-    )
+    const teamsElements = Array.from(target.getElementsByTagName('match-team'))
 
-    await Promise.all(
-      await teamMembersElements.map(async memberElement => {
-        const nicknameElement = memberElement.querySelector(
-          'strong[ng-bind="::teamMember.nickname"]'
+    teamsElements.forEach(async teamElement => {
+      const faction = teamElement.getAttribute('members').split('match.')[1]
+      const alignedLeft = teamElement.getAttribute('member-align') !== 'right'
+      const teamELO = []
+
+      const teamMembersElements = Array.from(
+        teamElement.querySelectorAll('div.match-team-member__details__name')
+      )
+
+      await Promise.all(
+        await teamMembersElements.map(async memberElement => {
+          const nicknameElement = memberElement.querySelector(
+            'strong[ng-bind="::teamMember.nickname"]'
+          )
+
+          if (checkIfEnhanced(nicknameElement)) {
+            return
+          }
+
+          const nickname = nicknameElement.innerHTML
+          const player = await getPlayer(nickname)
+
+          const playerCountry = player.country.toUpperCase()
+          addPlayerCountryFlagElement(
+            playerCountry,
+            alignedLeft,
+            nicknameElement
+          )
+
+          const playerELO = player.games.csgo.faceit_elo
+          addPlayerELOElement(playerELO, memberElement)
+          if (playerELO) {
+            teamELO.push(playerELO)
+          }
+
+          const team = match[faction]
+          const playerPartyId = team.find(
+            teamMember => teamMember.guid === player.guid
+          ).active_team_id
+          addPlayerPartyColorElement(
+            playerPartyId,
+            alignedLeft,
+            memberElement.parentElement.parentElement
+          )
+        })
+      )
+
+      if (teamELO.length) {
+        const teamNameElement = select(
+          `h2[ng-bind="match.${faction}_nickname"]`
         )
 
-        if (checkIfEnhanced(nicknameElement)) {
+        if (checkIfEnhanced(teamNameElement)) {
           return
         }
 
-        const nickname = nicknameElement.innerHTML
-        const player = await getPlayer(nickname)
-
-        const playerCountry = player.country.toUpperCase()
-        addPlayerCountryFlagElement(playerCountry, alignedLeft, nicknameElement)
-
-        const playerELO = player.games.csgo.faceit_elo
-        addPlayerELOElement(playerELO, memberElement)
-        if (playerELO) {
-          teamELO.push(playerELO)
-        }
-
-        const matchId = window.location.pathname.split('room/')[1]
-        const match = await getMatch(matchId)
-        const team = match[faction]
-        const playerPartyId = team.find(
-          teamMember => teamMember.guid === player.guid
-        ).active_team_id
-        addPlayerPartyColorElement(
-          playerPartyId,
-          alignedLeft,
-          memberElement.parentElement.parentElement
-        )
-      })
-    )
-
-    if (teamELO.length) {
-      const teamNameElement = select(`h2[ng-bind="match.${faction}_nickname"]`)
-
-      if (checkIfEnhanced(teamNameElement)) {
-        return
+        addTeamELOElement(teamELO, teamNameElement)
       }
-
-      addTeamELOElement(teamELO, teamNameElement)
-    }
+    })
   })
-}
