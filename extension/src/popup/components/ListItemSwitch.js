@@ -6,9 +6,9 @@ import {
 } from 'material-ui/List'
 import Switch from 'material-ui/Switch'
 
-export default ({ label, onClick, checked }) => (
+export default ({ onClick, checked, ...props }) => (
   <ListItem onClick={onClick} button>
-    <ListItemText primary={label} />
+    <ListItemText {...props} />
     <ListItemSecondaryAction>
       <Switch onChange={onClick} checked={checked} />
     </ListItemSecondaryAction>

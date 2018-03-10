@@ -1,5 +1,9 @@
 import { createMuiTheme } from 'material-ui/styles'
 
+export const colors = {
+  orange: '#f50'
+}
+
 export default createMuiTheme({
   palette: {
     type: 'dark',
@@ -7,7 +11,7 @@ export default createMuiTheme({
       main: '#fff'
     },
     secondary: {
-      main: '#f50'
+      main: colors.orange
     },
     text: {
       secondary: '#999b9d'

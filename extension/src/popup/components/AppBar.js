@@ -9,7 +9,7 @@ export default ({ onClickSave, saved, savedDisabled }) => (
   <AppBar position="static" color="secondary">
     <Toolbar>
       <Typography variant="title" color="primary" style={{ flex: 1 }}>
-        FACEIT Enhancer v{version}
+        FACEIT Enhancer
       </Typography>
       <Button variant="raised" onClick={onClickSave} disabled={savedDisabled}>
         {saved ? 'Saved' : 'Save'}
