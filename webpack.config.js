@@ -1,16 +1,17 @@
 const path = require('path')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 module.exports = {
   devtool: 'sourcemap',
-  context: path.resolve(__dirname, 'extension', 'src'),
+  context: path.resolve(__dirname, 'src'),
   entry: {
     content: './content/index.js',
     popup: './popup/index.js'
   },
   output: {
-    path: path.resolve(__dirname, 'extension', 'dist'),
+    path: path.resolve(__dirname, 'dist'),
     filename: '[name].js'
   },
   module: {
@@ -49,6 +50,7 @@ module.exports = {
       }
     ]
   },
+  plugins: [new CleanWebpackPlugin(['dist']), new CopyWebpackPlugin(['*'])],
   optimization: {
     concatenateModules: true,
     minimizer: [
@@ -63,6 +65,5 @@ module.exports = {
         }
       })
     ]
-  },
-  plugins: [new CleanWebpackPlugin(['extension/dist'])]
+  }
 }

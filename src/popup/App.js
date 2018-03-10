@@ -7,8 +7,8 @@ import ListItemLink from './components/ListItemLink'
 import ListItemText from './components/ListItemText'
 import ListSubheader from './components/ListSubheader'
 import Loading from './components/Loading'
-import storage from '../storage'
-import { version } from '../../manifest'
+import storage from '../libs/storage'
+import { version } from '../manifest'
 
 export default class App extends React.Component {
   state = {

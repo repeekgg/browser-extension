@@ -1,6 +1,6 @@
 import { h } from 'dom-chef'
 import stringToColor from 'string-to-color'
-import { getPlayer, getMatch } from './lib/faceit'
+import { getPlayer, getMatch } from '../libs/faceit'
 import { select, checkIfEnhanced, matchesPath } from './utils'
 
 function addPlayerCountryFlagElement(country, alignedLeft, target) {

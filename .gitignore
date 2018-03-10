@@ -1,4 +1,5 @@
 .DS_Store
 *.zip
+*.log
 node_modules
-extension/dist
+dist

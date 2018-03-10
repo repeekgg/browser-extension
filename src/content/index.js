@@ -2,7 +2,7 @@ import log from 'loglevel'
 import clickIf from './clickIf'
 import addMatchTeamInfo from './addMatchTeamInfo'
 import { select } from './utils'
-import storage from '../storage'
+import storage from '../libs/storage'
 
 function observeMainContent(element) {
   const observer = new MutationObserver(() => {

@@ -1,5 +1,5 @@
 import { select } from './utils'
-import storage from '../storage'
+import storage from '../libs/storage'
 
 function clickElement(selector, target) {
   const element = target.querySelector(selector)
