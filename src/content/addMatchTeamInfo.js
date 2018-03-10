@@ -96,7 +96,7 @@ export default target =>
               nicknameElement
             )
 
-            const playerELO = player.games.csgo.faceit_elo
+            const playerELO = player.games[match.game].faceit_elo
             addPlayerELOElement(playerELO, memberElement)
             if (playerELO) {
               teamELO.push(playerELO)
