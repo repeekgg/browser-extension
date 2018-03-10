@@ -66,7 +66,7 @@ export default class App extends React.Component {
               activeIndex={this.tabs.indexOf(activeTab)}
               onChange={this.onChangeTab}
             />
-            <div style={{ flex: 1, overflow: 'scroll' }}>
+            <div style={{ flex: 1, overflowY: 'auto' }}>
               {this.isActiveTab('General') && (
                 <List>
                   <ListSubheader>Party</ListSubheader>
