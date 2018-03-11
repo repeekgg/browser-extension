@@ -1,6 +1,6 @@
 /** @jsx h */
 import { h } from 'dom-chef'
-import stringToColor from 'string-to-color'
+import randomColor from 'randomcolor'
 import select from 'select-dom'
 import { getPlayer, getMatch } from '../libs/faceit'
 import { getRoomId } from '../libs/pages'
@@ -48,7 +48,7 @@ function addTeamELOElement(elo, target) {
 }
 
 function addPlayerPartyColorElement(partyId, alignedLeft, target) {
-  const color = stringToColor(partyId)
+  const color = randomColor({ seed: partyId })
 
   target.setAttribute(
     'style',
@@ -108,7 +108,7 @@ export default async target => {
                 teamMember => teamMember.guid === player.guid
               ).active_team_id
               addPlayerPartyColorElement(
-                playerPartyId || nickname,
+                playerPartyId || player.guid,
                 alignedLeft,
                 memberElement.parentElement.parentElement
               )
