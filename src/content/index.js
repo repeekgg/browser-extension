@@ -1,71 +1,49 @@
-import log from 'loglevel'
-import clickIf from './clickIf'
-import addMatchTeamInfo from './addMatchTeamInfo'
-import { select } from './utils'
-import storage from '../libs/storage'
+import select from 'select-dom'
+import * as modals from './libs/modals'
+import * as pages from './libs/pages'
+import { runFeatureIf } from './libs/utils'
+import clickPartyInviteAccept from './features/click-party-invite-accept'
+import clickMatchQueuingContinue from './features/click-match-queuing-continue'
+import clickMatchReady from './features/click-match-ready'
+import addMatchTeamInfo from './features/add-match-team-info'
 
-function observeMainContent(element) {
+function observeMainContent(mainContent) {
   const observer = new MutationObserver(() => {
-    addMatchTeamInfo(element)
+    if (pages.isRoomOverview()) {
+      addMatchTeamInfo(mainContent)
+    }
   })
 
-  observer.observe(element, { childList: true, subtree: true })
+  observer.observe(mainContent, { childList: true, subtree: true })
 }
 
-function observeBody() {
+function observe() {
   const observer = new MutationObserver(() => {
-    const modalElement = select('.modal-dialog')
+    const modal = select('.modal-dialog')
 
-    if (modalElement) {
-      clickIf(
-        'autoReadyMatch',
-        [
-          'button[ng-click="close()"][translate-once="CONTINUE"]',
-          'button[ng-click="close()"][translate-once="ACCEPT"]'
-        ],
-        modalElement
-      )
+    if (modal) {
+      if (modals.isInviteToParty(modal)) {
+        runFeatureIf('autoAcceptPartyInvite', clickPartyInviteAccept, modal)
+      } else if (modals.isMatchQueuing(modal)) {
+        runFeatureIf('autoReadyMatch', clickMatchQueuingContinue, modal)
+      } else if (modals.isMatchReady(modal)) {
+        runFeatureIf('autoReadyMatch', clickMatchReady, modal)
+      }
+    }
 
-      clickIf(
-        'autoAcceptPartyInvite',
-        'button[ng-click="acceptInvite()"][translate-once="ACCEPT"]',
-        modalElement
-      )
+    let foundMainContent = false
+
+    if (!foundMainContent) {
+      const mainContent = select('#main-content')
+
+      if (mainContent) {
+        foundMainContent = true
+        observeMainContent(mainContent)
+      }
     }
   })
 
   observer.observe(document.body, { childList: true })
 }
 
-function initObservers() {
-  observeBody()
-
-  const findMainContentElement = new MutationObserver(() => {
-    const mainContentElement = select('#main-content')
-
-    if (mainContentElement) {
-      findMainContentElement.disconnect()
-      observeMainContent(mainContentElement)
-    }
-  })
-
-  findMainContentElement.observe(document.body, { childList: true })
-}
-
-storage.get('debug').then(debug => {
-  initObservers()
-
-  const originalMethod = log.methodFactory
-
-  log.methodFactory = (methodName, logLevel, loggerName) => {
-    const rawMethod = originalMethod(methodName, logLevel, loggerName)
-    return message =>
-      rawMethod(`[${methodName.toUpperCase()}] FACEIT Enhancer: ${message}`)
-  }
-
-  if (debug) {
-    log.setLevel(0, false)
-  }
-
-  log.info('Started')
-})
+observe()

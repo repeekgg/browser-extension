@@ -1,7 +1,6 @@
 const DEFAULTS = {
   autoReadyMatch: false,
-  autoAcceptPartyInvite: false,
-  debug: false
+  autoAcceptPartyInvite: false
 }
 
 export default {

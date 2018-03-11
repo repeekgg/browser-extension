@@ -1,5 +1,3 @@
-import log from 'loglevel'
-
 const BASE_URL = 'https://api.faceit.com'
 
 const cache = new Map()
@@ -32,12 +30,12 @@ async function fetchApi(path) {
     const { result, payload } = json
 
     if (result !== 'ok') {
-      throw JSON.stringify(json)
+      throw json
     }
 
     return payload
   } catch (err) {
-    log.error(err)
+    console.error(err)
 
     return null
   }

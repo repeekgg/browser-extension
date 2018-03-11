@@ -1,14 +1,14 @@
 import React from 'react'
 import List from 'material-ui/List'
-import AppBar from './components/AppBar'
-import Tabs from './components/Tabs'
-import ListItemSwitch from './components/ListItemSwitch'
-import ListItemLink from './components/ListItemLink'
-import ListItemText from './components/ListItemText'
-import ListSubheader from './components/ListSubheader'
-import Loading from './components/Loading'
-import storage from '../libs/storage'
 import { version } from '../manifest'
+import storage from '../libs/storage'
+import AppBar from './components/app-bar'
+import Tabs from './components/tabs'
+import ListItemSwitch from './components/list-item-switch'
+import ListItemLink from './components/list-item-link'
+import ListItemText from './components/list-item-text'
+import ListSubheader from './components/list-subheader'
+import Loading from './components/loading'
 
 export default class App extends React.Component {
   state = {
@@ -46,7 +46,7 @@ export default class App extends React.Component {
 
   isActiveTab = index => this.state.activeTab === index
 
-  tabs = ['General', 'Advanced', 'Help']
+  tabs = ['General', 'Help', 'Donate']
 
   render() {
     const { activeTab, loading, edited, saved } = this.state
@@ -83,17 +83,6 @@ export default class App extends React.Component {
                   />
                 </List>
               )}
-              {this.isActiveTab('Advanced') && (
-                <List>
-                  <ListSubheader>Developers</ListSubheader>
-                  <ListItemSwitch
-                    primary="Debugging"
-                    secondary="Show logs in console"
-                    onClick={this.onSwitchOption('debug')}
-                    checked={this.state.options.debug}
-                  />
-                </List>
-              )}
               {this.isActiveTab('Help') && (
                 <List>
                   <ListSubheader>About</ListSubheader>
@@ -108,15 +97,20 @@ export default class App extends React.Component {
                     primary="Steam Group"
                     href="http://steamcommunity.com/groups/FACEITEnhancer"
                   />
-                  <ListSubheader>Donate</ListSubheader>
+                </List>
+              )}
+              {this.isActiveTab('Donate') && (
+                <List>
+                  <ListSubheader>PayPal.Me</ListSubheader>
                   <ListItemLink
                     primary="Buy me a drink"
-                    secondary="PayPal.me"
+                    secondary="Coffee, beer or water to stay hydrated during development ;)"
                     href="https://paypal.me/timcheung"
                   />
+                  <ListSubheader>Steam Trade Offer</ListSubheader>
                   <ListItemLink
-                    primary="Equip me with CS:GO skins"
-                    secondary="Steam Trade Offer"
+                    primary="Gift me goodies"
+                    secondary="CS:GO/PUBG skins, games or other stuff to have fun outside of development :)"
                     href="https://steamcommunity.com/tradeoffer/new/?partner=238736&token=IGhRvdeN"
                   />
                 </List>
