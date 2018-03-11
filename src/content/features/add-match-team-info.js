@@ -108,7 +108,7 @@ export default async target => {
                 teamMember => teamMember.guid === player.guid
               ).active_team_id
               addPlayerPartyColorElement(
-                playerPartyId,
+                playerPartyId || nickname,
                 alignedLeft,
                 memberElement.parentElement.parentElement
               )
