@@ -1,7 +1,7 @@
 {
   "name": "FACEIT Enhancer",
   "description": "Enhances the FACEIT experience and adds useful features",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "manifest_version": 2,
   "homepage_url": "http://steamcommunity.com/groups/faceitenhancer",
   "minimum_chrome_version": "51",
