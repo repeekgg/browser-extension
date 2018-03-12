@@ -1,7 +1,7 @@
 /** @jsx h */
 import { h } from 'dom-chef'
 import select from 'select-dom'
-import { getPlayer, getMatch } from '../libs/faceit'
+import { getPlayer, getQuickMatch } from '../libs/faceit'
 import { getRoomId } from '../libs/pages'
 import { hasEnhancerAttribute, setEnhancerAttribute } from '../libs/utils'
 import createFlagElement from '../components/flag'
@@ -77,7 +77,7 @@ function mapPartiesToColors(team, alignedLeft) {
 
 export default async target => {
   const matchId = getRoomId()
-  const match = await getMatch(matchId)
+  const match = await getQuickMatch(matchId)
 
   const teamsElements = Array.from(target.getElementsByTagName('match-team'))
 

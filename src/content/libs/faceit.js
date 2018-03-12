@@ -46,4 +46,4 @@ export const getPlayer = nickname => fetchApi(`/core/v1/nicknames/${nickname}`)
 export const getPlayerStats = userId =>
   fetchApi(`/stats/v1/stats/users/${userId}/games/csgo`)
 
-export const getMatch = matchId => fetchApi(`/core/v1/matches/${matchId}`)
+export const getQuickMatch = matchId => fetchApi(`/core/v1/matches/${matchId}`)
