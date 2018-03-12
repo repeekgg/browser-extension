@@ -5,12 +5,12 @@ import { runFeatureIf } from './libs/utils'
 import clickPartyInviteAccept from './features/click-party-invite-accept'
 import clickMatchQueuingContinue from './features/click-match-queuing-continue'
 import clickMatchReady from './features/click-match-ready'
-import addMatchTeamInfo from './features/add-match-team-info'
+import extendRoomOverviewInfo from './features/extend-room-overview-info'
 
 function observeMainContent(mainContent) {
   const observer = new MutationObserver(() => {
     if (pages.isRoomOverview()) {
-      addMatchTeamInfo(mainContent)
+      extendRoomOverviewInfo(mainContent)
     }
   })
 

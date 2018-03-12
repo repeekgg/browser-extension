@@ -27,9 +27,13 @@ async function fetchApi(path) {
     response = await response
 
     const json = await response.clone().json()
-    const { result, payload } = json
+    const {
+      result, // Status for old API(?)
+      code, // Status for new API(?)
+      payload
+    } = json
 
-    if (result !== 'ok') {
+    if ((result && result !== 'ok') || (code && code !== 'OPERATION-OK')) {
       throw json
     }
 
@@ -47,3 +51,5 @@ export const getPlayerStats = userId =>
   fetchApi(`/stats/v1/stats/users/${userId}/games/csgo`)
 
 export const getQuickMatch = matchId => fetchApi(`/core/v1/matches/${matchId}`)
+
+export const getMatch = matchId => fetchApi(`/match/v1/match/${matchId}`)
