@@ -4,7 +4,7 @@
     "precommit": "lint-staged",
     "dev": "webpack --mode=development --watch",
     "build": "webpack --mode=production",
-    "test": "xo && BABEL_ENV=testing ava && run-s build",
+    "test": "BABEL_ENV=testing ava",
     "lint": "xo",
     "release:amo": "cd dist && webext submit",
     "release:cws": "cd dist && webstore upload --auto-publish",
