@@ -4,45 +4,25 @@ import select from 'select-dom'
 import { getPlayer, getMatch } from '../libs/faceit'
 import { getRoomId } from '../libs/pages'
 import { hasEnhancerAttribute, setEnhancerAttribute } from '../libs/utils'
+import createFlagElement from '../components/flag'
+import createPlayerEloElement from '../components/player-elo'
+import createTeamEloElement from '../components/team-elo'
 
 function addPlayerCountryFlagElement(country, alignedLeft, target) {
-  const element = (
-    <img
-      src={`https://cdn.faceit.com/frontend/561/assets/images/flags/${country}.png`}
-      className="flag--14"
-      style={{
-        [`margin-${alignedLeft ? 'right' : 'left'}`]: 6,
-        'margin-bottom': 4
-      }}
-    />
-  )
-
+  const element = createFlagElement({ country, alignedLeft })
   target[alignedLeft ? 'prepend' : 'append'](element)
 }
 
-function addPlayerELOElement(elo, target) {
-  const element = (
-    <span className="text-muted ellipsis-b">ELO: {elo || '–'}</span>
-  )
-
+function addPlayerEloElement(elo, target) {
+  const element = createPlayerEloElement({ elo })
   target.append(element)
 }
 
-function addTeamELOElement(elo, target) {
+function addTeamEloElement(elo, target) {
   const totalElo = elo.reduce((acc, curr) => acc + curr, 0)
   const averageElo = Math.round(totalElo / 5)
 
-  const element = (
-    <span
-      className="text-muted"
-      style={{ display: 'block', 'margin-top': 6, 'font-size': 14 }}
-    >
-      Avg. ELO: {averageElo}
-      <br />
-      Total ELO: {totalElo}
-    </span>
-  )
-
+  const element = createTeamEloElement({ totalElo, averageElo })
   target.append(element)
 }
 
@@ -105,7 +85,7 @@ export default async target => {
     const membersAttribute = teamElement.getAttribute('members')
 
     if (membersAttribute) {
-      const teamELO = []
+      const teamElo = []
       const alignedLeft = teamElement.getAttribute('member-align') !== 'right'
       const faction = membersAttribute.split('match.')[1]
       const team = match[faction]
@@ -135,10 +115,10 @@ export default async target => {
                 nicknameElement
               )
 
-              const playerELO = player.games[match.game].faceit_elo
-              addPlayerELOElement(playerELO, memberElement)
-              if (playerELO) {
-                teamELO.push(playerELO)
+              const playerElo = player.games[match.game].faceit_elo
+              addPlayerEloElement(playerElo, memberElement)
+              if (playerElo) {
+                teamElo.push(playerElo)
               }
 
               const partyId =
@@ -156,14 +136,14 @@ export default async target => {
         })
       )
 
-      if (teamELO.length > 0) {
+      if (teamElo.length > 0) {
         const teamNameElement = select(
           `h2[ng-bind="match.${faction}_nickname"]`
         )
 
         if (!hasEnhancerAttribute(teamNameElement)) {
           setEnhancerAttribute(teamNameElement)
-          addTeamELOElement(teamELO, teamNameElement)
+          addTeamEloElement(teamElo, teamNameElement)
         }
       }
     }
