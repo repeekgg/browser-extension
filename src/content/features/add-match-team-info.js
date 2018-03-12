@@ -1,6 +1,5 @@
 /** @jsx h */
 import { h } from 'dom-chef'
-import randomColor from 'randomcolor'
 import select from 'select-dom'
 import { getPlayer, getMatch } from '../libs/faceit'
 import { getRoomId } from '../libs/pages'
@@ -47,15 +46,53 @@ function addTeamELOElement(elo, target) {
   target.append(element)
 }
 
-function addPlayerPartyColorElement(partyId, alignedLeft, target) {
-  const color = randomColor({ seed: partyId })
-
+function addPlayerPartyColorElement(color, alignedLeft, target) {
   target.setAttribute(
     'style',
     `border-${
       alignedLeft ? 'left' : 'right'
     }: 2px solid ${color}; border-radius: 0;`
   )
+}
+
+function mapPartiesToColors(team, alignedLeft) {
+  const distinctColors = [
+    '#BE0032',
+    '#F3C300',
+    '#875692',
+    '#A1CAF1',
+    '#C2B280',
+    '#848482',
+    '#008856',
+    '#F38400',
+    '#E68FAC',
+    '#0067A5'
+  ]
+
+  const colors = team.reduce(
+    (acc, curr) => {
+      const color = alignedLeft ? distinctColors.shift() : distinctColors.pop()
+
+      return curr.active_team_id && !acc.parties[curr.active_team_id]
+        ? {
+            ...acc,
+            parties: {
+              ...acc.parties,
+              [curr.active_team_id]: color
+            }
+          }
+        : {
+            ...acc,
+            solos: {
+              ...acc.solos,
+              [curr.guid]: color
+            }
+          }
+    },
+    { parties: {}, solos: {} }
+  )
+
+  return colors
 }
 
 export default async target => {
@@ -68,10 +105,11 @@ export default async target => {
     const membersAttribute = teamElement.getAttribute('members')
 
     if (membersAttribute) {
-      const faction = membersAttribute.split('match.')[1]
-
-      const alignedLeft = teamElement.getAttribute('member-align') !== 'right'
       const teamELO = []
+      const alignedLeft = teamElement.getAttribute('member-align') !== 'right'
+      const faction = membersAttribute.split('match.')[1]
+      const team = match[faction]
+      const partyColors = mapPartiesToColors(team, alignedLeft)
 
       const teamMembersElements = Array.from(
         teamElement.querySelectorAll('div.match-team-member__details__name')
@@ -103,12 +141,13 @@ export default async target => {
                 teamELO.push(playerELO)
               }
 
-              const team = match[faction]
-              const playerPartyId = team.find(
-                teamMember => teamMember.guid === player.guid
-              ).active_team_id
+              const partyId =
+                team.find(member => member.guid === player.guid)
+                  .active_team_id || player.guid
+              const partyColor =
+                partyColors.parties[partyId] || partyColors.solos[partyId]
               addPlayerPartyColorElement(
-                playerPartyId || player.guid,
+                partyColor,
                 alignedLeft,
                 memberElement.parentElement.parentElement
               )
