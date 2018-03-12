@@ -116,7 +116,7 @@ export default async target => {
       )
 
       await Promise.all(
-        await teamMembersElements.map(async memberElement => {
+        teamMembersElements.map(async memberElement => {
           const nicknameElement = memberElement.querySelector(
             'strong[ng-bind="::teamMember.nickname"]'
           )
