@@ -11,7 +11,7 @@ function mapPartiesToColors(party, alignedLeft) {
     '#F3C300',
     '#875692',
     '#A1CAF1',
-    '#C2B280',
+    '#F2F3F4',
     '#848482',
     '#008856',
     '#F38400',
