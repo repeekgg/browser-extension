@@ -4,6 +4,7 @@ import { getMatch, getQuickMatch, getPlayer } from '../libs/faceit'
 import createFlagElement from '../components/flag'
 import createPlayerEloElement from '../components/player-elo'
 import createTeamEloElement from '../components/team-elo'
+import createIconElement from '../components/icon'
 
 function mapPartiesToColors(party, alignedLeft) {
   const distinctColors = [
@@ -98,8 +99,22 @@ async function extendRoomOverviewInfo(teams, isMatchRoomV1, parent) {
 
               let elo = games[game].faceit_elo || 0
               teamElo.push(elo)
-              elo = createPlayerEloElement({ elo: games[game].faceit_elo })
-              details.appendChild(elo)
+              const gameNickname = select(
+                'span[ng-bind="::teamMember[gameContext + \'_name\']"]',
+                details
+              )
+              gameNickname.innerHTML = ` ${elo}`
+              gameNickname.style.cssText = `display: flex; align-items: center; justify-content: ${!alignedLeft &&
+                'flex-end'}`
+              const eloIcon = createIconElement({
+                icon: 'ELO-icon',
+                size: '18px'
+              })
+              eloIcon.style[`margin-${alignedLeft ? 'right' : 'left'}`] = '4px'
+              gameNickname.insertAdjacentElement(
+                alignedLeft ? 'afterbegin' : 'beforeend',
+                eloIcon
+              )
 
               if (party) {
                 const partyId =
