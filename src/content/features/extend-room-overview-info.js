@@ -1,8 +1,15 @@
+/** @jsx h */
+import { h } from 'dom-chef'
 import select from 'select-dom'
+import storage from '../../libs/storage'
 import { getRoomId } from '../libs/pages'
-import { getMatch, getQuickMatch, getPlayer } from '../libs/faceit'
+import {
+  getMatch,
+  getQuickMatch,
+  getPlayer,
+  getPlayerStats
+} from '../libs/faceit'
 import createFlagElement from '../components/flag'
-import createPlayerEloElement from '../components/player-elo'
 import createTeamEloElement from '../components/team-elo'
 import createIconElement from '../components/icon'
 
@@ -76,7 +83,14 @@ async function extendRoomOverviewInfo(teams, isMatchRoomV1, parent) {
           if (!member.hasAttribute('faceit-enhancer')) {
             member.setAttribute('faceit-enhancer', true)
 
-            const details = select('.match-team-member__details__name', member)
+            const details = select('.match-team-member__details', member)
+
+            const gameNickname = select(
+              'span[ng-bind="::teamMember[gameContext + \'_name\']"]',
+              details
+            )
+            gameNickname.remove()
+
             const nickname = select(
               `strong[${
                 isMatchRoomV1
@@ -101,22 +115,32 @@ async function extendRoomOverviewInfo(teams, isMatchRoomV1, parent) {
               // Elo
               let elo = games[game].faceit_elo || 0
               teamElo.push(elo)
-              const gameNickname = select(
-                'span[ng-bind="::teamMember[gameContext + \'_name\']"]',
+              elo = (
+                <div
+                  className="text-muted"
+                  style={{
+                    display: 'flex',
+                    'align-items': 'center',
+                    'justify-content': !alignedLeft && 'flex-end'
+                  }}
+                >
+                  {elo}
+                </div>
+              )
+              const name = select(
+                'div.match-team-member__details__name',
                 details
               )
-              gameNickname.innerHTML = ` ${elo}`
-              gameNickname.style.cssText = `display: flex; align-items: center; justify-content: ${!alignedLeft &&
-                'flex-end'}`
               const eloIcon = createIconElement({
                 icon: 'ELO-icon',
                 size: '18px'
               })
               eloIcon.style[`margin-${alignedLeft ? 'right' : 'left'}`] = '4px'
-              gameNickname.insertAdjacentElement(
+              elo.insertAdjacentElement(
                 alignedLeft ? 'afterbegin' : 'beforeend',
                 eloIcon
               )
+              name.appendChild(elo)
 
               // Party Indicators
               if (party) {
@@ -132,6 +156,66 @@ async function extendRoomOverviewInfo(teams, isMatchRoomV1, parent) {
                     alignedLeft ? 'left' : 'right'
                   }: 3px solid ${partyColor}; border-radius: 0;`
                 )
+              }
+
+              // Stats
+              const showPlayerStats = await storage.get(
+                'matchRoom.showPlayerStats'
+              )
+              if (showPlayerStats) {
+                const playerStats = await getPlayerStats(guid, game)
+
+                if (!playerStats) return
+
+                const {
+                  matches,
+                  win_rate, // eslint-disable-line camelcase
+                  average_kd_ratio, // eslint-disable-line camelcase
+                  average_kills, // eslint-disable-line camelcase
+                  average_kr_ratio // eslint-disable-line camelcase
+                } = playerStats
+
+                const stat = (value, label) => (
+                  <div style={{ flex: 1, padding: 9 }}>
+                    {value}
+                    <br />
+                    <span style={{ 'font-size': 10 }}>{label}</span>
+                  </div>
+                )
+
+                const statsVerticalDivider = () => (
+                  <div style={{ width: 1, background: '#333' }} />
+                )
+
+                const stats = (
+                  <div
+                    className="text-muted"
+                    style={{
+                      display: 'flex',
+                      'text-transform': 'uppercase',
+                      background: '#1b1b1f',
+                      'border-top': '1px solid #333',
+                      'text-align': !alignedLeft && 'right',
+                      'line-height': '1',
+                      'font-size': 12
+                    }}
+                  >
+                    {stat(matches, 'Matches')}
+                    {statsVerticalDivider()}
+                    {stat(
+                      `${win_rate}%`, // eslint-disable-line camelcase
+                      'Wins'
+                    )}
+                    {statsVerticalDivider()}
+                    {stat(average_kd_ratio, 'Avg. K/D')}
+                    {statsVerticalDivider()}
+                    {stat(average_kr_ratio, 'Avg. K/R')}
+                    {statsVerticalDivider()}
+                    {stat(Math.round(average_kills), 'Avg. Kills')}
+                  </div>
+                )
+
+                details.after(stats)
               }
             }
           }

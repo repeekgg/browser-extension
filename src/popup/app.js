@@ -75,11 +75,18 @@ export default class App extends React.Component {
                     onClick={this.onSwitchOption('autoAcceptPartyInvite')}
                     checked={this.state.options.autoAcceptPartyInvite}
                   />
-                  <ListSubheader>Match</ListSubheader>
+                  <ListSubheader>Match Queue</ListSubheader>
                   <ListItemSwitch
                     primary="Auto Ready"
                     onClick={this.onSwitchOption('autoReadyMatch')}
                     checked={this.state.options.autoReadyMatch}
+                  />
+                  <ListSubheader>Match Room</ListSubheader>
+                  <ListItemSwitch
+                    primary="Show Player Stats"
+                    secondary="Matches, Win Rate, Avg. K/D, Avg. K/R, Avg. Kills (Experimental)"
+                    onClick={this.onSwitchOption('matchRoom.showPlayerStats')}
+                    checked={this.state.options['matchRoom.showPlayerStats']}
                   />
                 </List>
               )}

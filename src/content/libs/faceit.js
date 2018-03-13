@@ -1,3 +1,5 @@
+import { convertToHumanReadableStats } from './stats'
+
 const BASE_URL = 'https://api.faceit.com'
 
 const cache = new Map()
@@ -35,9 +37,11 @@ async function fetchApi(path) {
 
     if ((result && result !== 'ok') || (code && code !== 'OPERATION-OK')) {
       throw json
+    } else if (payload) {
+      return payload
     }
 
-    return payload
+    return json
   } catch (err) {
     console.error(err)
 
@@ -47,8 +51,11 @@ async function fetchApi(path) {
 
 export const getPlayer = nickname => fetchApi(`/core/v1/nicknames/${nickname}`)
 
-export const getPlayerStats = userId =>
-  fetchApi(`/stats/v1/stats/users/${userId}/games/csgo`)
+export const getPlayerStats = async (userId, game) => {
+  const stats = await fetchApi(`/stats/v1/stats/users/${userId}/games/${game}`)
+
+  return convertToHumanReadableStats(stats, game)
+}
 
 export const getQuickMatch = matchId => fetchApi(`/core/v1/matches/${matchId}`)
 
