@@ -8,7 +8,8 @@ module.exports = {
   context: path.resolve(__dirname, 'src'),
   entry: {
     content: './content/index.js',
-    popup: './popup/index.js'
+    popup: './popup/index.js',
+    background: './background/index.js'
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
