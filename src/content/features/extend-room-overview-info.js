@@ -49,9 +49,7 @@ async function extendRoomOverviewInfo(teams, isMatchRoomV1, parent) {
   if (teams.length === 2) {
     teams.forEach(async team => {
       const roomId = getRoomId()
-      const { game, ...match } = isMatchRoomV1
-        ? await getQuickMatch(roomId)
-        : await getMatch(roomId)
+      let match = isMatchRoomV1 ? getQuickMatch(roomId) : getMatch(roomId)
 
       const faction = team
         .getAttribute('members')
@@ -60,6 +58,11 @@ async function extendRoomOverviewInfo(teams, isMatchRoomV1, parent) {
 
       let teamElo = []
 
+      const members = select.all('.match-team-member', team)
+
+      match = await match
+      const { game } = match
+
       let party
       let partyColors
       if (isMatchRoomV1) {
@@ -67,21 +70,19 @@ async function extendRoomOverviewInfo(teams, isMatchRoomV1, parent) {
         partyColors = mapPartiesToColors(party, alignedLeft)
       }
 
-      const members = select.all('.match-team-member', team)
-
       await Promise.all(
         members.map(async member => {
           if (!member.hasAttribute('faceit-enhancer')) {
             member.setAttribute('faceit-enhancer', true)
 
-            const name = select('.match-team-member__details__name', member)
+            const details = select('.match-team-member__details__name', member)
             const nickname = select(
               `strong[${
                 isMatchRoomV1
                   ? 'ng-bind="::teamMember.nickname"'
                   : 'ng-bind="vm.teamMember.nickname"'
               }]`,
-              name
+              details
             )
 
             const player = await getPlayer(nickname.innerHTML)
@@ -95,10 +96,10 @@ async function extendRoomOverviewInfo(teams, isMatchRoomV1, parent) {
               const flag = createFlagElement({ country, alignedLeft })
               nickname[alignedLeft ? 'prepend' : 'append'](flag)
 
-              let elo = games[game].faceit_elo
+              let elo = games[game].faceit_elo || 0
               teamElo.push(elo)
               elo = createPlayerEloElement({ elo: games[game].faceit_elo })
-              name.appendChild(elo)
+              details.appendChild(elo)
 
               if (party) {
                 const partyId =
@@ -145,15 +146,16 @@ async function extendRoomOverviewInfo(teams, isMatchRoomV1, parent) {
 
 const MATCH_TEAM_V1 = 'match-team'
 const MATCH_TEAM_V2 = 'match-team-v2'
+const MEMBERS_ATTRIBUTE = '[members]:not([members=""])'
 
 export default parent => {
   let teams
   let isMatchRoomV1 = false
 
-  if (select.exists(MATCH_TEAM_V1, parent)) {
+  if (select.exists(`${MATCH_TEAM_V1}${MEMBERS_ATTRIBUTE}`, parent)) {
     isMatchRoomV1 = true
     teams = select.all(MATCH_TEAM_V1, parent)
-  } else if (select.exists(MATCH_TEAM_V2, parent)) {
+  } else if (select.exists(`${MATCH_TEAM_V2}${MEMBERS_ATTRIBUTE}`, parent)) {
     teams = select.all(MATCH_TEAM_V2, parent)
   }
 
