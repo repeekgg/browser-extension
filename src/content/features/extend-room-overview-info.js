@@ -24,23 +24,23 @@ function mapPartiesToColors(party, alignedLeft) {
     (acc, curr) => {
       const color = alignedLeft ? distinctColors.shift() : distinctColors.pop()
 
-      return curr.active_team_id && !acc.parties[curr.active_team_id]
+      return curr.active_team_id && !acc.party[curr.active_team_id]
         ? {
             ...acc,
-            parties: {
-              ...acc.parties,
+            party: {
+              ...acc.party,
               [curr.active_team_id]: color
             }
           }
         : {
             ...acc,
-            solos: {
-              ...acc.solos,
+            solo: {
+              ...acc.solo,
               [curr.guid]: color
             }
           }
     },
-    { parties: {}, solos: {} }
+    { party: {}, solo: {} }
   )
 
   return colors
@@ -94,9 +94,11 @@ async function extendRoomOverviewInfo(teams, isMatchRoomV1, parent) {
             if (player) {
               const { country, games, guid } = player
 
+              // Flag
               const flag = createFlagElement({ country, alignedLeft })
               nickname[alignedLeft ? 'prepend' : 'append'](flag)
 
+              // Elo
               let elo = games[game].faceit_elo || 0
               teamElo.push(elo)
               const gameNickname = select(
@@ -116,12 +118,13 @@ async function extendRoomOverviewInfo(teams, isMatchRoomV1, parent) {
                 eloIcon
               )
 
+              // Party Indicators
               if (party) {
                 const partyId =
                   party.find(member => member.guid === guid).active_team_id ||
                   guid
                 const partyColor =
-                  partyColors.parties[partyId] || partyColors.solos[partyId]
+                  partyColors.party[partyId] || partyColors.solo[partyId]
 
                 member.setAttribute(
                   'style',
@@ -135,6 +138,7 @@ async function extendRoomOverviewInfo(teams, isMatchRoomV1, parent) {
         })
       )
 
+      // Team Elo
       if (teamElo.length > 0) {
         const teamName = select(
           `h2[ng-bind="${
