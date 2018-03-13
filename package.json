@@ -55,6 +55,7 @@
   "lint-staged": {
     "*.{js,json}": [
       "prettier --write",
+      "npm run lint",
       "git add"
     ]
   },
