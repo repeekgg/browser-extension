@@ -16,7 +16,7 @@ chrome.runtime.onInstalled.addListener(async ({ reason }) => {
     if (changelogUrl) {
       chrome.tabs.create({
         url: changelogUrl,
-        active: false
+        active: true
       })
     }
   }
