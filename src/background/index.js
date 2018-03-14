@@ -1,6 +1,6 @@
 import OptionsSync from 'webext-options-sync'
 import browser from 'webextension-polyfill'
-import changelog from '../libs/changelog'
+import changelogs from '../libs/changelogs'
 
 new OptionsSync().define({
   defaults: {
@@ -35,7 +35,7 @@ browser.runtime.onInstalled.addListener(async ({ reason }) => {
     }
 
     const { version } = browser.runtime.getManifest()
-    const changelogUrl = changelog[version]
+    const changelogUrl = changelogs[version]
 
     if (changelogUrl) {
       browser.tabs.create({

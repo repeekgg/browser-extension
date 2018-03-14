@@ -2,7 +2,7 @@ import React from 'react'
 import List from 'material-ui/List'
 import browser from 'webextension-polyfill'
 import { version } from '../manifest'
-import changelog from '../libs/changelog'
+import changelogs from '../libs/changelogs'
 import AppBar from './components/app-bar'
 import Tabs from './components/tabs'
 import ListItemSwitch from './components/list-item-switch'
@@ -97,7 +97,7 @@ export default class App extends React.Component {
                   <ListItemLink
                     primary="Version"
                     secondary={version}
-                    href={changelog[version]}
+                    href={changelogs[version]}
                   />
                   <ListSubheader>Channels</ListSubheader>
                   <ListItemLink
