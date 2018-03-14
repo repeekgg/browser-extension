@@ -179,9 +179,11 @@ async function extendRoomOverviewInfo(teams, isMatchRoomV1, parent) {
               } = await browser.storage.sync.get('matchRoomShowPlayerStats')
 
               if (matchRoomShowPlayerStats) {
-                const playerStats = await getPlayerStats(guid, game)
+                let stats = await getPlayerStats(guid, game)
 
-                if (!playerStats) return
+                if (!stats) {
+                  return
+                }
 
                 const {
                   matches,
@@ -190,7 +192,7 @@ async function extendRoomOverviewInfo(teams, isMatchRoomV1, parent) {
                   average_kills, // eslint-disable-line camelcase
                   average_kr_ratio, // eslint-disable-line camelcase
                   average_headshots // eslint-disable-line camelcase
-                } = playerStats
+                } = stats
 
                 const stat = (value, label) => (
                   <div style={{ flex: 1, padding: 9 }}>
@@ -204,7 +206,7 @@ async function extendRoomOverviewInfo(teams, isMatchRoomV1, parent) {
                   <div style={{ width: 1, background: '#333' }} />
                 )
 
-                const stats = (
+                stats = (
                   <div
                     className="text-light"
                     style={{
@@ -222,7 +224,9 @@ async function extendRoomOverviewInfo(teams, isMatchRoomV1, parent) {
                     )}
                     {statsVerticalDivider()}
                     {stat(
-                      `${Math.round(average_kills)} / ${average_headshots}%`, // eslint-disable-line camelcase
+                      `${Math.round(average_kills)} / ${Math.round(
+                        average_headshots
+                      )}%`, // eslint-disable-line camelcase
                       'Avg. Kills / HS'
                     )}
                     {statsVerticalDivider()}
