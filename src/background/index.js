@@ -1,4 +1,4 @@
-import changelog from './changelog'
+import changelog from '../libs/changelog'
 
 chrome.runtime.onInstalled.addListener(async ({ reason }) => {
   if (reason === 'update') {

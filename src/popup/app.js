@@ -2,11 +2,11 @@ import React from 'react'
 import List from 'material-ui/List'
 import { version } from '../manifest'
 import storage from '../libs/storage'
+import changelog from '../libs/changelog'
 import AppBar from './components/app-bar'
 import Tabs from './components/tabs'
 import ListItemSwitch from './components/list-item-switch'
 import ListItemLink from './components/list-item-link'
-import ListItemText from './components/list-item-text'
 import ListSubheader from './components/list-subheader'
 import Loading from './components/loading'
 
@@ -93,7 +93,11 @@ export default class App extends React.Component {
               {this.isActiveTab('Help') && (
                 <List>
                   <ListSubheader>About</ListSubheader>
-                  <ListItemText primary="Version" secondary={version} />
+                  <ListItemLink
+                    primary="Version"
+                    secondary={version}
+                    href={changelog[version]}
+                  />
                   <ListSubheader>Channels</ListSubheader>
                   <ListItemLink
                     primary="Reddit"
