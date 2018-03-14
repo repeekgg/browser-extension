@@ -112,16 +112,15 @@ export default class App extends React.Component {
               )}
               {this.isActiveTab('Donate') && (
                 <List>
-                  <ListSubheader>PayPal.Me</ListSubheader>
+                  <ListSubheader>Support the Development</ListSubheader>
                   <ListItemLink
-                    primary="Buy me a drink"
-                    secondary="Coffee, beer or water to stay hydrated during development ;)"
+                    primary="PayPal"
+                    secondary="Buy me a drink to stay hydrated during development :)"
                     href="https://paypal.me/timcheung"
                   />
-                  <ListSubheader>Steam Trade Offer</ListSubheader>
                   <ListItemLink
-                    primary="Gift me goodies"
-                    secondary="CS:GO/PUBG skins, games or other stuff to have fun outside of development :)"
+                    primary="Steam Trade Offer"
+                    secondary="Gift me CS:GO/PUBG skins, games or whatever to have some fun beside development :)"
                     href="https://steamcommunity.com/tradeoffer/new/?partner=238736&token=IGhRvdeN"
                   />
                 </List>
