@@ -98,7 +98,10 @@ async function extendRoomOverviewInfo(teams, isMatchRoomV1, parent) {
               const controls = select('div.match-team-member__controls', member)
 
               if (controls) {
-                controls.setAttribute('style', 'font-size: 12px; padding: 4px;')
+                controls.setAttribute(
+                  'style',
+                  'font-size: 12px; padding: 0 4px;'
+                )
 
                 const gameProfile = select(
                   `a[ng-if*="match.gameData.matchroom.profile_url"]`,
