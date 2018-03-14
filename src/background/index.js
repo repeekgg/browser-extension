@@ -1,22 +1,45 @@
+import OptionsSync from 'webext-options-sync'
+import browser from 'webextension-polyfill'
 import changelog from '../libs/changelog'
 
-chrome.runtime.onInstalled.addListener(async ({ reason }) => {
+new OptionsSync().define({
+  defaults: {
+    partyAutoAcceptInvite: false,
+    matchQueueAutoReady: false,
+    matchRoomShowPlayerStats: false
+  },
+  migrations: [
+    options => {
+      if (options.autoAcceptPartyInvite === true) {
+        options.partyAutoAcceptInvite = true
+      }
+
+      if (options.autoReadyMatch === true) {
+        options.matchQueueAutoReady = true
+      }
+
+      if (options['matchRoom.showPlayerStats'] === true) {
+        options.matchRoomShowPlayerStats = true
+      }
+    },
+    OptionsSync.migrations.removeUnused
+  ]
+})
+
+browser.runtime.onInstalled.addListener(async ({ reason }) => {
   if (reason === 'update') {
-    const { installType } = await new Promise(resolve => {
-      chrome.management.getSelf(resolve)
-    })
+    const { installType } = await browser.management.getSelf()
 
     if (installType === 'development') {
       return
     }
 
-    const { version } = chrome.runtime.getManifest()
+    const { version } = browser.runtime.getManifest()
     const changelogUrl = changelog[version]
 
     if (changelogUrl) {
-      chrome.tabs.create({
-        url: changelogUrl,
-        active: true
+      browser.tabs.create({
+        url: changelogUrl
       })
     }
   }

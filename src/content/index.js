@@ -23,11 +23,11 @@ function observe() {
 
     if (modal) {
       if (modals.isInviteToParty(modal)) {
-        runFeatureIf('autoAcceptPartyInvite', clickPartyInviteAccept, modal)
+        runFeatureIf('partyAutoAcceptInvite', clickPartyInviteAccept, modal)
       } else if (modals.isMatchQueuing(modal)) {
-        runFeatureIf('autoReadyMatch', clickMatchQueuingContinue, modal)
+        runFeatureIf('matchQueueAutoReady', clickMatchQueuingContinue, modal)
       } else if (modals.isMatchReady(modal)) {
-        runFeatureIf('autoReadyMatch', clickMatchReady, modal)
+        runFeatureIf('matchQueueAutoReady', clickMatchReady, modal)
       }
     }
 

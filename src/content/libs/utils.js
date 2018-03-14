@@ -1,4 +1,4 @@
-import storage from '../../libs/storage'
+import browser from 'webextension-polyfill'
 
 export const getCurrentPath = () => location.pathname
 
@@ -13,9 +13,10 @@ export const runFeatureIf = async (
   option,
   feature,
   parent,
-  store = storage
+  store = browser.storage.sync
 ) => {
-  if (await store.get(option)) {
+  const options = await store.get(option)
+  if (options[option]) {
     feature(parent)
   }
 }

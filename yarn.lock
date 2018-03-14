@@ -8581,11 +8581,19 @@ web-ext@^1.9.1:
     yargs "6.6.0"
     zip-dir "1.0.2"
 
+webext-options-sync@^0.15.0:
+  version "0.15.0"
+  resolved "https://registry.yarnpkg.com/webext-options-sync/-/webext-options-sync-0.15.0.tgz#b5c030eb42004394b50522582ff9210551effe23"
+
 webext@^1.9.1-with-submit.1:
   version "1.9.1-with-submit.1"
   resolved "https://registry.yarnpkg.com/webext/-/webext-1.9.1-with-submit.1.tgz#363d209f3f351f27943fc8b9d138c6c20c5b8171"
   dependencies:
     web-ext "^1.9.1"
+
+webextension-polyfill@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/webextension-polyfill/-/webextension-polyfill-0.2.1.tgz#cdfc9126033039f1713553157d35beff1d4d6f4a"
 
 webidl-conversions@^3.0.0:
   version "3.0.1"

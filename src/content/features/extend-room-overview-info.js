@@ -1,7 +1,7 @@
 /** @jsx h */
 import { h } from 'dom-chef'
 import select from 'select-dom'
-import storage from '../../libs/storage'
+import browser from 'webextension-polyfill'
 import { getRoomId } from '../libs/pages'
 import {
   getMatch,
@@ -159,10 +159,11 @@ async function extendRoomOverviewInfo(teams, isMatchRoomV1, parent) {
               }
 
               // Stats
-              const showPlayerStats = await storage.get(
-                'matchRoom.showPlayerStats'
-              )
-              if (showPlayerStats) {
+              const {
+                matchRoomShowPlayerStats
+              } = await browser.storage.sync.get('matchRoomShowPlayerStats')
+
+              if (matchRoomShowPlayerStats) {
                 const playerStats = await getPlayerStats(guid, game)
 
                 if (!playerStats) return

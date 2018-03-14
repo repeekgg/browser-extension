@@ -1,7 +1,7 @@
 import React from 'react'
 import List from 'material-ui/List'
+import browser from 'webextension-polyfill'
 import { version } from '../manifest'
-import storage from '../libs/storage'
 import changelog from '../libs/changelog'
 import AppBar from './components/app-bar'
 import Tabs from './components/tabs'
@@ -20,7 +20,7 @@ export default class App extends React.Component {
   }
 
   async componentDidMount() {
-    const options = await storage.get()
+    const options = await browser.storage.sync.get()
     this.setState({ options, loading: false })
   }
 
@@ -35,10 +35,9 @@ export default class App extends React.Component {
     }))
   }
 
-  onSave = () => {
-    chrome.storage.sync.set(this.state.options, () =>
-      this.setState({ saved: true, edited: false })
-    )
+  onSave = async () => {
+    await browser.storage.sync.set(this.state.options)
+    this.setState({ saved: true, edited: false })
   }
 
   onChangeTab = (e, value) =>
@@ -47,6 +46,11 @@ export default class App extends React.Component {
   isActiveTab = index => this.state.activeTab === index
 
   tabs = ['General', 'Help', 'Donate']
+
+  getSwitchProps = option => ({
+    onClick: this.onSwitchOption(option),
+    checked: this.state.options[option]
+  })
 
   render() {
     const { activeTab, loading, edited, saved } = this.state
@@ -72,21 +76,18 @@ export default class App extends React.Component {
                   <ListSubheader>Party</ListSubheader>
                   <ListItemSwitch
                     primary="Auto Accept Invite"
-                    onClick={this.onSwitchOption('autoAcceptPartyInvite')}
-                    checked={this.state.options.autoAcceptPartyInvite}
+                    {...this.getSwitchProps('partyAutoAcceptInvite')}
                   />
                   <ListSubheader>Match Queue</ListSubheader>
                   <ListItemSwitch
                     primary="Auto Ready"
-                    onClick={this.onSwitchOption('autoReadyMatch')}
-                    checked={this.state.options.autoReadyMatch}
+                    {...this.getSwitchProps('matchQueueAutoReady')}
                   />
                   <ListSubheader>Match Room</ListSubheader>
                   <ListItemSwitch
                     primary="Show Player Stats"
                     secondary="Matches, Win Rate, Avg. K/D, Avg. K/R, Avg. Kills (Experimental)"
-                    onClick={this.onSwitchOption('matchRoom.showPlayerStats')}
-                    checked={this.state.options['matchRoom.showPlayerStats']}
+                    {...this.getSwitchProps('matchRoomShowPlayerStats')}
                   />
                 </List>
               )}
