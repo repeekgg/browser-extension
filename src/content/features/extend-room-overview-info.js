@@ -98,25 +98,28 @@ async function extendRoomOverviewInfo(teams, isMatchRoomV1, parent) {
               const controls = select('div.match-team-member__controls', member)
 
               if (controls) {
-                controls.setAttribute('style', 'font-size: 12px;')
+                controls.setAttribute('style', 'font-size: 12px; padding: 4px;')
 
                 const gameProfile = select(
                   `a[ng-if*="match.gameData.matchroom.profile_url"]`,
                   member
                 )
-                gameProfile.setAttribute(
-                  'style',
-                  `width: auto; display: flex; align-items: center`
-                )
-                gameProfile[alignedLeft ? 'append' : 'prepend'](
-                  gameNickname.innerHTML
-                )
 
-                const gameIcon = select('i', gameProfile)
-                gameIcon.setAttribute(
-                  'style',
-                  `margin-${alignedLeft ? 'right' : 'left'}: 4px;`
-                )
+                if (gameProfile) {
+                  gameProfile.setAttribute(
+                    'style',
+                    `width: auto; display: flex; align-items: center`
+                  )
+                  gameProfile[alignedLeft ? 'append' : 'prepend'](
+                    gameNickname.innerHTML
+                  )
+
+                  const gameIcon = select('i', gameProfile)
+                  gameIcon.setAttribute(
+                    'style',
+                    `margin-${alignedLeft ? 'right' : 'left'}: 4px;`
+                  )
+                }
               }
             }
 
