@@ -39,7 +39,8 @@ browser.runtime.onInstalled.addListener(async ({ reason }) => {
 
     if (changelogUrl) {
       browser.tabs.create({
-        url: changelogUrl
+        url: changelogUrl,
+        active: false
       })
     }
   }
