@@ -1,13 +1,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { MuiThemeProvider } from 'material-ui/styles'
-import Reboot from 'material-ui/Reboot'
+import CssBaseline from 'material-ui/CssBaseline'
 import App from './app'
 import theme from './theme'
 
 ReactDOM.render(
   <MuiThemeProvider theme={theme}>
-    <Reboot />
+    <CssBaseline />
     <App />
   </MuiThemeProvider>,
   document.getElementById('root')

@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "dom-chef": "^3.1.0",
-    "material-ui": "1.0.0-beta.36",
+    "material-ui": "1.0.0-beta.37",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "select-dom": "^4.1.1",
