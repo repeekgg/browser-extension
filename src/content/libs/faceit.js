@@ -54,6 +54,10 @@ export const getPlayer = nickname => fetchApi(`/core/v1/nicknames/${nickname}`)
 export const getPlayerStats = async (userId, game) => {
   const stats = await fetchApi(`/stats/v1/stats/users/${userId}/games/${game}`)
 
+  if (!stats || !stats.lifetime || !stats.segments) {
+    return null
+  }
+
   return convertToHumanReadableStats(stats, game)
 }
 

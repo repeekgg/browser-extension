@@ -10,8 +10,8 @@ import {
   getPlayerStats
 } from '../libs/faceit'
 import createFlagElement from '../components/flag'
+import createPlayerEloElement from '../components/player-elo'
 import createTeamEloElement from '../components/team-elo'
-import createIconElement from '../components/icon'
 
 function mapPartiesToColors(party, alignedLeft) {
   const distinctColors = [
@@ -86,10 +86,39 @@ async function extendRoomOverviewInfo(teams, isMatchRoomV1, parent) {
             const details = select('.match-team-member__details', member)
 
             const gameNickname = select(
-              'span[ng-bind="::teamMember[gameContext + \'_name\']"]',
+              isMatchRoomV1
+                ? 'span[ng-bind="::teamMember[gameContext + \'_name\']"]'
+                : 'span[ng-bind="::vm.teamMember.gameName"]',
               details
             )
-            gameNickname.remove()
+
+            if (gameNickname) {
+              gameNickname.remove()
+
+              const controls = select('div.match-team-member__controls', member)
+
+              if (controls) {
+                controls.setAttribute('style', 'font-size: 12px;')
+
+                const gameProfile = select(
+                  `a[ng-if*="match.gameData.matchroom.profile_url"]`,
+                  member
+                )
+                gameProfile.setAttribute(
+                  'style',
+                  `width: auto; display: flex; align-items: center`
+                )
+                gameProfile[alignedLeft ? 'append' : 'prepend'](
+                  gameNickname.innerHTML
+                )
+
+                const gameIcon = select('i', gameProfile)
+                gameIcon.setAttribute(
+                  'style',
+                  `margin-${alignedLeft ? 'right' : 'left'}: 4px;`
+                )
+              }
+            }
 
             const nickname = select(
               `strong[${
@@ -115,30 +144,10 @@ async function extendRoomOverviewInfo(teams, isMatchRoomV1, parent) {
               // Elo
               let elo = games[game].faceit_elo || 0
               teamElo.push(elo)
-              elo = (
-                <div
-                  className="text-muted"
-                  style={{
-                    display: 'flex',
-                    'align-items': 'center',
-                    'justify-content': !alignedLeft && 'flex-end'
-                  }}
-                >
-                  {elo}
-                </div>
-              )
+              elo = createPlayerEloElement({ elo, alignedLeft })
               const name = select(
                 'div.match-team-member__details__name',
                 details
-              )
-              const eloIcon = createIconElement({
-                icon: 'ELO-icon',
-                size: '18px'
-              })
-              eloIcon.style[`margin-${alignedLeft ? 'right' : 'left'}`] = '4px'
-              elo.insertAdjacentElement(
-                alignedLeft ? 'afterbegin' : 'beforeend',
-                eloIcon
               )
               name.appendChild(elo)
 
@@ -173,14 +182,15 @@ async function extendRoomOverviewInfo(teams, isMatchRoomV1, parent) {
                   win_rate, // eslint-disable-line camelcase
                   average_kd_ratio, // eslint-disable-line camelcase
                   average_kills, // eslint-disable-line camelcase
-                  average_kr_ratio // eslint-disable-line camelcase
+                  average_kr_ratio, // eslint-disable-line camelcase
+                  average_headshots // eslint-disable-line camelcase
                 } = playerStats
 
                 const stat = (value, label) => (
                   <div style={{ flex: 1, padding: 9 }}>
                     {value}
                     <br />
-                    <span style={{ 'font-size': 10 }}>{label}</span>
+                    <span className="text-muted">{label}</span>
                   </div>
                 )
 
@@ -190,10 +200,9 @@ async function extendRoomOverviewInfo(teams, isMatchRoomV1, parent) {
 
                 const stats = (
                   <div
-                    className="text-muted"
+                    className="text-light"
                     style={{
                       display: 'flex',
-                      'text-transform': 'uppercase',
                       background: '#1b1b1f',
                       'border-top': '1px solid #333',
                       'text-align': !alignedLeft && 'right',
@@ -201,18 +210,20 @@ async function extendRoomOverviewInfo(teams, isMatchRoomV1, parent) {
                       'font-size': 12
                     }}
                   >
-                    {stat(matches, 'Matches')}
-                    {statsVerticalDivider()}
                     {stat(
-                      `${win_rate}%`, // eslint-disable-line camelcase
-                      'Wins'
+                      `${matches} / ${win_rate}%`, // eslint-disable-line camelcase
+                      'Matches / Wins'
                     )}
                     {statsVerticalDivider()}
-                    {stat(average_kd_ratio, 'Avg. K/D')}
+                    {stat(
+                      `${Math.round(average_kills)} / ${average_headshots}%`, // eslint-disable-line camelcase
+                      'Avg. Kills / HS'
+                    )}
                     {statsVerticalDivider()}
-                    {stat(average_kr_ratio, 'Avg. K/R')}
-                    {statsVerticalDivider()}
-                    {stat(Math.round(average_kills), 'Avg. Kills')}
+                    {stat(
+                      `${average_kd_ratio} / ${average_kr_ratio}`, // eslint-disable-line camelcase
+                      'Avg. K/D / K/R'
+                    )}
                   </div>
                 )
 
