@@ -9,49 +9,10 @@ import {
   getPlayer,
   getPlayerStats
 } from '../libs/faceit'
+import { mapPartiesToColors } from '../libs/parties'
 import createFlagElement from '../components/flag'
 import createPlayerEloElement from '../components/player-elo'
 import createTeamEloElement from '../components/team-elo'
-
-function mapPartiesToColors(party, alignedLeft) {
-  const distinctColors = [
-    '#BE0032',
-    '#F3C300',
-    '#875692',
-    '#A1CAF1',
-    '#F2F3F4',
-    '#848482',
-    '#008856',
-    '#F38400',
-    '#E68FAC',
-    '#0067A5'
-  ]
-
-  const colors = party.reduce(
-    (acc, curr) => {
-      const color = alignedLeft ? distinctColors.shift() : distinctColors.pop()
-
-      return curr.activeTeamId && !acc.party[curr.activeTeamId]
-        ? {
-            ...acc,
-            party: {
-              ...acc.party,
-              [curr.activeTeamId]: color
-            }
-          }
-        : {
-            ...acc,
-            solo: {
-              ...acc.solo,
-              [curr.guid]: color
-            }
-          }
-    },
-    { party: {}, solo: {} }
-  )
-
-  return colors
-}
 
 async function extendRoomOverviewInfo(teams, isMatchRoomV1, parent) {
   if (teams.length === 2) {
@@ -169,7 +130,7 @@ async function extendRoomOverviewInfo(teams, isMatchRoomV1, parent) {
                   'style',
                   `border-${
                     alignedLeft ? 'left' : 'right'
-                  }: 3px solid ${partyColor}; border-radius: 0;`
+                  }: 2px solid ${partyColor}; border-radius: 0;`
                 )
               }
 
