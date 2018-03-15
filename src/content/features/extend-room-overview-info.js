@@ -187,11 +187,11 @@ async function extendRoomOverviewInfo(teams, isMatchRoomV1, parent) {
 
                 const {
                   matches,
-                  win_rate, // eslint-disable-line camelcase
-                  average_kd_ratio, // eslint-disable-line camelcase
-                  average_kills, // eslint-disable-line camelcase
-                  average_kr_ratio, // eslint-disable-line camelcase
-                  average_headshots // eslint-disable-line camelcase
+                  winRate,
+                  averageKDRatio,
+                  averageKills,
+                  averageKRRatio,
+                  averageHeadshots
                 } = stats
 
                 const stat = (value, label) => (
@@ -218,20 +218,15 @@ async function extendRoomOverviewInfo(teams, isMatchRoomV1, parent) {
                       'font-size': 12
                     }}
                   >
-                    {stat(
-                      `${matches} / ${win_rate}%`, // eslint-disable-line camelcase
-                      'Matches / Wins'
-                    )}
+                    {stat(`${matches} / ${winRate}%`, 'Matches / Wins')}
                     {statsVerticalDivider()}
                     {stat(
-                      `${Math.round(average_kills)} / ${Math.round(
-                        average_headshots
-                      )}%`, // eslint-disable-line camelcase
+                      `${averageKills} / ${averageHeadshots}%`,
                       'Avg. Kills / HS'
                     )}
                     {statsVerticalDivider()}
                     {stat(
-                      `${average_kd_ratio} / ${average_kr_ratio}`, // eslint-disable-line camelcase
+                      `${averageKDRatio} / ${averageKRRatio}`,
                       'Avg. K/D / K/R'
                     )}
                   </div>
