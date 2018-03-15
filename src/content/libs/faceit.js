@@ -1,3 +1,4 @@
+import camelcaseKeys from 'camelcase-keys'
 import { mapTotalStats, mapAverageStats } from './stats'
 
 const BASE_URL = 'https://api.faceit.com'
@@ -37,11 +38,9 @@ async function fetchApi(path) {
 
     if ((result && result !== 'ok') || (code && code !== 'OPERATION-OK')) {
       throw json
-    } else if (payload) {
-      return payload
     }
 
-    return json
+    return camelcaseKeys(payload || json, { deep: true })
   } catch (err) {
     console.error(err)
 

@@ -31,12 +31,12 @@ function mapPartiesToColors(party, alignedLeft) {
     (acc, curr) => {
       const color = alignedLeft ? distinctColors.shift() : distinctColors.pop()
 
-      return curr.active_team_id && !acc.party[curr.active_team_id]
+      return curr.activeTeamId && !acc.party[curr.activeTeamId]
         ? {
             ...acc,
             party: {
               ...acc.party,
-              [curr.active_team_id]: color
+              [curr.activeTeamId]: color
             }
           }
         : {
@@ -148,7 +148,7 @@ async function extendRoomOverviewInfo(teams, isMatchRoomV1, parent) {
               nickname[alignedLeft ? 'prepend' : 'append'](flag)
 
               // Elo
-              let elo = games[game].faceit_elo || 0
+              let elo = games[game].faceitElo || 0
               teamElo.push(elo)
               elo = createPlayerEloElement({ elo, alignedLeft })
               const name = select(
@@ -160,7 +160,7 @@ async function extendRoomOverviewInfo(teams, isMatchRoomV1, parent) {
               // Party Indicators
               if (party) {
                 const partyId =
-                  party.find(member => member.guid === guid).active_team_id ||
+                  party.find(member => member.guid === guid).activeTeamId ||
                   guid
                 const partyColor =
                   partyColors.party[partyId] || partyColors.solo[partyId]
