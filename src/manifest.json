@@ -1,9 +1,9 @@
 {
   "name": "FACEIT Enhancer",
-  "description": "Enhances the FACEIT experience and adds useful features",
+  "description": "Enhances the FACEIT experience and adds useful features.",
   "version": "0.9.0",
   "manifest_version": 2,
-  "homepage_url": "http://steamcommunity.com/groups/faceitenhancer",
+  "homepage_url": "https://www.reddit.com/r/FACEITEnhancer/",
   "minimum_chrome_version": "51",
   "applications": {
     "gecko": {
