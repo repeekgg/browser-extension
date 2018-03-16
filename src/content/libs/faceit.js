@@ -88,3 +88,8 @@ export const getPlayerStats = async (userId, game, avgPastGames = 25) => {
 export const getQuickMatch = matchId => fetchApi(`/core/v1/matches/${matchId}`)
 
 export const getMatch = matchId => fetchApi(`/match/v1/match/${matchId}`)
+
+export const prefetchPlayersFromMatch = match =>
+  ['faction1', 'faction2'].forEach(key =>
+    match[key].forEach(({ nickname }) => getPlayer(nickname))
+  )

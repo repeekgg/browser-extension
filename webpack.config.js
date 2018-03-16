@@ -52,7 +52,13 @@ module.exports = {
       }
     ]
   },
-  plugins: [new CleanWebpackPlugin(['dist']), new CopyWebpackPlugin(['*'])],
+  plugins: [
+    new CleanWebpackPlugin(['dist']),
+    new CopyWebpackPlugin([
+      { from: 'content/index.css', to: 'content.css' },
+      '*'
+    ])
+  ],
   optimization: {
     concatenateModules: true,
     minimizer: [

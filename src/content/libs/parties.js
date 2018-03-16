@@ -1,11 +1,11 @@
 /* eslint-disable import/prefer-default-export */
 
-export function mapPartiesToColors(party, alignedLeft) {
+export function mapPartiesToColors(party, isFaction1) {
   const palette = ['#0082c8', '#ffe119', '#808080', '#3cb44b', '#e6194b']
 
   const colors = party.reduce(
     (acc, curr) => {
-      const color = alignedLeft ? palette.shift() : palette.pop()
+      const color = isFaction1 ? palette.shift() : palette.pop()
 
       return curr.activeTeamId && !acc.party[curr.activeTeamId]
         ? {

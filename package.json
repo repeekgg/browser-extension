@@ -6,6 +6,7 @@
     "build": "webpack --mode=production",
     "test": "BABEL_ENV=testing ava",
     "lint": "xo",
+    "prettier": "prettier --write \"**/*.{js,json,css}\"",
     "release:amo": "cd dist && webext submit",
     "release:cws": "cd dist && webstore upload --auto-publish",
     "release": "run-s build release:*"

@@ -1,10 +1,5 @@
-import { getCurrentPath } from './utils'
-
-export const getRoomId = path => {
-  const match = /room\/(.+-.+-.+-.+)/.exec(path || getCurrentPath())
-
-  return match && match[1]
-}
+/* eslint-disable import/prefer-default-export */
+import { getCurrentPath } from './location'
 
 export const isRoomOverview = path =>
   /room\/.+-.+-.+-.+$/.test(path || getCurrentPath())

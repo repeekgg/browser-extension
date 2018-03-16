@@ -2,15 +2,28 @@ import select from 'select-dom'
 import * as modals from './libs/modals'
 import * as pages from './libs/pages'
 import { runFeatureIf } from './libs/utils'
-import clickPartyInviteAccept from './features/click-party-invite-accept'
-import clickMatchQueuingContinue from './features/click-match-queuing-continue'
-import clickMatchReady from './features/click-match-ready'
-import extendRoomOverviewInfo from './features/extend-room-overview-info'
+import { matchRoomIsReady } from './libs/match-room'
+import clickModalPartyInviteAccept from './features/click-modal-party-invite-accept'
+import clickModalMatchQueuingContinue from './features/click-modal-match-queuing-continue'
+import clickModalMatchReady from './features/click-modal-match-ready'
+import addMatchRoomPlayerColors from './features/add-match-room-player-colors'
+import addMatchRoomPlayerFlags from './features/add-match-room-player-flags'
+import addMatchRoomPlayerElos from './features/add-match-room-player-elos'
+import addMatchRoomPlayerStats from './features/add-match-room-player-stats'
+import addMatchRoomTeamElos from './features/add-match-room-team-elos'
 
 function observeMainContent(mainContent) {
-  const observer = new MutationObserver(() => {
-    if (pages.isRoomOverview()) {
-      extendRoomOverviewInfo(mainContent)
+  const observer = new MutationObserver(async () => {
+    if (pages.isRoomOverview() && matchRoomIsReady()) {
+      addMatchRoomPlayerColors(mainContent)
+      addMatchRoomPlayerFlags(mainContent)
+      addMatchRoomPlayerElos(mainContent)
+      runFeatureIf(
+        'matchRoomShowPlayerStats',
+        addMatchRoomPlayerStats,
+        mainContent
+      )
+      addMatchRoomTeamElos(mainContent)
     }
   })
 
@@ -23,11 +36,19 @@ function observe() {
 
     if (modal) {
       if (modals.isInviteToParty(modal)) {
-        runFeatureIf('partyAutoAcceptInvite', clickPartyInviteAccept, modal)
+        runFeatureIf(
+          'partyAutoAcceptInvite',
+          clickModalPartyInviteAccept,
+          modal
+        )
       } else if (modals.isMatchQueuing(modal)) {
-        runFeatureIf('matchQueueAutoReady', clickMatchQueuingContinue, modal)
+        runFeatureIf(
+          'matchQueueAutoReady',
+          clickModalMatchQueuingContinue,
+          modal
+        )
       } else if (modals.isMatchReady(modal)) {
-        runFeatureIf('matchQueueAutoReady', clickMatchReady, modal)
+        runFeatureIf('matchQueueAutoReady', clickModalMatchReady, modal)
       }
     }
 

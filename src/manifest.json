@@ -21,7 +21,9 @@
   },
   "content_scripts": [
     {
+      "run_at": "document_end",
       "matches": ["https://www.faceit.com/*"],
+      "css": ["content.css"],
       "js": ["content.js"]
     }
   ],

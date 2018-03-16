@@ -1,13 +1,6 @@
+/* eslint-disable import/prefer-default-export */
+
 import browser from 'webextension-polyfill'
-
-export const getCurrentPath = () => location.pathname
-
-export const hasEnhancerAttribute = element =>
-  element.hasAttribute('faceit-enhancer')
-
-export const setEnhancerAttribute = element => {
-  element.setAttribute('faceit-enhancer', 'true')
-}
 
 export const runFeatureIf = async (
   option,
