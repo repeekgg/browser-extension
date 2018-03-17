@@ -1,29 +1,38 @@
-import OptionsSync from 'webext-options-sync'
 import browser from 'webextension-polyfill'
+import OptionsSync from 'webext-options-sync'
+import storage from '../libs/storage'
 import changelogs from '../libs/changelogs'
 
-new OptionsSync().define({
-  defaults: {
-    partyAutoAcceptInvite: false,
-    matchQueueAutoReady: false,
-    matchRoomShowPlayerStats: false
-  },
-  migrations: [
-    options => {
-      if (options.autoAcceptPartyInvite === true) {
-        options.partyAutoAcceptInvite = true
-      }
+const DEFAULTS = {
+  partyAutoAcceptInvite: false,
+  matchQueueAutoReady: false,
+  matchRoomShowPlayerStats: false,
+  matchRoomAutoCopyServerData: false,
+  matchRoomAutoConnectToServer: false,
+  notifyMatchRoomAutoConnectToServer: true
+}
 
-      if (options.autoReadyMatch === true) {
-        options.matchQueueAutoReady = true
-      }
+storage.define({
+  defaults: DEFAULTS,
+  migrations: [OptionsSync.migrations.removeUnused]
+})
 
-      if (options['matchRoom.showPlayerStats'] === true) {
-        options.matchRoomShowPlayerStats = true
-      }
-    },
-    OptionsSync.migrations.removeUnused
-  ]
+browser.runtime.onMessage.addListener(message => {
+  if (!message) {
+    return
+  }
+
+  if (message.action === 'notification') {
+    const { name } = browser.runtime.getManifest()
+    delete message.action
+
+    browser.notifications.create('', {
+      type: 'basic',
+      ...message,
+      contextMessage: name,
+      iconUrl: 'icon.png'
+    })
+  }
 })
 
 browser.runtime.onInstalled.addListener(async ({ reason }) => {

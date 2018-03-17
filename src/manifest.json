@@ -13,6 +13,8 @@
   },
   "permissions": [
     "storage",
+    "notifications",
+    "clipboardWrite",
     "https://api.faceit.com/",
     "https://cdn.faceit.com/"
   ],

@@ -1,14 +1,8 @@
 /* eslint-disable import/prefer-default-export */
+import storage from '../../libs/storage'
 
-import browser from 'webextension-polyfill'
-
-export const runFeatureIf = async (
-  option,
-  feature,
-  parent,
-  store = browser.storage.sync
-) => {
-  const options = await store.get(option)
+export const runFeatureIf = async (option, feature, parent) => {
+  const options = await storage.getAll()
   if (options[option]) {
     feature(parent)
   }

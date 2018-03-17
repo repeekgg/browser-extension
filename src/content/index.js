@@ -11,6 +11,7 @@ import addMatchRoomPlayerFlags from './features/add-match-room-player-flags'
 import addMatchRoomPlayerElos from './features/add-match-room-player-elos'
 import addMatchRoomPlayerStats from './features/add-match-room-player-stats'
 import addMatchRoomTeamElos from './features/add-match-room-team-elos'
+import copyMatchRoomCopyServerData from './features/copy-match-room-copy-server-data'
 
 function observeMainContent(mainContent) {
   const observer = new MutationObserver(async () => {
@@ -24,6 +25,11 @@ function observeMainContent(mainContent) {
         mainContent
       )
       addMatchRoomTeamElos(mainContent)
+      runFeatureIf(
+        'matchRoomAutoCopyServerData',
+        copyMatchRoomCopyServerData,
+        mainContent
+      )
     }
   })
 

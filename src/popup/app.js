@@ -1,8 +1,8 @@
 import React from 'react'
 import List from 'material-ui/List'
-import browser from 'webextension-polyfill'
 import { version } from '../manifest'
 import changelogs from '../libs/changelogs'
+import storage from '../libs/storage'
 import AppBar from './components/app-bar'
 import Tabs from './components/tabs'
 import ListItemSwitch from './components/list-item-switch'
@@ -20,7 +20,7 @@ export default class App extends React.Component {
   }
 
   async componentDidMount() {
-    const options = await browser.storage.sync.get()
+    const options = await storage.getAll()
     this.setState({ options, loading: false })
   }
 
@@ -36,7 +36,7 @@ export default class App extends React.Component {
   }
 
   onSave = async () => {
-    await browser.storage.sync.set(this.state.options)
+    await storage.set(this.state.options)
     this.setState({ saved: true, edited: false })
   }
 
@@ -45,7 +45,7 @@ export default class App extends React.Component {
 
   isActiveTab = index => this.state.activeTab === index
 
-  tabs = ['General', 'Help', 'Donate']
+  tabs = ['General', 'Notifications', 'Help', 'Donate']
 
   getSwitchProps = option => ({
     onClick: this.onSwitchOption(option),
@@ -88,6 +88,23 @@ export default class App extends React.Component {
                     primary="Show Player Stats"
                     secondary="Total stats (matches, win rate) & average stats (kills, headshots %, k/d, k/r) past 25 games."
                     {...this.getSwitchProps('matchRoomShowPlayerStats')}
+                  />
+                  <ListItemSwitch
+                    primary="Auto Copy Server Data"
+                    secondary="Copy server data to your clipboard automatically as soon as server is ready. Experimental feature (might cause issues)."
+                    {...this.getSwitchProps('matchRoomAutoCopyServerData')}
+                  />
+                </List>
+              )}
+              {this.isActiveTab('Notifications') && (
+                <List>
+                  <ListSubheader>Match Room</ListSubheader>
+                  <ListItemSwitch
+                    primary="Auto Copy Server Data"
+                    secondary="When server data has been copied to your clipboard."
+                    {...this.getSwitchProps(
+                      'notifyMatchRoomAutoConnectToServer'
+                    )}
                   />
                 </List>
               )}
