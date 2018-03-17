@@ -14,8 +14,6 @@ export default class App extends React.Component {
   state = {
     options: {},
     loading: true,
-    edited: false,
-    saved: false,
     activeTab: 'General'
   }
 
@@ -25,19 +23,18 @@ export default class App extends React.Component {
   }
 
   onSwitchOption = value => () => {
-    this.setState(({ options }) => ({
-      options: {
-        ...options,
-        [value]: !options[value]
-      },
-      edited: true,
-      saved: false
-    }))
-  }
+    this.setState(({ options }) => {
+      const newValue = !options[value]
 
-  onSave = async () => {
-    await storage.set(this.state.options)
-    this.setState({ saved: true, edited: false })
+      storage.set({ [value]: newValue })
+
+      return {
+        options: {
+          ...options,
+          [value]: newValue
+        }
+      }
+    })
   }
 
   onChangeTab = (e, value) =>
@@ -53,14 +50,10 @@ export default class App extends React.Component {
   })
 
   render() {
-    const { activeTab, loading, edited, saved } = this.state
+    const { activeTab, loading } = this.state
     return (
       <React.Fragment>
-        <AppBar
-          onClickSave={this.onSave}
-          saved={saved}
-          savedDisabled={!edited}
-        />
+        <AppBar />
         {loading ? (
           <Loading />
         ) : (
@@ -102,7 +95,7 @@ export default class App extends React.Component {
                 <List>
                   <ListItemSwitch
                     primary="Disable Notifications"
-                    secondary="Don't show any notifacations. All options below are ignored regardless of their setting."
+                    secondary="Don't show any notifications. All options below are ignored regardless of their setting."
                     {...this.getSwitchProps('notifyDisabled')}
                   />
                   <ListSubheader>Party</ListSubheader>
