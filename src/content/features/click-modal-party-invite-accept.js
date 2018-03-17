@@ -9,10 +9,10 @@ export default parent => {
 
   if (acceptButton) {
     acceptButton.click()
-  }
 
-  notifyIf('notifyPartyAutoAcceptInvite', {
-    title: 'Party Joined',
-    message: 'A party invite has been accepted.'
-  })
+    notifyIf('notifyPartyAutoAcceptInvite', {
+      title: 'Party Joined',
+      message: 'A party invite has been accepted.'
+    })
+  }
 }

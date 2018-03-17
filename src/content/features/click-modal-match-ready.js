@@ -18,10 +18,10 @@ export default parent => {
 
   if (acceptButton) {
     acceptButton.click()
-  }
 
-  notifyIf('notifyPartyAutoAcceptInvite', {
-    title: 'Match Found',
-    message: 'A match has been readied up.'
-  })
+    notifyIf('notifyPartyAutoAcceptInvite', {
+      title: 'Match Found',
+      message: 'A match has been readied up.'
+    })
+  }
 }
