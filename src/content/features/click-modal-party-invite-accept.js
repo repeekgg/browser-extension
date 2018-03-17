@@ -3,7 +3,7 @@ import { notifyIf } from '../libs/utils'
 
 export default parent => {
   const acceptButton = select(
-    'button[ng-click="acceptInvite()"][translate-once="ACCEPT"]',
+    'button[ng-click="acceptInvite()"][translate-once="ACCEPT"]:not([disabled])',
     parent
   )
 
@@ -11,7 +11,7 @@ export default parent => {
     acceptButton.click()
 
     notifyIf('notifyPartyAutoAcceptInvite', {
-      title: 'Party Joined',
+      title: 'Party Invite Accepted',
       message: 'A party invite has been accepted.'
     })
   }

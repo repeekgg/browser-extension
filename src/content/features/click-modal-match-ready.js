@@ -4,7 +4,7 @@ import { notifyIf } from '../libs/utils'
 export default parent => {
   // Quickmatch
   let acceptButton = select(
-    'button[ng-click="close()"][translate-once="ACCEPT"]',
+    'button[ng-click="close()"][translate-once="ACCEPT"]:not([disabled]',
     parent
   )
 
@@ -20,7 +20,7 @@ export default parent => {
     acceptButton.click()
 
     notifyIf('notifyPartyAutoAcceptInvite', {
-      title: 'Match Found',
+      title: 'Match Readied Up',
       message: 'A match has been readied up.'
     })
   }
