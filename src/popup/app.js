@@ -8,6 +8,7 @@ import Tabs from './components/tabs'
 import ListItemSwitch from './components/list-item-switch'
 import ListItemLink from './components/list-item-link'
 import ListSubheader from './components/list-subheader'
+import ListDividerSubheader from './components/list-divider-subheader'
 import Loading from './components/loading'
 
 export default class App extends React.Component {
@@ -42,7 +43,7 @@ export default class App extends React.Component {
 
   isActiveTab = index => this.state.activeTab === index
 
-  tabs = ['General', 'Notifications', 'Help', 'Donate']
+  tabs = ['General', 'Notifications', 'Help', 'Donate', 'About']
 
   getSwitchProps = option => ({
     onClick: this.onSwitchOption(option),
@@ -72,13 +73,13 @@ export default class App extends React.Component {
                     secondary="Accept party invites automatically."
                     {...this.getSwitchProps('partyAutoAcceptInvite')}
                   />
-                  <ListSubheader>Match Queue</ListSubheader>
+                  <ListDividerSubheader>Match Queue</ListDividerSubheader>
                   <ListItemSwitch
                     primary="Auto Ready"
                     secondary="Ready up for matches automatically."
                     {...this.getSwitchProps('matchQueueAutoReady')}
                   />
-                  <ListSubheader>Match Room</ListSubheader>
+                  <ListDividerSubheader>Match Room</ListDividerSubheader>
                   <ListItemSwitch
                     primary="Show Player Stats"
                     secondary="Show total stats (matches, win rate) & average stats (kills, headshots %, k/d, k/r) past 20 games."
@@ -93,24 +94,25 @@ export default class App extends React.Component {
               )}
               {this.isActiveTab('Notifications') && (
                 <List>
+                  <ListSubheader>General</ListSubheader>
                   <ListItemSwitch
                     primary="Disable Notifications"
-                    secondary="Don't show any notifications. All options below are ignored regardless of their setting."
+                    secondary="Don't show notifications. All options below are ignored regardless of their setting."
                     {...this.getSwitchProps('notifyDisabled')}
                   />
-                  <ListSubheader>Party</ListSubheader>
+                  <ListDividerSubheader>Party</ListDividerSubheader>
                   <ListItemSwitch
                     primary="Auto Accept Invite"
                     secondary="When a party invite has been accepted."
                     {...this.getSwitchProps('notifyPartyAutoAcceptInvite')}
                   />
-                  <ListSubheader>Match Queue</ListSubheader>
+                  <ListDividerSubheader>Match Queue</ListDividerSubheader>
                   <ListItemSwitch
                     primary="Auto Ready"
                     secondary="When a match has been readied up for."
                     {...this.getSwitchProps('notifyMatchQueueAutoReady')}
                   />
-                  <ListSubheader>Match Room</ListSubheader>
+                  <ListDividerSubheader>Match Room</ListDividerSubheader>
                   <ListItemSwitch
                     primary="Auto Copy Server Data"
                     secondary="When server data has been copied to your clipboard."
@@ -122,12 +124,6 @@ export default class App extends React.Component {
               )}
               {this.isActiveTab('Help') && (
                 <List>
-                  <ListSubheader>About</ListSubheader>
-                  <ListItemLink
-                    primary="Version"
-                    secondary={version}
-                    href={changelogs[version]}
-                  />
                   <ListSubheader>Channels</ListSubheader>
                   <ListItemLink
                     primary="Reddit"
@@ -152,6 +148,36 @@ export default class App extends React.Component {
                     primary="Steam Trade Offer"
                     secondary="Gift me CS:GO/PUBG skins, games or whatever to have some fun beside development :)"
                     href="https://steamcommunity.com/tradeoffer/new/?partner=238736&token=IGhRvdeN"
+                  />
+                  <ListDividerSubheader>Donators</ListDividerSubheader>
+                  <ListItemLink
+                    primary="Bymas"
+                    href="http://steamcommunity.com/profiles/76561198175953790/"
+                  />
+                  <ListItemLink
+                    primary="kidi"
+                    href="http://steamcommunity.com/profiles/76561198056684789/"
+                  />
+                </List>
+              )}
+              {this.isActiveTab('About') && (
+                <List>
+                  <ListSubheader>About</ListSubheader>
+                  <ListItemLink
+                    primary="Version"
+                    secondary={version}
+                    href={changelogs[version]}
+                  />
+                  <ListItemLink
+                    primary="Author"
+                    secondary="azn"
+                    href="http://steamcommunity.com/id/azn_/"
+                  />
+                  <ListDividerSubheader>Contributors</ListDividerSubheader>
+                  <ListItemLink
+                    primary="DyyLN"
+                    secondary="Helped building the potentially gaining and losing Elo points in a match."
+                    href="http://steamcommunity.com/profiles/76561198164180254/"
                   />
                 </List>
               )}
