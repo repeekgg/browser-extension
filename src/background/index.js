@@ -38,7 +38,7 @@ browser.runtime.onMessage.addListener(message => {
   }
 })
 
-browser.runtime.onInstalled.addListener(async ({ reason }) => {
+browser.runtime.onInstalled.addListener(async ({ reason, previousVersion }) => {
   if (reason === 'update') {
     const { installType } = await browser.management.getSelf()
 
@@ -47,6 +47,15 @@ browser.runtime.onInstalled.addListener(async ({ reason }) => {
     }
 
     const { version } = browser.runtime.getManifest()
+
+    if (
+      previousVersion === '0.10.0' ||
+      previousVersion === '0.10.1' ||
+      (previousVersion === '0.10.2' && version === '0.10.3')
+    ) {
+      return
+    }
+
     const changelogUrl = changelogs[version]
 
     if (changelogUrl) {

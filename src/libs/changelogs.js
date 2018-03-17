@@ -1,4 +1,5 @@
 export default {
+  '0.10.3': 'https://redd.it/850ife',
   '0.10.2': 'https://redd.it/850ife',
   '0.10.1': 'https://redd.it/850ife',
   '0.10.0': 'https://redd.it/850ife',
