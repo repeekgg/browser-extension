@@ -93,7 +93,7 @@ export default class App extends React.Component {
                   />
                   <ListItemSwitch
                     primary="Auto Copy Server Data"
-                    secondary="Copy server data to your clipboard automatically. Experimental feature (might cause issues)."
+                    secondary="Copy server data to your clipboard automatically. Experimental feature (might be unstable)."
                     {...this.getSwitchProps('matchRoomAutoCopyServerData')}
                   />
                 </List>
