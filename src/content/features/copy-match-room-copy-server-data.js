@@ -1,8 +1,7 @@
 import select from 'select-dom'
 import copyToClipboard from 'copy-text-to-clipboard'
-import browser from 'webextension-polyfill'
-import storage from '../../libs/storage'
 import { getTeamElements, getRoomId } from '../libs/match-room'
+import { notifyIf } from '../libs/utils'
 
 const store = new Map()
 
@@ -35,13 +34,8 @@ export default async parent => {
 
   copyToClipboard(serverConnectData)
 
-  const { notifyMatchRoomAutoConnectToServer } = await storage.getAll()
-
-  if (notifyMatchRoomAutoConnectToServer) {
-    browser.runtime.sendMessage({
-      action: 'notification',
-      title: 'Ready to Connect',
-      message: 'Server connect data has been copied to your clipboard.'
-    })
-  }
+  notifyIf('notifyMatchRoomAutoConnectToServer', {
+    title: 'Ready to Connect',
+    message: 'Server connect data has been copied to your clipboard.'
+  })
 }

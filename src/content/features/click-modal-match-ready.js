@@ -1,4 +1,5 @@
 import select from 'select-dom'
+import { notifyIf } from '../libs/utils'
 
 export default parent => {
   // Quickmatch
@@ -18,4 +19,9 @@ export default parent => {
   if (acceptButton) {
     acceptButton.click()
   }
+
+  notifyIf('notifyPartyAutoAcceptInvite', {
+    title: 'Match Found',
+    message: 'A match has been readied up.'
+  })
 }

@@ -76,28 +76,42 @@ export default class App extends React.Component {
                   <ListSubheader>Party</ListSubheader>
                   <ListItemSwitch
                     primary="Auto Accept Invite"
+                    secondary="Accept party invites automatically."
                     {...this.getSwitchProps('partyAutoAcceptInvite')}
                   />
                   <ListSubheader>Match Queue</ListSubheader>
                   <ListItemSwitch
                     primary="Auto Ready"
+                    secondary="Ready up matches automatically."
                     {...this.getSwitchProps('matchQueueAutoReady')}
                   />
                   <ListSubheader>Match Room</ListSubheader>
                   <ListItemSwitch
                     primary="Show Player Stats"
-                    secondary="Total stats (matches, win rate) & average stats (kills, headshots %, k/d, k/r) past 25 games."
+                    secondary="Show total stats (matches, win rate) & average stats (kills, headshots %, k/d, k/r) past 25 games."
                     {...this.getSwitchProps('matchRoomShowPlayerStats')}
                   />
                   <ListItemSwitch
                     primary="Auto Copy Server Data"
-                    secondary="Copy server data to your clipboard automatically as soon as server is ready. Experimental feature (might cause issues)."
+                    secondary="Copy server data to your clipboard automatically. Experimental feature (might cause issues)."
                     {...this.getSwitchProps('matchRoomAutoCopyServerData')}
                   />
                 </List>
               )}
               {this.isActiveTab('Notifications') && (
                 <List>
+                  <ListSubheader>Party</ListSubheader>
+                  <ListItemSwitch
+                    primary="Auto Accept Invite"
+                    secondary="When a party invite has been accepted."
+                    {...this.getSwitchProps('notifyPartyAutoAcceptInvite')}
+                  />
+                  <ListSubheader>Match Queue</ListSubheader>
+                  <ListItemSwitch
+                    primary="Auto Ready"
+                    secondary="When a match has been readied up."
+                    {...this.getSwitchProps('notifyMatchQueueAutoReady')}
+                  />
                   <ListSubheader>Match Room</ListSubheader>
                   <ListItemSwitch
                     primary="Auto Copy Server Data"

@@ -1,4 +1,5 @@
 import select from 'select-dom'
+import { notifyIf } from '../libs/utils'
 
 export default parent => {
   const acceptButton = select(
@@ -9,4 +10,9 @@ export default parent => {
   if (acceptButton) {
     acceptButton.click()
   }
+
+  notifyIf('notifyPartyAutoAcceptInvite', {
+    title: 'Party Joined',
+    message: 'A party invite has been accepted.'
+  })
 }
