@@ -82,7 +82,7 @@ export default class App extends React.Component {
                   <ListSubheader>Match Queue</ListSubheader>
                   <ListItemSwitch
                     primary="Auto Ready"
-                    secondary="Ready up matches automatically."
+                    secondary="Ready up for matches automatically."
                     {...this.getSwitchProps('matchQueueAutoReady')}
                   />
                   <ListSubheader>Match Room</ListSubheader>
@@ -109,7 +109,7 @@ export default class App extends React.Component {
                   <ListSubheader>Match Queue</ListSubheader>
                   <ListItemSwitch
                     primary="Auto Ready"
-                    secondary="When a match has been readied up."
+                    secondary="When a match has been readied up for."
                     {...this.getSwitchProps('notifyMatchQueueAutoReady')}
                   />
                   <ListSubheader>Match Room</ListSubheader>
