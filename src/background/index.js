@@ -9,6 +9,7 @@ const DEFAULTS = {
   matchRoomShowPlayerStats: false,
   matchRoomAutoCopyServerData: false,
   matchRoomAutoConnectToServer: false,
+  notifyDisabled: false,
   notifyPartyAutoAcceptInvite: true,
   notifyMatchQueueAutoReady: true,
   notifyMatchRoomAutoConnectToServer: true

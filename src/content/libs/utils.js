@@ -12,7 +12,7 @@ export const runFeatureIf = async (option, feature, parent) => {
 export const notifyIf = async (option, message) => {
   const options = await storage.getAll()
 
-  if (options[option]) {
+  if (!options.notifyDisabled && options[option]) {
     browser.runtime.sendMessage({
       action: 'notification',
       ...message

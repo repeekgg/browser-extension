@@ -100,6 +100,11 @@ export default class App extends React.Component {
               )}
               {this.isActiveTab('Notifications') && (
                 <List>
+                  <ListItemSwitch
+                    primary="Disable Notifications"
+                    secondary="Don't show any notifacations. All options below are ignored regardless of their setting."
+                    {...this.getSwitchProps('notifyDisabled')}
+                  />
                   <ListSubheader>Party</ListSubheader>
                   <ListItemSwitch
                     primary="Auto Accept Invite"
