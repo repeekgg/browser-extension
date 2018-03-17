@@ -50,7 +50,7 @@ async function fetchApi(path) {
 
 export const getPlayer = nickname => fetchApi(`/core/v1/nicknames/${nickname}`)
 
-export const getPlayerStats = async (userId, game, avgPastGames = 25) => {
+export const getPlayerStats = async (userId, game, avgPastGames = 20) => {
   if (game !== 'csgo') {
     return null
   }

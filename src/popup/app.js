@@ -88,7 +88,7 @@ export default class App extends React.Component {
                   <ListSubheader>Match Room</ListSubheader>
                   <ListItemSwitch
                     primary="Show Player Stats"
-                    secondary="Show total stats (matches, win rate) & average stats (kills, headshots %, k/d, k/r) past 25 games."
+                    secondary="Show total stats (matches, win rate) & average stats (kills, headshots %, k/d, k/r) past 20 games."
                     {...this.getSwitchProps('matchRoomShowPlayerStats')}
                   />
                   <ListItemSwitch
