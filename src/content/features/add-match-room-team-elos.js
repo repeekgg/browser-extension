@@ -4,93 +4,92 @@ import select from 'select-dom'
 import {
   getTeamElements,
   getRoomId,
-  getTeamMemberElements,
-  getNicknameElement,
-  getFactionDetails
+  getIsFaction1,
+  FACTION_1,
+  FACTION_2
 } from '../libs/match-room'
-import { getQuickMatch, getMatch, getPlayer } from '../libs/faceit'
-import { hasFeatureAttribute, setFeatureAttribute } from '../libs/dom-element'
+import { getQuickMatch, getMatch } from '../libs/faceit'
+import {
+  hasFeatureAttribute,
+  setFeatureAttribute,
+  setStyle
+} from '../libs/dom-element'
+import { calculateRatingChange } from '../libs/elo'
 
 const FEATURE_ATTRIBUTE = 'team-elo'
 
 export default async parent => {
-  const { teamElements, isTeamV1Element } = getTeamElements(parent)
-
-  const roomId = getRoomId()
-  const match = isTeamV1Element ? getQuickMatch(roomId) : getMatch(roomId)
-
-  let factions = await Promise.all(
-    teamElements.map(async teamElement => {
-      if (hasFeatureAttribute(teamElement, FEATURE_ATTRIBUTE)) {
-        return
-      }
-
-      setFeatureAttribute(teamElement, FEATURE_ATTRIBUTE)
-
-      const memberElements = getTeamMemberElements(teamElement)
-
-      let memberElos = await Promise.all(
-        memberElements.map(async memberElement => {
-          const nicknameElement = getNicknameElement(
-            memberElement,
-            isTeamV1Element
-          )
-          const nickname = nicknameElement.textContent
-
-          const player = await getPlayer(nickname)
-
-          if (!player) {
-            return
-          }
-
-          const { game } = await match
-          const elo = player.games[game].faceitElo || null
-
-          return elo
-        })
-      )
-
-      memberElos = memberElos.filter(m => Boolean(m))
-
-      const { factionName } = getFactionDetails(teamElement, isTeamV1Element)
-
-      const totalElo = memberElos.reduce((acc, curr) => acc + curr, 0)
-      const averageElo = Math.round(totalElo / memberElos.length)
-
-      return {
-        name: factionName,
-        totalElo,
-        averageElo
-      }
-    })
+  const factionNicknameElements = select.all(
+    `section.match__info-box h2`,
+    parent
   )
 
-  factions = factions.filter(faction => Boolean(faction))
+  const roomId = getRoomId()
+  const { isTeamV1Element } = getTeamElements(parent)
+  const match = isTeamV1Element
+    ? await getQuickMatch(roomId)
+    : await getMatch(roomId)
 
-  if (factions.length === 0) {
-    return
-  }
+  factionNicknameElements.forEach(async factionNicknameElement => {
+    if (hasFeatureAttribute(factionNicknameElement, FEATURE_ATTRIBUTE)) {
+      return
+    }
+    setFeatureAttribute(factionNicknameElement, FEATURE_ATTRIBUTE)
 
-  factions.forEach(async (faction, i) => {
-    const eloDiff = faction.averageElo - factions[i === 0 ? 1 : 0].averageElo
+    const isFaction1 = getIsFaction1(
+      factionNicknameElement.getAttribute('ng-bind')
+    )
+    const faction = isFaction1 ? FACTION_1 : FACTION_2
+
+    const elo = match[`${faction}Elo`]
+    const eloDiff = elo - match[`${isFaction1 ? FACTION_2 : FACTION_1}Elo`]
+    const { winPoints, lossPoints } = calculateRatingChange(
+      match[`${faction}Score`]
+    )
 
     const eloElement = (
-      <div className="text-muted" style={{ 'margin-top': 6, 'font-size': 14 }}>
-        Avg. Elo: {faction.averageElo}
-        <br />
-        Diff: {eloDiff > 0 && '+'}
+      <div className="text-muted text-md" style={{ 'margin-top': 6 }}>
+        Avg. Elo: {elo} / Diff: {eloDiff > 0 && '+'}
         {eloDiff}
+        <br />
+        <span>Win: +{winPoints}</span> / <span>Loss: {lossPoints}</span>
       </div>
     )
 
-    const factionNicknameElement = select(
-      `h2[ng-bind="${
-        isTeamV1Element
-          ? `match.${faction.name}_nickname`
-          : `vm.currentMatch.match.teams.${faction.name}.name`
-      }"]`,
-      parent
-    )
     factionNicknameElement.append(eloElement)
   })
+
+  if (match.state === 'finished') {
+    const scoreElements = select.all(
+      'section.match__info-box span[ng-bind^="match.score"]'
+    )
+
+    scoreElements.forEach(async scoreElement => {
+      if (hasFeatureAttribute(scoreElement, FEATURE_ATTRIBUTE)) {
+        return
+      }
+      setFeatureAttribute(scoreElement, FEATURE_ATTRIBUTE)
+
+      const isFaction1 = scoreElement.getAttribute('ng-bind').includes('score1')
+      const faction = isFaction1 ? FACTION_1 : FACTION_2
+      const { winPoints, lossPoints } = calculateRatingChange(
+        match[`${faction}Score`]
+      )
+
+      let points
+
+      if (isFaction1) {
+        points = match.winner === FACTION_1 ? winPoints : lossPoints
+      } else {
+        points = match.winner === FACTION_2 ? winPoints : lossPoints
+      }
+
+      const pointsElement = (
+        <div className="text-lg">{points > 0 ? `+${points}` : points}</div>
+      )
+
+      setStyle(scoreElement, 'margin-top: -41px')
+      scoreElement.append(pointsElement)
+    })
+  }
 }

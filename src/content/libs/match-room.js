@@ -1,6 +1,9 @@
 import select from 'select-dom'
 import { getCurrentPath } from './location'
 
+export const FACTION_1 = 'faction1'
+export const FACTION_2 = 'faction2'
+
 export const getRoomId = path => {
   const match = /room\/(.+-.+-.+-.+)/.exec(path || getCurrentPath())
 
@@ -49,7 +52,7 @@ export const getFactionDetails = (element, isTeamV1Element = true) => {
   }
 }
 
-export const getIsFaction1 = factionName => factionName === 'faction1'
+export const getIsFaction1 = factionName => factionName.includes('faction1')
 
 export const getTeamMemberElements = parent =>
   select.all('.match-team-member', parent)
