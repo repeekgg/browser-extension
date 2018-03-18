@@ -6,6 +6,12 @@ import { notifyIf } from '../libs/utils'
 const store = new Map()
 
 export default async parent => {
+  const roomId = getRoomId()
+
+  if (store.has(roomId)) {
+    return
+  }
+
   const { isTeamV1Element } = getTeamElements(parent)
   let serverConnectData
 
@@ -21,12 +27,6 @@ export default async parent => {
   }
 
   if (!serverConnectData) {
-    return
-  }
-
-  const roomId = getRoomId()
-
-  if (store.has(roomId)) {
     return
   }
 
