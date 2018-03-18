@@ -1,6 +1,7 @@
 {
   "private": true,
   "scripts": {
+    "prepush": "run-s test",
     "precommit": "lint-staged",
     "dev": "webpack --mode=development --watch",
     "build": "webpack --mode=production",
