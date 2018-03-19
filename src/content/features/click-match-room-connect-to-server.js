@@ -4,6 +4,8 @@ import { notifyIf } from '../libs/utils'
 
 const store = new Map()
 
+const DELAY = 10000
+
 export default async parent => {
   const roomId = getRoomId()
 
@@ -21,10 +23,11 @@ export default async parent => {
 
   setTimeout(() => {
     goToServerElement.click()
-  }, 10000)
+  }, DELAY)
 
   notifyIf('notifyMatchRoomAutoConnectToServer', {
     title: 'Connecting to Server',
-    message: 'Launching the game and connecting to the server in 5 seconds.'
+    message: `Launching the game and connecting to the server in ${DELAY /
+      1000} seconds.`
   })
 }
