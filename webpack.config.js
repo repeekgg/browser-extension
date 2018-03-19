@@ -1,4 +1,5 @@
 const path = require('path')
+const webpack = require('webpack')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
@@ -57,7 +58,10 @@ module.exports = {
     new CopyWebpackPlugin([
       { from: 'content/index.css', to: 'content.css' },
       '*'
-    ])
+    ]),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+    })
   ],
   optimization: {
     concatenateModules: true,

@@ -4,7 +4,7 @@
     "prepush": "run-s test",
     "precommit": "lint-staged",
     "dev": "webpack --mode=development --watch",
-    "build": "webpack --mode=production",
+    "build": "NODE_ENV=production webpack --mode=production",
     "test": "BABEL_ENV=testing ava",
     "lint": "xo",
     "prettier": "prettier --write \"**/*.{js,json,css}\"",
