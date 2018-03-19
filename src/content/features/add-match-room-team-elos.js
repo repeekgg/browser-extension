@@ -14,7 +14,7 @@ import {
   setFeatureAttribute,
   setStyle
 } from '../libs/dom-element'
-import { calculateRatingChange } from '../libs/elo'
+import { calculateRatingChangeMemoized } from '../libs/elo'
 
 const FEATURE_ATTRIBUTE = 'team-elo'
 
@@ -82,7 +82,7 @@ export default async parent => {
     const { factionName, averageElo } = faction
 
     const opponentAverageElo = factions[1 - i].averageElo
-    const { winPoints, lossPoints } = calculateRatingChange(
+    const { winPoints, lossPoints } = calculateRatingChangeMemoized(
       averageElo,
       opponentAverageElo
     )

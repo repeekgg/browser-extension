@@ -1,9 +1,8 @@
+import mem from 'mem'
 import camelcaseKeys from 'camelcase-keys'
-import { mapTotalStats, mapAverageStats } from './stats'
+import { mapTotalStatsMemoized, mapAverageStatsMemoized } from './stats'
 
 const BASE_URL = 'https://api.faceit.com'
-
-const cache = new Map()
 
 async function fetchApi(path) {
   if (typeof path !== 'string') {
@@ -18,18 +17,9 @@ async function fetchApi(path) {
       options.headers.Authorization = `Bearer ${token}`
     }
 
-    let response
+    const response = await fetch(`${BASE_URL}${path}`, options)
 
-    if (cache.has(path)) {
-      response = cache.get(path)
-    } else {
-      response = fetch(`${BASE_URL}${path}`, options)
-      cache.set(path, response)
-    }
-
-    response = await response
-
-    const json = await response.clone().json()
+    const json = await response.json()
     const {
       result, // Status for old API(?)
       code, // Status for new API(?)
@@ -48,14 +38,19 @@ async function fetchApi(path) {
   }
 }
 
-export const getPlayer = nickname => fetchApi(`/core/v1/nicknames/${nickname}`)
+const fetchApiMemoized = mem(fetchApi, {
+  maxAge: 600000
+})
+
+export const getPlayer = nickname =>
+  fetchApiMemoized(`/core/v1/nicknames/${nickname}`)
 
 export const getPlayerStats = async (userId, game, avgPastGames = 20) => {
   if (game !== 'csgo') {
     return null
   }
 
-  let totalStats = await fetchApi(
+  let totalStats = await fetchApiMemoized(
     `/stats/api/v1/stats/users/${userId}/games/${game}`
   )
 
@@ -63,9 +58,9 @@ export const getPlayerStats = async (userId, game, avgPastGames = 20) => {
     return null
   }
 
-  totalStats = mapTotalStats(totalStats.lifetime)
+  totalStats = mapTotalStatsMemoized(totalStats.lifetime)
 
-  let averageStats = await fetchApi(
+  let averageStats = await fetchApiMemoized(
     `/stats/api/v1/stats/time/users/${userId}/games/${game}?size=${avgPastGames}`
   )
 
@@ -77,7 +72,7 @@ export const getPlayerStats = async (userId, game, avgPastGames = 20) => {
     return null
   }
 
-  averageStats = mapAverageStats(averageStats)
+  averageStats = mapAverageStatsMemoized(averageStats)
 
   return {
     ...totalStats,
@@ -85,11 +80,8 @@ export const getPlayerStats = async (userId, game, avgPastGames = 20) => {
   }
 }
 
-export const getQuickMatch = matchId => fetchApi(`/core/v1/matches/${matchId}`)
+export const getQuickMatch = matchId =>
+  fetchApiMemoized(`/core/v1/matches/${matchId}`)
 
-export const getMatch = matchId => fetchApi(`/match/v1/match/${matchId}`)
-
-export const prefetchPlayersFromMatch = match =>
-  ['faction1', 'faction2'].forEach(key =>
-    match[key].forEach(({ nickname }) => getPlayer(nickname))
-  )
+export const getMatch = matchId =>
+  fetchApiMemoized(`/match/v1/match/${matchId}`)

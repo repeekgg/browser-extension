@@ -1,3 +1,5 @@
+import mem from 'mem'
+
 const TOTAL_STATS_MAP = {
   m1: 'matches',
   k6: 'winRate'
@@ -11,6 +13,8 @@ export const mapTotalStats = stats =>
     }),
     {}
   )
+
+export const mapTotalStatsMemoized = mem(mapTotalStats)
 
 const AVERAGE_STATS_MAP = {
   c2: 'averageKDRatio',
@@ -61,3 +65,5 @@ export const mapAverageStats = stats =>
         }, {}),
       {}
     )
+
+export const mapAverageStatsMemoized = mem(mapAverageStats)

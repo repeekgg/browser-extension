@@ -1,4 +1,5 @@
 import select from 'select-dom'
+import mem from 'mem'
 import { getCurrentPath } from './location'
 
 export const FACTION_1 = 'faction1'
@@ -109,3 +110,7 @@ export function mapPlayersToPartyColors(
       {}
     )
 }
+
+export const mapPlayersToPartyColorsMemoized = mem(mapPlayersToPartyColors, {
+  cacheKey: faction => JSON.stringify(faction)
+})

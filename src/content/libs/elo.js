@@ -1,4 +1,5 @@
 /* eslint-disable import/prefer-default-export */
+import mem from 'mem'
 
 export function calculateRatingChange(elo1, elo2, K = 50) {
   const eloDiff = elo2 - elo1
@@ -12,3 +13,5 @@ export function calculateRatingChange(elo1, elo2, K = 50) {
     lossPoints
   }
 }
+
+export const calculateRatingChangeMemoized = mem(calculateRatingChange)
