@@ -1,10 +1,11 @@
 import select from 'select-dom'
-import get from 'lodash.get'
 import copyToClipboard from 'copy-text-to-clipboard'
 import { getRoomId } from '../libs/match-room'
 import { notifyIf } from '../libs/utils'
 
 const store = new Map()
+
+const connectRegExp = /(connect \d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}:\d{1,5})/
 
 export default async parent => {
   const roomId = getRoomId()
@@ -13,14 +14,15 @@ export default async parent => {
     return
   }
 
-  const element = select('span[translate="IN-CASE-OF-FPS-DROPS"]', parent)
+  const element = select('a[translate-once="GO-TO-SERVER"]', parent)
 
   if (!element) {
     return
   }
 
-  const matchData = element.getAttribute('translate-values')
-  const serverConnectData = get(JSON.parse(matchData), 'server.clipboard.text')
+  const elementHref = element.getAttribute('href')
+  const serverConnectData =
+    elementHref && connectRegExp.exec(decodeURI(elementHref))
 
   if (!serverConnectData) {
     return
@@ -28,7 +30,7 @@ export default async parent => {
 
   store.set(roomId, true)
 
-  copyToClipboard(serverConnectData)
+  copyToClipboard(serverConnectData[1])
 
   notifyIf('notifyMatchRoomAutoConnectToServer', {
     title: 'Server Connect Data Copied',
