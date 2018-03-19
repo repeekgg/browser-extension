@@ -1,6 +1,7 @@
 import select from 'select-dom'
+import get from 'lodash.get'
 import copyToClipboard from 'copy-text-to-clipboard'
-import { getTeamElements, getRoomId } from '../libs/match-room'
+import { getRoomId } from '../libs/match-room'
 import { notifyIf } from '../libs/utils'
 
 const store = new Map()
@@ -12,19 +13,14 @@ export default async parent => {
     return
   }
 
-  const { isTeamV1Element } = getTeamElements(parent)
-  let serverConnectData
+  const element = select('span[translate="IN-CASE-OF-FPS-DROPS"]', parent)
 
-  if (isTeamV1Element) {
-    const element = select('div[ng-if="serverConnectData.active"] span', parent)
-    serverConnectData = element && element.textContent
-  } else {
-    const element = select(
-      'input[ng-model="vm.currentMatch.derived.serverConnectData.clipboard.text"]',
-      parent
-    )
-    serverConnectData = element && element.value
+  if (!element) {
+    return
   }
+
+  const matchData = element.getAttribute('translate-values')
+  const serverConnectData = get(JSON.parse(matchData), 'server.clipboard.text')
 
   if (!serverConnectData) {
     return
