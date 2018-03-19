@@ -140,6 +140,11 @@ export default class App extends React.Component {
                     secondary="Copy server data to your clipboard automatically. Experimental feature (might be unstable)."
                     {...this.getSwitchProps('matchRoomAutoCopyServerData')}
                   />
+                  <ListItemSwitch
+                    primary="Auto Connect to Server"
+                    secondary="Launching the game and connecting to the server automatically with 5 seconds delay."
+                    {...this.getSwitchProps('matchRoomAutoConnectToServer')}
+                  />
                 </List>
               )}
               {this.isActiveTab('Notifications') && (
@@ -166,6 +171,13 @@ export default class App extends React.Component {
                   <ListItemSwitch
                     primary="Auto Copy Server Data"
                     secondary="When server data has been copied to your clipboard."
+                    {...this.getSwitchProps(
+                      'notifyMatchRoomAutoCopyServerData'
+                    )}
+                  />
+                  <ListItemSwitch
+                    primary="Auto Connect To Server"
+                    secondary="When launching the game and connecting to the server."
                     {...this.getSwitchProps(
                       'notifyMatchRoomAutoConnectToServer'
                     )}

@@ -9,6 +9,7 @@ export const DEFAULTS = {
   notifyDisabled: false,
   notifyPartyAutoAcceptInvite: true,
   notifyMatchQueueAutoReady: true,
+  notifyMatchRoomAutoCopyServerData: true,
   notifyMatchRoomAutoConnectToServer: true,
   updateNotificationType: 'tab',
   updateNotifications: []

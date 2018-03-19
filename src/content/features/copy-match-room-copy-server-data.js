@@ -32,7 +32,7 @@ export default async parent => {
 
   copyToClipboard(serverConnectData[1])
 
-  notifyIf('notifyMatchRoomAutoConnectToServer', {
+  notifyIf('notifyMatchRoomAutoCopyServerData', {
     title: 'Server Connect Data Copied',
     message: 'Server connect data has been copied to your clipboard.'
   })
