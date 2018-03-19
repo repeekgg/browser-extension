@@ -137,12 +137,12 @@ export default class App extends React.Component {
                   />
                   <ListItemSwitch
                     primary="Auto Copy Server Data"
-                    secondary="Copy server data to your clipboard automatically. Experimental feature (might be unstable)."
+                    secondary="Copy server data to your clipboard automatically."
                     {...this.getSwitchProps('matchRoomAutoCopyServerData')}
                   />
                   <ListItemSwitch
                     primary="Auto Connect to Server"
-                    secondary="Launching the game and connecting to the server automatically with 5 seconds delay."
+                    secondary="Launch the game and connect to the server automatically (10 seconds delayed)."
                     {...this.getSwitchProps('matchRoomAutoConnectToServer')}
                   />
                 </List>
