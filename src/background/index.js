@@ -3,18 +3,7 @@ import OptionsSync from 'webext-options-sync'
 import semverDiff from 'semver-diff'
 import storage from '../libs/storage'
 import changelogs from '../libs/changelogs'
-
-const DEFAULTS = {
-  partyAutoAcceptInvite: false,
-  matchQueueAutoReady: false,
-  matchRoomShowPlayerStats: false,
-  matchRoomAutoCopyServerData: false,
-  matchRoomAutoConnectToServer: false,
-  notifyDisabled: false,
-  notifyPartyAutoAcceptInvite: true,
-  notifyMatchQueueAutoReady: true,
-  notifyMatchRoomAutoConnectToServer: true
-}
+import { DEFAULTS, UPDATE_NOTIFICATION_TYPES } from '../libs/settings'
 
 storage.define({
   defaults: DEFAULTS,
@@ -57,10 +46,34 @@ browser.runtime.onInstalled.addListener(async ({ reason, previousVersion }) => {
     const changelogUrl = changelogs[version]
 
     if (changelogUrl) {
-      browser.tabs.create({
-        url: changelogUrl,
-        active: false
-      })
+      const {
+        updateNotificationType,
+        updateNotifications
+      } = await storage.getAll()
+
+      switch (updateNotificationType) {
+        // Tab
+        case UPDATE_NOTIFICATION_TYPES[0]: {
+          browser.tabs.create({
+            url: changelogUrl,
+            active: false
+          })
+          break
+        }
+        // Badge
+        case UPDATE_NOTIFICATION_TYPES[1]: {
+          updateNotifications.push(version)
+          await storage.set({ updateNotifications })
+          browser.browserAction.setBadgeText({
+            text: updateNotifications.length.toString()
+          })
+          browser.browserAction.setBadgeBackgroundColor({ color: '#f50' })
+          break
+        }
+        default: {
+          break
+        }
+      }
     }
   }
 })

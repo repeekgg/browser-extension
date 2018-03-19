@@ -1,15 +1,24 @@
 import React from 'react'
 import List from 'material-ui/List'
+import browser from 'webextension-polyfill'
 import { version } from '../manifest'
 import changelogs from '../libs/changelogs'
 import storage from '../libs/storage'
+import { UPDATE_NOTIFICATION_TYPES } from '../libs/settings'
 import AppBar from './components/app-bar'
 import Tabs from './components/tabs'
 import ListItemSwitch from './components/list-item-switch'
 import ListItemLink from './components/list-item-link'
+import ListItemMenu from './components/list-item-menu'
 import ListSubheader from './components/list-subheader'
 import ListDividerSubheader from './components/list-divider-subheader'
 import Loading from './components/loading'
+
+const UPDATE_NOTIFICATION_TYPES_MAP = {
+  tab: 'Open changelog in a new unfocused tab automatically',
+  badge: 'Show a badge on the extension icon and open changelog yourself',
+  disabled: 'Disabled'
+}
 
 export default class App extends React.Component {
   state = {
@@ -38,12 +47,47 @@ export default class App extends React.Component {
     })
   }
 
+  onChangeOption = value => newValue => {
+    const option = { [value]: newValue }
+    this.setState(({ options }) => ({
+      options: {
+        ...options,
+        ...option
+      }
+    }))
+    storage.set(option)
+  }
+
   onChangeTab = (e, value) =>
     this.setState(() => ({ activeTab: this.tabs[value] }))
 
+  onClickUpdateNotification = version => {
+    this.setState(({ options }) => {
+      const updateNotifications = options.updateNotifications.filter(
+        updateVersion => updateVersion !== version
+      )
+
+      storage.set({ updateNotifications })
+
+      browser.browserAction.setBadgeText({
+        text:
+          updateNotifications.length > 0
+            ? updateNotifications.length.toString()
+            : ''
+      })
+
+      return {
+        options: {
+          ...options,
+          updateNotifications
+        }
+      }
+    })
+  }
+
   isActiveTab = index => this.state.activeTab === index
 
-  tabs = ['General', 'Notifications', 'Help', 'Donate', 'About']
+  tabs = ['General', 'Notifications', 'Misc', 'Help', 'Donate', 'About']
 
   getSwitchProps = option => ({
     onClick: this.onSwitchOption(option),
@@ -54,7 +98,13 @@ export default class App extends React.Component {
     const { activeTab, loading } = this.state
     return (
       <React.Fragment>
-        <AppBar />
+        <AppBar
+          showUpdateNotifications={
+            this.state.options.updateNotificationType === 'badge'
+          }
+          updateNotifications={this.state.options.updateNotifications}
+          onClickUpdateNotification={this.onClickUpdateNotification}
+        />
         {loading ? (
           <Loading />
         ) : (
@@ -118,6 +168,20 @@ export default class App extends React.Component {
                     secondary="When server data has been copied to your clipboard."
                     {...this.getSwitchProps(
                       'notifyMatchRoomAutoConnectToServer'
+                    )}
+                  />
+                </List>
+              )}
+              {this.isActiveTab('Misc') && (
+                <List>
+                  <ListSubheader>Updates</ListSubheader>
+                  <ListItemMenu
+                    primary="Notify about New Updates"
+                    options={UPDATE_NOTIFICATION_TYPES}
+                    mapOption={option => UPDATE_NOTIFICATION_TYPES_MAP[option]}
+                    selected={this.state.options.updateNotificationType}
+                    onChangeOption={this.onChangeOption(
+                      'updateNotificationType'
                     )}
                   />
                 </List>
