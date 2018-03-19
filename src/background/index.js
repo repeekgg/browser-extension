@@ -1,5 +1,6 @@
 import browser from 'webextension-polyfill'
 import OptionsSync from 'webext-options-sync'
+import semverDiff from 'semver-diff'
 import storage from '../libs/storage'
 import changelogs from '../libs/changelogs'
 
@@ -48,7 +49,8 @@ browser.runtime.onInstalled.addListener(async ({ reason, previousVersion }) => {
 
     const { version } = browser.runtime.getManifest()
 
-    if (previousVersion === '0.11.0' && version.includes('0.11')) {
+    const versionDiffType = semverDiff(previousVersion, version)
+    if (versionDiffType === null || versionDiffType === 'patch') {
       return
     }
 
