@@ -14,64 +14,61 @@ import addMatchRoomTeamElos from './features/add-match-room-team-elos'
 import copyMatchRoomCopyServerData from './features/copy-match-room-copy-server-data'
 import clickMatchRoomConnectToServer from './features/click-match-room-connect-to-server'
 
-function observeMainContent(mainContent) {
-  const observer = new MutationObserver(async () => {
+function observeMainContent(element) {
+  const runFeatures = () => {
     if (pages.isRoomOverview() && matchRoomIsReady()) {
-      addMatchRoomPlayerColors(mainContent)
-      addMatchRoomPlayerFlags(mainContent)
-      addMatchRoomPlayerElos(mainContent)
-      runFeatureIf(
-        'matchRoomShowPlayerStats',
-        addMatchRoomPlayerStats,
-        mainContent
-      )
-      addMatchRoomTeamElos(mainContent)
+      addMatchRoomPlayerColors(element)
+      addMatchRoomPlayerFlags(element)
+      addMatchRoomPlayerElos(element)
+      runFeatureIf('matchRoomShowPlayerStats', addMatchRoomPlayerStats, element)
+      addMatchRoomTeamElos(element)
       runFeatureIf(
         'matchRoomAutoCopyServerData',
         copyMatchRoomCopyServerData,
-        mainContent
+        element
       )
       runFeatureIf(
         'matchRoomAutoConnectToServer',
         clickMatchRoomConnectToServer,
-        mainContent
+        element
       )
     }
-  })
+  }
 
-  observer.observe(mainContent, { childList: true, subtree: true })
+  runFeatures()
+
+  const observer = new MutationObserver(runFeatures)
+  observer.observe(element, { childList: true, subtree: true })
 }
 
-function observe() {
-  const observer = new MutationObserver(() => {
-    const modal = select('.modal-dialog')
+function observeBody() {
+  let mainContentElement
 
-    if (modal) {
-      if (modals.isInviteToParty(modal)) {
+  const observer = new MutationObserver(() => {
+    const modalElement = select('.modal-dialog')
+
+    if (modalElement) {
+      if (modals.isInviteToParty(modalElement)) {
         runFeatureIf(
           'partyAutoAcceptInvite',
           clickModalPartyInviteAccept,
-          modal
+          modalElement
         )
-      } else if (modals.isMatchQueuing(modal)) {
+      } else if (modals.isMatchQueuing(modalElement)) {
         runFeatureIf(
           'matchQueueAutoReady',
           clickModalMatchQueuingContinue,
-          modal
+          modalElement
         )
-      } else if (modals.isMatchReady(modal)) {
-        runFeatureIf('matchQueueAutoReady', clickModalMatchReady, modal)
+      } else if (modals.isMatchReady(modalElement)) {
+        runFeatureIf('matchQueueAutoReady', clickModalMatchReady, modalElement)
       }
     }
 
-    let foundMainContent = false
-
-    if (!foundMainContent) {
-      const mainContent = select('#main-content')
-
-      if (mainContent) {
-        foundMainContent = true
-        observeMainContent(mainContent)
+    if (!mainContentElement) {
+      mainContentElement = select('#main-content')
+      if (mainContentElement) {
+        observeMainContent(mainContentElement)
       }
     }
   })
@@ -79,4 +76,4 @@ function observe() {
   observer.observe(document.body, { childList: true })
 }
 
-observe()
+observeBody()
