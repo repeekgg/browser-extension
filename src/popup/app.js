@@ -117,6 +117,12 @@ export default class App extends React.Component {
             <div style={{ flex: 1, overflowY: 'auto' }}>
               {this.isActiveTab('General') && (
                 <List>
+                  <ListSubheader>General</ListSubheader>
+                  <ListItemSwitch
+                    primary="Show Elo & Elo Progress in Header"
+                    secondary="Show own level, Elo and Elo progress in the header."
+                    {...this.getSwitchProps('headerShowElo')}
+                  />
                   <ListSubheader>Party</ListSubheader>
                   <ListItemSwitch
                     primary="Auto Accept Invite"
@@ -144,6 +150,13 @@ export default class App extends React.Component {
                     primary="Auto Connect to Server"
                     secondary="Launch the game and connect to the server automatically (10 seconds delayed)."
                     {...this.getSwitchProps('matchRoomAutoConnectToServer')}
+                  />
+                  <ListItemSwitch
+                    primary="Hide Player Controls"
+                    secondary={
+                      'Hide the bar that includes "Add Friend", game profile, "Twitch channel", "Recommend/Report" etc. Will be displayed when hovering over the player instead.'
+                    }
+                    {...this.getSwitchProps('matchRoomHidePlayerControls')}
                   />
                 </List>
               )}

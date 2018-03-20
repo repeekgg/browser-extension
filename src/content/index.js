@@ -13,6 +13,8 @@ import addMatchRoomPlayerStats from './features/add-match-room-player-stats'
 import addMatchRoomTeamElos from './features/add-match-room-team-elos'
 import copyMatchRoomCopyServerData from './features/copy-match-room-copy-server-data'
 import clickMatchRoomConnectToServer from './features/click-match-room-connect-to-server'
+import addHeaderOwnElo from './features/add-header-own-elo'
+import moveHeaderSearch from './features/move-header-search'
 
 function observeMainContent(element) {
   const runFeatures = () => {
@@ -41,7 +43,20 @@ function observeMainContent(element) {
   observer.observe(element, { childList: true, subtree: true })
 }
 
+function observeHeader(element) {
+  const runFeatures = () => {
+    moveHeaderSearch(element)
+    runFeatureIf('headerShowElo', addHeaderOwnElo, element)
+  }
+
+  runFeatures()
+
+  const observer = new MutationObserver(runFeatures)
+  observer.observe(element, { childList: true, subtree: true })
+}
+
 function observeBody() {
+  let headerElement
   let mainContentElement
 
   const observer = new MutationObserver(() => {
@@ -62,6 +77,13 @@ function observeBody() {
         )
       } else if (modals.isMatchReady(modalElement)) {
         runFeatureIf('matchQueueAutoReady', clickModalMatchReady, modalElement)
+      }
+    }
+
+    if (!headerElement) {
+      headerElement = select('div.main-header__content')
+      if (headerElement) {
+        observeHeader(headerElement)
       }
     }
 

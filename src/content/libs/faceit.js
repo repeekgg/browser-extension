@@ -85,3 +85,5 @@ export const getQuickMatch = matchId =>
 
 export const getMatch = matchId =>
   fetchApiMemoized(`/match/v1/match/${matchId}`)
+
+export const getSelf = () => fetchApiMemoized('/core/v1/sessions/me')
