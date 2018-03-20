@@ -1,3 +1,5 @@
+/** @jsx h */
+import { h } from 'dom-chef'
 import select from 'select-dom'
 import {
   getTeamElements,
@@ -6,7 +8,11 @@ import {
   getTeamMemberElements,
   getNicknameElement
 } from '../libs/match-room'
-import { hasFeatureAttribute, setFeatureAttribute } from '../libs/dom-element'
+import {
+  hasFeatureAttribute,
+  setFeatureAttribute,
+  setStyle
+} from '../libs/dom-element'
 import { getQuickMatch, getMatch, getPlayer } from '../libs/faceit'
 
 const FEATURE_ATTRIBUTE = 'player-elo'
@@ -41,12 +47,33 @@ export default async parent => {
       const { game } = await match
       const elo = player.games[game].faceitElo || '–'
 
+      const eloElement = (
+        <span
+          style={{
+            display: 'flex',
+            'align-items': 'center',
+            [`margin-${isFaction1 ? 'right' : 'left'}`]: 4
+          }}
+        >
+          <i
+            className="icon-ELO-icon"
+            style={{
+              [`margin-${isFaction1 ? 'left' : 'right'}`]: 4,
+              'margin-top': 2
+            }}
+          />
+        </span>
+      )
+
+      eloElement[isFaction1 ? 'prepend' : 'append'](elo)
+
       const skillElement = select(
         '.match-team-member__details__skill',
         memberElement
       )
+      setStyle(skillElement, 'display: flex')
       skillElement.classList.add('text-muted', 'text-md')
-      skillElement[isFaction1 ? 'prepend' : 'append'](elo)
+      skillElement[isFaction1 ? 'prepend' : 'append'](eloElement)
     })
   })
 }
