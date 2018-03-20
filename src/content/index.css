@@ -1,8 +1,0 @@
-/* Hide Team Member Controls (add friend, game profile, etc...) */
-.match-team-member__controls {
-  display: none !important;
-}
-
-.match-team-member:hover .match-team-member__controls {
-  display: flex !important;
-}

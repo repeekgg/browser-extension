@@ -15,6 +15,7 @@ import copyMatchRoomCopyServerData from './features/copy-match-room-copy-server-
 import clickMatchRoomConnectToServer from './features/click-match-room-connect-to-server'
 import addHeaderOwnElo from './features/add-header-own-elo'
 import moveHeaderSearch from './features/move-header-search'
+import hideMatchRoomPlayerControls from './features/hide-match-room-player-controls'
 
 function observeMainContent(element) {
   const runFeatures = () => {
@@ -99,3 +100,9 @@ function observeBody() {
 }
 
 observeBody()
+
+function runOnce() {
+  runFeatureIf('matchRoomHidePlayerControls', hideMatchRoomPlayerControls)
+}
+
+runOnce()

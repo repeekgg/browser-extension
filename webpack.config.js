@@ -55,10 +55,7 @@ module.exports = {
   },
   plugins: [
     new CleanWebpackPlugin(['dist']),
-    new CopyWebpackPlugin([
-      { from: 'content/index.css', to: 'content.css' },
-      '*'
-    ]),
+    new CopyWebpackPlugin(['*']),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
     })

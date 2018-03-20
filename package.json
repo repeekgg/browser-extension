@@ -23,6 +23,7 @@
     "react-dom": "^16.2.0",
     "select-dom": "^4.1.1",
     "semver-diff": "^2.1.0",
+    "style-inject": "^0.3.0",
     "webext-options-sync": "^0.15.0",
     "webextension-polyfill": "^0.2.1"
   },
