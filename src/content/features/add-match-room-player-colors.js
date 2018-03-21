@@ -23,9 +23,13 @@ export default async parent => {
   }
 
   const roomId = getRoomId()
-  const match = isTeamV1Element
+  const { matchType, ...match } = isTeamV1Element
     ? await getQuickMatch(roomId)
     : await getMatch(roomId)
+
+  if (matchType === '5v5PREMADE') {
+    return
+  }
 
   teamElements.forEach(async teamElement => {
     const { factionName, isFaction1 } = getFactionDetails(
