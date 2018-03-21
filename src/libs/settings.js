@@ -1,6 +1,7 @@
 export const UPDATE_NOTIFICATION_TYPES = ['tab', 'badge', 'disabled']
 
 export const DEFAULTS = {
+  extensionEnabled: true,
   headerShowElo: true,
   partyAutoAcceptInvite: false,
   matchQueueAutoReady: false,

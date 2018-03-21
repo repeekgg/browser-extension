@@ -8,7 +8,7 @@ import Switch from 'material-ui/Switch'
 
 export default ({ onClick, checked, ...props }) => (
   <ListItem onClick={onClick} button>
-    <ListItemText {...props} style={{ paddingRight: 60 }} />
+    <ListItemText {...props} />
     <ListItemSecondaryAction>
       <Switch onChange={onClick} checked={checked} />
     </ListItemSecondaryAction>

@@ -1,4 +1,5 @@
 import select from 'select-dom'
+import storage from '../libs/storage'
 import * as modals from './libs/modals'
 import * as pages from './libs/pages'
 import { runFeatureIf } from './libs/utils'
@@ -99,10 +100,14 @@ function observeBody() {
   observer.observe(document.body, { childList: true })
 }
 
-observeBody()
-
 function runOnce() {
   runFeatureIf('matchRoomHidePlayerControls', hideMatchRoomPlayerControls)
 }
 
-runOnce()
+storage.getAll().then(({ extensionEnabled }) => {
+  if (!extensionEnabled) {
+    return
+  }
+  observeBody()
+  runOnce()
+})
