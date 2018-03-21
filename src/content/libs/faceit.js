@@ -1,4 +1,5 @@
-import mem from 'mem'
+import pMemoize from 'p-memoize'
+import pRetry from 'p-retry'
 import camelcaseKeys from 'camelcase-keys'
 import { mapTotalStatsMemoized, mapAverageStatsMemoized } from './stats'
 
@@ -17,7 +18,20 @@ async function fetchApi(path) {
       options.headers.Authorization = `Bearer ${token}`
     }
 
-    const response = await fetch(`${BASE_URL}${path}`, options)
+    const response = await pRetry(
+      () =>
+        fetch(`${BASE_URL}${path}`, options).then(res => {
+          if (res.status === 404) {
+            throw new pRetry.AbortError(res.statusText)
+          } else if (!res.ok) {
+            throw new Error(res.statusText)
+          }
+          return res
+        }),
+      {
+        retries: 3
+      }
+    )
 
     const json = await response.json()
     const {
@@ -27,7 +41,7 @@ async function fetchApi(path) {
     } = json
 
     if ((result && result !== 'ok') || (code && code !== 'OPERATION-OK')) {
-      throw json
+      throw new Error(json)
     }
 
     return camelcaseKeys(payload || json, { deep: true })
@@ -38,7 +52,7 @@ async function fetchApi(path) {
   }
 }
 
-const fetchApiMemoized = mem(fetchApi, {
+const fetchApiMemoized = pMemoize(fetchApi, {
   maxAge: 600000
 })
 
