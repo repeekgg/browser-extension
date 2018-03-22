@@ -5,4 +5,4 @@ export const isRoomOverview = path =>
   /room\/.+-.+-.+-.+$/.test(path || getCurrentPath())
 
 export const isPlayerProfileStats = path =>
-  /players\/(.+)\/stats\/(.+)/.test(path || getCurrentPath())
+  /players\/.+\/stats\//.test(path || getCurrentPath())

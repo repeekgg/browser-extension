@@ -2,13 +2,14 @@
 import { h } from 'dom-chef'
 import select from 'select-dom'
 import {
-  getSelf,
+  getPlayer,
   getPlayerMatches,
   getQuickMatch,
   getMatch
 } from '../libs/faceit'
 import { mapMatchesByIdAndExtendElo } from '../libs/matches'
 import { getRoomId } from '../libs/match-room'
+import { getPlayerId } from '../libs/players'
 import { hasFeatureAttribute, setFeatureAttribute } from '../libs/dom-element'
 import { calculateRatingChange } from '../libs/elo'
 
@@ -24,9 +25,10 @@ export default async parentElement => {
     return
   }
 
-  const self = await getSelf()
-  const isFreeMembership = self.membership.type === 'free'
-  const matches = await getPlayerMatches(self.guid, self.flag, 21)
+  const playerId = await getPlayerId()
+  const player = await getPlayer(playerId)
+  const isFreeMembership = player.membership.type === 'free'
+  const matches = await getPlayerMatches(player.guid, player.flag, 21)
 
   const matchesById = mapMatchesByIdAndExtendElo(matches)
 
