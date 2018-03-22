@@ -77,7 +77,9 @@ export default async parentElement => {
         isFaction1 ? faction1Elo : faction2Elo,
         isFaction1 ? faction2Elo : faction1Elo
       )
-      const hasWon = winner === 'faction1' && isFaction1
+      const hasWon =
+        (winner === 'faction1' && isFaction1) ||
+        (winner === 'faction2' && !isFaction1)
       eloDiff = hasWon ? winPoints : lossPoints
     }
 
