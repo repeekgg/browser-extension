@@ -72,11 +72,11 @@ export default async parentElement => {
       }
 
       const { faction1Id, faction1Elo, faction2Elo, winner } = match
-      const { winPoints, lossPoints } = calculateRatingChange(
-        faction1Elo,
-        faction2Elo
-      )
       const isFaction1 = faction1Id === teamId
+      const { winPoints, lossPoints } = calculateRatingChange(
+        isFaction1 ? faction1Elo : faction2Elo,
+        isFaction1 ? faction2Elo : faction1Elo
+      )
       const hasWon = winner === 'faction1' && isFaction1
       eloDiff = hasWon ? winPoints : lossPoints
     }
