@@ -2,13 +2,14 @@
 
 export function mapMatchesByIdAndExtendElo(matches) {
   return matches.reduce((acc, { matchId, elo, ...match }, i) => {
-    if (!elo || matches.length === i + 1) {
+    if (matches.length === i + 1) {
       return acc
     }
 
-    const newElo = Number(elo) || null
-    const oldElo = Number(matches[i + 1].elo) || null
-    const eloDiff = oldElo ? newElo - oldElo : null
+    const newElo = elo ? Number(elo) : null
+    const nextMatchElo = matches[i + 1].elo
+    const oldElo = nextMatchElo ? Number(nextMatchElo) : null
+    const eloDiff = oldElo && newElo ? newElo - oldElo : null
 
     return {
       ...acc,

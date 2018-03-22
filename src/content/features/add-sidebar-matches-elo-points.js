@@ -88,7 +88,7 @@ export default async parentElement => {
     )
     opponentNameElement.append(eloDiffElement)
 
-    if (isFreeMembership) {
+    if (isFreeMembership || !newElo) {
       return
     }
 

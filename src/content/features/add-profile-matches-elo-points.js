@@ -89,7 +89,7 @@ export default async parentElement => {
       gainedElo ? '+' : ''
     }${eloDiff})`
 
-    if (isFreeMembership) {
+    if (isFreeMembership || !newElo) {
       return
     }
 
