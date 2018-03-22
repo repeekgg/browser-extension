@@ -17,6 +17,8 @@ import clickMatchRoomConnectToServer from './features/click-match-room-connect-t
 import addHeaderOwnElo from './features/add-header-own-elo'
 import moveHeaderSearch from './features/move-header-search'
 import hideMatchRoomPlayerControls from './features/hide-match-room-player-controls'
+import addSidebarMatchesEloPoints from './features/add-sidebar-matches-elo-points'
+import addProfileMatchesEloPoints from './features/add-profile-matches-elo-points'
 
 function observeMainContent(element) {
   const runFeatures = () => {
@@ -36,7 +38,20 @@ function observeMainContent(element) {
         clickMatchRoomConnectToServer,
         element
       )
+    } else if (pages.isPlayerProfileStats()) {
+      addProfileMatchesEloPoints(element)
     }
+  }
+
+  runFeatures()
+
+  const observer = new MutationObserver(runFeatures)
+  observer.observe(element, { childList: true, subtree: true })
+}
+
+function observeSidebarContent(element) {
+  const runFeatures = () => {
+    addSidebarMatchesEloPoints(element)
   }
 
   runFeatures()
@@ -59,6 +74,7 @@ function observeHeader(element) {
 
 function observeBody() {
   let headerElement
+  let sidebarContentElement
   let mainContentElement
 
   const observer = new MutationObserver(() => {
@@ -86,6 +102,13 @@ function observeBody() {
       headerElement = select('div.main-header__content')
       if (headerElement) {
         observeHeader(headerElement)
+      }
+    }
+
+    if (!sidebarContentElement) {
+      sidebarContentElement = select('.sidebar__content__view')
+      if (sidebarContentElement) {
+        observeSidebarContent(sidebarContentElement)
       }
     }
 

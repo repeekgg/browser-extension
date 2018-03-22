@@ -59,7 +59,12 @@ const fetchApiMemoized = pMemoize(fetchApi, {
 export const getPlayer = nickname =>
   fetchApiMemoized(`/core/v1/nicknames/${nickname}`)
 
-export const getPlayerStats = async (userId, game, avgPastGames = 20) => {
+export const getPlayerMatches = (userId, game, size = 20) =>
+  fetchApiMemoized(
+    `/stats/v1/stats/time/users/${userId}/games/${game}?size=${size}`
+  )
+
+export const getPlayerStats = async (userId, game, size) => {
   if (game !== 'csgo') {
     return null
   }
@@ -75,7 +80,7 @@ export const getPlayerStats = async (userId, game, avgPastGames = 20) => {
   totalStats = mapTotalStatsMemoized(totalStats.lifetime)
 
   let averageStats = await fetchApiMemoized(
-    `/stats/api/v1/stats/time/users/${userId}/games/${game}?size=${avgPastGames}`
+    `/stats/api/v1/stats/time/users/${userId}/games/${game}?size=${size}`
   )
 
   if (
