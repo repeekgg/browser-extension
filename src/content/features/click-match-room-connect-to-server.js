@@ -1,6 +1,7 @@
 import select from 'select-dom'
+import browser from 'webextension-polyfill'
 import { getRoomId } from '../libs/match-room'
-import { notifyIf } from '../libs/utils'
+import { runFeatureIf, notifyIf } from '../libs/utils'
 
 const store = new Map()
 
@@ -23,6 +24,9 @@ export default async parent => {
 
   setTimeout(() => {
     goToServerElement.click()
+    runFeatureIf('matchRoomAutoCloseBrowserOnConnectToServer', () => {
+      browser.windows.remove(browser.windows.WINDOW_ID_CURRENT)
+    })
   }, DELAY)
 
   notifyIf('notifyMatchRoomAutoConnectToServer', {

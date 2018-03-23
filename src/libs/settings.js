@@ -8,6 +8,7 @@ export const DEFAULTS = {
   matchRoomShowPlayerStats: false,
   matchRoomAutoCopyServerData: false,
   matchRoomAutoConnectToServer: false,
+  matchRoomAutoCloseBrowserOnConnectToServer: false,
   matchRoomHidePlayerControls: true,
   notifyDisabled: false,
   notifyPartyAutoAcceptInvite: true,

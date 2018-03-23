@@ -18,6 +18,7 @@
     "https://api.faceit.com/",
     "https://cdn.faceit.com/"
   ],
+  "optional_permissions": ["tabs"],
   "icons": {
     "128": "icon.png"
   },

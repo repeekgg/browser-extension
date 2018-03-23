@@ -84,8 +84,10 @@ export default class App extends React.Component {
     })
   }
 
-  getSwitchProps = option => ({
-    onClick: this.onSwitchOption(option),
+  getSwitchProps = (option, onClick) => ({
+    onClick: onClick
+      ? () => onClick(this.onSwitchOption(option))
+      : this.onSwitchOption(option),
     checked: this.state.options[option],
     key: option
   })
@@ -146,6 +148,25 @@ export default class App extends React.Component {
               primary="Connect to Server"
               secondary="Connect to the server automatically. NOTE: It's recommended to have the game started manually beforehand to avoid lags/FPS issues."
               {...this.getSwitchProps('matchRoomAutoConnectToServer')}
+            />
+            <ListItemSwitch
+              primary="Close Browser"
+              secondary={
+                'EXPERIMENTAL: Close the browser automatically when "Connect to Server" will be executed. NOTE: This feature requires the permission "Read your browsing history" to close the browser, but actually none of your browser history will be read, it\'s just a bit misleading.'
+              }
+              {...this.getSwitchProps(
+                'matchRoomAutoCloseBrowserOnConnectToServer',
+                switchOption => {
+                  browser.permissions.request(
+                    { permissions: ['tabs'] },
+                    granted => {
+                      if (granted) {
+                        switchOption()
+                      }
+                    }
+                  )
+                }
+              )}
             />
           </React.Fragment>
         )
