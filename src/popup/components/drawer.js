@@ -49,7 +49,7 @@ class Drawer extends React.Component {
 const styles = () => ({
   drawerPaper: {
     position: 'relative',
-    width: 160,
+    width: 190,
     background: '#1A1A1D',
     border: 'none'
   }

@@ -19,6 +19,7 @@ import moveHeaderSearch from './features/move-header-search'
 import hideMatchRoomPlayerControls from './features/hide-match-room-player-controls'
 import addSidebarMatchesEloPoints from './features/add-sidebar-matches-elo-points'
 import addProfileMatchesEloPoints from './features/add-profile-matches-elo-points'
+import clickMatchRoomVeto from './features/click-match-room-veto'
 
 function observeMainContent(element) {
   const runFeatures = () => {
@@ -38,6 +39,7 @@ function observeMainContent(element) {
         clickMatchRoomConnectToServer,
         element
       )
+      runFeatureIf('matchRoomAutoVetoMaps', clickMatchRoomVeto, element)
     } else if (pages.isPlayerProfileStats()) {
       addProfileMatchesEloPoints(element)
     }

@@ -13,6 +13,7 @@ import ListItemLink from './components/list-item-link'
 import ListItemMenu from './components/list-item-menu'
 import ListSubheader from './components/list-subheader'
 import ListDividerSubheader from './components/list-divider-subheader'
+import ListSortableItems from './components/list-sortable'
 import Drawer from './components/drawer'
 
 const userBrowser = detect()
@@ -96,6 +97,7 @@ export default class App extends React.Component {
     'General',
     'Automation',
     'Appearance',
+    'Veto Preferences',
     'Notifications',
     'Help',
     'Donate',
@@ -168,6 +170,11 @@ export default class App extends React.Component {
                 }
               )}
             />
+            <ListItemSwitch
+              primary="Veto Maps"
+              secondary="EXPERIMENTAL: Veto maps automatically based on your map preferences with a delay of 2 seconds, so you can still veto manually and influence the outcome."
+              {...this.getSwitchProps('matchRoomAutoVetoMaps')}
+            />
           </React.Fragment>
         )
       }
@@ -192,6 +199,29 @@ export default class App extends React.Component {
                 'Hide the bar that includes "Add Friend", game profile, "Twitch channel", "Recommend/Report" etc. Will be displayed when hovering over the player instead.'
               }
               {...this.getSwitchProps('matchRoomHidePlayerControls')}
+            />
+          </React.Fragment>
+        )
+      }
+      case 'Veto Preferences': {
+        return (
+          <React.Fragment>
+            <ListSubheader>Map Preferences</ListSubheader>
+            <ListItemText secondary="Sorted by favourite to least favourite. Least favourite will be vetoed first." />
+            <ListSortableItems
+              items={this.state.options.matchRoomAutoVetoMapItems}
+              onSorted={newItems => {
+                const matchRoomAutoVetoMapItems = newItems
+
+                storage.set({ matchRoomAutoVetoMapItems })
+
+                this.setState(options => ({
+                  options: {
+                    ...options,
+                    matchRoomAutoVetoMapItems
+                  }
+                }))
+              }}
             />
           </React.Fragment>
         )
@@ -223,6 +253,10 @@ export default class App extends React.Component {
             <ListItemSwitch
               primary="Server Connect"
               {...this.getSwitchProps('notifyMatchRoomAutoConnectToServer')}
+            />
+            <ListItemSwitch
+              primary="Map Veto"
+              {...this.getSwitchProps('notifyMatchRoomAutoVetoMaps')}
             />
           </React.Fragment>
         )
