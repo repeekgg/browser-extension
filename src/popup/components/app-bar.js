@@ -3,9 +3,7 @@ import AppBar from 'material-ui/AppBar'
 import Toolbar from 'material-ui/Toolbar'
 import Typography from 'material-ui/Typography'
 import Button from 'material-ui/Button'
-import browser from 'webextension-polyfill'
 import Menu, { MenuItem } from 'material-ui/Menu'
-import changelogs from '../../libs/changelogs'
 
 export default class extends React.Component {
   state = {
@@ -17,16 +15,12 @@ export default class extends React.Component {
   onClickNotificationUpdates = event =>
     this.setState({ anchorEl: event.currentTarget })
 
-  onClickMenuItem = version => {
-    browser.tabs.create({
-      url: changelogs[version]
-    })
-
-    this.props.onClickUpdateNotification(version)
-  }
-
   render() {
-    const { updateNotifications = [], showUpdateNotifications } = this.props
+    const {
+      updateNotifications = [],
+      showUpdateNotifications,
+      onClickUpdateNotification
+    } = this.props
     const { anchorEl } = this.state
 
     return (
@@ -53,7 +47,7 @@ export default class extends React.Component {
                 {updateNotifications.map(version => (
                   <MenuItem
                     key={version}
-                    onClick={() => this.onClickMenuItem(version)}
+                    onClick={() => onClickUpdateNotification(version)}
                   >
                     v{version}
                   </MenuItem>

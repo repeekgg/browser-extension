@@ -61,27 +61,22 @@ export default class App extends React.Component {
     storage.set(option)
   }
 
-  onClickUpdateNotification = version => {
-    this.setState(({ options }) => {
-      const updateNotifications = options.updateNotifications.filter(
-        updateVersion => updateVersion !== version
-      )
+  onClickUpdateNotification = async version => {
+    const updateNotifications = this.state.options.updateNotifications.filter(
+      updateVersion => updateVersion !== version
+    )
 
-      storage.set({ updateNotifications })
+    await storage.set({ updateNotifications })
 
-      browser.browserAction.setBadgeText({
-        text:
-          updateNotifications.length > 0
-            ? updateNotifications.length.toString()
-            : ''
-      })
+    browser.browserAction.setBadgeText({
+      text:
+        updateNotifications.length > 0
+          ? updateNotifications.length.toString()
+          : ''
+    })
 
-      return {
-        options: {
-          ...options,
-          updateNotifications
-        }
-      }
+    browser.tabs.create({
+      url: changelogs[version]
     })
   }
 
