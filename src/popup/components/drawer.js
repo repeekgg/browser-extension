@@ -11,7 +11,7 @@ class Drawer extends React.Component {
   }
 
   render() {
-    const { classes, onChange, loading, renderContent, items } = this.props
+    const { classes, loading, renderContent, items } = this.props
 
     return (
       <div style={{ display: 'flex', overflow: 'hidden' }}>
@@ -23,7 +23,6 @@ class Drawer extends React.Component {
                 primary={item}
                 onClick={() => {
                   this.setState({ activeItem: item })
-                  onChange(item)
                 }}
                 style={
                   this.state.activeItem === item
