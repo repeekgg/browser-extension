@@ -64,7 +64,7 @@ export const getPlayerMatches = (userId, game, size = 20) =>
     `/stats/v1/stats/time/users/${userId}/games/${game}?size=${size}`
   )
 
-export const getPlayerStats = async (userId, game, size) => {
+export const getPlayerStats = async (userId, game, size = 20) => {
   if (game !== 'csgo') {
     return null
   }
