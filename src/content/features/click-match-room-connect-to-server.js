@@ -25,7 +25,9 @@ export default async parent => {
   setTimeout(() => {
     goToServerElement.click()
     runFeatureIf('matchRoomAutoCloseBrowserOnConnectToServer', () => {
-      browser.windows.remove(browser.windows.WINDOW_ID_CURRENT)
+      browser.runtime.sendMessage({
+        action: 'closeWindow'
+      })
     })
   }, DELAY)
 

@@ -15,16 +15,26 @@ browser.runtime.onMessage.addListener(message => {
     return
   }
 
-  if (message.action === 'notification') {
-    const { name } = browser.runtime.getManifest()
-    delete message.action
+  switch (message.action) {
+    case 'notification': {
+      const { name } = browser.runtime.getManifest()
+      delete message.action
 
-    browser.notifications.create('', {
-      type: 'basic',
-      ...message,
-      contextMessage: name,
-      iconUrl: 'icon.png'
-    })
+      browser.notifications.create('', {
+        type: 'basic',
+        ...message,
+        contextMessage: name,
+        iconUrl: 'icon.png'
+      })
+      break
+    }
+    case 'closeWindow': {
+      browser.windows.remove(browser.windows.WINDOW_ID_CURRENT)
+      break
+    }
+    default: {
+      break
+    }
   }
 })
 
