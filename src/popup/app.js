@@ -307,19 +307,24 @@ export default class App extends React.Component {
               Thanks for Your Donations!
             </ListDividerSubheader>
             <ListItemLink
-              primary="Bymas"
-              secondary="PUBG Skins"
-              href="http://steamcommunity.com/profiles/76561198175953790/"
-            />
-            <ListItemLink
-              primary="kidi"
-              secondary="CS:GO Skins"
-              href="http://steamcommunity.com/profiles/76561198056684789/"
+              primary="zwck"
+              secondary="€5"
+              href="https://www.faceit.com/en/players/zwacki"
             />
             <ListItemLink
               primary="shiroatata"
               secondary="CS:GO Skins"
-              href="http://steamcommunity.com/profiles/76561198088934322"
+              href="https://www.faceit.com/en/players/hentaidemon"
+            />
+            <ListItemLink
+              primary="kidi"
+              secondary="CS:GO Skins"
+              href="https://www.faceit.com/en/players/bykidi"
+            />
+            <ListItemLink
+              primary="Bymas"
+              secondary="PUBG Skins"
+              href="https://www.faceit.com/en/players/Bymas"
             />
           </React.Fragment>
         )
@@ -352,7 +357,7 @@ export default class App extends React.Component {
             <ListItemLink
               primary="DyyLN"
               secondary="Helped building the potentially gaining and losing Elo points in a match."
-              href="http://steamcommunity.com/profiles/76561198164180254/"
+              href="https://www.faceit.com/en/players/DyyLN"
             />
           </React.Fragment>
         )
