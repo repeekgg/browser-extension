@@ -286,7 +286,7 @@ export default class App extends React.Component {
           <React.Fragment>
             <ListSubheader>Support {name}</ListSubheader>
             <ListItemText
-              secondary={`If you like ${name} and want to support the extension and the development, donations are appreciated, but never asked.`}
+              secondary={`If you are satisfied with ${name} and want to support the extension and further development, donations are appreciated, but never asked.`}
             />
             <ListItemLink
               primary="PayPal"
@@ -294,13 +294,13 @@ export default class App extends React.Component {
               href="https://paypal.me/timcheung"
             />
             <ListItemLink
-              primary="paysafecard, MasterCard/VISA, Sofortüberweisung, giropay"
+              primary="paysafecard, MasterCard/VISA, Sofortueberweisung, giropay"
               secondary="Buy me a snack to stay saturated during developing :)"
               href="https://www.tipeeestream.com/azn-1/donation"
             />
             <ListItemLink
               primary="Steam Trade Offer"
-              secondary="Gift me CS:GO/PUBG skins, games or whatever to have some fun beside develping :)"
+              secondary="Gift me CS:GO/PUBG skins, games or whatever to have some fun beside developing :)"
               href="https://steamcommunity.com/tradeoffer/new/?partner=238736&token=IGhRvdeN"
             />
             <ListDividerSubheader>
