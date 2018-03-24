@@ -6,7 +6,8 @@ export default () => {
       display: none;
     }
 
-    .match-team-member:hover .match-team-member__controls {
+    .match-team-member:hover .match-team-member__controls,
+    .match-team-member__controls:focus-within {
       display: flex;
     }
   `)
