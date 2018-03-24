@@ -215,7 +215,7 @@ export default class App extends React.Component {
 
                 storage.set({ matchRoomAutoVetoMapItems })
 
-                this.setState(options => ({
+                this.setState(({ options }) => ({
                   options: {
                     ...options,
                     matchRoomAutoVetoMapItems
