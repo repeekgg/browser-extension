@@ -1,4 +1,5 @@
 export default {
+  '0.16.0': 'https://redd.it/871ffx',
   '0.15.5': 'https://redd.it/86mi95',
   '0.15.4': 'https://redd.it/86mi95',
   '0.15.3': 'https://redd.it/86mi95',
