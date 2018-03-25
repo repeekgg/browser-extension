@@ -39,6 +39,7 @@ export const DEFAULTS = {
   notifyMatchQueueAutoReady: true,
   notifyMatchRoomAutoCopyServerData: true,
   notifyMatchRoomAutoConnectToServer: true,
+  notifyMatchRoomAutoVetoLocations: true,
   notifyMatchRoomAutoVetoMaps: true,
   updateNotificationType: 'tab',
   updateNotifications: []

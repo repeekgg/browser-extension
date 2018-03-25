@@ -276,7 +276,11 @@ export default class App extends React.Component {
               {...this.getSwitchProps('notifyMatchRoomAutoConnectToServer')}
             />
             <ListItemSwitch
-              primary="Map Veto"
+              primary="Server Locations Veto"
+              {...this.getSwitchProps('notifyMatchRoomAutoVetoLocations')}
+            />
+            <ListItemSwitch
+              primary="Maps Veto"
               {...this.getSwitchProps('notifyMatchRoomAutoVetoMaps')}
             />
           </React.Fragment>
