@@ -155,25 +155,6 @@ export default class App extends React.Component {
               {...this.getSwitchProps('matchRoomAutoConnectToServer')}
             />
             <ListItemSwitch
-              primary="Close Browser"
-              secondary={
-                'EXPERIMENTAL: Close the browser automatically when "Connect to Server" will be executed. NOTE: This feature requires the permission "Read your browsing history" to close the browser, but actually none of your browser history will be read, it\'s just a bit misleading.'
-              }
-              {...this.getSwitchProps(
-                'matchRoomAutoCloseBrowserOnConnectToServer',
-                switchOption => {
-                  browser.permissions.request(
-                    { permissions: ['tabs'] },
-                    granted => {
-                      if (granted) {
-                        switchOption()
-                      }
-                    }
-                  )
-                }
-              )}
-            />
-            <ListItemSwitch
               primary="Veto Server Locations"
               secondary="EXPERIMENTAL: Veto server locations automatically based on your location preferences with a delay of 2 seconds, so you can still veto manually and influence the outcome."
               {...this.getSwitchProps('matchRoomAutoVetoLocations')}

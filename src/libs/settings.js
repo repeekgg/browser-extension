@@ -29,7 +29,6 @@ export const DEFAULTS = {
   matchRoomShowPlayerStats: false,
   matchRoomAutoCopyServerData: false,
   matchRoomAutoConnectToServer: false,
-  matchRoomAutoCloseBrowserOnConnectToServer: false,
   matchRoomHidePlayerControls: true,
   matchRoomAutoVetoLocations: false,
   matchRoomAutoVetoLocationItems: MATCH_ROOM_VETO_LOCATION_ITEMS,
