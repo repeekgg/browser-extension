@@ -4,7 +4,10 @@ import storage from '../../libs/storage'
 
 export const runFeatureIf = async (option, feature, parent) => {
   const options = await storage.getAll()
-  if (options[option]) {
+  const featureEnabled = Array.isArray(option)
+    ? option.some(opt => options[opt])
+    : options[option]
+  if (featureEnabled) {
     feature(parent)
   }
 }

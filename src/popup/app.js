@@ -5,7 +5,10 @@ import capitalize from 'lodash.capitalize'
 import { name, version } from '../manifest'
 import changelogs from '../libs/changelogs'
 import storage from '../libs/storage'
-import { UPDATE_NOTIFICATION_TYPES } from '../libs/settings'
+import {
+  UPDATE_NOTIFICATION_TYPES,
+  MATCH_ROOM_VETO_LOCATION_REGIONS
+} from '../libs/settings'
 import AppBar from './components/app-bar'
 import ListItemText from './components/list-item-text'
 import ListItemSwitch from './components/list-item-switch'
@@ -26,13 +29,18 @@ const UPDATE_NOTIFICATION_TYPES_MAP = {
 
 export default class App extends React.Component {
   state = {
-    options: {},
+    options: {
+      matchRoomVetoLocationRegion: MATCH_ROOM_VETO_LOCATION_REGIONS[0]
+    },
     loading: true
   }
 
   async componentDidMount() {
-    const options = await storage.getAll()
-    this.setState({ options, loading: false })
+    const storageOptions = await storage.getAll()
+    this.setState(({ options }) => ({
+      options: { ...options, ...storageOptions },
+      loading: false
+    }))
   }
 
   onSwitchOption = value => () => {
@@ -166,6 +174,11 @@ export default class App extends React.Component {
               )}
             />
             <ListItemSwitch
+              primary="Veto Server Locations"
+              secondary="EXPERIMENTAL: Veto server locations automatically based on your location preferences with a delay of 2 seconds, so you can still veto manually and influence the outcome."
+              {...this.getSwitchProps('matchRoomAutoVetoLocations')}
+            />
+            <ListItemSwitch
               primary="Veto Maps"
               secondary="EXPERIMENTAL: Veto maps automatically based on your map preferences with a delay of 2 seconds, so you can still veto manually and influence the outcome."
               {...this.getSwitchProps('matchRoomAutoVetoMaps')}
@@ -201,6 +214,38 @@ export default class App extends React.Component {
       case 'Veto Preferences': {
         return (
           <React.Fragment>
+            <ListSubheader>Server Location Preferences</ListSubheader>
+            <ListItemMenu
+              primary="Region"
+              options={MATCH_ROOM_VETO_LOCATION_REGIONS}
+              selected={this.state.options.matchRoomVetoLocationRegion}
+              onChangeOption={this.onChangeOption(
+                'matchRoomVetoLocationRegion'
+              )}
+            />
+            <ListItemText secondary="Sorted by favourite to least favourite. Least favourite will be vetoed first." />
+            <ListSortableItems
+              items={
+                this.state.options.matchRoomAutoVetoLocationItems[
+                  this.state.options.matchRoomVetoLocationRegion
+                ]
+              }
+              onSorted={newItems => {
+                this.setState(({ options }) => {
+                  const matchRoomAutoVetoLocationItems = {
+                    ...options.matchRoomAutoVetoLocationItems,
+                    [options.matchRoomVetoLocationRegion]: newItems
+                  }
+                  storage.set({ matchRoomAutoVetoLocationItems })
+                  return {
+                    options: {
+                      ...options,
+                      matchRoomAutoVetoLocationItems
+                    }
+                  }
+                })
+              }}
+            />
             <ListSubheader>Map Preferences</ListSubheader>
             <ListItemText secondary="Sorted by favourite to least favourite. Least favourite will be vetoed first." />
             <ListSortableItems

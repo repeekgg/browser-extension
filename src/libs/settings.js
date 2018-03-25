@@ -1,5 +1,15 @@
 export const UPDATE_NOTIFICATION_TYPES = ['tab', 'badge', 'disabled']
 
+export const MATCH_ROOM_VETO_LOCATION_ITEMS = {
+  EU: ['UK', 'Sweden', 'France', 'Germany', 'Netherlands'],
+  US: ['Chicago', 'Dallas', 'Denver'],
+  Oceania: ['Sydney', 'Melbourne']
+}
+
+export const MATCH_ROOM_VETO_LOCATION_REGIONS = Object.keys(
+  MATCH_ROOM_VETO_LOCATION_ITEMS
+)
+
 export const MATCH_ROOM_VETO_MAP_ITEMS = [
   'de_dust2',
   'de_mirage',
@@ -21,6 +31,8 @@ export const DEFAULTS = {
   matchRoomAutoConnectToServer: false,
   matchRoomAutoCloseBrowserOnConnectToServer: false,
   matchRoomHidePlayerControls: true,
+  matchRoomAutoVetoLocations: false,
+  matchRoomAutoVetoLocationItems: MATCH_ROOM_VETO_LOCATION_ITEMS,
   matchRoomAutoVetoMaps: false,
   matchRoomAutoVetoMapItems: MATCH_ROOM_VETO_MAP_ITEMS,
   notifyDisabled: false,

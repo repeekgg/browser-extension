@@ -1,4 +1,5 @@
 import select from 'select-dom'
+import * as pages from './pages'
 
 export const isInviteToParty = parent =>
   select.exists('h3[translate-once="INVITE-TO-PARTY"]', parent)
@@ -8,3 +9,10 @@ export const isMatchQueuing = parent =>
 
 export const isMatchReady = parent =>
   select.exists('h3[translate-once="MATCH-READY"]', parent)
+
+export const isMatchRoomCaptain = parent =>
+  pages.isRoomOverview() &&
+  select.exists(
+    `h3[translate="<span class='text-primary'>Action</span> required"]`,
+    parent
+  )

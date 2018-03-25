@@ -19,7 +19,9 @@ import moveHeaderSearch from './features/move-header-search'
 import hideMatchRoomPlayerControls from './features/hide-match-room-player-controls'
 import addSidebarMatchesEloPoints from './features/add-sidebar-matches-elo-points'
 import addProfileMatchesEloPoints from './features/add-profile-matches-elo-points'
-import clickMatchRoomVeto from './features/click-match-room-veto'
+import clickMatchRoomVetoLocations from './features/click-match-room-veto-locations'
+import clickMatchRoomVetoMaps from './features/click-match-room-veto-maps'
+import clickModalMatchRoomCaptainOk from './features/click-modal-match-room-captain-ok'
 
 function observeMainContent(element) {
   const runFeatures = () => {
@@ -39,7 +41,12 @@ function observeMainContent(element) {
         clickMatchRoomConnectToServer,
         element
       )
-      runFeatureIf('matchRoomAutoVetoMaps', clickMatchRoomVeto, element)
+      runFeatureIf(
+        'matchRoomAutoVetoLocations',
+        clickMatchRoomVetoLocations,
+        element
+      )
+      runFeatureIf('matchRoomAutoVetoMaps', clickMatchRoomVetoMaps, element)
     } else if (pages.isPlayerProfileStats()) {
       addProfileMatchesEloPoints(element)
     }
@@ -97,6 +104,12 @@ function observeBody() {
         )
       } else if (modals.isMatchReady(modalElement)) {
         runFeatureIf('matchQueueAutoReady', clickModalMatchReady, modalElement)
+      } else if (modals.isMatchRoomCaptain(modalElement)) {
+        runFeatureIf(
+          ['matchRoomAutoVetoLocations', 'matchRoomAutoVetoMaps'],
+          clickModalMatchRoomCaptainOk,
+          modalElement
+        )
       }
     }
 
