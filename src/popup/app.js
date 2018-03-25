@@ -348,7 +348,7 @@ export default class App extends React.Component {
             </ListDividerSubheader>
             <ListItemLink
               primary="zwck"
-              secondary="€5"
+              secondary="5 EUR"
               href="https://www.faceit.com/en/players/zwacki"
             />
             <ListItemLink
