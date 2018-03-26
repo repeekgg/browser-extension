@@ -1,27 +1,24 @@
 /** @jsx h */
 import { h } from 'dom-chef'
 import select from 'select-dom'
-import { getRoomId } from '../libs/match-room'
+import { hasFeatureAttribute, setFeatureAttribute } from '../libs/dom-element'
 
-const store = new Map()
+const FEATURE_ATTRIBUTE = 'connect-to-server-delayed'
 
 export default async parentElement => {
-  const roomId = getRoomId()
-
-  if (store.has(roomId)) {
-    return
-  }
-
   const goToServerElement = select(
     'a[translate-once="GO-TO-SERVER"]',
     parentElement
   )
 
-  if (!goToServerElement) {
+  if (
+    !goToServerElement ||
+    hasFeatureAttribute(goToServerElement, FEATURE_ATTRIBUTE)
+  ) {
     return
   }
 
-  store.set(roomId, true)
+  setFeatureAttribute(goToServerElement, FEATURE_ATTRIBUTE)
 
   let goToServerTimer
 
