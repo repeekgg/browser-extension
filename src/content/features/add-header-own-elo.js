@@ -3,19 +3,7 @@ import select from 'select-dom'
 import { h } from 'dom-chef'
 import { getSelf } from '../libs/faceit'
 import { hasFeatureAttribute, setFeatureAttribute } from '../libs/dom-element'
-
-const LEVELS = {
-  1: [1, 800],
-  2: [801, 950],
-  3: [951, 1100],
-  4: [1101, 1250],
-  5: [1251, 1400],
-  6: [1401, 1550],
-  7: [1551, 1700],
-  8: [1701, 1850],
-  9: [1851, 2000],
-  10: [2001, null]
-}
+import { LEVELS } from '../libs/elo'
 
 const FEATURE_ATTRIBUTE = 'own-elo'
 
