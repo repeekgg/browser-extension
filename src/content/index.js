@@ -22,6 +22,7 @@ import addProfileMatchesEloPoints from './features/add-profile-matches-elo-point
 import clickMatchRoomVetoLocations from './features/click-match-room-veto-locations'
 import clickMatchRoomVetoMaps from './features/click-match-room-veto-maps'
 import clickModalMatchRoomCaptainOk from './features/click-modal-match-room-captain-ok'
+import addMatchRoomConnectToServerDelayed from './features/add-match-room-connect-to-server-delayed'
 
 function observeMainContent(element) {
   const runFeatures = () => {
@@ -47,6 +48,7 @@ function observeMainContent(element) {
         element
       )
       runFeatureIf('matchRoomAutoVetoMaps', clickMatchRoomVetoMaps, element)
+      addMatchRoomConnectToServerDelayed(element)
     } else if (pages.isPlayerProfileStats()) {
       addProfileMatchesEloPoints(element)
     }
