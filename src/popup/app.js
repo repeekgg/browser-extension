@@ -366,7 +366,7 @@ export default class App extends React.Component {
             <ListItemLink
               primary="Author"
               secondary="azn"
-              href="http://steamcommunity.com/id/azn_/"
+              href="https://www.faceit.com/en/players/azn__"
             />
             <ListDividerSubheader>Community</ListDividerSubheader>
             <ListItemLink
