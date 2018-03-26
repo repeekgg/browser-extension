@@ -14,6 +14,6 @@ test('calculateRatingChange', t => {
 
   t.deepEqual(calculateRatingChange(1000, 5000), {
     winPoints: 50,
-    lossPoints: -10
+    lossPoints: -0
   })
 })

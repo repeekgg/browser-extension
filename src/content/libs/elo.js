@@ -9,8 +9,8 @@ export function calculateRatingChange(elo1, elo2, K = 50) {
   const lossPoints = Math.round(K * (0 - percentage))
 
   return {
-    winPoints: winPoints === 0 ? 10 : winPoints,
-    lossPoints: lossPoints === 0 ? -10 : lossPoints
+    winPoints: winPoints < 10 ? 10 : winPoints,
+    lossPoints
   }
 }
 
