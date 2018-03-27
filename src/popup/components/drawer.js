@@ -7,38 +7,31 @@ import Loading from './loading'
 
 class Drawer extends React.Component {
   state = {
-    activeItem: this.props.items[0]
+    activeItem: Object.keys(this.props.items)[0]
   }
 
   render() {
-    const { classes, loading, renderContent, items } = this.props
+    const { classes, loading, items, itemProps } = this.props
+    const { activeItem } = this.state
 
     return (
       <div style={{ display: 'flex', overflow: 'hidden' }}>
         <MUIDrawer variant="permanent" classes={{ paper: classes.drawerPaper }}>
           <List>
-            {items.map(item => (
+            {Object.keys(items).map(item => (
               <ListItemText
                 key={item}
                 primary={item}
                 onClick={() => {
                   this.setState({ activeItem: item })
                 }}
-                style={
-                  this.state.activeItem === item
-                    ? { background: '#3F3F42' }
-                    : null
-                }
+                style={activeItem === item ? { background: '#3F3F42' } : null}
               />
             ))}
           </List>
         </MUIDrawer>
         <div style={{ flex: 1, overflowY: 'auto' }}>
-          {loading ? (
-            <Loading />
-          ) : (
-            <List>{renderContent(this.state.activeItem)}</List>
-          )}
+          {loading ? <Loading /> : <List>{items[activeItem](itemProps)}</List>}
         </div>
       </div>
     )
