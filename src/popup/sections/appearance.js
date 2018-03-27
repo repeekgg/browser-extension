@@ -8,9 +8,15 @@ export default ({ getSwitchProps }) => (
   <React.Fragment>
     <ListSubheader>Header</ListSubheader>
     <ListItemSwitch
-      primary="Show Level with Elo and Level Progress"
-      secondary="Show current level, Elo rating and level progress with how much is needed to reach the next level."
+      primary="Show Own Level Progress"
+      secondary="Show own level, Elo, level progress and how much is needed to reach the next level."
       {...getSwitchProps('headerShowElo')}
+    />
+    <ListSubheader divider>Player Profile</ListSubheader>
+    <ListItemSwitch
+      primary="Show Level Progress"
+      secondary="Show level, Elo, level progress and how much is needed to reach the next level."
+      {...getSwitchProps('playerProfileLevelProgress')}
     />
     <ListSubheader divider>Match Room</ListSubheader>
     <ListItemSwitch

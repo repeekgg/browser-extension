@@ -57,7 +57,11 @@ function observeMainContent(element) {
       addMatchRoomPickPlayerElos(element)
       addMatchRoomPickPlayerFlags(element)
     } else if (pages.isPlayerProfileStats()) {
-      addProfileLevelProgress(element)
+      runFeatureIf(
+        'playerProfileLevelProgress',
+        addProfileLevelProgress,
+        element
+      )
       addProfileMatchesEloPoints(element)
     }
   }
