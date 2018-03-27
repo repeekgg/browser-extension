@@ -1,4 +1,5 @@
 import select from 'select-dom'
+import shuffle from 'lodash.shuffle'
 import { hasFeatureAttribute, setFeatureAttribute } from '../libs/dom-element'
 import storage from '../../libs/storage'
 import { notifyIf } from '../libs/utils'
@@ -40,12 +41,19 @@ export default async parentElement => {
     return
   }
 
-  const { matchRoomAutoVetoMapItems } = await storage.getAll()
-  const autoVetoItems = matchRoomAutoVetoMapItems.reverse()
+  const {
+    matchRoomAutoVetoMapItems,
+    matchRoomAutoVetoMapsShuffle: shuffleMaps,
+    matchRoomAutoVetoMapsShuffleAmount: shuffleMapsAmount
+  } = await storage.getAll()
+  let autoVetoItems = matchRoomAutoVetoMapItems
 
-  if (!autoVetoItems) {
-    return
+  if (shuffleMaps) {
+    const shuffledItems = shuffle(autoVetoItems.splice(0, shuffleMapsAmount))
+    autoVetoItems.unshift(...shuffledItems)
   }
+
+  autoVetoItems = autoVetoItems.reverse()
 
   const isVetoMaps = autoVetoItems.some(item =>
     select.exists(`li > div[title="${item}"]`, votingListElement)

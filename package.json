@@ -18,6 +18,7 @@
     "detect-browser": "^2.1.0",
     "dom-chef": "^3.1.0",
     "lodash.capitalize": "^4.2.1",
+    "lodash.shuffle": "^4.2.0",
     "material-ui": "^1.0.0-beta.38",
     "mem": "^3.0.0",
     "p-memoize": "^1.0.0",

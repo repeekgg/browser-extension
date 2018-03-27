@@ -33,6 +33,8 @@ export const DEFAULTS = {
   matchRoomAutoVetoLocations: false,
   matchRoomAutoVetoLocationItems: MATCH_ROOM_VETO_LOCATION_ITEMS,
   matchRoomAutoVetoMaps: false,
+  matchRoomAutoVetoMapsShuffle: false,
+  matchRoomAutoVetoMapsShuffleAmount: 3,
   matchRoomAutoVetoMapItems: MATCH_ROOM_VETO_MAP_ITEMS,
   notifyDisabled: false,
   notifyPartyAutoAcceptInvite: true,
