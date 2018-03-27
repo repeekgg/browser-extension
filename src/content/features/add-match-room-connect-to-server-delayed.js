@@ -22,33 +22,38 @@ export default async parentElement => {
 
   let goToServerTimer
 
-  const connectToServerDelayed = () => {
-    if (goToServerTimer) {
-      return
-    }
-
-    const timeLeftElement = select(
-      'timer[countdown="vm.currentMatch.derived.warmupCountdown"]',
-      parentElement
-    )
-    const timeLeft = timeLeftElement.textContent
-    const [minutes, seconds] = timeLeft.split(':')
-    const delay = Math.abs(60000 - (minutes * 60000 + seconds * 1000))
-
-    goToServerTimer = setTimeout(() => {
-      goToServerElement.click()
-    }, delay)
-  }
-
   const connectToServerDelayedElement = (
     <a
       className="btn btn-primary mt-md"
       onClick={e => {
         e.preventDefault()
-        connectToServerDelayed()
+
+        if (goToServerTimer) {
+          return
+        }
+
         connectToServerDelayedElement.setAttribute('disabled', 'disabled')
+
+        const timeLeftElement = select(
+          'timer[countdown="vm.currentMatch.derived.warmupCountdown"]',
+          parentElement
+        )
+        const timeLeft = timeLeftElement.textContent
+        const [minutes, seconds] = timeLeft.split(':')
+        const delay = minutes * 60000 + seconds * 1000 - 60000
+
+        if (delay < 60000) {
+          connectToServerDelayedElement.textContent =
+            'Not connecting: Less than 1 minute left'
+          return
+        }
+
         connectToServerDelayedElement.textContent =
           'Connecting at 1 Minute left'
+
+        goToServerTimer = setTimeout(() => {
+          goToServerElement.click()
+        }, delay)
       }}
       href="#"
     >
