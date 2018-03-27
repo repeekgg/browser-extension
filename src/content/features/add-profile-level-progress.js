@@ -85,10 +85,12 @@ export default async parentElement => {
           {keyStatElement('Elo', faceitElo)}
         </div>
         <div className="col-lg-4 flex-column-stretch">
-          {keyStatElement(
-            `Points needed to reach level ${currentLevel + 1}`,
-            levelMaxElo - faceitElo
-          )}
+          {currentLevel === 10
+            ? keyStatElement(`Maximum level reached`, '🔥')
+            : keyStatElement(
+                `Points needed to reach level ${currentLevel + 1}`,
+                levelMaxElo - faceitElo
+              )}
         </div>
       </div>
       <div>
