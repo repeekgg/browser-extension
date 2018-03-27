@@ -4,6 +4,7 @@ import camelcaseKeys from 'camelcase-keys'
 import { mapTotalStatsMemoized, mapAverageStatsMemoized } from './stats'
 
 const BASE_URL = 'https://api.faceit.com'
+export const CACHE_TIME = 600000
 
 async function fetchApi(path) {
   if (typeof path !== 'string') {
@@ -53,7 +54,7 @@ async function fetchApi(path) {
 }
 
 const fetchApiMemoized = pMemoize(fetchApi, {
-  maxAge: 600000
+  maxAge: CACHE_TIME
 })
 
 export const getPlayer = nickname =>
