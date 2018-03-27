@@ -20,7 +20,7 @@ export default (elo, alignRight = false) => {
     </span>
   )
 
-  eloElement[alignRight ? 'prepend' : 'append'](elo)
+  eloElement[alignRight ? 'append' : 'prepend'](elo)
 
   return eloElement
 }
