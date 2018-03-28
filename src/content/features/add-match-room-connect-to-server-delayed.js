@@ -6,9 +6,15 @@ import { hasFeatureAttribute, setFeatureAttribute } from '../libs/dom-element'
 const FEATURE_ATTRIBUTE = 'connect-to-server-delayed'
 
 export default async parentElement => {
+  const matchDetailsElement = select('div.match-vs__details', parentElement)
+
+  if (!matchDetailsElement) {
+    return
+  }
+
   const goToServerElement = select(
     'a[translate-once="GO-TO-SERVER"]',
-    parentElement
+    matchDetailsElement
   )
 
   if (
@@ -34,22 +40,25 @@ export default async parentElement => {
 
         connectToServerDelayedElement.setAttribute('disabled', 'disabled')
 
-        const timeLeftElement = select(
-          'timer[countdown="vm.currentMatch.derived.warmupCountdown"]',
-          parentElement
-        )
+        const timeLeftElement = select('timer', matchDetailsElement)
+
+        if (!timeLeftElement) {
+          connectToServerDelayedElement.textContent =
+            'Error: Something went wrong :('
+        }
+
         const timeLeft = timeLeftElement.textContent
         const [minutes, seconds] = timeLeft.split(':')
         const delay = minutes * 60000 + seconds * 1000 - 60000
 
         if (delay < 60000) {
           connectToServerDelayedElement.textContent =
-            'Not connecting: Less than 1 minute left'
+            'Not Connecting: Less than 1 Minute Left'
           return
         }
 
         connectToServerDelayedElement.textContent =
-          'Connecting at 1 Minute left'
+          'Connecting at 1 Minute left ...'
 
         goToServerTimer = setTimeout(() => {
           goToServerElement.click()
