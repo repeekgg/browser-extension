@@ -48,7 +48,9 @@ export default async parentElement => {
         }
 
         const timeLeft = timeLeftElement.textContent
-        const [minutes, seconds] = timeLeft.split(':')
+        const [minutes, seconds] = timeLeft
+          .split(':')
+          .map(x => Number(x.trim()))
         const delay = minutes * 60000 + seconds * 1000 - 60000
 
         if (delay < 60000) {

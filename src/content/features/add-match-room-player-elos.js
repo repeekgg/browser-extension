@@ -12,7 +12,7 @@ import {
   setStyle
 } from '../libs/dom-element'
 import { getQuickMatch, getMatch, getPlayer } from '../libs/faceit'
-import createMatchRoomPlayerEloElement from '../components/match-room-player-elo'
+import createEloElement from '../components/elo'
 
 const FEATURE_ATTRIBUTE = 'player-elo'
 
@@ -46,7 +46,13 @@ export default async parent => {
       const { game } = await match
       const elo = player.games[game].faceitElo || '–'
 
-      const eloElement = createMatchRoomPlayerEloElement(elo, !isFaction1)
+      const eloElement = createEloElement({
+        elo,
+        alignRight: isFaction1,
+        style: {
+          [`margin-${isFaction1 ? 'right' : 'left'}`]: 4
+        }
+      })
 
       const skillElement = select(
         '.match-team-member__details__skill',

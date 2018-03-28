@@ -4,8 +4,9 @@ import { h } from 'dom-chef'
 import { CACHE_TIME, getSelf } from '../libs/faceit'
 import { hasFeatureAttribute, setFeatureAttribute } from '../libs/dom-element'
 import { LEVELS } from '../libs/elo'
+import createSkillLevelElement from '../components/skill-level'
 
-const FEATURE_ATTRIBUTE = 'own-elo'
+const FEATURE_ATTRIBUTE = 'own-level'
 const REFRESH_TIME = CACHE_TIME + 15000
 
 export default async parent => {
@@ -20,9 +21,9 @@ export default async parent => {
   }
   setFeatureAttribute(userElement, FEATURE_ATTRIBUTE)
 
-  let eloElement
+  let levelElement
 
-  const addEloElement = async () => {
+  const addLevelElement = async () => {
     const self = await getSelf()
 
     if (!self) {
@@ -37,7 +38,7 @@ export default async parent => {
       ? `${(faceitElo - levelMinElo) / (levelMaxElo - levelMinElo) * 100}%`
       : '100%'
 
-    eloElement = (
+    levelElement = (
       <div
         style={{ display: 'flex', 'align-items': 'center', 'margin-right': 10 }}
       >
@@ -87,19 +88,17 @@ export default async parent => {
             </div>
           </div>
         </div>
-        <img
-          src={`https://cdn.faceit.com/frontend/614/assets/images/skill-icons/skill_level_${skillLevel}_md.png`}
-        />
+        {createSkillLevelElement({ level: skillLevel })}
       </div>
     )
 
-    userElement.prepend(eloElement)
+    userElement.prepend(levelElement)
   }
 
-  addEloElement()
+  addLevelElement()
 
   setInterval(() => {
-    eloElement.remove()
-    addEloElement()
+    levelElement.remove()
+    addLevelElement()
   }, REFRESH_TIME)
 }

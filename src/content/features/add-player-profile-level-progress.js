@@ -5,31 +5,24 @@ import { hasFeatureAttribute, setFeatureAttribute } from '../libs/dom-element'
 import { getPlayer } from '../libs/faceit'
 import { LEVELS } from '../libs/elo'
 import { getPlayerId } from '../libs/players'
+import createSkillLevelElement from '../components/skill-level'
 
 const FEATURE_ATTRIBUTE = 'level-progress'
 
-const levelImageElement = (level, style = {}) => (
-  <img
-    src={`https://cdn.faceit.com/frontend/614/assets/images/skill-icons/skill_level_${level}_md.png`}
-    alt={`Level ${level}`}
-    style={style}
-  />
-)
-
-const keyStatElement = (key, stat) => (
+const keyStatElement = ({ key, stat }) => (
   <div className="key-stat well" style={{ height: '100%' }}>
     <div className="key-stat__value text-gray">{stat}</div>
     {key}
   </div>
 )
 
-const eloRangeElement = (from, to, style) => (
+const eloRangeElement = ({ from, to, style }) => (
   <div className="text-md" style={{ 'margin-top': 2, ...style }}>
     {from} – {to}
   </div>
 )
 
-const levelElement = ({
+const skillLevelElement = ({
   level,
   currentLevel,
   eloFrom,
@@ -37,7 +30,7 @@ const levelElement = ({
   width = 7.5,
   borderRight = true
 }) => {
-  const style = { opacity: currentLevel === level ? 1 : 0.6 }
+  const style = { opacity: currentLevel === level ? 1 : 0.5 }
   return (
     <div
       className="text-light"
@@ -48,8 +41,8 @@ const levelElement = ({
         padding: '10px 0'
       }}
     >
-      {levelImageElement(level, style)}
-      {eloRangeElement(eloFrom, eloTo, style)}
+      {createSkillLevelElement({ level, style })}
+      {eloRangeElement({ from: eloFrom, to: eloTo, style })}
     </div>
   )
 }
@@ -79,18 +72,21 @@ export default async parentElement => {
       <h2 className="header-text-3 heading-border">Level Progress</h2>
       <div className="row flex flex-stretch">
         <div className="col-lg-4 flex-column-stretch">
-          {keyStatElement('Level', levelImageElement(currentLevel))}
+          {keyStatElement({
+            key: 'Level',
+            stat: createSkillLevelElement({ level: currentLevel })
+          })}
         </div>
         <div className="col-lg-4 flex-column-stretch">
-          {keyStatElement('Elo', faceitElo)}
+          {keyStatElement({ key: 'Elo', stat: faceitElo })}
         </div>
         <div className="col-lg-4 flex-column-stretch">
           {currentLevel === 10
-            ? keyStatElement(`Maximum level reached`, '🔥')
-            : keyStatElement(
-                `Points needed to reach level ${currentLevel + 1}`,
-                levelMaxElo - faceitElo
-              )}
+            ? keyStatElement({ key: `Maximum level reached`, stat: '🔥' })
+            : keyStatElement({
+                key: `Points needed to reach level ${currentLevel + 1}`,
+                stat: levelMaxElo - faceitElo
+              })}
         </div>
       </div>
       <div>
@@ -106,56 +102,56 @@ export default async parentElement => {
               />
             </div>
             <div style={{ display: 'flex' }}>
-              {levelElement({
+              {skillLevelElement({
                 level: 1,
                 currentLevel,
                 eloFrom: 1,
                 eloTo: 800,
                 width: 40
               })}
-              {levelElement({
+              {skillLevelElement({
                 level: 2,
                 currentLevel,
                 eloFrom: 801,
                 eloTo: 950
               })}
-              {levelElement({
+              {skillLevelElement({
                 level: 3,
                 currentLevel,
                 eloFrom: 951,
                 eloTo: 1100
               })}
-              {levelElement({
+              {skillLevelElement({
                 level: 4,
                 currentLevel,
                 eloFrom: 1101,
                 eloTo: 1250
               })}
-              {levelElement({
+              {skillLevelElement({
                 level: 5,
                 currentLevel,
                 eloFrom: 1251,
                 eloTo: 1400
               })}
-              {levelElement({
+              {skillLevelElement({
                 level: 6,
                 currentLevel,
                 eloFrom: 1401,
                 eloTo: 1550
               })}
-              {levelElement({
+              {skillLevelElement({
                 level: 7,
                 currentLevel,
                 eloFrom: 1551,
                 eloTo: 1700
               })}
-              {levelElement({
+              {skillLevelElement({
                 level: 8,
                 currentLevel,
                 eloFrom: 1701,
                 eloTo: 1850
               })}
-              {levelElement({
+              {skillLevelElement({
                 level: 9,
                 currentLevel,
                 eloFrom: 1851,
@@ -171,7 +167,7 @@ export default async parentElement => {
                 background: progressWidth > 100 ? '#f50' : '#323737'
               }}
             />
-            {levelElement({
+            {skillLevelElement({
               level: 10,
               currentLevel,
               eloFrom: 2001,

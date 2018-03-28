@@ -13,7 +13,7 @@ import {
   getPlayer,
   getPlayerStats
 } from '../libs/faceit'
-import createMatchRoomPlayerStatsElement from '../components/match-room-player-stats'
+import createPlayerStatsElement from '../components/player-stats'
 
 const FEATURE_ATTRIBUTE = 'player-stats'
 
@@ -50,7 +50,7 @@ export default async parent => {
       if (!stats) {
         return
       }
-      const statsElement = createMatchRoomPlayerStatsElement(stats, !isFaction1)
+      const statsElement = createPlayerStatsElement(stats, !isFaction1)
 
       const memberDetailsElement = select(
         '.match-team-member__details',

@@ -12,17 +12,15 @@ const statsVerticalDivider = () => (
   <div style={{ width: 1, background: '#333' }} />
 )
 
-export default (
-  {
-    matches,
-    winRate,
-    averageKDRatio,
-    averageKills,
-    averageKRRatio,
-    averageHeadshots
-  },
+export default ({
+  matches,
+  winRate,
+  averageKDRatio,
+  averageKills,
+  averageKRRatio,
+  averageHeadshots,
   alignRight = false
-) => (
+}) => (
   <div
     className="text-muted"
     style={{

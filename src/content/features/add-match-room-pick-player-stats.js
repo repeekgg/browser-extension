@@ -8,7 +8,7 @@ import {
   setFeatureAttribute,
   setStyle
 } from '../libs/dom-element'
-import createMatchRoomPlayerStatsElement from '../components/match-room-player-stats'
+import createPlayerStatsElement from '../components/player-stats'
 
 const FEATURE_ATTRIBUTE = 'pick-player-stats'
 
@@ -64,7 +64,7 @@ export default async parentElement => {
       return
     }
 
-    const statsElement = createMatchRoomPlayerStatsElement(stats)
+    const statsElement = createPlayerStatsElement(stats)
 
     playerPickElement.append(
       <div style={{ width: '100%' }}>{statsElement}</div>

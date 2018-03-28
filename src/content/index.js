@@ -14,7 +14,7 @@ import addMatchRoomPlayerStats from './features/add-match-room-player-stats'
 import addMatchRoomTeamElos from './features/add-match-room-team-elos'
 import copyMatchRoomCopyServerData from './features/copy-match-room-copy-server-data'
 import clickMatchRoomConnectToServer from './features/click-match-room-connect-to-server'
-import addHeaderOwnElo from './features/add-header-own-elo'
+import addHeaderOwnLevel from './features/add-header-own-level'
 import moveHeaderSearch from './features/move-header-search'
 import hideMatchRoomPlayerControls from './features/hide-match-room-player-controls'
 import addSidebarMatchesEloPoints from './features/add-sidebar-matches-elo-points'
@@ -23,7 +23,7 @@ import clickMatchRoomVetoLocations from './features/click-match-room-veto-locati
 import clickMatchRoomVetoMaps from './features/click-match-room-veto-maps'
 import clickModalMatchRoomCaptainOk from './features/click-modal-match-room-captain-ok'
 import addMatchRoomConnectToServerDelayed from './features/add-match-room-connect-to-server-delayed'
-import addProfileLevelProgress from './features/add-profile-level-progress'
+import addPlayerProfileLevelProgress from './features/add-player-profile-level-progress'
 import addMatchRoomPickPlayerStats from './features/add-match-room-pick-player-stats'
 import addMatchRoomPickPlayerElos from './features/add-match-room-pick-player-elos'
 import addMatchRoomPickPlayerFlags from './features/add-match-room-pick-player-flags'
@@ -59,7 +59,7 @@ function observeMainContent(element) {
     } else if (pages.isPlayerProfileStats()) {
       runFeatureIf(
         'playerProfileLevelProgress',
-        addProfileLevelProgress,
+        addPlayerProfileLevelProgress,
         element
       )
       addProfileMatchesEloPoints(element)
@@ -86,7 +86,7 @@ function observeSidebarContent(element) {
 function observeHeader(element) {
   const runFeatures = () => {
     moveHeaderSearch(element)
-    runFeatureIf('headerShowElo', addHeaderOwnElo, element)
+    runFeatureIf('headerShowElo', addHeaderOwnLevel, element)
   }
 
   runFeatures()

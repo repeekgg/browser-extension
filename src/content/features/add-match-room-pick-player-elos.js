@@ -4,7 +4,7 @@ import select from 'select-dom'
 import { getMatch, getPlayer } from '../libs/faceit'
 import { getTeamElements, getRoomId } from '../libs/match-room'
 import { hasFeatureAttribute, setFeatureAttribute } from '../libs/dom-element'
-import createMatchRoomPlayerEloElement from '../components/match-room-player-elo'
+import createEloElement from '../components/elo'
 
 const FEATURE_ATTRIBUTE = 'pick-player-elo'
 
@@ -53,7 +53,7 @@ export default async parentElement => {
 
     const elo = player.games[game].faceitElo || '–'
 
-    const eloElement = createMatchRoomPlayerEloElement(elo)
+    const eloElement = createEloElement({ elo })
 
     nicknameElement.append(
       <div className="text-muted text-md">{eloElement}</div>
