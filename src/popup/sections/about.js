@@ -14,7 +14,12 @@ export default () => (
       secondary={version}
       href={changelogs[version]}
     />
-    <ListItemLink primary="Author" secondary="azn" faceit="azn__" />
+    <ListItemLink primary="Developed by" secondary="azn" faceit="azn__" />
+    <ListItemLink
+      primary="Source Code"
+      secondary="GitHub"
+      href="https://github.com/timche/faceit-enhancer"
+    />
     <ListSubheader divider>Community</ListSubheader>
     <ListItemLink primary="Reddit" secondary="r/FACEITEnhancer" subreddit />
     <ListItemLink
