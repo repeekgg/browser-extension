@@ -29,6 +29,7 @@ export default () => (
     />
     <ListSubheader divider>Thanks for Your Donations!</ListSubheader>
     <ListItemLink primary="zwck" secondary="5 EUR" faceit="zwacki" />
+    <ListItemLink primary="hAnnah_f" secondary="3.82 EUR" faceit="hAnnah_f" />
     <ListItemLink
       primary="shiroatata"
       secondary="CS:GO Skins"
