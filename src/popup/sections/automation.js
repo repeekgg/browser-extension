@@ -31,12 +31,12 @@ export default ({ getSwitchProps }) => (
     />
     <ListItemSwitch
       primary="Veto Server Locations"
-      secondary="EXPERIMENTAL: Veto server locations automatically based on your location preferences with a delay of 2 seconds, so you can still veto manually and influence the outcome."
+      secondary="Veto server locations automatically based on your location preferences with a delay of 2 seconds, so you can still veto manually and influence the outcome."
       {...getSwitchProps('matchRoomAutoVetoLocations')}
     />
     <ListItemSwitch
       primary="Veto Maps"
-      secondary="EXPERIMENTAL: Veto maps automatically based on your map preferences with a delay of 2 seconds, so you can still veto manually and influence the outcome."
+      secondary="Veto maps automatically based on your map preferences with a delay of 2 seconds, so you can still veto manually and influence the outcome."
       {...getSwitchProps('matchRoomAutoVetoMaps')}
     />
   </React.Fragment>
