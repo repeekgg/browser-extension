@@ -29,6 +29,7 @@ import addMatchRoomPickPlayerElos from './features/add-match-room-pick-player-el
 import addMatchRoomPickPlayerFlags from './features/add-match-room-pick-player-flags'
 import showSidebarMatchmakingQueuing from './features/show-sidebar-matchmaking-queuing'
 import addSidebarHideButton from './features/add-sidebar-hide-button'
+import addPlayerProfileDownloadDemo from './features/add-player-profile-download-demo'
 
 function observeMainContent(element) {
   const runFeatures = () => {
@@ -65,6 +66,7 @@ function observeMainContent(element) {
         element
       )
       addProfileMatchesEloPoints(element)
+      addPlayerProfileDownloadDemo(element)
     }
   }
 
