@@ -28,6 +28,7 @@ import addMatchRoomPickPlayerStats from './features/add-match-room-pick-player-s
 import addMatchRoomPickPlayerElos from './features/add-match-room-pick-player-elos'
 import addMatchRoomPickPlayerFlags from './features/add-match-room-pick-player-flags'
 import showSidebarMatchmakingQueuing from './features/show-sidebar-matchmaking-queuing'
+import addSidebarHideButton from './features/add-sidebar-hide-button'
 
 function observeMainContent(element) {
   const runFeatures = () => {
@@ -77,6 +78,7 @@ function observeSidebarContent(element) {
   const runFeatures = () => {
     addSidebarMatchesEloPoints(element)
     showSidebarMatchmakingQueuing(element)
+    addSidebarHideButton(element)
   }
 
   runFeatures()
@@ -137,7 +139,7 @@ function observeBody() {
     }
 
     if (!sidebarContentElement) {
-      sidebarContentElement = select('.sidebar__content__view')
+      sidebarContentElement = select('#sidebar')
       if (sidebarContentElement) {
         observeSidebarContent(sidebarContentElement)
       }
