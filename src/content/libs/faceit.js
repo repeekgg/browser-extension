@@ -107,3 +107,8 @@ export const getMatch = matchId =>
   fetchApiMemoized(`/match/v1/match/${matchId}`)
 
 export const getSelf = () => fetchApiMemoized('/core/v1/sessions/me')
+
+export const getQuickMatchPlayers = async (game, region, matchType) =>
+  (await fetchApi(
+    `/core/v1/quickmatches/players?game=${game}&matchType=${matchType}&region=${region}`
+  )).total

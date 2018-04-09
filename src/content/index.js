@@ -27,6 +27,7 @@ import addPlayerProfileLevelProgress from './features/add-player-profile-level-p
 import addMatchRoomPickPlayerStats from './features/add-match-room-pick-player-stats'
 import addMatchRoomPickPlayerElos from './features/add-match-room-pick-player-elos'
 import addMatchRoomPickPlayerFlags from './features/add-match-room-pick-player-flags'
+import showSidebarMatchmakingQueuing from './features/show-sidebar-matchmaking-queuing'
 
 function observeMainContent(element) {
   const runFeatures = () => {
@@ -75,6 +76,7 @@ function observeMainContent(element) {
 function observeSidebarContent(element) {
   const runFeatures = () => {
     addSidebarMatchesEloPoints(element)
+    showSidebarMatchmakingQueuing(element)
   }
 
   runFeatures()
