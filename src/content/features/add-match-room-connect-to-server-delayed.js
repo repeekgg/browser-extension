@@ -2,10 +2,17 @@
 import { h } from 'dom-chef'
 import select from 'select-dom'
 import { hasFeatureAttribute, setFeatureAttribute } from '../libs/dom-element'
+import storage from '../../libs/storage'
 
 const FEATURE_ATTRIBUTE = 'connect-to-server-delayed'
 
 export default async parentElement => {
+  const { matchRoomAutoConnectToServer } = await storage.getAll()
+
+  if (matchRoomAutoConnectToServer) {
+    return
+  }
+
   const matchDetailsElement = select('div.match-vs__details', parentElement)
 
   if (!matchDetailsElement) {
