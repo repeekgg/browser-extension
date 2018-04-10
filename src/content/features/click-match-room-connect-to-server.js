@@ -1,28 +1,38 @@
 import select from 'select-dom'
 import { getRoomId } from '../libs/match-room'
 import { notifyIf } from '../libs/utils'
+import { hasFeatureAttribute, setFeatureAttribute } from '../libs/dom-element'
 
-const store = new Map()
+const FEATURE_ATTRIBUTE = 'connect-to-server'
 
 const DELAY = 10000
 
 export default async parent => {
-  const roomId = getRoomId()
-
-  if (store.has(roomId)) {
-    return
-  }
-
   const goToServerElement = select('a[translate-once="GO-TO-SERVER"]', parent)
 
   if (!goToServerElement) {
     return
   }
 
-  store.set(roomId, true)
+  if (hasFeatureAttribute(goToServerElement, FEATURE_ATTRIBUTE)) {
+    return
+  }
+  setFeatureAttribute(goToServerElement, FEATURE_ATTRIBUTE)
+
+  const connectedToServer =
+    JSON.parse(localStorage.getItem('faceitEnhancer.connectedToServer')) || []
+
+  const roomId = getRoomId()
+
+  if (connectedToServer.includes(roomId)) {
+    return
+  }
 
   setTimeout(() => {
     goToServerElement.click()
+
+    connectedToServer.push(roomId)
+    localStorage.setItem(JSON.stringify(connectedToServer))
   }, DELAY)
 
   notifyIf('notifyMatchRoomAutoConnectToServer', {
