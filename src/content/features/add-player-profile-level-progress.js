@@ -4,7 +4,7 @@ import select from 'select-dom'
 import { hasFeatureAttribute, setFeatureAttribute } from '../libs/dom-element'
 import { getPlayer } from '../libs/faceit'
 import { LEVELS } from '../libs/elo'
-import { getPlayerId } from '../libs/players'
+import { getPlayerProfileNickname } from '../libs/player-profile'
 import createSkillLevelElement from '../components/skill-level'
 
 const FEATURE_ATTRIBUTE = 'level-progress'
@@ -55,8 +55,8 @@ export default async parentElement => {
   }
   setFeatureAttribute(profileElement, FEATURE_ATTRIBUTE)
 
-  const playerId = await getPlayerId()
-  const player = await getPlayer(playerId)
+  const nickname = await getPlayerProfileNickname()
+  const player = await getPlayer(nickname)
 
   if (!player) {
     return

@@ -9,7 +9,7 @@ import {
 } from '../libs/faceit'
 import { mapMatchesByIdAndExtendElo } from '../libs/matches'
 import { getRoomId } from '../libs/match-room'
-import { getPlayerId } from '../libs/players'
+import { getPlayerProfileNickname } from '../libs/player-profile'
 import { hasFeatureAttribute, setFeatureAttribute } from '../libs/dom-element'
 import { calculateRatingChange } from '../libs/elo'
 
@@ -25,8 +25,8 @@ export default async parentElement => {
     return
   }
 
-  const playerId = await getPlayerId()
-  const player = await getPlayer(playerId)
+  const nickname = await getPlayerProfileNickname()
+  const player = await getPlayer(nickname)
   const isFreeMembership = player.membership.type === 'free'
   const matches = await getPlayerMatches(player.guid, player.flag, 21)
 
