@@ -132,6 +132,15 @@ function observeBody() {
           clickModalMatchRoomCaptainOk,
           modalElement
         )
+      } else if (modals.isPlayerProfileStats()) {
+        runFeatureIf(
+          'playerProfileLevelProgress',
+          addPlayerProfileLevelProgress,
+          modalElement
+        )
+        addProfileMatchesEloPoints(modalElement)
+        addPlayerProfileDownloadDemo(modalElement)
+        addPlayerProfileExtendedStats(modalElement)
       }
     }
 
