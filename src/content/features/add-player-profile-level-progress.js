@@ -85,7 +85,7 @@ export default async parentElement => {
             ? keyStatElement({ key: `Maximum level reached`, stat: '🔥' })
             : keyStatElement({
                 key: `Points needed to reach level ${currentLevel + 1}`,
-                stat: levelMaxElo - faceitElo
+                stat: LEVELS[currentLevel + 1][0] - faceitElo
               })}
         </div>
       </div>

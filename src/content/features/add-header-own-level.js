@@ -80,8 +80,8 @@ export default async parent => {
             >
               {levelMinElo}
               <span>
-                -{faceitElo - levelMinElo}/{levelMaxElo
-                  ? `+${levelMaxElo - faceitElo}`
+                -{faceitElo - LEVELS[skillLevel - 1][1]}/{levelMaxElo
+                  ? `+${LEVELS[skillLevel + 1][0] - faceitElo}`
                   : '∞'}
               </span>
               <span>{levelMaxElo ? levelMaxElo : '∞'}</span>
