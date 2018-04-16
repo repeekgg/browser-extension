@@ -1,8 +1,7 @@
 import mem from 'mem'
 
 const TOTAL_STATS_MAP = {
-  m1: 'matches',
-  k6: 'winRate'
+  m1: 'matches'
 }
 
 export const mapTotalStats = stats =>
@@ -31,7 +30,9 @@ export const mapAverageStats = stats =>
           ...acc,
           [AVERAGE_STATS_MAP[curr]]: stat[curr]
         }),
-        {}
+        {
+          winRate: stat.i2 === stat.teamId ? 'win' : 'loss'
+        }
       )
     )
     .reduce(
@@ -40,19 +41,25 @@ export const mapAverageStats = stats =>
           let value
 
           if (stats.length === i + 1) {
-            value =
-              (
-                acc[curr2].reduce(
-                  (acc3, curr3) => acc3 + Number(curr3),
-                  Number(curr[curr2])
-                ) / stats.length
-              ).toFixed(2) / 1
+            if (curr2 === 'winRate') {
+              const results = [...acc[curr2], curr[curr2]]
+              const wins = results.filter(x => x === 'win').length
+              value = Math.round(wins / results.length * 100)
+            } else {
+              value =
+                (
+                  acc[curr2].reduce(
+                    (acc3, curr3) => acc3 + Number(curr3),
+                    Number(curr[curr2])
+                  ) / stats.length
+                ).toFixed(2) / 1
 
-            if (
-              curr2 === AVERAGE_STATS_MAP.c4 ||
-              curr2 === AVERAGE_STATS_MAP.i6
-            ) {
-              value = Math.round(value)
+              if (
+                curr2 === AVERAGE_STATS_MAP.c4 ||
+                curr2 === AVERAGE_STATS_MAP.i6
+              ) {
+                value = Math.round(value)
+              }
             }
           } else {
             value = (acc[curr2] || []).concat(curr[curr2])
