@@ -18,5 +18,11 @@ export const isMatchRoomCaptain = parent =>
     parent
   )
 
+export const isMatchDefeat = parent =>
+  select.exists('h2[translate-once="DEFEAT"]', parent)
+
+export const isMatchVictory = parent =>
+  select.exists('h2[translate-once="VICTORY"]', parent)
+
 export const isPlayerProfileStats = () =>
   /players-modal\/.+\/stats\//.test(getCurrentPath())

@@ -39,5 +39,16 @@ export default ({ getSwitchProps }) => (
       secondary="Veto maps automatically based on your map preferences with a delay of 2 seconds, so you can still veto manually and influence the outcome."
       {...getSwitchProps('matchRoomAutoVetoMaps')}
     />
+    <ListSubheader divider>Pop Ups</ListSubheader>
+    <ListItemSwitch
+      primary="Close Match Victory"
+      secondary="Close match victory pop up automatically."
+      {...getSwitchProps('modalCloseMatchVictory')}
+    />
+    <ListItemSwitch
+      primary="Close Match Defeat"
+      secondary="Close match defeat pop up automatically."
+      {...getSwitchProps('modalCloseMatchDefeat')}
+    />
   </React.Fragment>
 )
