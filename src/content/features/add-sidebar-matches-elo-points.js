@@ -14,10 +14,9 @@ import { calculateRatingChange } from '../libs/elo'
 
 const FEATURE_ATTRIBUTE = 'elo-points'
 
-export default async parentElement => {
+export default async () => {
   const matchHistoryElement = select(
-    'div[ng-if="vm.matchStore.matchHistory.length"]',
-    parentElement
+    'div[ng-if="vm.matchStore.matchHistory.length"]'
   )
 
   if (!matchHistoryElement) {

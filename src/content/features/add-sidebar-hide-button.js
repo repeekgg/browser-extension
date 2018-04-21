@@ -22,11 +22,8 @@ styleInject(`
   }
 `)
 
-export default async parentElement => {
-  const sidebarMenuElement = select(
-    '.sidebar__content__menu > div',
-    parentElement
-  )
+export default async () => {
+  const sidebarMenuElement = select('.sidebar__content__menu > div')
 
   if (!sidebarMenuElement) {
     return
@@ -43,13 +40,14 @@ export default async parentElement => {
 
   let sidebarHidden = false
   const mainContentWrapperElement = select('.main-content__wrapper')
+  const sidebarElement = select('#sidebar')
 
   const hideSidebarElement = (
     <div className="nav-icon">
       <div
         className="nav-icon__inner"
         onClick={() => {
-          ;[parentElement, mainContentWrapperElement].forEach(element => {
+          ;[sidebarElement, mainContentWrapperElement].forEach(element => {
             element.classList[sidebarHidden ? 'remove' : 'add'](
               SIDEBAR_HIDE_CLASS
             )

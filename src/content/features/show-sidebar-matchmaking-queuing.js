@@ -6,10 +6,10 @@ import { getQuickMatchPlayers } from '../libs/faceit'
 
 const FEATURE_ATTRIBUTE = 'matchmaking-queuing'
 
-export default parentElement => {
+export default async () => {
   const matchmakingElementSelector =
     'div[ng-if*="vm.userMatchmakingStore.matchmaking.length"]'
-  const matchmakingElement = select(matchmakingElementSelector, parentElement)
+  const matchmakingElement = select(matchmakingElementSelector)
 
   if (!matchmakingElement) {
     return
@@ -70,11 +70,11 @@ export default parentElement => {
   })
 
   const observer = new MutationObserver(() => {
-    if (!select.exists(matchmakingElementSelector, parentElement)) {
+    if (!select.exists(matchmakingElementSelector)) {
       updateIntervals.forEach(interval => clearInterval(interval))
       observer.disconnect()
     }
   })
 
-  observer.observe(parentElement, { childList: true })
+  observer.observe(matchmakingElement.parentElement, { childList: true })
 }

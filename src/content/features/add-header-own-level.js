@@ -9,17 +9,17 @@ import createSkillLevelElement from '../components/skill-level'
 const FEATURE_ATTRIBUTE = 'own-level'
 const REFRESH_TIME = CACHE_TIME + 15000
 
-export default async parent => {
-  const userElement = select('.main-header__right', parent)
+export default async () => {
+  const headerRightElement = select('.main-header__right')
 
-  if (!userElement) {
+  if (!headerRightElement) {
     return
   }
 
-  if (hasFeatureAttribute(userElement, FEATURE_ATTRIBUTE)) {
+  if (hasFeatureAttribute(headerRightElement, FEATURE_ATTRIBUTE)) {
     return
   }
-  setFeatureAttribute(userElement, FEATURE_ATTRIBUTE)
+  setFeatureAttribute(headerRightElement, FEATURE_ATTRIBUTE)
 
   let levelElement
 
@@ -92,7 +92,7 @@ export default async parent => {
       </div>
     )
 
-    userElement.prepend(levelElement)
+    headerRightElement.prepend(levelElement)
   }
 
   addLevelElement()

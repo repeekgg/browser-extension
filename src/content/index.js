@@ -79,34 +79,7 @@ function observeMainContent(element) {
   observer.observe(element, { childList: true, subtree: true })
 }
 
-function observeSidebarContent(element) {
-  const runFeatures = () => {
-    addSidebarMatchesEloPoints(element)
-    showSidebarMatchmakingQueuing(element)
-    addSidebarHideButton(element)
-  }
-
-  runFeatures()
-
-  const observer = new MutationObserver(runFeatures)
-  observer.observe(element, { childList: true, subtree: true })
-}
-
-function observeHeader(element) {
-  const runFeatures = () => {
-    moveHeaderSearch(element)
-    runFeatureIf('headerShowElo', addHeaderOwnLevel, element)
-  }
-
-  runFeatures()
-
-  const observer = new MutationObserver(runFeatures)
-  observer.observe(element, { childList: true, subtree: true })
-}
-
 function observeBody() {
-  let headerElement
-  let sidebarContentElement
   let mainContentElement
 
   const observer = new MutationObserver(() => {
@@ -149,19 +122,12 @@ function observeBody() {
       }
     }
 
-    if (!headerElement) {
-      headerElement = select('div.main-header__content')
-      if (headerElement) {
-        observeHeader(headerElement)
-      }
-    }
+    moveHeaderSearch()
+    runFeatureIf('headerShowElo', addHeaderOwnLevel)
 
-    if (!sidebarContentElement) {
-      sidebarContentElement = select('#sidebar')
-      if (sidebarContentElement) {
-        observeSidebarContent(sidebarContentElement)
-      }
-    }
+    addSidebarMatchesEloPoints()
+    showSidebarMatchmakingQueuing()
+    addSidebarHideButton()
 
     if (!mainContentElement) {
       mainContentElement = select('#main-content')
@@ -171,7 +137,7 @@ function observeBody() {
     }
   })
 
-  observer.observe(document.body, { childList: true })
+  observer.observe(document.body, { childList: true, subtree: true })
 }
 
 function runOnce() {

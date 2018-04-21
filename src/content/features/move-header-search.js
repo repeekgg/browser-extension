@@ -7,8 +7,8 @@ import {
 
 const FEATURE_ATTRIBUTE = 'move-search'
 
-export default async parent => {
-  let searchElement = select('.search-solr', parent)
+export default async () => {
+  let searchElement = select('.search-solr')
 
   if (!searchElement) {
     return
@@ -24,8 +24,7 @@ export default async parent => {
   searchElement.remove()
 
   const targetElement = select(
-    '.main-header__left div[ng-if="vm.currentUserStore.currentUser"]',
-    parent
+    '.main-header__left div[ng-if="vm.currentUserStore.currentUser"]'
   )
 
   setStyle(searchElement, 'margin-left: 10px')
