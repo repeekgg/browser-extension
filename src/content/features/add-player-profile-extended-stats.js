@@ -16,10 +16,10 @@ const FEATURE_ATTRIBUTE = 'extended-stats'
 export default async parentElement => {
   const profileElement = select('section.profile > div.profile', parentElement)
 
-  if (hasFeatureAttribute(profileElement, FEATURE_ATTRIBUTE)) {
+  if (hasFeatureAttribute(FEATURE_ATTRIBUTE, profileElement)) {
     return
   }
-  setFeatureAttribute(profileElement, FEATURE_ATTRIBUTE)
+  setFeatureAttribute(FEATURE_ATTRIBUTE, profileElement)
 
   const nickname = getPlayerProfileNickname()
   const game = getPlayerProfileStatsGame()

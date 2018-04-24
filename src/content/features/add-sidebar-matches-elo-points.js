@@ -23,10 +23,10 @@ export default async () => {
     return
   }
 
-  if (hasFeatureAttribute(matchHistoryElement, FEATURE_ATTRIBUTE)) {
+  if (hasFeatureAttribute(FEATURE_ATTRIBUTE, matchHistoryElement)) {
     return
   }
-  setFeatureAttribute(matchHistoryElement, FEATURE_ATTRIBUTE)
+  setFeatureAttribute(FEATURE_ATTRIBUTE, matchHistoryElement)
 
   const self = await getSelf()
   const isFreeMembership = self.membership.type === 'free'

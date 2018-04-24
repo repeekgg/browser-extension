@@ -16,10 +16,10 @@ export default async () => {
     return
   }
 
-  if (hasFeatureAttribute(headerRightElement, FEATURE_ATTRIBUTE)) {
+  if (hasFeatureAttribute(FEATURE_ATTRIBUTE, headerRightElement)) {
     return
   }
-  setFeatureAttribute(headerRightElement, FEATURE_ATTRIBUTE)
+  setFeatureAttribute(FEATURE_ATTRIBUTE, headerRightElement)
 
   let levelElement
 

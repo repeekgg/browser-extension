@@ -15,10 +15,10 @@ export default async () => {
     return
   }
 
-  if (hasFeatureAttribute(matchmakingElement, FEATURE_ATTRIBUTE)) {
+  if (hasFeatureAttribute(FEATURE_ATTRIBUTE, matchmakingElement)) {
     return
   }
-  setFeatureAttribute(matchmakingElement, FEATURE_ATTRIBUTE)
+  setFeatureAttribute(FEATURE_ATTRIBUTE, matchmakingElement)
 
   const queueElements = select.all(
     'navigation-queue-line > div',

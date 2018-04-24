@@ -29,10 +29,10 @@ export default async () => {
     return
   }
 
-  if (hasFeatureAttribute(sidebarMenuElement, FEATURE_ATTRIBUTE)) {
+  if (hasFeatureAttribute(FEATURE_ATTRIBUTE, sidebarMenuElement)) {
     return
   }
-  setFeatureAttribute(sidebarMenuElement, FEATURE_ATTRIBUTE)
+  setFeatureAttribute(FEATURE_ATTRIBUTE, sidebarMenuElement)
 
   const dividerElement = <div className="divider" />
 

@@ -48,16 +48,16 @@ export default async parentElement => {
 
   const matchElementsHead = select('thead > tr', matchHistoryElement)
 
-  if (!hasFeatureAttribute(matchElementsHead, FEATURE_ATTRIBUTE)) {
+  if (!hasFeatureAttribute(FEATURE_ATTRIBUTE, matchElementsHead)) {
     matchElementsHead.append(<th />)
-    setFeatureAttribute(matchElementsHead, FEATURE_ATTRIBUTE)
+    setFeatureAttribute(FEATURE_ATTRIBUTE, matchElementsHead)
   }
 
   matchElements.forEach(async matchElement => {
-    if (hasFeatureAttribute(matchElement, FEATURE_ATTRIBUTE)) {
+    if (hasFeatureAttribute(FEATURE_ATTRIBUTE, matchElement)) {
       return
     }
-    setFeatureAttribute(matchElement, FEATURE_ATTRIBUTE)
+    setFeatureAttribute(FEATURE_ATTRIBUTE, matchElement)
 
     const accordionElement = matchElement.nextElementSibling
     const goToMatchRoomElement = select(

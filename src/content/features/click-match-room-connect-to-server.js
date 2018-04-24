@@ -14,10 +14,10 @@ export default async parent => {
     return
   }
 
-  if (hasFeatureAttribute(goToServerElement, FEATURE_ATTRIBUTE)) {
+  if (hasFeatureAttribute(FEATURE_ATTRIBUTE, goToServerElement)) {
     return
   }
-  setFeatureAttribute(goToServerElement, FEATURE_ATTRIBUTE)
+  setFeatureAttribute(FEATURE_ATTRIBUTE, goToServerElement)
 
   const connectedToServer =
     JSON.parse(localStorage.getItem('faceitEnhancer.connectedToServer')) || []

@@ -28,11 +28,11 @@ export default async parentElement => {
   )
 
   playerPickElements.forEach(async playerPickElement => {
-    if (hasFeatureAttribute(playerPickElement, FEATURE_ATTRIBUTE)) {
+    if (hasFeatureAttribute(FEATURE_ATTRIBUTE, playerPickElement)) {
       return
     }
 
-    setFeatureAttribute(playerPickElement, FEATURE_ATTRIBUTE)
+    setFeatureAttribute(FEATURE_ATTRIBUTE, playerPickElement)
 
     const nicknameElement = select(
       'div[ng-bind="::player.nickname"]',

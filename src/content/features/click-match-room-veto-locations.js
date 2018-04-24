@@ -54,13 +54,13 @@ export default async parentElement => {
   )
 
   if (
-    hasFeatureAttribute(votingListElement, FEATURE_ATTRIBUTE) ||
+    hasFeatureAttribute(FEATURE_ATTRIBUTE, votingListElement) ||
     !isVetoLocations
   ) {
     return
   }
 
-  setFeatureAttribute(votingListElement, FEATURE_ATTRIBUTE)
+  setFeatureAttribute(FEATURE_ATTRIBUTE, votingListElement)
 
   const autoVeto = () => {
     const isVetoTurn = select.exists('li > button', votingListElement)

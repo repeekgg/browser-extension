@@ -96,8 +96,8 @@ export default async parent => {
       parent
     )
 
-    if (!hasFeatureAttribute(factionNicknameElement, FEATURE_ATTRIBUTE)) {
-      setFeatureAttribute(factionNicknameElement, FEATURE_ATTRIBUTE)
+    if (!hasFeatureAttribute(FEATURE_ATTRIBUTE, factionNicknameElement)) {
+      setFeatureAttribute(FEATURE_ATTRIBUTE, factionNicknameElement)
 
       const eloDiff = averageElo - opponentAverageElo
 
@@ -119,8 +119,8 @@ export default async parent => {
         : `span[ng-bind="vm.currentMatch.match.results.score.faction${factionIndex}"]`
     )
 
-    if (scoreElement && !hasFeatureAttribute(scoreElement, FEATURE_ATTRIBUTE)) {
-      setFeatureAttribute(scoreElement, FEATURE_ATTRIBUTE)
+    if (scoreElement && !hasFeatureAttribute(FEATURE_ATTRIBUTE, scoreElement)) {
+      setFeatureAttribute(FEATURE_ATTRIBUTE, scoreElement)
 
       const points =
         parseFloat(scoreElement.textContent) === 1 ? winPoints : lossPoints

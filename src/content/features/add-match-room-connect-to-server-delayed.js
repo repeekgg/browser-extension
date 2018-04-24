@@ -26,12 +26,12 @@ export default async parentElement => {
 
   if (
     !goToServerElement ||
-    hasFeatureAttribute(goToServerElement, FEATURE_ATTRIBUTE)
+    hasFeatureAttribute(FEATURE_ATTRIBUTE, goToServerElement)
   ) {
     return
   }
 
-  setFeatureAttribute(goToServerElement, FEATURE_ATTRIBUTE)
+  setFeatureAttribute(FEATURE_ATTRIBUTE, goToServerElement)
 
   let goToServerTimer
 

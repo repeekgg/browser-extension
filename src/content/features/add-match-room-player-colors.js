@@ -44,11 +44,11 @@ export default async parent => {
     const memberElements = getTeamMemberElements(teamElement)
 
     memberElements.forEach(async memberElement => {
-      if (hasFeatureAttribute(memberElement, FEATURE_ATTRIBUTE)) {
+      if (hasFeatureAttribute(FEATURE_ATTRIBUTE, memberElement)) {
         return
       }
 
-      setFeatureAttribute(memberElement, FEATURE_ATTRIBUTE)
+      setFeatureAttribute(FEATURE_ATTRIBUTE, memberElement)
 
       const nickname = select(
         `strong[ng-bind="::teamMember.nickname"]`,

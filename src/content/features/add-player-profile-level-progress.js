@@ -50,10 +50,10 @@ const skillLevelElement = ({
 export default async parentElement => {
   const profileElement = select('section.profile > div.profile', parentElement)
 
-  if (hasFeatureAttribute(profileElement, FEATURE_ATTRIBUTE)) {
+  if (hasFeatureAttribute(FEATURE_ATTRIBUTE, profileElement)) {
     return
   }
-  setFeatureAttribute(profileElement, FEATURE_ATTRIBUTE)
+  setFeatureAttribute(FEATURE_ATTRIBUTE, profileElement)
 
   const nickname = await getPlayerProfileNickname()
   const player = await getPlayer(nickname)

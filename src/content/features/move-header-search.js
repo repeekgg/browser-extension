@@ -14,10 +14,10 @@ export default async () => {
     return
   }
 
-  if (hasFeatureAttribute(searchElement, FEATURE_ATTRIBUTE)) {
+  if (hasFeatureAttribute(FEATURE_ATTRIBUTE, searchElement)) {
     return
   }
-  setFeatureAttribute(searchElement, FEATURE_ATTRIBUTE)
+  setFeatureAttribute(FEATURE_ATTRIBUTE, searchElement)
 
   searchElement = searchElement.parentElement
 

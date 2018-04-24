@@ -41,10 +41,10 @@ export default async parentElement => {
     return
   }
 
-  if (hasFeatureAttribute(matchHistoryElement, FEATURE_ATTRIBUTE)) {
+  if (hasFeatureAttribute(FEATURE_ATTRIBUTE, matchHistoryElement)) {
     return
   }
-  setFeatureAttribute(matchHistoryElement, FEATURE_ATTRIBUTE)
+  setFeatureAttribute(FEATURE_ATTRIBUTE, matchHistoryElement)
 
   matchElements.forEach(async matchElement => {
     const accordionElement = matchElement.nextElementSibling
