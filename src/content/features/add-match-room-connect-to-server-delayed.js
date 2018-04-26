@@ -72,6 +72,13 @@ export default async parentElement => {
         goToServerTimer = setTimeout(() => {
           goToServerElement.click()
         }, delay)
+
+        goToServerElement.addEventListener('click', () => {
+          clearTimeout(goToServerTimer)
+
+          connectToServerDelayedElement.textContent =
+            'Canceled: Connected manually'
+        })
       }}
       href="#"
     >
