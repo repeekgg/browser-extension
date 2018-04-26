@@ -1,5 +1,5 @@
 import React from 'react'
-import capitalize from 'lodash.capitalize'
+import capitalize from 'lodash-es/capitalize'
 import { detect } from 'detect-browser'
 import { version } from '../../manifest'
 import ListSubheader from '../components/list-subheader'

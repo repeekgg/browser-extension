@@ -2,6 +2,7 @@
 import { h } from 'dom-chef'
 import select from 'select-dom'
 import styleInject from 'style-inject'
+import get from 'lodash-es/get'
 import { hasFeatureAttribute, setFeatureAttribute } from '../libs/dom-element'
 import { getRoomId } from '../libs/match-room'
 import { getQuickMatch, getMatch } from '../libs/faceit'
@@ -75,8 +76,10 @@ export default async parentElement => {
           onClick={async () => {
             const match =
               (await getQuickMatch(matchId)) || (await getMatch(matchId))
-            const { stats: { demoFileUrl } } = match.externalMatches[0]
-            window.open(demoFileUrl)
+            const demoUrl =
+              get(match, 'match.externalMatches[0].stats.demoFileUrl') ||
+              match.demoUrl
+            window.open(demoUrl)
           }}
         >
           Watch Demo
