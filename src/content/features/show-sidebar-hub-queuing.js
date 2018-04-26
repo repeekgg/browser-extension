@@ -52,7 +52,8 @@ export default async () => {
 
     updateIntervals.push(
       setInterval(async () => {
-        numberQueuingElement.textContent = await getHubQueue(hubId)
+        const { noOfPlayers } = await getHubQueue(hubId)
+        numberQueuingElement.textContent = noOfPlayers
       }, 120000)
     )
   })
