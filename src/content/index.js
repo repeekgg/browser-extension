@@ -32,6 +32,7 @@ import addSidebarHideButton from './features/add-sidebar-hide-button'
 import addPlayerProfileDownloadDemo from './features/add-player-profile-download-demo'
 import addPlayerProfileExtendedStats from './features/add-player-profile-extended-stats'
 import clickModalClose from './features/click-modal-close'
+import showSidebarHubQueuing from './features/show-sidebar-hub-queuing'
 
 function observeMainContent(element) {
   const runFeatures = () => {
@@ -127,6 +128,7 @@ function observeBody() {
 
     addSidebarMatchesEloPoints()
     showSidebarMatchmakingQueuing()
+    showSidebarHubQueuing()
     addSidebarHideButton()
 
     if (!mainContentElement) {
