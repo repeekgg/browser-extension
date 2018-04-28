@@ -77,9 +77,11 @@ export default async parentElement => {
             const match =
               (await getQuickMatch(matchId)) || (await getMatch(matchId))
             const demoUrl =
-              get(match, 'match.externalMatches[0].stats.demoFileUrl') ||
+              get(match, 'externalMatches[0].stats.demoFileUrl') ||
               match.demoUrl
-            window.open(demoUrl)
+            if (demoUrl) {
+              window.open(demoUrl)
+            }
           }}
         >
           Watch Demo
