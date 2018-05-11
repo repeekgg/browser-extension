@@ -1,5 +1,5 @@
 import select from 'select-dom'
-import shuffle from 'lodash-es/shuffle'
+import shuffle from 'lodash/shuffle'
 import { hasFeatureAttribute, setFeatureAttribute } from '../libs/dom-element'
 import storage from '../../libs/storage'
 import { notifyIf } from '../libs/utils'

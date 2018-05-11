@@ -1,7 +1,7 @@
 import select from 'select-dom'
 import mem from 'mem'
-import isEmpty from 'lodash-es/isEmpty'
-import head from 'lodash-es/head'
+import isEmpty from 'lodash/isEmpty'
+import head from 'lodash/head'
 import { getCurrentPath } from './location'
 
 export const FACTION_1 = 'faction1'

@@ -2,7 +2,7 @@
 import { h } from 'dom-chef'
 import select from 'select-dom'
 import styleInject from 'style-inject'
-import get from 'lodash-es/get'
+import get from 'lodash/get'
 import { hasFeatureAttribute, setFeatureAttribute } from '../libs/dom-element'
 import { getRoomId } from '../libs/match-room'
 import { getQuickMatch, getMatch } from '../libs/faceit'
