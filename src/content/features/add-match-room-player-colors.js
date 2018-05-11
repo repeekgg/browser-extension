@@ -4,7 +4,8 @@ import {
   getRoomId,
   getFactionDetails,
   getTeamMemberElements,
-  mapPlayersToPartyColorsMemoized
+  mapPlayersToPartyColorsMemoized,
+  getFactionIsPremade
 } from '../libs/match-room'
 import { getQuickMatch, getMatch } from '../libs/faceit'
 import {
@@ -38,8 +39,13 @@ export default async parent => {
     )
 
     const faction = match[factionName]
+    const factionType = match[`${factionName}Type`]
 
-    const playerColors = mapPlayersToPartyColorsMemoized(faction, isFaction1)
+    const playerColors = mapPlayersToPartyColorsMemoized(
+      faction,
+      isFaction1,
+      getFactionIsPremade(factionType)
+    )
 
     const memberElements = getTeamMemberElements(teamElement)
 

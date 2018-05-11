@@ -1,5 +1,7 @@
 import select from 'select-dom'
 import mem from 'mem'
+import isEmpty from 'lodash-es/isEmpty'
+import head from 'lodash-es/head'
 import { getCurrentPath } from './location'
 
 export const FACTION_1 = 'faction1'
@@ -68,11 +70,14 @@ export const getNicknameElement = (parent, isTeamV1Element) =>
     parent
   )
 
+export const getFactionIsPremade = factionType => factionType === 'premade'
+
 const COLOR_PALETTE = ['#0082c8', '#ffe119', '#808080', '#3cb44b', '#e6194b']
 
 export function mapPlayersToPartyColors(
   faction,
   isFaction1,
+  isPremade,
   colorPalette = COLOR_PALETTE
 ) {
   const availableColors = [...colorPalette]
@@ -83,7 +88,9 @@ export function mapPlayersToPartyColors(
     .reduce((acc, curr) => {
       let partyColor
 
-      if (curr.activeTeamId) {
+      if (isPremade) {
+        partyColor = isEmpty(acc) ? pickColor() : head(acc).partyColor
+      } else if (curr.activeTeamId) {
         const partyMember = acc.find(
           ({ activeTeamId }) => activeTeamId === curr.activeTeamId
         )

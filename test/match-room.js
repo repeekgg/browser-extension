@@ -21,7 +21,7 @@ test('mapPlayersToPartyColors', t => {
   ]
   const colors = ['white', 'black']
 
-  t.deepEqual(matchRoom.mapPlayersToPartyColors(faction, true, colors), {
+  t.deepEqual(matchRoom.mapPlayersToPartyColors(faction, true, false, colors), {
     a: colors[0],
     b: colors[0],
     c: colors[1]
