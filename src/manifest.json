@@ -1,9 +1,9 @@
 {
   "name": "FACEIT Enhancer",
   "description": "Enhances the FACEIT experience and adds useful features.",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "manifest_version": 2,
-  "homepage_url": "https://www.reddit.com/r/FACEITEnhancer/",
+  "homepage_url": "https://faceit-enhancer.com/",
   "minimum_chrome_version": "51",
   "applications": {
     "gecko": {
