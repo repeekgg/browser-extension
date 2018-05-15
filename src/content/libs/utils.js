@@ -24,7 +24,7 @@ export const notifyIf = async (option, message) => {
   }
 }
 
-export const isLoggedIn = async () => {
+export const isLoggedIn = () => {
   const mainHeaderRightLoggedOut = select('.main-header__right__logged-out')
 
   if (mainHeaderRightLoggedOut) {
