@@ -1,5 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 import browser from 'webextension-polyfill'
+import select from 'select-dom'
 import storage from '../../libs/storage'
 
 export const runFeatureIf = async (option, feature, parent) => {
@@ -21,4 +22,14 @@ export const notifyIf = async (option, message) => {
       ...message
     })
   }
+}
+
+export const isLoggedIn = async () => {
+  const mainHeaderRightLoggedOut = select('.main-header__right__logged-out')
+
+  if (mainHeaderRightLoggedOut) {
+    return false
+  }
+
+  return true
 }
