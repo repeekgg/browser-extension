@@ -24,12 +24,5 @@ export const notifyIf = async (option, message) => {
   }
 }
 
-export const isLoggedIn = () => {
-  const mainHeaderRightLoggedOut = select('.main-header__right__logged-out')
-
-  if (mainHeaderRightLoggedOut) {
-    return false
-  }
-
-  return true
-}
+export const isLoggedIn = () =>
+  !select.exists('.main-header__right__logged-out')
