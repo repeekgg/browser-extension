@@ -30,7 +30,7 @@ export default async () => {
       return
     }
 
-    const { flag, games } = self
+    const { flag, games, nickname } = self
     const { skillLevel, faceitElo } = games[flag]
     const [levelMinElo, levelMaxElo] = LEVELS[skillLevel]
 
@@ -51,7 +51,9 @@ export default async () => {
               'justify-content': 'flex-end'
             }}
           >
-            {faceitElo}
+            <a href={`https://www.faceit.com/en/players/${nickname}`}>
+              {faceitElo}
+            </a>
             <i
               className="icon-ELO-icon text-light"
               style={{ 'margin-left': 4 }}
