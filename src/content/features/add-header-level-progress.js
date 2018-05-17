@@ -5,11 +5,16 @@ import { CACHE_TIME, getSelf } from '../libs/faceit'
 import { hasFeatureAttribute, setFeatureAttribute } from '../libs/dom-element'
 import { LEVELS } from '../libs/elo'
 import createSkillLevelElement from '../components/skill-level'
+import { isLoggedIn } from '../libs/utils'
 
 const FEATURE_ATTRIBUTE = 'own-level'
 const REFRESH_TIME = CACHE_TIME + 15000
 
 export default async () => {
+  if (!isLoggedIn()) {
+    return
+  }
+
   const headerRightElement = select('.main-header__right')
 
   if (!headerRightElement) {
