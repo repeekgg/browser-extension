@@ -14,8 +14,11 @@ export default () => (
       secondary={version}
       href={changelogs[version]}
     />
-    <ListItemLink primary="Author" secondary="azn" faceit="azn__" />
-    <ListItemLink primary="Website" href="https://faceit-enhancer.com" />
+    <ListItemLink
+      primary="Website"
+      secondary="faceit-enhancer.com"
+      href="https://faceit-enhancer.com"
+    />
     <ListItemLink
       primary="GitHub"
       secondary="Source Code"
@@ -26,6 +29,18 @@ export default () => (
     <ListItemLink
       primary="Steam Group"
       steamCommunity="groups/FACEITEnhancer"
+    />
+    <ListSubheader divider>Team</ListSubheader>
+    <ListItemLink primary="azn" secondary="Author" faceit="azn__" />
+    <ListItemLink
+      primary="zerosiris"
+      secondary="Developer"
+      faceit="zerosiris"
+    />
+    <ListItemLink
+      primary="poacher2k"
+      secondary="Developer"
+      faceit="poacher2k"
     />
     <ListSubheader divider>Contributors</ListSubheader>
     <ListItemLink
