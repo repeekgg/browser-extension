@@ -11,7 +11,6 @@ import Appearance, { APPEARANCE } from './sections/appearance'
 import VetoPreferences, { VETO_PREFERENCES } from './sections/veto-preferences'
 import Notifications, { NOTIFICATIONS } from './sections/notifications'
 import Help, { HELP } from './sections/help'
-import Donate, { DONATE } from './sections/donate'
 import About, { ABOUT } from './sections/about'
 
 export default class App extends React.Component {
@@ -115,7 +114,6 @@ export default class App extends React.Component {
             [VETO_PREFERENCES]: VetoPreferences,
             [NOTIFICATIONS]: Notifications,
             [HELP]: Help,
-            [DONATE]: Donate,
             [ABOUT]: About
           }}
           itemProps={{
