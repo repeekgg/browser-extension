@@ -44,6 +44,11 @@ export default async parent => {
               memberElement,
               isTeamV1Element
             )
+
+            if (!nicknameElement) {
+              return
+            }
+
             const nickname = nicknameElement.textContent
 
             const player = await getPlayer(nickname)
