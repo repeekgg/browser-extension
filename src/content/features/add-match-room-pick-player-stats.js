@@ -20,7 +20,7 @@ export default async parentElement => {
   }
 
   const captainPickElement = select(
-    `div.match-voting[ng-include="'blocks/v2/matchroom/main/captain-pick-block.html'"] ul`,
+    `div.match-voting[ng-include="vm.templates.captainPick"] ul`,
     parentElement
   )
 
