@@ -43,6 +43,14 @@ export default async () => {
       ? `${(faceitElo - levelMinElo) / (levelMaxElo - levelMinElo) * 100}%`
       : '100%'
 
+    const levelBelow = LEVELS[skillLevel - 1]
+    const levelAbove = LEVELS[skillLevel + 1]
+
+    const levelBelowEloDiff = levelBelow ? `-${faceitElo - levelBelow[1]}` : 0
+    const levelAboveEloDiff = levelMaxElo
+      ? `+${levelAbove[0] - faceitElo}`
+      : '∞'
+
     levelElement = (
       <a href={`https://www.faceit.com/en/players/${nickname}`}>
         <div
@@ -90,9 +98,7 @@ export default async () => {
               >
                 {levelMinElo}
                 <span>
-                  -{faceitElo - LEVELS[skillLevel - 1][1]}/{levelMaxElo
-                    ? `+${LEVELS[skillLevel + 1][0] - faceitElo}`
-                    : '∞'}
+                  {levelBelowEloDiff}/{levelAboveEloDiff}
                 </span>
                 <span>{levelMaxElo ? levelMaxElo : '∞'}</span>
               </div>
