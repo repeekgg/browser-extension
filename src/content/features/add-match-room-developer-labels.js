@@ -1,3 +1,5 @@
+/** @jsx h */
+import { h } from 'dom-chef'
 import select from 'select-dom'
 import {
   getTeamElements,
@@ -40,8 +42,6 @@ export default async parent => {
       return
     }
 
-    const { isFaction1 } = factionDetails
-
     const memberElements = getTeamMemberElements(teamElement)
 
     memberElements.forEach(async memberElement => {
@@ -65,15 +65,16 @@ export default async parent => {
         return
       }
 
-      const developerLabelElement = createDeveloperLabelElement({
-        alignRight: !isFaction1
-      })
+      const developerLabelElement = createDeveloperLabelElement()
 
       const memberDetailsElement = select(
-        '.match-team-member__details',
+        '.match-team-member__details__name',
         memberElement
       )
-      memberDetailsElement.before(developerLabelElement)
+      memberDetailsElement.insertAdjacentElement(
+        'afterbegin',
+        <div style={{ 'margin-top': 5 }}>{developerLabelElement}</div>
+      )
     })
   })
 }
