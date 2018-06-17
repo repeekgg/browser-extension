@@ -121,3 +121,31 @@ export function mapPlayersToPartyColors(
 export const mapPlayersToPartyColorsMemoized = mem(mapPlayersToPartyColors, {
   cacheKey: faction => JSON.stringify(faction)
 })
+
+const mapMatchNicknamesToPlayers = match => {
+  const nicknamesToPlayers = {}
+  let allPlayers
+  if (match.faction1 && match.faction2) {
+    allPlayers = match.faction1.concat(match.faction2)
+  } else if (match.teams && match.teams.faction1 && match.teams.faction2) {
+    allPlayers = match.teams.faction1.roster.concat(match.teams.faction2.roster)
+  } else {
+    throw new Error(
+      `Not sure how to handle this match: ${match.guid || match.id}`
+    )
+  }
+
+  allPlayers.forEach(player => {
+    const { nickname } = player
+    nicknamesToPlayers[nickname] = player
+  })
+
+  return nicknamesToPlayers
+}
+
+export const mapMatchNicknamesToPlayersMemoized = mem(
+  mapMatchNicknamesToPlayers,
+  {
+    cacheKey: match => JSON.stringify(match.guid || match.id)
+  }
+)

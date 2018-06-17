@@ -57,6 +57,8 @@ const fetchApiMemoized = pMemoize(fetchApi, {
   maxAge: CACHE_TIME
 })
 
+export const getUser = userId => fetchApiMemoized(`/core/v1/users/${userId}`)
+
 export const getPlayer = nickname =>
   fetchApiMemoized(`/core/v1/nicknames/${nickname}`)
 

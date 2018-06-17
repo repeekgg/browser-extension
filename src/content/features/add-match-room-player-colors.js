@@ -33,10 +33,13 @@ export default async parent => {
   }
 
   teamElements.forEach(async teamElement => {
-    const { factionName, isFaction1 } = getFactionDetails(
-      teamElement,
-      isTeamV1Element
-    )
+    const factionDetails = getFactionDetails(teamElement, isTeamV1Element)
+
+    if (!factionDetails) {
+      return
+    }
+
+    const { factionName, isFaction1 } = factionDetails
 
     const faction = match[factionName]
     const factionType = match[`${factionName}Type`]

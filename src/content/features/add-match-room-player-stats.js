@@ -4,15 +4,11 @@ import {
   getRoomId,
   getFactionDetails,
   getTeamMemberElements,
-  getNicknameElement
+  getNicknameElement,
+  mapMatchNicknamesToPlayersMemoized
 } from '../libs/match-room'
 import { hasFeatureAttribute, setFeatureAttribute } from '../libs/dom-element'
-import {
-  getQuickMatch,
-  getMatch,
-  getPlayer,
-  getPlayerStats
-} from '../libs/faceit'
+import { getQuickMatch, getMatch, getPlayerStats } from '../libs/faceit'
 import createPlayerStatsElement from '../components/player-stats'
 
 const FEATURE_ATTRIBUTE = 'player-stats'
@@ -21,10 +17,26 @@ export default async parent => {
   const { teamElements, isTeamV1Element } = getTeamElements(parent)
 
   const roomId = getRoomId()
-  const match = isTeamV1Element ? getQuickMatch(roomId) : getMatch(roomId)
+  const match = isTeamV1Element
+    ? await getQuickMatch(roomId)
+    : await getMatch(roomId)
+
+  if (!match) {
+    return
+  }
+
+  const { game } = match
+
+  const nicknamesToPlayers = mapMatchNicknamesToPlayersMemoized(match)
 
   teamElements.forEach(async teamElement => {
-    const { isFaction1 } = getFactionDetails(teamElement, isTeamV1Element)
+    const factionDetails = getFactionDetails(teamElement, isTeamV1Element)
+
+    if (!factionDetails) {
+      return
+    }
+
+    const { isFaction1 } = factionDetails
 
     const memberElements = getTeamMemberElements(teamElement)
 
@@ -36,16 +48,16 @@ export default async parent => {
 
       const nicknameElement = getNicknameElement(memberElement, isTeamV1Element)
       const nickname = nicknameElement.textContent
+      const player = nicknamesToPlayers[nickname]
 
-      const player = await getPlayer(nickname)
-
-      if (!player) {
-        return
+      let userId
+      if (isTeamV1Element) {
+        userId = player.guid
+      } else {
+        userId = player.id
       }
 
-      const { guid } = player
-      const { game } = await match
-      const stats = await getPlayerStats(guid, game)
+      const stats = await getPlayerStats(userId, game)
 
       if (!stats) {
         return

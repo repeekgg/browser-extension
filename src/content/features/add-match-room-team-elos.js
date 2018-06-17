@@ -6,9 +6,10 @@ import {
   getRoomId,
   getTeamMemberElements,
   getNicknameElement,
-  getFactionDetails
+  getFactionDetails,
+  mapMatchNicknamesToPlayersMemoized
 } from '../libs/match-room'
-import { getQuickMatch, getMatch, getPlayer } from '../libs/faceit'
+import { getQuickMatch, getMatch, getUser } from '../libs/faceit'
 import {
   hasFeatureAttribute,
   setFeatureAttribute,
@@ -26,9 +27,21 @@ export default async parent => {
     ? await getQuickMatch(roomId)
     : await getMatch(roomId)
 
+  if (!match) {
+    return
+  }
+
+  const nicknamesToPlayers = mapMatchNicknamesToPlayersMemoized(match)
+
   let factions = await Promise.all(
     teamElements.map(async teamElement => {
-      const { factionName } = getFactionDetails(teamElement, isTeamV1Element)
+      const factionDetails = getFactionDetails(teamElement, isTeamV1Element)
+
+      if (!factionDetails) {
+        return
+      }
+
+      const { factionName } = factionDetails
       const factionElo = match[`${factionName}Elo`]
 
       let averageElo
@@ -50,15 +63,23 @@ export default async parent => {
             }
 
             const nickname = nicknameElement.textContent
+            const player = nicknamesToPlayers[nickname]
 
-            const player = await getPlayer(nickname)
+            let userId
+            if (isTeamV1Element) {
+              userId = player.guid
+            } else {
+              userId = player.id
+            }
 
-            if (!player) {
+            const user = await getUser(userId)
+
+            if (!user) {
               return
             }
 
             const { game } = match
-            const elo = player.games[game].faceitElo || null
+            const elo = user.games[game].faceitElo || null
 
             return elo
           })
@@ -100,6 +121,10 @@ export default async parent => {
       }"]`,
       parent
     )
+
+    if (!factionNicknameElement) {
+      return
+    }
 
     if (!hasFeatureAttribute(FEATURE_ATTRIBUTE, factionNicknameElement)) {
       setFeatureAttribute(FEATURE_ATTRIBUTE, factionNicknameElement)
