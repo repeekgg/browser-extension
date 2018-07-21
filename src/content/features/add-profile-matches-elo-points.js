@@ -5,7 +5,8 @@ import {
   getPlayer,
   getPlayerMatches,
   getQuickMatch,
-  getMatch
+  getMatch,
+  getSelf
 } from '../libs/faceit'
 import { mapMatchesByIdAndExtendElo } from '../libs/matches'
 import { getRoomId } from '../libs/match-room'
@@ -27,7 +28,8 @@ export default async parentElement => {
 
   const nickname = await getPlayerProfileNickname()
   const player = await getPlayer(nickname)
-  const isFreeMembership = player.membership.type === 'free'
+  const self = await getSelf()
+  const selfHasFreeMembership = self.membership.type === 'free'
   const matches = await getPlayerMatches(player.guid, player.flag, 21)
 
   const matchesById = mapMatchesByIdAndExtendElo(matches)
@@ -89,7 +91,7 @@ export default async parentElement => {
       gainedElo ? '+' : ''
     }${eloDiff})`
 
-    if (isFreeMembership || !newElo) {
+    if (selfHasFreeMembership || !newElo) {
       return
     }
 
