@@ -42,11 +42,5 @@ export default () => (
       secondary="Developer"
       faceit="poacher2k"
     />
-    <ListSubheader divider>Contributors</ListSubheader>
-    <ListItemLink
-      primary="DyyLN"
-      secondary="Helped building the potentially gaining and losing Elo points in a match."
-      faceit="DyyLN"
-    />
   </React.Fragment>
 )
