@@ -13,7 +13,7 @@ import { hasFeatureAttribute, setFeatureAttribute } from '../libs/dom-element'
 import { getQuickMatch, getMatch } from '../libs/faceit'
 import createFeaturedPlayerLabelElement from '../components/featured-player-label'
 
-const FEATURE_ATTRIBUTE = 'player-label'
+const FEATURE_ATTRIBUTE = 'featured-player-label'
 
 function addPlayer(id, role) {
   return { id, role }
