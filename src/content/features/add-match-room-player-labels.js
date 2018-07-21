@@ -11,14 +11,32 @@ import {
 } from '../libs/match-room'
 import { hasFeatureAttribute, setFeatureAttribute } from '../libs/dom-element'
 import { getQuickMatch, getMatch } from '../libs/faceit'
-import createDeveloperLabelElement from '../components/developer-label'
+import createFeaturedPlayerLabelElement from '../components/featured-player-label'
 
-const FEATURE_ATTRIBUTE = 'developer-label'
+const FEATURE_ATTRIBUTE = 'player-label'
 
-const developerIds = [
-  'b144525f-8f41-4ea4-aade-77862b631bbc', // Azn
-  'e5344dfd-94c2-4087-86e0-20f8c81fe4cb', // Zerosiris
-  'a9f76105-4473-4870-a2c6-7f831e96edaf' // Poacher2k
+function addPlayer(id, role) {
+  return { id, role }
+}
+
+function addDeveloper(id) {
+  return addPlayer(id, 'Developer')
+}
+
+function addSupporter(id) {
+  return addPlayer(id, 'Supporter')
+}
+
+// Get player guid:
+// https://api.faceit.com/core/v1/nicknames/<nickname>
+const featuredPlayers = [
+  /* eslint-disable capitalized-comments */
+  addPlayer('b144525f-8f41-4ea4-aade-77862b631bbc', 'Creator'), // azn
+  addDeveloper('e5344dfd-94c2-4087-86e0-20f8c81fe4cb'), // zerosiris
+  addDeveloper('a9f76105-4473-4870-a2c6-7f831e96edaf'), // poacher2k
+  addSupporter('4d18a0d6-c6a1-4079-af4d-0d73dbdcc5cf'), // zwacki
+  addSupporter('ff0f31f0-b26a-47cf-ae44-09f8a0f65ddb') // hAnnah_f
+  /* eslint-enable capitalized-comments */
 ]
 
 export default async parent => {
@@ -61,11 +79,15 @@ export default async parent => {
         userId = player.id
       }
 
-      if (developerIds.indexOf(userId) === -1) {
+      const featuredPlayer = featuredPlayers.find(({ id }) => id === userId)
+
+      if (!featuredPlayer) {
         return
       }
 
-      const developerLabelElement = createDeveloperLabelElement()
+      const featuredPlayerLabelElement = createFeaturedPlayerLabelElement({
+        role: featuredPlayer.role
+      })
 
       const memberDetailsElement = select(
         '.match-team-member__details__name',
@@ -73,7 +95,9 @@ export default async parent => {
       )
       memberDetailsElement.insertAdjacentElement(
         'afterbegin',
-        <div style={{ 'margin-top': 5 }}>{developerLabelElement}</div>
+        <div style={{ 'margin-top': 5, 'margin-bottom': 3 }}>
+          {featuredPlayerLabelElement}
+        </div>
       )
     })
   })
