@@ -70,16 +70,26 @@ export const getNicknameElement = (parent, isTeamV1Element) =>
     parent
   )
 
-export const getFactionIsPremade = factionType => factionType === 'premade'
+export const getFactionIsPremadeV1 = factionType => factionType === 'premade'
 
 const COLOR_PALETTE = ['#0082c8', '#ffe119', '#808080', '#3cb44b', '#e6194b']
 
 export function mapPlayersToPartyColors(
-  faction,
-  isFaction1,
-  isPremade,
+  match,
+  isTeamV1Element,
+  factionDetails,
   colorPalette = COLOR_PALETTE
 ) {
+  const { factionName, isFaction1 } = factionDetails
+  const faction = isTeamV1Element
+    ? match[factionName]
+    : match.teams[factionName].roster
+  const factionType = match[`${factionName}Type`]
+  const isPremade = isTeamV1Element && getFactionIsPremadeV1(factionType)
+
+  const parties = match.entityCustom && match.entityCustom.parties
+  const partiesIds = parties && Object.keys(parties)
+
   const availableColors = [...colorPalette]
   const pickColor = () =>
     isFaction1 ? availableColors.shift() : availableColors.pop()
@@ -90,10 +100,20 @@ export function mapPlayersToPartyColors(
 
       if (isPremade) {
         partyColor = isEmpty(acc) ? pickColor() : head(acc).partyColor
-      } else if (curr.activeTeamId) {
-        const partyMember = acc.find(
-          ({ activeTeamId }) => activeTeamId === curr.activeTeamId
-        )
+      } else if (curr.activeTeamId || !isTeamV1Element) {
+        let partyMember
+        if (isTeamV1Element) {
+          partyMember = acc.find(
+            ({ activeTeamId }) => activeTeamId === curr.activeTeamId
+          )
+        } else {
+          const playerPartyId = partiesIds.find(partyId => {
+            const party = parties[partyId]
+            return party.indexOf(curr.id) !== -1
+          })
+          const playerParty = parties[playerPartyId]
+          partyMember = acc.find(({ id }) => playerParty.indexOf(id) !== -1)
+        }
 
         if (partyMember) {
           partyColor = partyMember.partyColor
@@ -119,7 +139,14 @@ export function mapPlayersToPartyColors(
 }
 
 export const mapPlayersToPartyColorsMemoized = mem(mapPlayersToPartyColors, {
-  cacheKey: faction => JSON.stringify(faction)
+  cacheKey: (match, isTeamV1Element, factionDetails) => {
+    const { factionName } = factionDetails
+    const faction = isTeamV1Element
+      ? match[factionName]
+      : match.teams[factionName].roster
+
+    return JSON.stringify(faction)
+  }
 })
 
 const mapMatchNicknamesToPlayers = match => {

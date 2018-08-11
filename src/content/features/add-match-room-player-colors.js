@@ -4,8 +4,7 @@ import {
   getRoomId,
   getFactionDetails,
   getTeamMemberElements,
-  mapPlayersToPartyColorsMemoized,
-  getFactionIsPremade
+  mapPlayersToPartyColorsMemoized
 } from '../libs/match-room'
 import { getQuickMatch, getMatch } from '../libs/faceit'
 import {
@@ -18,10 +17,6 @@ const FEATURE_ATTRIBUTE = 'player-color'
 
 export default async parent => {
   const { teamElements, isTeamV1Element } = getTeamElements(parent)
-
-  if (!isTeamV1Element) {
-    return
-  }
 
   const roomId = getRoomId()
   const { matchType, ...match } = isTeamV1Element
@@ -39,15 +34,12 @@ export default async parent => {
       return
     }
 
-    const { factionName, isFaction1 } = factionDetails
-
-    const faction = match[factionName]
-    const factionType = match[`${factionName}Type`]
+    const { isFaction1 } = factionDetails
 
     const playerColors = mapPlayersToPartyColorsMemoized(
-      faction,
-      isFaction1,
-      getFactionIsPremade(factionType)
+      match,
+      isTeamV1Element,
+      factionDetails
     )
 
     const memberElements = getTeamMemberElements(teamElement)
@@ -59,10 +51,10 @@ export default async parent => {
 
       setFeatureAttribute(FEATURE_ATTRIBUTE, memberElement)
 
-      const nickname = select(
-        `strong[ng-bind="::teamMember.nickname"]`,
-        memberElement
-      ).textContent
+      const nicknameSelector = isTeamV1Element
+        ? `strong[ng-bind="::teamMember.nickname"]`
+        : `strong[ng-bind="vm.teamMember.nickname"]`
+      const nickname = select(nicknameSelector, memberElement).textContent
 
       setStyle(memberElement, [
         `border-${isFaction1 ? 'left' : 'right'}: 2px solid ${
