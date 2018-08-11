@@ -9,21 +9,70 @@ test('getRoomId', t => {
   t.falsy(matchRoom.getRoomId(''))
 })
 
-test('mapPlayersToPartyColors', t => {
+test('mapPlayersToPartyColorsV1', t => {
   const createPlayer = (nickname, activeTeamId) => ({
     nickname,
     activeTeamId
   })
-  const faction = [
+  const faction1 = [
     createPlayer('a', '1'),
     createPlayer('b', '1'),
     createPlayer('c', '2')
   ]
+  const match = { faction1 }
+  const factionDetails = { factionName: 'faction1', isFaction1: true }
   const colors = ['white', 'black']
 
-  t.deepEqual(matchRoom.mapPlayersToPartyColors(faction, true, false, colors), {
-    a: colors[0],
-    b: colors[0],
-    c: colors[1]
-  })
+  t.deepEqual(
+    matchRoom.mapPlayersToPartyColors(match, true, factionDetails, colors),
+    {
+      a: colors[0],
+      b: colors[0],
+      c: colors[1]
+    }
+  )
+})
+
+test('mapPlayersToPartyColorsV2', t => {
+  let playerIdCounter = 0
+  const parties = {}
+  const createPlayer = (nickname, partyId) => {
+    if (!parties[partyId]) {
+      parties[partyId] = []
+    }
+    const id = playerIdCounter++
+    parties[partyId].push(id)
+
+    return {
+      nickname,
+      id
+    }
+  }
+  const roster = [
+    createPlayer('a', '1'),
+    createPlayer('b', '1'),
+    createPlayer('c', '2')
+  ]
+  const match = {
+    entityCustom: {
+      parties
+    },
+    teams: {
+      faction1: {
+        roster
+      }
+    }
+  }
+
+  const factionDetails = { factionName: 'faction1', isFaction1: true }
+  const colors = ['white', 'black']
+
+  t.deepEqual(
+    matchRoom.mapPlayersToPartyColors(match, false, factionDetails, colors),
+    {
+      a: colors[0],
+      b: colors[0],
+      c: colors[1]
+    }
+  )
 })
