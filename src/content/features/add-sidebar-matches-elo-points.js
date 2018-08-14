@@ -35,7 +35,7 @@ export default async () => {
   const matchesById = mapMatchesByIdAndExtendElo(matches)
 
   const pastMatchElements = select.all(
-    'navigation-match-line[match="match"][template="match-history"] > div',
+    'navigation-match-v3-line[match="match"] > div',
     matchHistoryElement
   )
 
@@ -85,6 +85,7 @@ export default async () => {
       'div.side-menu-line__text > div[class*="text-white"]',
       pastMatchElement
     )
+
     opponentNameElement.append(eloDiffElement)
 
     if (isFreeMembership || !newElo) {

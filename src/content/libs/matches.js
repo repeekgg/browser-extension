@@ -1,4 +1,5 @@
 /* eslint-disable import/prefer-default-export */
+import { normalizeElo } from './elo'
 
 export function mapMatchesByIdAndExtendElo(matches) {
   return matches.reduce((acc, { matchId, elo, ...match }, i) => {
@@ -6,9 +7,8 @@ export function mapMatchesByIdAndExtendElo(matches) {
       return acc
     }
 
-    const newElo = elo ? Number(elo) : null
-    const nextMatchElo = matches[i + 1].elo
-    const oldElo = nextMatchElo ? Number(nextMatchElo) : null
+    const newElo = normalizeElo(elo)
+    const oldElo = normalizeElo(matches[i + 1].elo)
     const eloDiff = oldElo && newElo ? newElo - oldElo : null
 
     return {

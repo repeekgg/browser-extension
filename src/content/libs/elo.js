@@ -1,6 +1,10 @@
 /* eslint-disable import/prefer-default-export */
 import mem from 'mem'
 
+export function normalizeElo(elo) {
+  return elo ? Number(elo.replace(',', '')) : null
+}
+
 export function calculateRatingChange(elo1, elo2, K = 50) {
   const eloDiff = elo2 - elo1
   const percentage = 1 / (1 + Math.pow(10, eloDiff / 400))
