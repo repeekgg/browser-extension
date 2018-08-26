@@ -8,7 +8,9 @@ export const FACTION_1 = 'faction1'
 export const FACTION_2 = 'faction2'
 
 export const getRoomId = path => {
-  const match = /room\/(.+-.+-.+-.+)/.exec(path || getCurrentPath())
+  const match = /room\/([0-9a-z]+-[0-9a-z]+-[0-9a-z]+-[0-9a-z]+-[0-9a-z]+)/.exec(
+    path || getCurrentPath()
+  )
 
   return match && match[1]
 }

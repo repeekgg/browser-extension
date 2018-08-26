@@ -49,14 +49,7 @@ export default async parentElement => {
   setFeatureAttribute(FEATURE_ATTRIBUTE, matchHistoryElement)
 
   matchElements.forEach(async matchElement => {
-    const accordionElement = matchElement.nextElementSibling
-    const goToMatchRoomElement = select(
-      'a[ui-sref*="app.root.matchroom.main.overview"]',
-      accordionElement
-    )
-    const resultElement = select('td:nth-child(3) span', matchElement)
-
-    const matchId = getRoomId(goToMatchRoomElement.getAttribute('href'))
+    const matchId = getRoomId(matchElement.getAttribute('href'))
 
     if (!matchesById[matchId]) {
       return
@@ -86,6 +79,8 @@ export default async parentElement => {
     }
 
     const gainedElo = eloDiff > 0
+
+    const resultElement = select('td:nth-child(3) span', matchElement)
 
     resultElement.textContent = `${resultElement.textContent} (${
       gainedElo ? '+' : ''
