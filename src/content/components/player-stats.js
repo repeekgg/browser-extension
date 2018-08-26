@@ -25,7 +25,6 @@ export default ({
     className="text-muted"
     style={{
       display: 'flex',
-      background: '#1b1b1f',
       'border-top': '1px solid #333',
       'text-align': alignRight && 'right',
       'font-size': 12,
