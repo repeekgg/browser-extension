@@ -9,25 +9,6 @@ import { getQuickMatch, getMatch } from '../libs/faceit'
 
 const FEATURE_ATTRIBUTE = 'demo-download'
 
-styleInject(`
-  .match-history-stats__row th:nth-last-child(3) .entry {
-    text-align: right;
-  }
-
-  .match-history-stats__row td:nth-last-child(2) {
-    width: 1px;
-  }
-
-  .match-history-stats__row td:nth-last-child(3) .entry {
-    text-align: right;
-  }
-
-  .match-history-stats__row td:nth-last-child(3) .entry img {
-    height: 40px;
-    padding-left: 5px;
-  }
-`)
-
 export default async parentElement => {
   const matchHistoryElement = select(
     'div.js-match-history-stats',
@@ -36,6 +17,21 @@ export default async parentElement => {
 
   if (!matchHistoryElement) {
     return
+  }
+
+  if (!hasFeatureAttribute(FEATURE_ATTRIBUTE, matchHistoryElement)) {
+    styleInject(`
+      .match-history-stats__row th:nth-last-child(3) .entry {
+        text-align: right;
+      }
+      .match-history-stats__row td:nth-last-child(3) .entry {
+        text-align: right;
+      }
+      .match-history-stats__row td:nth-last-child(3) .entry img {
+        padding-left: 8px;
+      }
+    `)
+    setFeatureAttribute(FEATURE_ATTRIBUTE, matchHistoryElement)
   }
 
   const matchElements = select.all(
@@ -60,20 +56,14 @@ export default async parentElement => {
     }
     setFeatureAttribute(FEATURE_ATTRIBUTE, matchElement)
 
-    const accordionElement = matchElement.nextElementSibling
-    const goToMatchRoomElement = select(
-      'a[ui-sref*="app.root.matchroom.main.overview"]',
-      accordionElement
-    )
-
-    const matchId = getRoomId(goToMatchRoomElement.getAttribute('href'))
+    const matchId = getRoomId(matchElement.getAttribute('href'))
 
     const downloadButtonElement = (
-      <td>
-        <button
+      <td style={{ width: 1 }}>
+        <a
           className="btn btn-default btn--with-icon mb-sm"
-          type="button"
-          onClick={async () => {
+          onClick={async e => {
+            e.stopPropagation()
             const match =
               (await getQuickMatch(matchId)) || (await getMatch(matchId))
             const demoUrl =
@@ -85,7 +75,7 @@ export default async parentElement => {
           }}
         >
           Watch Demo
-        </button>
+        </a>
       </td>
     )
 
@@ -93,11 +83,5 @@ export default async parentElement => {
       downloadButtonElement,
       matchElement.children[matchElement.children.length - 1]
     )
-
-    const accordionCellElement = select(
-      '.match-history-stats__accordion__cell',
-      accordionElement
-    )
-    accordionCellElement.setAttribute('colspan', 7)
   })
 }
