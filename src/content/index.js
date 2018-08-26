@@ -16,7 +16,6 @@ import addMatchRoomTeamElos from './features/add-match-room-team-elos'
 import copyMatchRoomCopyServerData from './features/copy-match-room-copy-server-data'
 import clickMatchRoomConnectToServer from './features/click-match-room-connect-to-server'
 import addHeaderLevelProgress from './features/add-header-level-progress'
-import moveHeaderSearch from './features/move-header-search'
 import hideMatchRoomPlayerControls from './features/hide-match-room-player-controls'
 import addSidebarMatchesEloPoints from './features/add-sidebar-matches-elo-points'
 import addProfileMatchesEloPoints from './features/add-profile-matches-elo-points'
@@ -125,7 +124,6 @@ function observeBody() {
       }
     }
 
-    moveHeaderSearch()
     runFeatureIf('headerShowElo', addHeaderLevelProgress)
 
     addSidebarMatchesEloPoints()

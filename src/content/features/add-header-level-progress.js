@@ -57,7 +57,8 @@ export default async () => {
           style={{
             display: 'flex',
             'align-items': 'center',
-            'margin-right': 10
+            'margin-right': 8,
+            'margin-left': 24
           }}
         >
           <div style={{ 'margin-right': 4 }}>
@@ -109,7 +110,10 @@ export default async () => {
       </a>
     )
 
-    headerRightElement.prepend(levelElement)
+    headerRightElement.insertBefore(
+      levelElement,
+      headerRightElement.children[headerRightElement.children.length - 1]
+    )
   }
 
   addLevelElement()
