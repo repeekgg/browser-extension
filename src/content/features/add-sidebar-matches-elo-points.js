@@ -53,40 +53,49 @@ export default async () => {
 
       if (gameMode.includes('5v5')) {
         match = await getQuickMatch(matchId)
+        if (!match) {
+          match = await getMatch(matchId)
+        }
       } else {
         match = await getMatch(matchId)
       }
 
       const { faction1Id, faction1Elo, faction2Elo, winner } = match
-      const isFaction1 = faction1Id === teamId
-      const { winPoints, lossPoints } = calculateRatingChange(
-        isFaction1 ? faction1Elo : faction2Elo,
-        isFaction1 ? faction2Elo : faction1Elo
-      )
-      const hasWon =
-        (winner === 'faction1' && isFaction1) ||
-        (winner === 'faction2' && !isFaction1)
-      eloDiff = hasWon ? winPoints : lossPoints
+
+      if (faction1Id && faction1Elo) {
+        const isFaction1 = faction1Id === teamId
+        const { winPoints, lossPoints } = calculateRatingChange(
+          isFaction1 ? faction1Elo : faction2Elo,
+          isFaction1 ? faction2Elo : faction1Elo
+        )
+
+        const hasWon =
+          (winner === 'faction1' && isFaction1) ||
+          (winner === 'faction2' && !isFaction1)
+        eloDiff = hasWon ? winPoints : lossPoints
+      }
     }
-
-    const eloGained = eloDiff > 0
-
-    const eloDiffElement = (
-      <span
-        className={eloGained ? 'text-success' : 'text-danger'}
-        style={{ 'margin-left': 5 }}
-      >
-        {eloGained && '+'}
-        {eloDiff}
-      </span>
-    )
 
     const opponentNameElement = select(
       'div.side-menu-line__text > div[class*="text-white"]',
       pastMatchElement
     )
 
-    opponentNameElement.append(eloDiffElement)
+    if (eloDiff) {
+      const gainedElo = eloDiff > 0
+
+      const eloDiffElement = (
+        <span
+          className={gainedElo ? 'text-success' : 'text-danger'}
+          style={{ 'margin-left': 5 }}
+        >
+          {gainedElo && '+'}
+          {eloDiff}
+        </span>
+      )
+
+      opponentNameElement.append(eloDiffElement)
+    }
 
     if (isFreeMembership || !newElo) {
       return

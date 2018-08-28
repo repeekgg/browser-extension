@@ -62,29 +62,37 @@ export default async parentElement => {
 
       if (gameMode.includes('5v5')) {
         match = await getQuickMatch(matchId)
+        if (!match) {
+          match = await getMatch(matchId)
+        }
       } else {
         match = await getMatch(matchId)
       }
 
       const { faction1Id, faction1Elo, faction2Elo, winner } = match
-      const isFaction1 = faction1Id === teamId
-      const { winPoints, lossPoints } = calculateRatingChange(
-        isFaction1 ? faction1Elo : faction2Elo,
-        isFaction1 ? faction2Elo : faction1Elo
-      )
-      const hasWon =
-        (winner === 'faction1' && isFaction1) ||
-        (winner === 'faction2' && !isFaction1)
-      eloDiff = hasWon ? winPoints : lossPoints
-    }
 
-    const gainedElo = eloDiff > 0
+      if (faction1Id && faction1Elo) {
+        const isFaction1 = faction1Id === teamId
+        const { winPoints, lossPoints } = calculateRatingChange(
+          isFaction1 ? faction1Elo : faction2Elo,
+          isFaction1 ? faction2Elo : faction1Elo
+        )
+
+        const hasWon =
+          (winner === 'faction1' && isFaction1) ||
+          (winner === 'faction2' && !isFaction1)
+        eloDiff = hasWon ? winPoints : lossPoints
+      }
+    }
 
     const resultElement = select('td:nth-child(3) span', matchElement)
 
-    resultElement.textContent = `${resultElement.textContent} (${
-      gainedElo ? '+' : ''
-    }${eloDiff})`
+    if (eloDiff) {
+      const gainedElo = eloDiff > 0
+      resultElement.textContent = `${resultElement.textContent} (${
+        gainedElo ? '+' : ''
+      }${eloDiff})`
+    }
 
     if (selfHasFreeMembership || !newElo) {
       return
