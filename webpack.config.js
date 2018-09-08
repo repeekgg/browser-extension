@@ -62,17 +62,20 @@ module.exports = {
   ],
   optimization: {
     concatenateModules: true,
-    minimizer: [
-      new UglifyJsPlugin({
-        uglifyOptions: {
-          mangle: false,
-          compress: false,
-          output: {
-            beautify: true,
-            indent_level: 2 // eslint-disable-line camelcase
-          }
-        }
-      })
-    ]
+    minimizer:
+      process.env.NODE_ENV === 'production'
+        ? [
+            new UglifyJsPlugin({
+              uglifyOptions: {
+                mangle: false,
+                compress: false,
+                output: {
+                  beautify: true,
+                  indent_level: 2 // eslint-disable-line camelcase
+                }
+              }
+            })
+          ]
+        : undefined
   }
 }
