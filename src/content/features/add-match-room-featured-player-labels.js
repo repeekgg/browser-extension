@@ -23,8 +23,8 @@ function addDeveloper(id) {
   return addPlayer(id, 'Developer')
 }
 
-function addSupporter(id) {
-  return addPlayer(id, 'Supporter')
+function addDonator(id) {
+  return addPlayer(id, 'Donator')
 }
 
 // Get player guid:
@@ -32,11 +32,10 @@ function addSupporter(id) {
 const featuredPlayers = [
   /* eslint-disable capitalized-comments */
   addPlayer('b144525f-8f41-4ea4-aade-77862b631bbc', 'Creator'), // azn
-  addDeveloper('e5344dfd-94c2-4087-86e0-20f8c81fe4cb'), // zerosiris
   addDeveloper('a9f76105-4473-4870-a2c6-7f831e96edaf'), // poacher2k
-  addSupporter('4d18a0d6-c6a1-4079-af4d-0d73dbdcc5cf'), // zwacki
-  addSupporter('ff0f31f0-b26a-47cf-ae44-09f8a0f65ddb'), // hAnnah_f
-  addPlayer('b9b5b9fc-a5d6-4398-bb69-35decdca1ae5', 'Contributor') // DyyLN
+  addDonator('4d18a0d6-c6a1-4079-af4d-0d73dbdcc5cf'), // zwacki
+  addDonator('ff0f31f0-b26a-47cf-ae44-09f8a0f65ddb'), // hAnnah_f
+  addDonator('710970df-174c-4e4a-8267-e858b717f2cc') // shiroatata
   /* eslint-enable capitalized-comments */
 ]
 
