@@ -49,10 +49,7 @@ browser.runtime.onInstalled.addListener(async ({ reason, previousVersion }) => {
     const { version } = browser.runtime.getManifest()
 
     const versionDiffType = semverDiff(previousVersion, version)
-    if (
-      version !== '1.6.7' &&
-      (versionDiffType === null || versionDiffType === 'patch')
-    ) {
+    if (versionDiffType === null || versionDiffType === 'patch') {
       return
     }
 
