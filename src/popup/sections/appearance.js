@@ -31,5 +31,11 @@ export default ({ getSwitchProps }) => (
       }
       {...getSwitchProps('matchRoomHidePlayerControls')}
     />
+    <ListSubheader divider>Other page elements</ListSubheader>
+    <ListItemSwitch
+      primary="Hide FACEIT Client download banner"
+      secondary={`Hide the orange banner that says "THE FACEIT CLIENT HAS LANDED, DOWNLOAD IT NOW"`}
+      {...getSwitchProps('hideFaceitClientHasLandedBanner')}
+    />
   </React.Fragment>
 )
