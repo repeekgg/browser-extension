@@ -3,11 +3,18 @@ import browser from 'webextension-polyfill'
 import select from 'select-dom'
 import storage from '../../libs/storage'
 
-export const runFeatureIf = async (option, feature, parent) => {
+export const isFeatureEnabled = async option => {
   const options = await storage.getAll()
   const featureEnabled = Array.isArray(option)
     ? option.some(opt => options[opt])
     : options[option]
+
+  return featureEnabled
+}
+
+export const runFeatureIf = async (option, feature, parent) => {
+  const featureEnabled = await isFeatureEnabled(option)
+
   if (featureEnabled) {
     feature(parent)
   }
