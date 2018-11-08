@@ -36,8 +36,8 @@ export default class extends React.Component {
                 onClick={this.onClickNotificationUpdates}
                 disabled={!updateNotifications.length}
               >
-                {updateNotifications.length} new Update{updateNotifications.length !==
-                  1 && 's'}
+                {updateNotifications.length} new Update
+                {updateNotifications.length !== 1 && 's'}
               </Button>
               <Menu
                 anchorEl={anchorEl}

@@ -44,7 +44,7 @@ export const mapAverageStats = stats =>
             if (curr2 === 'winRate') {
               const results = [...acc[curr2], curr[curr2]]
               const wins = results.filter(x => x === 'win').length
-              value = Math.round(wins / results.length * 100)
+              value = Math.round((wins / results.length) * 100)
             } else {
               value =
                 (

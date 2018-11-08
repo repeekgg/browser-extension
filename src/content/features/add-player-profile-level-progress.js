@@ -65,7 +65,7 @@ export default async parentElement => {
   const { flag, games } = player
   const { skillLevel: currentLevel, faceitElo } = games[flag]
   const [_, levelMaxElo] = LEVELS[currentLevel] // eslint-disable-line no-unused-vars
-  const progressWidth = faceitElo / 2000 * 100
+  const progressWidth = (faceitElo / 2000) * 100
 
   const levelProgressElement = (
     <section>
