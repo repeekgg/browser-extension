@@ -29,3 +29,6 @@ export const isGlobalRankingUpdate = parent =>
 
 export const isPlayerProfileStats = () =>
   /players-modal\/.+\/stats\//.test(getCurrentPath())
+
+export const isSelectRoster = parent =>
+  select.exists('h3[translate-once="SELECT-ROSTER"]', parent)

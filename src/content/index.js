@@ -34,6 +34,7 @@ import addSidebarHideButton from './features/add-sidebar-hide-button'
 import addPlayerProfileExtendedStats from './features/add-player-profile-extended-stats'
 import clickModalClose from './features/click-modal-close'
 import showSidebarHubQueuing from './features/show-sidebar-hub-queuing'
+import sortSelectRoster from './features/sort-select-roster'
 import isUserBanned from './bans/is-user-banned'
 import stopToxicity from './bans/stop-toxicity'
 import store from './store'
@@ -136,6 +137,8 @@ function observeBody() {
           modalElement
         )
         addPlayerProfileExtendedStats(modalElement)
+      } else if (modals.isSelectRoster(modalElement)) {
+        sortSelectRoster(modalElement)
       }
     }
 
