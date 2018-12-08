@@ -25,6 +25,7 @@ export const DEFAULTS = {
   extensionEnabled: true,
   headerShowElo: true,
   hideFaceitClientHasLandedBanner: true,
+  lastRosterSelection: [],
   playerProfileLevelProgress: true,
   partyAutoAcceptInvite: false,
   matchQueueAutoReady: false,
