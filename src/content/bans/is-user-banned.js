@@ -19,6 +19,10 @@ export default async () => {
 
   const bannedUser = bans.find(ban => ban.guid === self.guid)
 
+  if (!bannedUser) {
+    return false
+  }
+
   const { startDate, days, weeks, months } = bannedUser
   let endDate
 
