@@ -43,7 +43,7 @@ export default async bannedUser => {
           style={{ color: 'red' }}
         >
           <div>#StopToxicity</div>
-          <div style={{ 'font-size': 6 }}>
+          <div style={{ 'font-size': 9 }}>
             Banned from using FACEIT Enhancer
             <br />
             until {bannedUser.endDate}
