@@ -34,6 +34,8 @@ import addPlayerProfileDownloadDemo from './features/add-player-profile-download
 import addPlayerProfileExtendedStats from './features/add-player-profile-extended-stats'
 import clickModalClose from './features/click-modal-close'
 import showSidebarHubQueuing from './features/show-sidebar-hub-queuing'
+import isUserBanned from './bans/is-user-banned'
+import stopToxicity from './bans/stop-toxicity'
 
 function observeMainContent(element) {
   const runFeatures = () => {
@@ -151,10 +153,20 @@ function runOnce() {
   runFeatureIf('matchRoomHidePlayerControls', hideMatchRoomPlayerControls)
 }
 
-storage.getAll().then(({ extensionEnabled }) => {
+;(async () => {
+  const { extensionEnabled } = await storage.getAll()
+
   if (!extensionEnabled) {
     return
   }
+
+  const bannedUser = await isUserBanned()
+
+  if (bannedUser) {
+    stopToxicity(bannedUser)
+    return
+  }
+
   observeBody()
   runOnce()
-})
+})()
