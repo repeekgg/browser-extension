@@ -1,4 +1,4 @@
-import { createMuiTheme } from 'material-ui/styles'
+import { createMuiTheme } from '@material-ui/core/styles'
 
 export const colors = {
   orange: '#f50'
@@ -19,5 +19,8 @@ export default createMuiTheme({
     background: {
       default: '#1E2222'
     }
+  },
+  typography: {
+    useNextVariants: true
   }
 })

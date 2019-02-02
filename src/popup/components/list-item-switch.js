@@ -1,16 +1,14 @@
 import React from 'react'
-import {
-  ListItem,
-  ListItemText,
-  ListItemSecondaryAction
-} from 'material-ui/List'
-import Switch from 'material-ui/Switch'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemText from '@material-ui/core/ListItemText'
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
+import Switch from '@material-ui/core/Switch'
 
 export default ({ onClick, checked, ...props }) => (
-  <ListItem onClick={onClick} button>
+  <ListItem button onClick={onClick}>
     <ListItemText {...props} />
     <ListItemSecondaryAction>
-      <Switch onChange={onClick} checked={checked} />
+      <Switch checked={checked} onChange={onClick} />
     </ListItemSecondaryAction>
   </ListItem>
 )

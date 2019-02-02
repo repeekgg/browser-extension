@@ -13,6 +13,7 @@
     "release": "run-s build release:*"
   },
   "dependencies": {
+    "@material-ui/core": "^3.9.1",
     "camelcase-keys": "^4.2.0",
     "copy-text-to-clipboard": "^1.0.4",
     "country-list": "^2.1.0",
@@ -20,7 +21,6 @@
     "detect-browser": "^2.1.0",
     "dom-chef": "^3.1.0",
     "lodash": "^4.17.10",
-    "material-ui": "^1.0.0-beta.38",
     "mem": "^3.0.0",
     "p-memoize": "^1.0.0",
     "p-retry": "^1.0.0",
@@ -59,7 +59,7 @@
     "sinon": "^4.4.2",
     "uglifyjs-webpack-plugin": "^1.2.2",
     "webext": "^1.9.1-with-submit.1",
-    "webpack": "^4.1.0",
+    "webpack": "4.19.0",
     "webpack-cli": "^2.0.10",
     "xo": "^0.20.3"
   },

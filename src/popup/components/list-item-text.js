@@ -1,8 +1,9 @@
 import React from 'react'
-import { ListItem, ListItemText } from 'material-ui/List'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemText from '@material-ui/core/ListItemText'
 
 export default ({ onClick, style, button, ...props }) => (
-  <ListItem onClick={onClick} button={button || Boolean(onClick)} style={style}>
+  <ListItem button={button || Boolean(onClick)} style={style} onClick={onClick}>
     <ListItemText {...props} />
   </ListItem>
 )

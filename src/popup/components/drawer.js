@@ -1,7 +1,7 @@
 import React from 'react'
-import { withStyles } from 'material-ui/styles'
-import MUIDrawer from 'material-ui/Drawer'
-import List from 'material-ui/List'
+import { withStyles } from '@material-ui/core/styles'
+import MUIDrawer from '@material-ui/core/Drawer'
+import List from '@material-ui/core/List'
 import ListItemText from './list-item-text'
 import Loading from './loading'
 
@@ -22,10 +22,10 @@ class Drawer extends React.Component {
               <ListItemText
                 key={item}
                 primary={item}
+                style={activeItem === item ? { background: '#3F3F42' } : null}
                 onClick={() => {
                   this.setState({ activeItem: item })
                 }}
-                style={activeItem === item ? { background: '#3F3F42' } : null}
               />
             ))}
           </List>

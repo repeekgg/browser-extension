@@ -1,9 +1,10 @@
 import React from 'react'
-import AppBar from 'material-ui/AppBar'
-import Toolbar from 'material-ui/Toolbar'
-import Typography from 'material-ui/Typography'
-import Button from 'material-ui/Button'
-import Menu, { MenuItem } from 'material-ui/Menu'
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
+import Typography from '@material-ui/core/Typography'
+import Button from '@material-ui/core/Button'
+import Menu from '@material-ui/core/Menu'
+import MenuItem from '@material-ui/core/MenuItem'
 
 export default class extends React.Component {
   state = {
@@ -26,15 +27,15 @@ export default class extends React.Component {
     return (
       <AppBar position="static" color="secondary">
         <Toolbar>
-          <Typography variant="title" color="primary" style={{ flex: 1 }}>
+          <Typography variant="h6" color="primary" style={{ flex: 1 }}>
             FACEIT Enhancer
           </Typography>
           {showUpdateNotifications && (
             <React.Fragment>
               <Button
                 variant="raised"
-                onClick={this.onClickNotificationUpdates}
                 disabled={!updateNotifications.length}
+                onClick={this.onClickNotificationUpdates}
               >
                 {updateNotifications.length} new Update
                 {updateNotifications.length !== 1 && 's'}

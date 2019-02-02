@@ -1,5 +1,6 @@
 import React from 'react'
-import { ListItem, ListItemText } from 'material-ui/List'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemText from '@material-ui/core/ListItemText'
 
 export default ({ href, faceit, steamCommunity, subreddit, ...props }) => {
   let link = href
@@ -15,7 +16,7 @@ export default ({ href, faceit, steamCommunity, subreddit, ...props }) => {
   }
 
   return (
-    <ListItem component="a" href={link} target="_blank" button>
+    <ListItem button component="a" href={link} target="_blank">
       <ListItemText {...props} />
     </ListItem>
   )

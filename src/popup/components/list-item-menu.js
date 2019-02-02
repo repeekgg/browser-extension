@@ -1,5 +1,6 @@
 import React from 'react'
-import Menu, { MenuItem } from 'material-ui/Menu'
+import Menu from '@material-ui/core/Menu'
+import MenuItem from '@material-ui/core/MenuItem'
 import ListItemText from './list-item-text'
 
 export default class ListItemMenu extends React.Component {
@@ -23,9 +24,9 @@ export default class ListItemMenu extends React.Component {
       <React.Fragment>
         <ListItemText
           button
-          onClick={this.onClickListItem}
           primary={primary}
           secondary={mapOption ? mapOption(selected) : selected}
+          onClick={this.onClickListItem}
         />
         <Menu
           anchorEl={anchorEl}

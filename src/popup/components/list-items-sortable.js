@@ -1,15 +1,16 @@
 /* eslint-disable new-cap */
 import React from 'react'
-import List from 'material-ui/List'
+import List from '@material-ui/core/List'
 import {
   SortableContainer,
   SortableElement,
   arrayMove
 } from 'react-sortable-hoc'
+
 import ListItemText from './list-item-text'
 
 const SortableItem = SortableElement(({ value }) => (
-  <ListItemText primary={value} button />
+  <ListItemText button primary={value} />
 ))
 
 const SortableList = SortableContainer(({ items }) => (
