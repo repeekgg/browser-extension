@@ -36,6 +36,11 @@ export default ({ getSwitchProps }) => (
       }
       {...getSwitchProps('matchRoomHidePlayerControls')}
     />
+    <ListItemSwitch
+      primary="Show Player Divisions"
+      secondary="Shows the divisions in addition to levels, similar to how it used to be like before."
+      {...getSwitchProps('matchRoomShowPlayerDivisions')}
+    />
     <ListSubheader divider>Other page elements</ListSubheader>
     <ListItemSwitch
       primary="Hide FACEIT Client download banner"

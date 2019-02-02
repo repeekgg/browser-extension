@@ -11,6 +11,7 @@ import addMatchRoomFeaturedPlayerLabels from './features/add-match-room-featured
 import addMatchRoomPlayerColors from './features/add-match-room-player-colors'
 import addMatchRoomPlayerFlags from './features/add-match-room-player-flags'
 import addMatchRoomPlayerElos from './features/add-match-room-player-elos'
+import addMatchRoomPlayerDivisions from './features/add-match-room-player-divisions'
 import addMatchRoomPlayerStats from './features/add-match-room-player-stats'
 import addMatchRoomTeamElos from './features/add-match-room-team-elos'
 import copyMatchRoomCopyServerData from './features/copy-match-room-copy-server-data'
@@ -44,6 +45,11 @@ function observeMainContent(element) {
       addMatchRoomPlayerColors(element)
       addMatchRoomPlayerFlags(element)
       addMatchRoomPlayerElos(element)
+      runFeatureIf(
+        'matchRoomShowPlayerDivisions',
+        addMatchRoomPlayerDivisions,
+        element
+      )
       runFeatureIf('matchRoomShowPlayerStats', addMatchRoomPlayerStats, element)
       addMatchRoomTeamElos(element)
       runFeatureIf(

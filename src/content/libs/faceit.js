@@ -102,6 +102,16 @@ export const getPlayerStats = async (userId, game, size = 20) => {
   }
 }
 
+export const getPlayerDivision = async (userId, game, region) => {
+  const response = await fetchApi(
+    `/league/v1/user/${userId}?game=${game}&region=${region}`
+  )
+
+  if (Array.isArray(response)) {
+    return response.find(elem => elem.divisionType)
+  }
+}
+
 export const getQuickMatch = matchId =>
   fetchApiMemoized(`/core/v1/matches/${matchId}?withStats=true`)
 
