@@ -88,10 +88,15 @@
     "plugins": [
       "react"
     ],
+    "settings": {
+      "react": {
+      }
+    },
     "prettier": true,
     "space": true,
     "rules": {
-      "react/prop-types": 0
+      "react/prop-types": 0,
+      "react/jsx-sort-props": 0
     }
   },
   "ava": {
