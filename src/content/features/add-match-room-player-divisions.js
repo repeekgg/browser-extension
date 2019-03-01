@@ -56,6 +56,13 @@ export default async parent => {
         '.match-team-member__details__skill',
         memberElement
       )
+
+      const leagueIcon = select('league-icon', memberElement)
+
+      if (leagueIcon) {
+        return
+      }
+
       const nicknameElement = getNicknameElement(memberElement, isTeamV1Element)
       const nickname = nicknameElement.textContent
       const player = nicknamesToPlayers[nickname]
