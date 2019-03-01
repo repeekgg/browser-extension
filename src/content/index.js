@@ -33,6 +33,13 @@ import showSidebarMatchmakingQueuing from './features/show-sidebar-matchmaking-q
 import addSidebarHideButton from './features/add-sidebar-hide-button'
 import addPlayerProfileDownloadDemo from './features/add-player-profile-download-demo'
 import addPlayerProfileExtendedStats from './features/add-player-profile-extended-stats'
+import addTournamentCheckinPlayerFlags from './features/add-tournament-checkin-player-flags'
+import addTournamentCheckinPlayerElos from './features/add-tournament-checkin-player-elos'
+import addTournamentCheckinPlayerLevels from './features/add-tournament-checkin-player-levels'
+import addTournamentCheckinPlayerStats from './features/add-tournament-checkin-player-stats'
+import addTournamentTeamPopupPlayerElos from './features/add-tournament-team-popup-player-elos'
+import addTournamentTeamPopupPlayerStats from './features/add-tournament-team-popup-player-stats'
+import addTournamentTeamPopupTeamElos from './features/add-tournament-team-popup-team-elos'
 import clickModalClose from './features/click-modal-close'
 import showSidebarHubQueuing from './features/show-sidebar-hub-queuing'
 import isUserBanned from './bans/is-user-banned'
@@ -72,6 +79,10 @@ function observeMainContent(element) {
       addMatchRoomPickPlayerStats(element)
       addMatchRoomPickPlayerElos(element)
       addMatchRoomPickPlayerFlags(element)
+    } else if (pages.isTournamentOverview()) {
+      addTournamentTeamPopupPlayerElos(element)
+      addTournamentTeamPopupTeamElos(element)
+      addTournamentTeamPopupPlayerStats(element)
     } else if (pages.isPlayerProfileStats()) {
       runFeatureIf(
         'playerProfileLevelProgress',
@@ -81,6 +92,12 @@ function observeMainContent(element) {
       addProfileMatchesEloPoints(element)
       addPlayerProfileDownloadDemo(element)
       addPlayerProfileExtendedStats(element)
+    }
+    if (pages.hasTournamentCheckin()) {
+      addTournamentCheckinPlayerFlags(element)
+      addTournamentCheckinPlayerElos(element)
+      addTournamentCheckinPlayerLevels(element)
+      addTournamentCheckinPlayerStats(element)
     }
   }
 
@@ -145,7 +162,7 @@ function observeBody() {
     addSidebarHideButton()
 
     if (!mainContentElement) {
-      mainContentElement = select('#main-content')
+      mainContentElement = select('body')
       if (mainContentElement) {
         observeMainContent(mainContentElement)
       }

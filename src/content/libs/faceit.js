@@ -112,6 +112,9 @@ export const getPlayerDivision = async (userId, game, region) => {
   }
 }
 
+export const getTournament = tournamentId =>
+  fetchApiMemoized(`/core/v1/tournaments/${tournamentId}`)
+
 export const getQuickMatch = matchId =>
   fetchApiMemoized(`/core/v1/matches/${matchId}?withStats=true`)
 

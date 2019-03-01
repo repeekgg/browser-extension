@@ -31,5 +31,7 @@ export const notifyIf = async (option, message) => {
   }
 }
 
+export const isModalOpen = () => select.exists('.modal-dialog')
+
 export const isLoggedIn = () =>
   !select.exists('.main-header__right__logged-out')
