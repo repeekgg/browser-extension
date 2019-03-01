@@ -17,7 +17,7 @@ export default async parentElement => {
     return
   }
 
-  const playerElements = select.all('.roster .roster__member' , parentElement)
+  const playerElements = select.all('.roster .roster__member', parentElement)
 
   if (playerElements.length === 0) {
     return

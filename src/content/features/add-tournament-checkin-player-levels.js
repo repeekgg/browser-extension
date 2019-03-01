@@ -1,7 +1,7 @@
 /** @jsx h */
 import { h } from 'dom-chef'
 import select from 'select-dom'
-import {  getPlayer } from '../libs/faceit'
+import { getPlayer } from '../libs/faceit'
 import { hasFeatureAttribute, setFeatureAttribute } from '../libs/dom-element'
 import { isModalOpen } from '../libs/utils'
 import createSkillLevelElement from '../components/skill-level'
