@@ -33,11 +33,6 @@ export default () => (
     <ListSubheader divider>Team</ListSubheader>
     <ListItemLink primary="azn" secondary="Creator" faceit="azn__" />
     <ListItemLink
-      primary="zerosiris"
-      secondary="Developer"
-      faceit="zerosiris"
-    />
-    <ListItemLink
       primary="poacher2k"
       secondary="Developer"
       faceit="poacher2k"
