@@ -33,7 +33,7 @@ export default async parentElement => {
   }
 
   const votingListElement = select(
-    'div.match-vs__details > div.match-voting > ul',
+    'div.match-vs__details > div.match-voting > div > democracy',
     parentElement
   )
 
@@ -56,7 +56,7 @@ export default async parentElement => {
   autoVetoItems = autoVetoItems.reverse()
 
   const isVetoMaps = autoVetoItems.some(item =>
-    select.exists(`li > div[title="${item}"]`, votingListElement)
+    select.exists(`div[title="${item}"]`, votingListElement)
   )
 
   if (
@@ -69,7 +69,7 @@ export default async parentElement => {
   setFeatureAttribute(FEATURE_ATTRIBUTE, votingListElement)
 
   const autoVeto = () => {
-    const isVetoTurn = select.exists('li > button', votingListElement)
+    const isVetoTurn = select.exists('button', votingListElement)
 
     if (!isVetoTurn) {
       return
@@ -77,7 +77,7 @@ export default async parentElement => {
 
     autoVetoItems.some(item => {
       const vetoButtonElement = select(
-        `li > div[title="${item}"] ~ button`,
+        `div[title="${item}"] * button`,
         votingListElement
       )
       if (vetoButtonElement) {
@@ -92,7 +92,7 @@ export default async parentElement => {
   autoVeto()
 
   const observer = new MutationObserver(() => {
-    const vetoButtonElements = select.all('li > button', votingListElement)
+    const vetoButtonElements = select.all('button', votingListElement)
 
     if ([2, 3].includes(vetoButtonElements.length)) {
       observer.disconnect()
