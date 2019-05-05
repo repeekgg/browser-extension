@@ -4,7 +4,10 @@ import select from 'select-dom'
 import { hasFeatureAttribute, setFeatureAttribute } from '../libs/dom-element'
 import { getPlayer } from '../libs/faceit'
 import { LEVELS } from '../libs/elo'
-import { getPlayerProfileNickname } from '../libs/player-profile'
+import {
+  getPlayerProfileNickname,
+  getPlayerProfileStatsGame
+} from '../libs/player-profile'
 import createSkillLevelElement from '../components/skill-level'
 
 const FEATURE_ATTRIBUTE = 'level-progress'
@@ -55,15 +58,16 @@ export default async parentElement => {
   }
   setFeatureAttribute(FEATURE_ATTRIBUTE, profileElement)
 
-  const nickname = await getPlayerProfileNickname()
+  const nickname = getPlayerProfileNickname()
   const player = await getPlayer(nickname)
 
   if (!player) {
     return
   }
 
-  const { flag, games } = player
-  const { skillLevel: currentLevel, faceitElo } = games[flag]
+  const { games } = player
+  const game = getPlayerProfileStatsGame()
+  const { skillLevel: currentLevel, faceitElo } = games[game]
   const [_, levelMaxElo] = LEVELS[currentLevel] // eslint-disable-line no-unused-vars
   const progressWidth = (faceitElo / 2000) * 100
 
