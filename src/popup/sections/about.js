@@ -30,6 +30,8 @@ export default () => (
       primary="Steam Group"
       steamCommunity="groups/FACEITEnhancer"
     />
+    <ListSubheader divider>Social</ListSubheader>
+    <ListItemLink primary="Twitter" href="https://twitter.com/timche_" />
     <ListSubheader divider>Team</ListSubheader>
     <ListItemLink primary="azn" secondary="Creator" faceit="azn" />
     <ListItemLink

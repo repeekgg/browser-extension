@@ -15,8 +15,8 @@ import createFeaturedPlayerLabelElement from '../components/featured-player-labe
 
 const FEATURE_ATTRIBUTE = 'featured-player-label'
 
-function addPlayer(id, role) {
-  return { id, role }
+function addPlayer(id, role, bgColor, textColor) {
+  return { id, role, bgColor, textColor }
 }
 
 function addDeveloper(id) {
@@ -24,7 +24,7 @@ function addDeveloper(id) {
 }
 
 function addDonator(id) {
-  return addPlayer(id, 'Donator')
+  return addPlayer(id, 'Donator', '#ffe119', '#000')
 }
 
 // Get player guid:
@@ -85,8 +85,12 @@ export default async parent => {
         return
       }
 
+      const { role, bgColor, textColor } = featuredPlayer
+
       const featuredPlayerLabelElement = createFeaturedPlayerLabelElement({
-        role: featuredPlayer.role
+        role,
+        bgColor,
+        textColor
       })
 
       const memberDetailsElement = select(
