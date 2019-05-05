@@ -30,7 +30,6 @@ import addMatchRoomPickPlayerElos from './features/add-match-room-pick-player-el
 import addMatchRoomPickPlayerFlags from './features/add-match-room-pick-player-flags'
 import showSidebarMatchmakingQueuing from './features/show-sidebar-matchmaking-queuing'
 import addSidebarHideButton from './features/add-sidebar-hide-button'
-import addPlayerProfileDownloadDemo from './features/add-player-profile-download-demo'
 import addPlayerProfileExtendedStats from './features/add-player-profile-extended-stats'
 import clickModalClose from './features/click-modal-close'
 import showSidebarHubQueuing from './features/show-sidebar-hub-queuing'
@@ -77,7 +76,6 @@ function observeMainContent(element) {
         element
       )
       addProfileMatchesEloPoints(element)
-      addPlayerProfileDownloadDemo(element)
       addPlayerProfileExtendedStats(element)
     }
   }
@@ -126,7 +124,6 @@ function observeBody() {
           modalElement
         )
         addProfileMatchesEloPoints(modalElement)
-        addPlayerProfileDownloadDemo(modalElement)
         addPlayerProfileExtendedStats(modalElement)
       }
     }
