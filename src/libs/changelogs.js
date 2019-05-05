@@ -1,4 +1,5 @@
 export default {
+  '2.0.0': 'https://redd.it/bkx7tl',
   '1.6.7': 'https://redd.it/9afkzy',
   '1.6.6': 'https://redd.it/9afkzy',
   '1.4.1': 'https://redd.it/8kd917',
