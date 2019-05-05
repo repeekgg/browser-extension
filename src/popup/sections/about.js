@@ -31,7 +31,7 @@ export default () => (
       steamCommunity="groups/FACEITEnhancer"
     />
     <ListSubheader divider>Team</ListSubheader>
-    <ListItemLink primary="azn" secondary="Creator" faceit="azn__" />
+    <ListItemLink primary="azn" secondary="Creator" faceit="azn" />
     <ListItemLink
       primary="poacher2k"
       secondary="Developer"
