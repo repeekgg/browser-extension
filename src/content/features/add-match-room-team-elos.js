@@ -135,7 +135,8 @@ export default async parent => {
         <div className="text-muted text-md" style={{ 'margin-top': 6 }}>
           Avg. Elo: {averageElo} / Diff: {eloDiff > 0 ? `+${eloDiff}` : eloDiff}
           <br />
-          <span>Win: +{winPoints}</span> / <span>Loss: {lossPoints}</span>
+          <span>Est. Win: +{winPoints}</span> /{' '}
+          <span>Est. Loss: {lossPoints}</span>
         </div>
       )
 
