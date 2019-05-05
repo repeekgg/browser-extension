@@ -27,7 +27,7 @@ export default async parent => {
     ? await getQuickMatch(roomId)
     : await getMatch(roomId)
 
-  if (!match) {
+  if (!match || match.state === 'FINISHED') {
     return
   }
 
@@ -104,7 +104,7 @@ export default async parent => {
     return
   }
 
-  factions.forEach(async (faction, i) => {
+  let eloElements = factions.map((faction, i) => {
     const { factionName, averageElo } = faction
 
     const opponentAverageElo = factions[1 - i].averageElo
@@ -122,26 +122,27 @@ export default async parent => {
       parent
     )
 
-    if (!factionNicknameElement) {
-      return
+    if (
+      !factionNicknameElement ||
+      hasFeatureAttribute(FEATURE_ATTRIBUTE, factionNicknameElement)
+    ) {
+      return null
     }
 
-    if (!hasFeatureAttribute(FEATURE_ATTRIBUTE, factionNicknameElement)) {
-      setFeatureAttribute(FEATURE_ATTRIBUTE, factionNicknameElement)
+    setFeatureAttribute(FEATURE_ATTRIBUTE, factionNicknameElement)
 
-      const eloDiff = averageElo - opponentAverageElo
+    const eloDiff = averageElo - opponentAverageElo
 
-      const eloElement = (
-        <div className="text-muted text-md" style={{ 'margin-top': 6 }}>
-          Avg. Elo: {averageElo} / Diff: {eloDiff > 0 ? `+${eloDiff}` : eloDiff}
-          <br />
-          <span>Est. Win: +{winPoints}</span> /{' '}
-          <span>Est. Loss: {lossPoints}</span>
-        </div>
-      )
+    const eloElement = (
+      <div className="text-muted text-md" style={{ 'margin-top': 6 }}>
+        Avg. Elo: {averageElo} / Diff: {eloDiff > 0 ? `+${eloDiff}` : eloDiff}
+        <br />
+        <span>Est. Win: +{winPoints}</span> /{' '}
+        <span>Est. Loss: {lossPoints}</span>
+      </div>
+    )
 
-      factionNicknameElement.append(eloElement)
-    }
+    factionNicknameElement.append(eloElement)
 
     const factionIndex = i + 1
     const scoreElement = select(
@@ -163,5 +164,34 @@ export default async parent => {
       setStyle(scoreElement, 'margin-top: -41px')
       scoreElement.append(pointsElement)
     }
+
+    return eloElement
   })
+
+  eloElements = eloElements.filter(eloElement => Boolean(eloElement))
+
+  if (eloElements.length !== 2) {
+    return
+  }
+
+  const observer = new MutationObserver(() => {
+    const firstResultElement = select('div[class*="MatchScore__Result"')
+
+    if (!firstResultElement) {
+      return
+    }
+
+    const result = firstResultElement.textContent
+
+    if (result === 'W' || result === 'L') {
+      eloElements.forEach(eloElement => {
+        eloElement.remove()
+      })
+      observer.disconnect()
+    }
+  })
+
+  const matchResultElement = select('div[class*=VersusTeamStatus__Holder]')
+
+  observer.observe(matchResultElement, { childList: true, subtree: true })
 }
