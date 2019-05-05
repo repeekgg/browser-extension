@@ -7,7 +7,20 @@ import { DEFAULTS, UPDATE_NOTIFICATION_TYPES } from '../libs/settings'
 
 storage.define({
   defaults: DEFAULTS,
-  migrations: [OptionsSync.migrations.removeUnused]
+  migrations: [
+    savedOptions => {
+      if (
+        savedOptions.matchRoomAutoVetoMapItems &&
+        savedOptions.matchRoomAutoVetoMapItems.includes('de_cbble')
+      ) {
+        savedOptions.matchRoomAutoVetoMapItems = savedOptions.matchRoomAutoVetoMapItems.filter(
+          map => map !== 'de_cbble'
+        )
+        savedOptions.matchRoomAutoVetoMapItems.push('de_vertigo')
+      }
+    },
+    OptionsSync.migrations.removeUnused
+  ]
 })
 
 browser.runtime.onMessage.addListener(message => {
