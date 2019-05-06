@@ -45,7 +45,12 @@ const featuredPlayers = [
   addVIP('d7638ee5-901a-4c94-aee8-e856325b51a0'), // roxxon
   addVIP('efcd8a5a-3a07-4b71-8a82-4f0b0ad4569d'), // wipseN
   addVIP('0ea79dd6-708e-44e5-adba-d2c5e906d42d'), // HPRski
-  addVIP('89464037-3752-4c5b-b998-aca7bf941ba5') // KROKODEALZ
+  addVIP('2162170c-a008-455e-bb64-200a12bafa96'), // kamilyzer
+  addVIP('c28cd3b7-9fbe-45e7-b30f-e22c43b58617'), // V3n0mTV
+  addVIP('d3386053-26eb-403e-8a1b-96aaed775204'), // WaLLe
+  addVIP('1d558e16-f936-4245-97bb-ca60955f15de'), // kaip1
+  addVIP('e146a824-ea66-4aa7-bdcd-23000021b76a'), // mads-
+  addVIP('c4c64927-5f68-4997-9d21-8e9a64646a20') // pyromania
   /* eslint-enable capitalized-comments */
 ]
 
