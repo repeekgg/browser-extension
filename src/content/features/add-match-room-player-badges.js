@@ -44,7 +44,13 @@ const featuredPlayers = [
   addVIP('27d1a137-8bf2-4b21-844e-ff2b7131ae74'), // Swisher
   addVIP('d7638ee5-901a-4c94-aee8-e856325b51a0'), // roxxon
   addVIP('efcd8a5a-3a07-4b71-8a82-4f0b0ad4569d'), // wipseN
-  addVIP('0ea79dd6-708e-44e5-adba-d2c5e906d42d'), // HPRski
+  addPlayer(
+    '0ea79dd6-708e-44e5-adba-d2c5e906d42d',
+    'VIP 🍆💦',
+    '#FF69B4',
+    undefined,
+    'Has donated to support the development.'
+  ), // HPRski
   addVIP('2162170c-a008-455e-bb64-200a12bafa96'), // kamilyzer
   addVIP('c28cd3b7-9fbe-45e7-b30f-e22c43b58617'), // V3n0mTV
   addVIP('d3386053-26eb-403e-8a1b-96aaed775204'), // WaLLe
