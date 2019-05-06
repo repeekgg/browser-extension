@@ -1,7 +1,7 @@
 {
   "name": "FACEIT Enhancer",
   "description": "Enhances the FACEIT experience and adds useful features.",
-  "version": "2.4.0",
+  "version": "2.5.0",
   "manifest_version": 2,
   "homepage_url": "https://faceit-enhancer.com/",
   "minimum_chrome_version": "51",
