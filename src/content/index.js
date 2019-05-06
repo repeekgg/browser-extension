@@ -7,7 +7,7 @@ import { matchRoomIsReady } from './libs/match-room'
 import clickModalPartyInviteAccept from './features/click-modal-party-invite-accept'
 import clickModalMatchQueuingContinue from './features/click-modal-match-queuing-continue'
 import clickModalMatchReady from './features/click-modal-match-ready'
-import addMatchRoomFeaturedPlayerLabels from './features/add-match-room-featured-player-labels'
+import addMatchRoomPlayerBadges from './features/add-match-room-player-badges'
 import addMatchRoomPlayerColors from './features/add-match-room-player-colors'
 import addMatchRoomPlayerFlags from './features/add-match-room-player-flags'
 import addMatchRoomPlayerElos from './features/add-match-room-player-elos'
@@ -38,7 +38,7 @@ import stopToxicity from './bans/stop-toxicity'
 function observeMainContent(element) {
   const runFeatures = () => {
     if (pages.isRoomOverview() && matchRoomIsReady()) {
-      addMatchRoomFeaturedPlayerLabels(element)
+      addMatchRoomPlayerBadges(element)
       addMatchRoomPlayerColors(element)
       addMatchRoomPlayerFlags(element)
       addMatchRoomPlayerElos(element)

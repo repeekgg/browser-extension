@@ -11,20 +11,22 @@ import {
 } from '../libs/match-room'
 import { hasFeatureAttribute, setFeatureAttribute } from '../libs/dom-element'
 import { getQuickMatch, getMatch } from '../libs/faceit'
-import createFeaturedPlayerLabelElement from '../components/featured-player-label'
+import createFeaturedPlayerLabelElement from '../components/player-badge'
 
 const FEATURE_ATTRIBUTE = 'featured-player-label'
 
-function addPlayer(id, role, bgColor, textColor) {
-  return { id, role, bgColor, textColor }
+function addPlayer(id, role, bgColor, textColor, description) {
+  return { id, role, bgColor, textColor, description }
 }
 
-function addDeveloper(id) {
-  return addPlayer(id, 'Developer')
-}
-
-function addDonator(id) {
-  return addPlayer(id, 'Donator', '#ffe119', '#000')
+function addVIP(id) {
+  return addPlayer(
+    id,
+    'VIP',
+    '#ffe119',
+    '#000',
+    'Has donated to support the development.'
+  )
 }
 
 // Get player guid:
@@ -32,18 +34,18 @@ function addDonator(id) {
 const featuredPlayers = [
   /* eslint-disable capitalized-comments */
   addPlayer('b144525f-8f41-4ea4-aade-77862b631bbc', 'Creator'), // azn
-  addDeveloper('a9f76105-4473-4870-a2c6-7f831e96edaf'), // poacher2k
-  addDonator('4d18a0d6-c6a1-4079-af4d-0d73dbdcc5cf'), // zwacki
-  addDonator('ff0f31f0-b26a-47cf-ae44-09f8a0f65ddb'), // hAnnah_f
-  addDonator('710970df-174c-4e4a-8267-e858b717f2cc'), // shiroatata
-  addDonator('c40dcb07-36ab-4fea-82be-04d01b8d20de'), // ahGrizzly
-  addDonator('bf64c6f0-7445-4c2e-9a89-e8377670676b'), // DinoH
-  addDonator('c86192da-0af2-430e-ad9d-42118154922e'), // Odim
-  addDonator('27d1a137-8bf2-4b21-844e-ff2b7131ae74'), // Swisher
-  addDonator('d7638ee5-901a-4c94-aee8-e856325b51a0'), // roxxon
-  addDonator('efcd8a5a-3a07-4b71-8a82-4f0b0ad4569d'), // wipseN
-  addDonator('0ea79dd6-708e-44e5-adba-d2c5e906d42d'), // HPRski
-  addDonator('89464037-3752-4c5b-b998-aca7bf941ba5') // KROKODEALZ
+  addPlayer('a9f76105-4473-4870-a2c6-7f831e96edaf', 'Developer'), // poacher2k
+  addVIP('4d18a0d6-c6a1-4079-af4d-0d73dbdcc5cf'), // zwacki
+  addVIP('ff0f31f0-b26a-47cf-ae44-09f8a0f65ddb'), // hAnnah_f
+  addVIP('710970df-174c-4e4a-8267-e858b717f2cc'), // shiroatata
+  addVIP('c40dcb07-36ab-4fea-82be-04d01b8d20de'), // ahGrizzly
+  addVIP('bf64c6f0-7445-4c2e-9a89-e8377670676b'), // DinoH
+  addVIP('c86192da-0af2-430e-ad9d-42118154922e'), // Odim
+  addVIP('27d1a137-8bf2-4b21-844e-ff2b7131ae74'), // Swisher
+  addVIP('d7638ee5-901a-4c94-aee8-e856325b51a0'), // roxxon
+  addVIP('efcd8a5a-3a07-4b71-8a82-4f0b0ad4569d'), // wipseN
+  addVIP('0ea79dd6-708e-44e5-adba-d2c5e906d42d'), // HPRski
+  addVIP('89464037-3752-4c5b-b998-aca7bf941ba5') // KROKODEALZ
   /* eslint-enable capitalized-comments */
 ]
 
@@ -93,12 +95,13 @@ export default async parent => {
         return
       }
 
-      const { role, bgColor, textColor } = featuredPlayer
+      const { role, bgColor, textColor, description } = featuredPlayer
 
       const featuredPlayerLabelElement = createFeaturedPlayerLabelElement({
         role,
         bgColor,
-        textColor
+        textColor,
+        description
       })
 
       const memberDetailsElement = select(
