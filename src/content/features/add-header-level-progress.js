@@ -36,7 +36,7 @@ export default async () => {
     }
 
     const { flag, games, nickname } = self
-    const { skillLevel, faceitElo } = games[flag]
+    const { skillLevel, faceitElo = 1000 } = games[flag]
     const [levelMinElo, levelMaxElo] = LEVELS[skillLevel]
 
     const dismissUnexpectedStatsDialog = () => {
