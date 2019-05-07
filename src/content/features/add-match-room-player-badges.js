@@ -60,6 +60,7 @@ const featuredPlayers = [
   addVIP('93664af5-da4f-4613-9036-51f16a0473f8'), // -kap0-
   addVIP('e722c887-a653-40ba-bf48-9222622be69b'), // Ritzyyyy
   addVIP('0db84792-74e9-41c3-ac86-1df84eee31fd'), // -kelevra-
+  addVIP('553a950f-6da3-4a37-85df-9b2fb8b68371'), // Asixz
   addVIP('c4c64927-5f68-4997-9d21-8e9a64646a20') // pyromania
   /* eslint-enable capitalized-comments */
 ]
