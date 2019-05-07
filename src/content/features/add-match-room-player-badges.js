@@ -12,8 +12,9 @@ import {
 import { hasFeatureAttribute, setFeatureAttribute } from '../libs/dom-element'
 import { getQuickMatch, getMatch } from '../libs/faceit'
 import createFeaturedPlayerLabelElement from '../components/player-badge'
+import vips from '../vips'
 
-const FEATURE_ATTRIBUTE = 'featured-player-label'
+const FEATURE_ATTRIBUTE = 'player-badge'
 
 function addPlayer(id, role, bgColor, textColor, description) {
   return { id, role, bgColor, textColor, description }
@@ -31,19 +32,10 @@ function addVIP(id) {
 
 // Get player guid:
 // https://api.faceit.com/core/v1/nicknames/<nickname>
-const featuredPlayers = [
+const playerBadges = [
   /* eslint-disable capitalized-comments */
   addPlayer('b144525f-8f41-4ea4-aade-77862b631bbc', 'Creator'), // azn
   addPlayer('a9f76105-4473-4870-a2c6-7f831e96edaf', 'Developer'), // poacher2k
-  addVIP('4d18a0d6-c6a1-4079-af4d-0d73dbdcc5cf'), // zwacki
-  addVIP('ff0f31f0-b26a-47cf-ae44-09f8a0f65ddb'), // hAnnah_f
-  addVIP('710970df-174c-4e4a-8267-e858b717f2cc'), // shiroatata
-  addVIP('c40dcb07-36ab-4fea-82be-04d01b8d20de'), // ahGrizzly
-  addVIP('bf64c6f0-7445-4c2e-9a89-e8377670676b'), // DinoH
-  addVIP('c86192da-0af2-430e-ad9d-42118154922e'), // Odim
-  addVIP('27d1a137-8bf2-4b21-844e-ff2b7131ae74'), // Swisher
-  addVIP('d7638ee5-901a-4c94-aee8-e856325b51a0'), // roxxon
-  addVIP('efcd8a5a-3a07-4b71-8a82-4f0b0ad4569d'), // wipseN
   addPlayer(
     '0ea79dd6-708e-44e5-adba-d2c5e906d42d',
     'VIP 🍆💦',
@@ -51,17 +43,7 @@ const featuredPlayers = [
     undefined,
     'Has donated to support the development.'
   ), // HPRski
-  addVIP('2162170c-a008-455e-bb64-200a12bafa96'), // kamilyzer
-  addVIP('c28cd3b7-9fbe-45e7-b30f-e22c43b58617'), // V3n0mTV
-  addVIP('d3386053-26eb-403e-8a1b-96aaed775204'), // WaLLe
-  addVIP('1d558e16-f936-4245-97bb-ca60955f15de'), // kaip1
-  addVIP('e146a824-ea66-4aa7-bdcd-23000021b76a'), // mads-
-  addVIP('91d9aeb3-0974-429b-a986-7d45f9089337'), // aireni
-  addVIP('93664af5-da4f-4613-9036-51f16a0473f8'), // -kap0-
-  addVIP('e722c887-a653-40ba-bf48-9222622be69b'), // Ritzyyyy
-  addVIP('0db84792-74e9-41c3-ac86-1df84eee31fd'), // -kelevra-
-  addVIP('553a950f-6da3-4a37-85df-9b2fb8b68371'), // Asixz
-  addVIP('c4c64927-5f68-4997-9d21-8e9a64646a20') // pyromania
+  ...vips.map(({ guid }) => addVIP(guid))
   /* eslint-enable capitalized-comments */
 ]
 
@@ -105,13 +87,13 @@ export default async parent => {
         userId = player.id
       }
 
-      const featuredPlayer = featuredPlayers.find(({ id }) => id === userId)
+      const playerBadge = playerBadges.find(({ id }) => id === userId)
 
-      if (!featuredPlayer) {
+      if (!playerBadge) {
         return
       }
 
-      const { role, bgColor, textColor, description } = featuredPlayer
+      const { role, bgColor, textColor, description } = playerBadge
 
       const featuredPlayerLabelElement = createFeaturedPlayerLabelElement({
         role,

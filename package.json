@@ -10,7 +10,8 @@
     "prettier": "prettier --write \"**/*.{js,json,css}\"",
     "release:amo": "cd dist && webext submit",
     "release:cws": "cd dist && webstore upload --auto-publish",
-    "release": "run-s build release:*"
+    "release": "run-s build release:*",
+    "add-vip": "node scripts/add-vip.js"
   },
   "dependencies": {
     "@material-ui/core": "^3.9.1",
@@ -52,8 +53,10 @@
     "eslint-config-xo-react": "^0.16.0",
     "eslint-plugin-prettier": "^2.6.0",
     "eslint-plugin-react": "^7.7.0",
+    "got": "^9.6.0",
     "husky": "^0.14.3",
     "lint-staged": "^7.0.0",
+    "load-json-file": "^6.0.0",
     "npm-run-all": "^4.1.2",
     "prettier": "^1.15.1",
     "sinon": "^4.4.2",
@@ -61,6 +64,7 @@
     "webext": "^1.9.1-with-submit.1",
     "webpack": "4.19.0",
     "webpack-cli": "^2.0.10",
+    "write-json-file": "^3.2.0",
     "xo": "^0.20.3"
   },
   "prettier": {
@@ -72,7 +76,7 @@
   "lint-staged": {
     "*.{js,json}": [
       "prettier --write",
-      "npm run lint",
+      "xo --fix",
       "git add"
     ]
   },
