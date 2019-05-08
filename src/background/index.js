@@ -2,7 +2,7 @@ import browser from 'webextension-polyfill'
 import OptionsSync from 'webext-options-sync'
 import semverDiff from 'semver-diff'
 import storage from '../libs/storage'
-import changelogs from '../libs/changelogs'
+import changelogs from '../changelogs'
 import { DEFAULTS, UPDATE_NOTIFICATION_TYPES } from '../libs/settings'
 
 storage.define({

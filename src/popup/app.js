@@ -1,7 +1,7 @@
 import React from 'react'
 import browser from 'webextension-polyfill'
 import storage from '../libs/storage'
-import changelogs from '../libs/changelogs'
+import changelogs from '../changelogs'
 import { MATCH_ROOM_VETO_LOCATION_REGIONS } from '../libs/settings'
 import AppBar from './components/app-bar'
 import Drawer from './components/drawer'

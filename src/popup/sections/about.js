@@ -1,5 +1,5 @@
 import React from 'react'
-import changelogs from '../../libs/changelogs'
+import changelogs from '../../changelogs'
 import { version } from '../../manifest'
 import ListSubheader from '../components/list-subheader'
 import ListItemLink from '../components/list-item-link'
