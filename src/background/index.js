@@ -66,23 +66,7 @@ browser.runtime.onInstalled.addListener(async ({ reason, previousVersion }) => {
       return
     }
 
-    let changelogUrl = changelogs[version]
-
-    // @TODO: Remove later
-    if (
-      ![
-        '2.0.0',
-        '2.1.0',
-        '2.2.0',
-        '2.3.0',
-        '2.4.0',
-        '2.5.0',
-        '2.6.0',
-        '2.7.0'
-      ].includes(previousVersion)
-    ) {
-      changelogUrl = 'https://redd.it/bkx7tl'
-    }
+    const changelogUrl = changelogs[version]
 
     if (changelogUrl) {
       const {
