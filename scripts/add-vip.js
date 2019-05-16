@@ -17,16 +17,19 @@ const fetchUser = require('./helpers/fetch-user')
 
     const { guid } = await fetchUser(nickname)
 
-    await writeJsonFile(file, [
-      ...vips,
-      {
-        nickname,
-        guid
-      },
+    await writeJsonFile(
+      file,
+      [
+        ...vips,
+        {
+          nickname,
+          guid
+        }
+      ],
       {
         detectIndent: true
       }
-    ])
+    )
 
     console.log(`Added ${nickname}`)
   } catch (error) {
