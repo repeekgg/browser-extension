@@ -20,12 +20,12 @@ function addPlayer(id, role, bgColor, textColor, description) {
   return { id, role, bgColor, textColor, description }
 }
 
-function addVIP(id) {
+function addVIP(id, bgColor = '#ffe119', textColor = '#000') {
   return addPlayer(
     id,
     'VIP',
-    '#ffe119',
-    '#000',
+    bgColor,
+    textColor,
     'Has donated to support the development.'
   )
 }
@@ -43,7 +43,9 @@ const playerBadges = [
     undefined,
     'Has donated to support the development.'
   ), // HPRski
-  ...vips.map(({ guid }) => addVIP(guid))
+  ...vips.map(({ guid, bgColor, textColor }) =>
+    addVIP(guid, bgColor, textColor)
+  )
   /* eslint-enable capitalized-comments */
 ]
 
