@@ -27,6 +27,7 @@ import addPlayerProfileLevelProgress from './features/add-player-profile-level-p
 import addMatchRoomPickPlayerStats from './features/add-match-room-pick-player-stats'
 import addMatchRoomPickPlayerElos from './features/add-match-room-pick-player-elos'
 import addMatchRoomPickPlayerFlags from './features/add-match-room-pick-player-flags'
+import addPlayerControlsReportFix from './features/add-match-room-player-controls-report-fix'
 import showSidebarMatchmakingQueuing from './features/show-sidebar-matchmaking-queuing'
 import addSidebarHideButton from './features/add-sidebar-hide-button'
 import addPlayerProfileExtendedStats from './features/add-player-profile-extended-stats'
@@ -45,6 +46,11 @@ function observeMainContent(element) {
       runFeatureIf(
         'matchRoomShowPlayerDivisions',
         addMatchRoomPlayerDivisions,
+        element
+      )
+      runFeatureIf(
+        'matchRoomHidePlayerControls',
+        addPlayerControlsReportFix,
         element
       )
       runFeatureIf('matchRoomShowPlayerStats', addMatchRoomPlayerStats, element)
