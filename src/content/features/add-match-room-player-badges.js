@@ -11,19 +11,24 @@ import {
 } from '../libs/match-room'
 import { hasFeatureAttribute, setFeatureAttribute } from '../libs/dom-element'
 import { getQuickMatch, getMatch } from '../libs/faceit'
-import createFeaturedPlayerLabelElement from '../components/player-badge'
+import createFeaturedPlayerBadgeElement from '../components/player-badge'
 import vips from '../vips'
 
 const FEATURE_ATTRIBUTE = 'player-badge'
 
-function addPlayer(id, role, bgColor, textColor, description) {
-  return { id, role, bgColor, textColor, description }
+function addPlayer(id, role, bgColor, textColor, description, onClick) {
+  return { id, role, bgColor, textColor, description, onClick }
 }
 
-function addVIP(id, bgColor = '#ffe119', textColor = '#000') {
+function addVIP({
+  guid,
+  role = 'VIP',
+  bgColor = '#ffe119',
+  textColor = '#000'
+}) {
   return addPlayer(
-    id,
-    'VIP',
+    guid,
+    role,
     bgColor,
     textColor,
     'Has donated to support the development.'
@@ -32,20 +37,13 @@ function addVIP(id, bgColor = '#ffe119', textColor = '#000') {
 
 // Get player guid:
 // https://api.faceit.com/core/v1/nicknames/<nickname>
+// or
+// yarn add-vip <nickname>
 const playerBadges = [
   /* eslint-disable capitalized-comments */
   addPlayer('b144525f-8f41-4ea4-aade-77862b631bbc', 'Creator'), // azn
   addPlayer('a9f76105-4473-4870-a2c6-7f831e96edaf', 'Developer'), // poacher2k
-  addPlayer(
-    '0ea79dd6-708e-44e5-adba-d2c5e906d42d',
-    'VIP 🍆💦',
-    '#FF69B4',
-    undefined,
-    'Has donated to support the development.'
-  ), // HPRski
-  ...vips.map(({ guid, bgColor, textColor }) =>
-    addVIP(guid, bgColor, textColor)
-  )
+  ...vips.map(addVIP)
   /* eslint-enable capitalized-comments */
 ]
 
@@ -95,14 +93,9 @@ export default async parent => {
         return
       }
 
-      const { role, bgColor, textColor, description } = playerBadge
-
-      const featuredPlayerLabelElement = createFeaturedPlayerLabelElement({
-        role,
-        bgColor,
-        textColor,
-        description
-      })
+      const featuredPlayerBadgeElement = createFeaturedPlayerBadgeElement(
+        playerBadge
+      )
 
       const memberDetailsElement = select(
         '.match-team-member__details__name',
@@ -111,7 +104,7 @@ export default async parent => {
       memberDetailsElement.insertAdjacentElement(
         'afterbegin',
         <div style={{ 'margin-top': 5, 'margin-bottom': 3 }}>
-          {featuredPlayerLabelElement}
+          {featuredPlayerBadgeElement}
         </div>
       )
     })
