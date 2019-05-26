@@ -10,7 +10,7 @@ export default () => (
     <ListSubheader>Donate</ListSubheader>
     <ListItemText
       secondary={
-        'If you like our extension and want to buy us a coffee, we appreciate your support. Donators will get a special "FACEIT Enhancer VIP" badge displayed in the match room. Please include a link to your FACEIT profile in your donation to obtain your badge.'
+        'We develop this extension in our free time, so donations are very much appreciated, but will never be asked for. Donators who donate at least 3 Euros will get an exclusive "FACEIT Enhancer VIP" badge displayed in the match room. Please include a link to your FACEIT profile in your donation to obtain your badge. Thanks for the support.'
       }
     />
     <ListItemLink primary="PayPal.me" href="https://www.paypal.me/timcheung" />
