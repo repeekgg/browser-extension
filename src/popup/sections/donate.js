@@ -13,7 +13,10 @@ export default () => (
         'We develop this extension in our free time, so donations are very much appreciated, but will never be asked for. Donators with a minimum of 3 Euros donation will get an exclusive "FACEIT Enhancer VIP" badge displayed in the match room. Please include a link to your FACEIT profile in your donation to obtain your badge. Thanks for the support.'
       }
     />
-    <ListItemLink primary="PayPal.me" href="https://www.paypal.me/timcheung" />
+    <ListItemLink
+      primary="PayPal.me"
+      href="https://www.paypal.me/timcheung/5"
+    />
     <ListItemLink
       primary="BuyMeACoffee.com"
       href="https://www.buymeacoffee.com/timche"
