@@ -23,15 +23,16 @@ function addPlayer(id, role, bgColor, textColor, description, onClick) {
 function addVIP({
   guid,
   role = 'VIP',
-  bgColor = '#ffe119',
-  textColor = '#000'
+  bgColor = '#0082c8',
+  textColor = '#fff',
+  highest = false
 }) {
   return addPlayer(
     guid,
-    role,
-    bgColor,
-    textColor,
-    'Has donated to support the development.'
+    highest ? `VIP ★` : role,
+    highest ? '#ffe119' : bgColor,
+    highest ? '#000' : textColor,
+    `Has donated ${highest ? 'the most' : ''} to support the development.`
   )
 }
 
@@ -103,9 +104,7 @@ export default async parent => {
       )
       memberDetailsElement.insertAdjacentElement(
         'afterbegin',
-        <div style={{ 'margin-top': 5, 'margin-bottom': 3 }}>
-          {featuredPlayerBadgeElement}
-        </div>
+        <div style={{ 'margin-top': 5 }}>{featuredPlayerBadgeElement}</div>
       )
     })
   })

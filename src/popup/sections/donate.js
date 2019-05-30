@@ -8,15 +8,14 @@ export const DONATE = 'Donate'
 export default () => (
   <React.Fragment>
     <ListSubheader>Donate</ListSubheader>
+    <ListItemText secondary="We develop this extension in our free time, so donations are very much appreciated, but will never be asked for." />
     <ListItemText
       secondary={
-        'We develop this extension in our free time, so donations are very much appreciated, but will never be asked for. Donators with a minimum of 3 Euros donation will get an exclusive "FACEIT Enhancer VIP" badge displayed in the match room. Please include a link to your FACEIT profile in your donation to obtain your badge. Thanks for the support.'
+        'A donation of 3 Euros and more will get you an exclusive "FACEIT Enhancer VIP" badge displayed in the match room. The highest donator(s) get(s) a unique badge.'
       }
     />
-    <ListItemLink
-      primary="PayPal.me"
-      href="https://www.paypal.me/timcheung/5"
-    />
+    <ListItemText secondary="Please include a link to your FACEIT profile in your donation to obtain your badge. Thanks for your support." />
+    <ListItemLink primary="PayPal.me" href="https://www.paypal.me/timcheung" />
     <ListItemLink
       primary="BuyMeACoffee.com"
       href="https://www.buymeacoffee.com/timche"
@@ -26,5 +25,6 @@ export default () => (
       href="https://www.tipeeestream.com/azn-1/donation"
     />
     <ListItemLink primary="Patreon" href="https://www.patreon.com/timche" />
+    <ListItemText secondary="Donations are non-refundable." />
   </React.Fragment>
 )

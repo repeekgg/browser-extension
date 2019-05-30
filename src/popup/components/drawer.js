@@ -15,7 +15,7 @@ class Drawer extends React.Component {
     const { activeItem } = this.state
 
     return (
-      <div style={{ display: 'flex', overflow: 'hidden' }}>
+      <div style={{ display: 'flex', overflow: 'hidden', height: '100%' }}>
         <MUIDrawer variant="permanent" classes={{ paper: classes.drawerPaper }}>
           <List>
             {Object.keys(items).map(item => (
@@ -42,6 +42,7 @@ const styles = () => ({
   drawerPaper: {
     position: 'relative',
     width: 190,
+    height: '100%',
     background: '#1A1A1D',
     border: 'none'
   }
