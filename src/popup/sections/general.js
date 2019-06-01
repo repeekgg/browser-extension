@@ -6,8 +6,8 @@ import ListItemMenu from '../components/list-item-menu'
 
 const UPDATE_NOTIFICATION_TYPES_MAP = {
   tab: 'Open changelog in a new unfocused tab automatically',
-  badge: 'Show a badge on the extension icon and open changelog manually',
-  disabled: 'Do Nothing'
+  badge: 'Show a badge on the extension icon and open changelog by myself',
+  disabled: 'Disabled'
 }
 
 export const GENERAL = 'General'
@@ -21,7 +21,7 @@ export default ({ getSwitchProps, getMenuProps }) => (
       {...getSwitchProps('extensionEnabled')}
     />
     <ListItemMenu
-      primary="When Updated"
+      primary="Update Notification"
       options={UPDATE_NOTIFICATION_TYPES}
       mapOption={option => UPDATE_NOTIFICATION_TYPES_MAP[option]}
       {...getMenuProps('updateNotificationType')}

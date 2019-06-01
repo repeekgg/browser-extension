@@ -12,11 +12,6 @@ export default ({ getSwitchProps }) => (
       secondary="Show own level, Elo, level progress and how much is needed to reach the next level."
       {...getSwitchProps('headerShowElo')}
     />
-    <ListItemSwitch
-      primary="Warn on unexpected stats change"
-      secondary="Show a dialog under the level progress when main game has changed"
-      {...getSwitchProps('warnOnUnexpectedStats')}
-    />
     <ListSubheader divider>Player Profile</ListSubheader>
     <ListItemSwitch
       primary="Show Level Progress"

@@ -20,8 +20,8 @@ export default () => (
       href="https://faceit-enhancer.com"
     />
     <ListItemLink
-      primary="GitHub"
-      secondary="Source Code"
+      primary="Source Code"
+      secondary="GitHub"
       href="https://github.com/faceit-enhancer/faceit-enhancer"
     />
     <ListSubheader divider>Community</ListSubheader>

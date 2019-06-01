@@ -11,20 +11,15 @@ export default () => (
     <ListItemText secondary="We develop this extension in our free time, so donations are very much appreciated, but will never be asked for." />
     <ListItemText
       secondary={
-        'A donation of 3 Euros and more will get you an exclusive "FACEIT Enhancer VIP" badge displayed in the match room. The highest donator(s) get(s) a unique badge.'
+        'To appreciate your support, a donation of 3 Euros and more gets you an exclusive "FACEIT Enhancer VIP" badge displayed in the match room. The highest donation(s) get(s) a special badge. Please include a link to your FACEIT profile in your donation to obtain your badge.'
       }
     />
-    <ListItemText secondary="Please include a link to your FACEIT profile in your donation to obtain your badge. Thanks for your support." />
+    <ListItemText secondary="Thanks for your support." />
     <ListItemLink primary="PayPal.me" href="https://www.paypal.me/timcheung" />
     <ListItemLink
       primary="BuyMeACoffee.com"
       href="https://www.buymeacoffee.com/timche"
     />
-    <ListItemLink
-      primary="TipeeeStream"
-      href="https://www.tipeeestream.com/azn-1/donation"
-    />
-    <ListItemLink primary="Patreon" href="https://www.patreon.com/timche" />
     <ListItemText secondary="Donations are non-refundable." />
   </React.Fragment>
 )

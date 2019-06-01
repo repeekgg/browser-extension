@@ -49,6 +49,5 @@ export const DEFAULTS = {
   notifyMatchRoomAutoVetoLocations: true,
   notifyMatchRoomAutoVetoMaps: true,
   updateNotificationType: 'tab',
-  updateNotifications: [],
-  warnOnUnexpectedStats: true
+  updateNotifications: []
 }
