@@ -32,7 +32,7 @@ function addVIP({
     highest ? `VIP ★` : role,
     highest ? '#ffe119' : bgColor,
     highest ? '#000' : textColor,
-    `Has donated ${highest ? 'the most' : ''} to support the development.`
+    `Has donated${highest ? ' the most ' : ' '}to support the development.`
   )
 }
 
