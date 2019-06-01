@@ -11,6 +11,7 @@
     "release:cws": "cd dist && webstore upload --auto-publish",
     "release": "run-s build release:*",
     "add-vip": "node scripts/add-vip.js",
+    "add-ban": "node scripts/add-ban.js",
     "bump-version": "node scripts/bump-version.js"
   },
   "dependencies": {
