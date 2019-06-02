@@ -14,7 +14,7 @@
   {
     "nickname": "ahGrizzly",
     "guid": "c40dcb07-36ab-4fea-82be-04d01b8d20de",
-    "highest": true
+    "special": true
   },
   {
     "nickname": "DinoH",
@@ -59,7 +59,7 @@
   {
     "nickname": "aireni",
     "guid": "91d9aeb3-0974-429b-a986-7d45f9089337",
-    "highest": true
+    "special": true
   },
   {
     "nickname": "-kap0-",
@@ -68,7 +68,7 @@
   {
     "nickname": "Ritzyyyy",
     "guid": "e722c887-a653-40ba-bf48-9222622be69b",
-    "highest": true
+    "special": true
   },
   {
     "nickname": "-kelevra-",
@@ -85,7 +85,7 @@
   {
     "nickname": "RealPanda",
     "guid": "b9c0bdcc-e2b9-4a01-8312-cf1a72d61bd2",
-    "highest": true
+    "special": true
   },
   {
     "nickname": "MxDanger",
@@ -125,7 +125,7 @@
   {
     "nickname": "Hertz_-",
     "guid": "2ac6a4b5-8f92-4227-bf1f-a864f6e2735b",
-    "highest": true
+    "special": true
   },
   {
     "nickname": "IhiyahnhIhI",
@@ -285,5 +285,17 @@
   {
     "nickname": "Slaaaaaaavas",
     "guid": "86d91175-6a52-43ee-841b-dcf767533ee6"
+  },
+  {
+    "nickname": "Yoshwa",
+    "guid": "9859953a-161c-4fd8-bc02-164ec494f82a"
+  },
+  {
+    "nickname": "m0g-",
+    "guid": "39deca90-60ea-4dae-b4c9-053fa39030d7"
+  },
+  {
+    "nickname": "nalc0",
+    "guid": "b82444de-cbe7-4d9b-b7ac-51f621b8a748"
   }
 ]

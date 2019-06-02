@@ -25,14 +25,14 @@ function addVIP({
   role = 'VIP',
   bgColor = '#0082c8',
   textColor = '#fff',
-  highest = false
+  special = false
 }) {
   return addPlayer(
     guid,
-    highest ? `VIP ★` : role,
-    highest ? '#ffe119' : bgColor,
-    highest ? '#000' : textColor,
-    `Has donated${highest ? ' the most ' : ' '}to support the development.`
+    special ? `VIP ★` : role,
+    special ? '#ffe119' : bgColor,
+    special ? '#000' : textColor,
+    `Has donated${special ? ' the most ' : ' '}to support the development.`
   )
 }
 
