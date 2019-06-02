@@ -204,7 +204,8 @@
   },
   {
     "nickname": "_APOFIS",
-    "guid": "f06f016d-2dac-4c32-bcaf-70b7b70aa5f4"
+    "guid": "f06f016d-2dac-4c32-bcaf-70b7b70aa5f4",
+    "special": true
   },
   {
     "nickname": "unknwn-",
@@ -297,5 +298,9 @@
   {
     "nickname": "nalc0",
     "guid": "b82444de-cbe7-4d9b-b7ac-51f621b8a748"
+  },
+  {
+    "nickname": "rink666",
+    "guid": "fd3e7ecc-1efc-4222-8e61-cb370d46f44d"
   }
 ]
