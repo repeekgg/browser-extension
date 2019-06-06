@@ -12,7 +12,8 @@
     "release": "run-s build release:*",
     "add-vip": "node scripts/add-vip.js",
     "add-ban": "node scripts/add-ban.js",
-    "bump-version": "node scripts/bump-version.js"
+    "bump-version": "node scripts/bump-version.js",
+    "git-release": "node scripts/git-release.js"
   },
   "dependencies": {
     "@material-ui/core": "^3.9.1",
