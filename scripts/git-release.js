@@ -4,7 +4,7 @@ const semver = require('semver')
 
 ;(async () => {
   try {
-    const gitPushMasterProc = execa('git', 'push', 'origin', 'master')
+    const gitPushMasterProc = execa('git', ['push', 'origin', 'master'])
     gitPushMasterProc.stdout.pipe(process.stdout)
     await gitPushMasterProc
 
