@@ -24,7 +24,7 @@ storage.define({
   ]
 })
 
-browser.runtime.onMessage.addListener(message => {
+browser.runtime.onMessage.addListener(async message => {
   if (!message) {
     return
   }
@@ -42,13 +42,20 @@ browser.runtime.onMessage.addListener(message => {
       })
       break
     }
-    case 'closeWindow': {
-      browser.windows.remove(browser.windows.WINDOW_ID_CURRENT)
+    case 'fetchApi': {
+      try {
+        const [bans, vips] = await Promise.all([fetchBans(), fetchVips()])
+
+        await storage.set({
+          bans,
+          vips
+        })
+      } catch (error) {
+        console.error(error)
+      }
       break
     }
-    default: {
-      break
-    }
+    default:
   }
 })
 
@@ -101,15 +108,5 @@ browser.runtime.onInstalled.addListener(async ({ reason, previousVersion }) => {
     }
   }
 })
-;(async () => {
-  try {
-    const [bans, vips] = await Promise.all([fetchBans(), fetchVips()])
 
-    await storage.set({
-      bans,
-      vips
-    })
-  } catch (error) {
-    console.error(error)
-  }
-})()
+browser.runtime.onStartup.addListener(() => console.log('hello'))

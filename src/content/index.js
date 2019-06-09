@@ -1,4 +1,5 @@
 import select from 'select-dom'
+import browser from 'webextension-polyfill'
 import storage from '../libs/storage'
 import * as modals from './libs/modals'
 import * as pages from './libs/pages'
@@ -163,6 +164,8 @@ function runOnce() {
   if (!extensionEnabled) {
     return
   }
+
+  await browser.runtime.sendMessage({ action: 'fetchApi' })
 
   const bannedUser = await isUserBanned()
 
