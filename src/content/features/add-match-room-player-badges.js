@@ -12,7 +12,7 @@ import {
 import { hasFeatureAttribute, setFeatureAttribute } from '../libs/dom-element'
 import { getQuickMatch, getMatch } from '../libs/faceit'
 import createFeaturedPlayerBadgeElement from '../components/player-badge'
-import vips from '../vips'
+import storage from '../../libs/storage'
 
 const FEATURE_ATTRIBUTE = 'player-badge'
 
@@ -36,17 +36,7 @@ function addVIP({
   )
 }
 
-// Get player guid:
-// https://api.faceit.com/core/v1/nicknames/<nickname>
-// or
-// yarn add-vip <nickname>
-const playerBadges = [
-  /* eslint-disable capitalized-comments */
-  addPlayer('b144525f-8f41-4ea4-aade-77862b631bbc', 'Creator'), // azn
-  addPlayer('a9f76105-4473-4870-a2c6-7f831e96edaf', 'Developer'), // poacher2k
-  ...vips.map(addVIP)
-  /* eslint-enable capitalized-comments */
-]
+let playerBadges
 
 export default async parent => {
   const { teamElements, isTeamV1Element } = getTeamElements(parent)
@@ -58,6 +48,17 @@ export default async parent => {
 
   if (!match) {
     return
+  }
+
+  if (!playerBadges) {
+    const { vips } = await storage.getAll()
+    playerBadges = [
+      /* eslint-disable capitalized-comments */
+      addPlayer('b144525f-8f41-4ea4-aade-77862b631bbc', 'Creator'), // azn
+      addPlayer('a9f76105-4473-4870-a2c6-7f831e96edaf', 'Developer'), // poacher2k
+      ...vips.map(addVIP)
+      /* eslint-enable capitalized-comments */
+    ]
   }
 
   const nicknamesToPlayers = mapMatchNicknamesToPlayersMemoized(match)

@@ -4,6 +4,7 @@ import semverDiff from 'semver-diff'
 import storage from '../libs/storage'
 import changelogs from '../changelogs'
 import { DEFAULTS, UPDATE_NOTIFICATION_TYPES } from '../libs/settings'
+import { fetchBans, fetchVips } from './api'
 
 storage.define({
   defaults: DEFAULTS,
@@ -100,3 +101,15 @@ browser.runtime.onInstalled.addListener(async ({ reason, previousVersion }) => {
     }
   }
 })
+;(async () => {
+  try {
+    const [bans, vips] = await Promise.all([fetchBans(), fetchVips()])
+
+    await storage.set({
+      bans,
+      vips
+    })
+  } catch (error) {
+    console.error(error)
+  }
+})()
