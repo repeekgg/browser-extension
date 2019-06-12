@@ -41,6 +41,7 @@ export const DEFAULTS = {
   matchRoomAutoVetoMapItems: MATCH_ROOM_VETO_MAP_ITEMS,
   modalCloseMatchVictory: false,
   modalCloseMatchDefeat: false,
+  modalCloseGlobalRankingUpdate: false,
   notifyDisabled: false,
   notifyPartyAutoAcceptInvite: true,
   notifyMatchQueueAutoReady: true,

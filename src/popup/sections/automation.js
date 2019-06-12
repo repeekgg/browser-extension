@@ -50,5 +50,10 @@ export default ({ getSwitchProps }) => (
       secondary="Close match defeat pop up automatically."
       {...getSwitchProps('modalCloseMatchDefeat')}
     />
+    <ListItemSwitch
+      primary="Close Ranking Update"
+      secondary="Close ranking update pop up automatically."
+      {...getSwitchProps('modalCloseGlobalRankingUpdate')}
+    />
   </React.Fragment>
 )
