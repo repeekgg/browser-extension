@@ -24,5 +24,8 @@ export const isMatchDefeat = parent =>
 export const isMatchVictory = parent =>
   select.exists('h2[translate-once="VICTORY"]', parent)
 
+export const isGlobalRankingUpdate = parent =>
+  select.exists('h2[translate-once="GLOBAL-RANKING-UPDATE"]', parent)
+
 export const isPlayerProfileStats = () =>
   /players-modal\/.+\/stats\//.test(getCurrentPath())

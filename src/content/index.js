@@ -122,6 +122,12 @@ function observeBody() {
         runFeatureIf('modalCloseMatchVictory', clickModalClose, modalElement)
       } else if (modals.isMatchDefeat(modalElement)) {
         runFeatureIf('modalCloseMatchDefeat', clickModalClose, modalElement)
+      } else if (modals.isGlobalRankingUpdate(modalElement)) {
+        runFeatureIf(
+          'modalCloseGlobalRankingUpdate',
+          clickModalClose,
+          modalElement
+        )
       } else if (modals.isPlayerProfileStats()) {
         runFeatureIf(
           'playerProfileLevelProgress',
