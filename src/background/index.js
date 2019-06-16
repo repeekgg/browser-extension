@@ -19,6 +19,14 @@ storage.define({
         )
         savedOptions.matchRoomAutoVetoMapItems.push('de_vertigo')
       }
+
+      if (savedOptions.bans) {
+        delete savedOptions.bans
+      }
+
+      if (savedOptions.vips) {
+        delete savedOptions.vips
+      }
     },
     OptionsSync.migrations.removeUnused
   ]
@@ -45,15 +53,11 @@ browser.runtime.onMessage.addListener(async message => {
     case 'fetchApi': {
       try {
         const [bans, vips] = await Promise.all([fetchBans(), fetchVips()])
-
-        await storage.set({
-          bans,
-          vips
-        })
+        return { bans, vips }
       } catch (error) {
         console.error(error)
+        return { bans: [], vips: [] }
       }
-      break
     }
     default:
   }
@@ -108,5 +112,3 @@ browser.runtime.onInstalled.addListener(async ({ reason, previousVersion }) => {
     }
   }
 })
-
-browser.runtime.onStartup.addListener(() => console.log('hello'))

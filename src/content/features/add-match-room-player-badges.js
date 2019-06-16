@@ -12,12 +12,12 @@ import {
 import { hasFeatureAttribute, setFeatureAttribute } from '../libs/dom-element'
 import { getQuickMatch, getMatch } from '../libs/faceit'
 import createFeaturedPlayerBadgeElement from '../components/player-badge'
-import storage from '../../libs/storage'
+import store from '../store'
 
 const FEATURE_ATTRIBUTE = 'player-badge'
 
-function addPlayer(id, role, bgColor, textColor, description, onClick) {
-  return { id, role, bgColor, textColor, description, onClick }
+function addPlayer(guid, role, bgColor, textColor, description, onClick) {
+  return { guid, role, bgColor, textColor, description, onClick }
 }
 
 function addVIP({
@@ -51,7 +51,8 @@ export default async parent => {
   }
 
   if (!playerBadges) {
-    const { vips } = await storage.getAll()
+    const vips = store.get('vips')
+
     playerBadges = [
       /* eslint-disable capitalized-comments */
       addPlayer('b144525f-8f41-4ea4-aade-77862b631bbc', 'Creator'), // azn
@@ -89,7 +90,7 @@ export default async parent => {
         userId = player.id
       }
 
-      const playerBadge = playerBadges.find(({ id }) => id === userId)
+      const playerBadge = playerBadges.find(({ guid }) => guid === userId)
 
       if (!playerBadge) {
         return

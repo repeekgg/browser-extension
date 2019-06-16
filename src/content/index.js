@@ -36,6 +36,7 @@ import clickModalClose from './features/click-modal-close'
 import showSidebarHubQueuing from './features/show-sidebar-hub-queuing'
 import isUserBanned from './bans/is-user-banned'
 import stopToxicity from './bans/stop-toxicity'
+import store from './store'
 
 function observeMainContent(element) {
   const runFeatures = () => {
@@ -171,7 +172,11 @@ function runOnce() {
     return
   }
 
-  await browser.runtime.sendMessage({ action: 'fetchApi' })
+  const { bans, vips } = await browser.runtime.sendMessage({
+    action: 'fetchApi'
+  })
+  store.set('bans', bans)
+  store.set('vips', vips)
 
   const bannedUser = await isUserBanned()
 

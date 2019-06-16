@@ -4,13 +4,13 @@ import addMonths from 'date-fns/add_months'
 import dateIsAfter from 'date-fns/is_after'
 import formatDate from 'date-fns/format'
 import { getSelf } from '../libs/faceit'
-import storage from '../../libs/storage'
+import store from '../store'
 
 export default async () => {
   try {
     const self = await getSelf()
 
-    const { bans } = await storage.getAll()
+    const bans = store.get('bans')
     const bannedUser = bans.find(ban => ban.guid === self.guid)
 
     if (!bannedUser) {
