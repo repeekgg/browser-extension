@@ -1,5 +1,3 @@
-import addDays from 'date-fns/add_days'
-import addWeeks from 'date-fns/add_weeks'
 import addMonths from 'date-fns/add_months'
 import dateIsAfter from 'date-fns/is_after'
 import formatDate from 'date-fns/format'
@@ -17,16 +15,9 @@ export default async () => {
       return false
     }
 
-    const { startDate, days, weeks, months } = bannedUser
-    let endDate
+    const { startDate, months } = bannedUser
 
-    if (days) {
-      endDate = addDays(startDate, days)
-    } else if (weeks) {
-      endDate = addWeeks(startDate, weeks)
-    } else if (months) {
-      endDate = addMonths(startDate, months)
-    }
+    const endDate = addMonths(startDate, months)
 
     if (dateIsAfter(new Date(), endDate)) {
       return false
