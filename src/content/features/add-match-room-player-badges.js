@@ -13,6 +13,7 @@ import { hasFeatureAttribute, setFeatureAttribute } from '../libs/dom-element'
 import { getQuickMatch, getMatch } from '../libs/faceit'
 import createFeaturedPlayerBadgeElement from '../components/player-badge'
 import store from '../store'
+import vipLevels from '../../libs/vip-levels'
 
 const FEATURE_ATTRIBUTE = 'player-badge'
 
@@ -20,19 +21,15 @@ function addPlayer(guid, role, bgColor, textColor, description, onClick) {
   return { guid, role, bgColor, textColor, description, onClick }
 }
 
-function addVIP({
-  guid,
-  role = 'VIP',
-  bgColor = '#0082c8',
-  textColor = '#fff',
-  special = false
-}) {
+function addVIP({ guid, level = 0, role, bgColor, textColor }) {
   return addPlayer(
     guid,
-    special ? `VIP ★` : role,
-    special ? '#ffe119' : bgColor,
-    special ? '#000' : textColor,
-    `Has donated${special ? ' the most ' : ' '}to support the development.`
+    role || `VIP ${level > 0 ? new Array(level).fill('★').join('') : ''}`,
+    bgColor || vipLevels[level].bgColor,
+    textColor || vipLevels[level].textColor,
+    `Has donated${
+      level > 0 ? ` at least ${level}0 Euros ` : ' '
+    }to support the development.`
   )
 }
 
