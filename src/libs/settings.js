@@ -42,6 +42,7 @@ export const DEFAULTS = {
   modalCloseMatchVictory: false,
   modalCloseMatchDefeat: false,
   modalCloseGlobalRankingUpdate: false,
+  modalClickResume: false,
   notifyDisabled: false,
   notifyPartyAutoAcceptInvite: true,
   notifyMatchQueueAutoReady: true,
