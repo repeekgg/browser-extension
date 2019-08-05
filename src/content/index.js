@@ -37,7 +37,7 @@ import showSidebarHubQueuing from './features/show-sidebar-hub-queuing'
 import isUserBanned from './bans/is-user-banned'
 import stopToxicity from './bans/stop-toxicity'
 import store from './store'
-import clickModalResume from './features/click-modal-resume'
+import clickModalInactiveCheck from './features/click-modal-inactive-check'
 
 function observeMainContent(element) {
   const runFeatures = () => {
@@ -131,7 +131,11 @@ function observeBody() {
           modalElement
         )
       } else if (modals.isInactive(modalElement)) {
-        runFeatureIf('modalClickResume', clickModalResume, modalElement)
+        runFeatureIf(
+          'modalClickInactiveCheck',
+          clickModalInactiveCheck,
+          modalElement
+        )
       } else if (modals.isPlayerProfileStats()) {
         runFeatureIf(
           'playerProfileLevelProgress',
