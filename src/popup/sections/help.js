@@ -25,5 +25,6 @@ export default () => (
       primary="Ask the Community"
       subreddit="submit?selftext=true"
     />
+    <ListItemLink primary="Twitter" href="https://twitter.com/timche_" />
   </React.Fragment>
 )
