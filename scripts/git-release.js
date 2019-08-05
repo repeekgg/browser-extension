@@ -7,7 +7,11 @@ const execa = require('execa')
     gitPushMasterProc.stdout.pipe(process.stdout)
     await gitPushMasterProc
 
-    const version = await execa.stdout('git', ['log', '-1', '--pretty=%B'])
+    const version = (await execa.stdout('git', [
+      'log',
+      '-1',
+      '--pretty=%B'
+    ])).trim()
 
     const gitPushTagProc = execa('git', ['push', 'origin', `v${version}`])
     gitPushTagProc.stdout.pipe(process.stdout)
