@@ -20,7 +20,7 @@ const VIPBadge = ({ level, bgColor, textColor }) => (
     }}
   >
     FACEIT Enhancer VIP{' '}
-    {level > 0 ? new Array(level).fill('\u2605').join('') : ''}
+    {level > 0 ? new Array(level).fill(String.fromCharCode(9733)).join('') : ''}
   </span>
 )
 
@@ -44,8 +44,8 @@ export default () => (
             style={{ marginBottom: 2 }}
           >
             {vipLevel === 0
-              ? 'Basic (>= 3 Euros)'
-              : `Level ${vipLevel} (>= ${vipLevel}0 Euros)`}
+              ? 'Basic: >= 3 Euros'
+              : `Level ${vipLevel}: >= ${vipLevel}0 Euros`}
           </Typography>
           <VIPBadge level={vipLevel} {...vipLevels[vipLevel]} />
         </ListItem>
