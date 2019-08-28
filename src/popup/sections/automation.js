@@ -55,5 +55,10 @@ export default ({ getSwitchProps }) => (
       secondary="Close ranking update pop up automatically."
       {...getSwitchProps('modalCloseGlobalRankingUpdate')}
     />
+    <ListItemSwitch
+      primary="Close Inactive Check"
+      secondary="Close inactive check pop up automatically."
+      {...getSwitchProps('modalClickResume')}
+    />
   </React.Fragment>
 )
