@@ -19,7 +19,6 @@ import clickMatchRoomConnectToServer from './features/click-match-room-connect-t
 import addHeaderLevelProgress from './features/add-header-level-progress'
 import hideMatchRoomPlayerControls from './features/hide-match-room-player-controls'
 import hideFaceitClientHasLandedBanner from './features/hide-faceit-client-has-landed-banner'
-import addSidebarMatchesEloPoints from './features/add-sidebar-matches-elo-points'
 import clickMatchRoomVetoLocations from './features/click-match-room-veto-locations'
 import clickMatchRoomVetoMaps from './features/click-match-room-veto-maps'
 import clickModalMatchRoomCaptainOk from './features/click-modal-match-room-captain-ok'
@@ -145,7 +144,6 @@ function observeBody() {
       hideFaceitClientHasLandedBanner
     )
 
-    addSidebarMatchesEloPoints()
     showSidebarMatchmakingQueuing()
     showSidebarHubQueuing()
 
