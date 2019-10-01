@@ -30,7 +30,6 @@ import addPlayerControlsReportFix from './features/add-match-room-player-control
 import showSidebarMatchmakingQueuing from './features/show-sidebar-matchmaking-queuing'
 import addPlayerProfileExtendedStats from './features/add-player-profile-extended-stats'
 import clickModalClose from './features/click-modal-close'
-import showSidebarHubQueuing from './features/show-sidebar-hub-queuing'
 import isUserBanned from './bans/is-user-banned'
 import stopToxicity from './bans/stop-toxicity'
 import store from './store'
@@ -145,7 +144,6 @@ function observeBody() {
     )
 
     showSidebarMatchmakingQueuing()
-    showSidebarHubQueuing()
 
     if (!mainContentElement) {
       mainContentElement = select('#main-content')
