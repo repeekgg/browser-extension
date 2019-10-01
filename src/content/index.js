@@ -27,7 +27,6 @@ import addMatchRoomPickPlayerStats from './features/add-match-room-pick-player-s
 import addMatchRoomPickPlayerElos from './features/add-match-room-pick-player-elos'
 import addMatchRoomPickPlayerFlags from './features/add-match-room-pick-player-flags'
 import addPlayerControlsReportFix from './features/add-match-room-player-controls-report-fix'
-import showSidebarMatchmakingQueuing from './features/show-sidebar-matchmaking-queuing'
 import addPlayerProfileExtendedStats from './features/add-player-profile-extended-stats'
 import clickModalClose from './features/click-modal-close'
 import isUserBanned from './bans/is-user-banned'
@@ -142,8 +141,6 @@ function observeBody() {
       'hideFaceitClientHasLandedBanner',
       hideFaceitClientHasLandedBanner
     )
-
-    showSidebarMatchmakingQueuing()
 
     if (!mainContentElement) {
       mainContentElement = select('#main-content')
