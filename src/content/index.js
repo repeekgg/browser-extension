@@ -29,7 +29,6 @@ import addMatchRoomPickPlayerElos from './features/add-match-room-pick-player-el
 import addMatchRoomPickPlayerFlags from './features/add-match-room-pick-player-flags'
 import addPlayerControlsReportFix from './features/add-match-room-player-controls-report-fix'
 import showSidebarMatchmakingQueuing from './features/show-sidebar-matchmaking-queuing'
-import addSidebarHideButton from './features/add-sidebar-hide-button'
 import addPlayerProfileExtendedStats from './features/add-player-profile-extended-stats'
 import clickModalClose from './features/click-modal-close'
 import showSidebarHubQueuing from './features/show-sidebar-hub-queuing'
@@ -149,7 +148,6 @@ function observeBody() {
     addSidebarMatchesEloPoints()
     showSidebarMatchmakingQueuing()
     showSidebarHubQueuing()
-    addSidebarHideButton()
 
     if (!mainContentElement) {
       mainContentElement = select('#main-content')
