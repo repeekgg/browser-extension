@@ -23,17 +23,22 @@ export default async parentElement => {
 
   const nickname = getPlayerProfileNickname()
   const game = getPlayerProfileStatsGame()
-  const {
-    guid,
-    infractions: { afk, leaver }
-  } = await getPlayer(nickname)
+  const { guid, infractions = {} } = await getPlayer(nickname)
+
+  const { afk = 0, leaver = 0 } = infractions
+
+  const playerStats = await getPlayerStats(guid, game)
+
+  if (!playerStats) {
+    return
+  }
 
   const {
     averageKills,
     averageHeadshots,
     averageKDRatio,
     averageKRRatio
-  } = await getPlayerStats(guid, game)
+  } = playerStats
 
   const statsElement = (
     <section>
