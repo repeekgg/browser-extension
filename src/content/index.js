@@ -34,6 +34,7 @@ import stopToxicity from './bans/stop-toxicity'
 import store from './store'
 import clickModalInactiveCheck from './features/click-modal-inactive-check'
 import addSidebarMatchesElo from './features/add-sidebar-matches-elo'
+import addMatchRoomEloSelfResult from './features/add-match-room-elo-self-result'
 
 function observeMainContent(element) {
   const runFeatures = () => {
@@ -49,6 +50,7 @@ function observeMainContent(element) {
       )
       runFeatureIf('matchRoomShowPlayerStats', addMatchRoomPlayerStats, element)
       addMatchRoomEloEstimation(element)
+      addMatchRoomEloSelfResult(element)
       runFeatureIf(
         'matchRoomAutoCopyServerData',
         copyMatchRoomCopyServerData,
