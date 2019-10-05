@@ -33,6 +33,7 @@ import isUserBanned from './bans/is-user-banned'
 import stopToxicity from './bans/stop-toxicity'
 import store from './store'
 import clickModalInactiveCheck from './features/click-modal-inactive-check'
+import addSidebarMatchesElo from './features/add-sidebar-matches-elo'
 
 function observeMainContent(element) {
   const runFeatures = () => {
@@ -141,6 +142,8 @@ function observeBody() {
       'hideFaceitClientHasLandedBanner',
       hideFaceitClientHasLandedBanner
     )
+
+    addSidebarMatchesElo()
 
     if (!mainContentElement) {
       mainContentElement = select('#main-content')

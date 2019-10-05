@@ -62,7 +62,7 @@ export const getUser = userId => fetchApiMemoized(`/core/v1/users/${userId}`)
 export const getPlayer = nickname =>
   fetchApiMemoized(`/core/v1/nicknames/${nickname}`)
 
-export const getPlayerMatches = (userId, game, size = 20) =>
+export const getPlayerMatches = (userId, game, size = 21) =>
   fetchApiMemoized(
     `/stats/v1/stats/time/users/${userId}/games/${game}?size=${size}`
   )
