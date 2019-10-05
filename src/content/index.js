@@ -13,7 +13,7 @@ import addMatchRoomPlayerColors from './features/add-match-room-player-colors'
 import addMatchRoomPlayerFlags from './features/add-match-room-player-flags'
 import addMatchRoomPlayerElos from './features/add-match-room-player-elos'
 import addMatchRoomPlayerStats from './features/add-match-room-player-stats'
-import addMatchRoomTeamElos from './features/add-match-room-team-elos'
+import addMatchRoomEloEstimation from './features/add-match-room-elo-estimation'
 import copyMatchRoomCopyServerData from './features/copy-match-room-copy-server-data'
 import clickMatchRoomConnectToServer from './features/click-match-room-connect-to-server'
 import addHeaderLevelProgress from './features/add-header-level-progress'
@@ -48,7 +48,7 @@ function observeMainContent(element) {
         element
       )
       runFeatureIf('matchRoomShowPlayerStats', addMatchRoomPlayerStats, element)
-      addMatchRoomTeamElos(element)
+      addMatchRoomEloEstimation(element)
       runFeatureIf(
         'matchRoomAutoCopyServerData',
         copyMatchRoomCopyServerData,

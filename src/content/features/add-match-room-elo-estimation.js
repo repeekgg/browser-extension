@@ -17,7 +17,7 @@ import {
 } from '../libs/dom-element'
 import { calculateRatingChangeMemoized } from '../libs/elo'
 
-const FEATURE_ATTRIBUTE = 'team-elo'
+const FEATURE_ATTRIBUTE = 'elo-estimation'
 
 export default async parent => {
   const { teamElements, isTeamV1Element } = getTeamElements(parent)
