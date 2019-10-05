@@ -86,11 +86,13 @@ export const getPlayerStats = async (userId, game, size = 20) => {
     `/stats/api/v1/stats/time/users/${userId}/games/${game}?size=${size}`
   )
 
-  if (
-    !averageStats ||
-    !Array.isArray(averageStats) ||
-    averageStats.length === 0
-  ) {
+  if (!averageStats || !Array.isArray(averageStats)) {
+    return null
+  }
+
+  averageStats = averageStats.filter(stats => stats.gameMode.includes('5v5'))
+
+  if (averageStats.length <= 1) {
     return null
   }
 
