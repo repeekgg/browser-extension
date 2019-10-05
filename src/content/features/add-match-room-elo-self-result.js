@@ -2,26 +2,27 @@
 import { h } from 'dom-chef'
 import select from 'select-dom'
 import { hasFeatureAttribute, setFeatureAttribute } from '../libs/dom-element'
-import { getRoomId } from '../libs/match-room'
+import { getRoomId, getMatchState } from '../libs/match-room'
 import { getSelf, getPlayerMatches } from '../libs/faceit'
 import { mapMatchesWithElo } from '../libs/matches'
 
 const FEATURE_ATTRIBUTE = 'elo-self-result'
 
 export default async parent => {
-  const matchStatusElement = select(
+  const matchStateElement = select(
     'div[class*=VersusTeamStatus__Status]',
     parent
   )
+  const matchState = getMatchState(parent)
 
   if (
-    !matchStatusElement ||
-    matchStatusElement.textContent !== 'FINISHED' ||
-    hasFeatureAttribute(FEATURE_ATTRIBUTE, matchStatusElement)
+    !matchState ||
+    matchState !== 'FINISHED' ||
+    hasFeatureAttribute(FEATURE_ATTRIBUTE, matchStateElement)
   ) {
     return
   }
-  setFeatureAttribute(FEATURE_ATTRIBUTE, matchStatusElement)
+  setFeatureAttribute(FEATURE_ATTRIBUTE, matchStateElement)
 
   const self = await getSelf()
   const game = self.flag

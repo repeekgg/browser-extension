@@ -178,3 +178,16 @@ export const mapMatchNicknamesToPlayersMemoized = mem(
     cacheKey: match => JSON.stringify(match.guid || match.id)
   }
 )
+
+export const getMatchState = element => {
+  const matchStateElement = select(
+    'div[class*=VersusTeamStatus__Status]',
+    element
+  )
+
+  if (!matchStateElement) {
+    return null
+  }
+
+  return matchStateElement.textContent
+}

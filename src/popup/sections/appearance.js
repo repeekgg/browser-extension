@@ -20,6 +20,11 @@ export default ({ getSwitchProps }) => (
     />
     <ListSubheader divider>Match Room</ListSubheader>
     <ListItemSwitch
+      primary="Focus Mode"
+      secondary="Hide all players and focus only on the match like a pro. Players are shown when the match is finished. All other match room settings are ignored regardless of their setting."
+      {...getSwitchProps('matchRoomFocusMode')}
+    />
+    <ListItemSwitch
       primary="Show Player Stats"
       secondary="Show total stats (Matches, Win Rate) & average stats (Kills, Headshots %, K/D, K/R) from last 20 games."
       {...getSwitchProps('matchRoomShowPlayerStats')}

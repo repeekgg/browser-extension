@@ -35,6 +35,7 @@ import store from './store'
 import clickModalInactiveCheck from './features/click-modal-inactive-check'
 import addSidebarMatchesElo from './features/add-sidebar-matches-elo'
 import addMatchRoomEloSelfResult from './features/add-match-room-elo-self-result'
+import applyMatchRoomFocusMode from './features/apply-match-room-focus-mode'
 
 function observeMainContent(element) {
   const runFeatures = () => {
@@ -70,6 +71,7 @@ function observeMainContent(element) {
       addMatchRoomPickPlayerStats(element)
       addMatchRoomPickPlayerElos(element)
       addMatchRoomPickPlayerFlags(element)
+      runFeatureIf('matchRoomFocusMode', applyMatchRoomFocusMode, element)
     } else if (pages.isPlayerProfileStats()) {
       runFeatureIf(
         'playerProfileLevelProgress',

@@ -16,10 +16,17 @@ import {
   setStyle
 } from '../libs/dom-element'
 import { calculateRatingChangeMemoized } from '../libs/elo'
+import storage from '../../libs/storage'
 
 const FEATURE_ATTRIBUTE = 'elo-estimation'
 
 export default async parent => {
+  const { matchRoomFocusMode } = await storage.getAll()
+
+  if (matchRoomFocusMode) {
+    return
+  }
+
   const { teamElements, isTeamV1Element } = getTeamElements(parent)
 
   const roomId = getRoomId()
