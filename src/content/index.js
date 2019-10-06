@@ -19,6 +19,7 @@ import clickMatchRoomConnectToServer from './features/click-match-room-connect-t
 import addHeaderLevelProgress from './features/add-header-level-progress'
 import hideMatchRoomPlayerControls from './features/hide-match-room-player-controls'
 import hideFaceitClientHasLandedBanner from './features/hide-faceit-client-has-landed-banner'
+import addProfileMatchesEloPoints from './features/add-profile-matches-elo-points'
 import clickMatchRoomVetoLocations from './features/click-match-room-veto-locations'
 import clickMatchRoomVetoMaps from './features/click-match-room-veto-maps'
 import clickModalMatchRoomCaptainOk from './features/click-modal-match-room-captain-ok'
@@ -80,6 +81,7 @@ function observeMainContent(element) {
         element
       )
       addPlayerProfileDownloadDemo(element)
+      addProfileMatchesEloPoints(element)
       addPlayerProfileExtendedStats(element)
     }
   }
@@ -140,6 +142,7 @@ function observeBody() {
           modalElement
         )
         addPlayerProfileDownloadDemo(modalElement)
+        addProfileMatchesEloPoints(modalElement)
         addPlayerProfileExtendedStats(modalElement)
       }
     }
