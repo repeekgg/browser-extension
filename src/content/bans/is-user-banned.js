@@ -1,5 +1,5 @@
-import addMonths from 'date-fns/add_months'
-import dateIsAfter from 'date-fns/is_after'
+import addMonths from 'date-fns/addMonths'
+import dateIsAfter from 'date-fns/isAfter'
 import formatDate from 'date-fns/format'
 import { getSelf } from '../libs/faceit'
 import store from '../store'
