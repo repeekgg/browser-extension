@@ -1,6 +1,7 @@
 import pMemoize from 'p-memoize'
 import pRetry from 'p-retry'
 import camelcaseKeys from 'camelcase-keys'
+import format from 'date-fns/format'
 import { mapTotalStatsMemoized, mapAverageStatsMemoized } from './stats'
 
 const BASE_URL = 'https://api.faceit.com'
@@ -119,3 +120,16 @@ export const getQuickMatchPlayers = async (game, region, matchType) =>
 
 export const getHubQueue = async id =>
   (await fetchApi(`/queue/v1/queue/hub/${id}`))[0]
+
+export const getPlayerHistory = async (userId, page = 0) => {
+  const size = 50
+  const offset = 0
+  const from = encodeURIComponent(`1970-01-01T01:00:00+0000`)
+  const to = encodeURIComponent(
+    format(new Date(), `yyyy-MM-dd'T'HH:mm:ss'+0000'`)
+  )
+
+  return fetchApiMemoized(
+    `/match-history/v5/players/${userId}/history/?from=${from}&to=${to}&page=${page}&size=${size}&offset=${offset}`
+  )
+}
