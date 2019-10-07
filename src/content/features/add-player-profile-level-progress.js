@@ -1,13 +1,16 @@
 /** @jsx h */
 import { h } from 'dom-chef'
 import select from 'select-dom'
-import { hasFeatureAttribute, setFeatureAttribute } from '../libs/dom-element'
-import { getPlayer } from '../libs/faceit'
-import { LEVELS } from '../libs/elo'
+import {
+  hasFeatureAttribute,
+  setFeatureAttribute
+} from '../helpers/dom-element'
+import { getPlayer } from '../helpers/faceit'
+import { LEVELS } from '../helpers/elo'
 import {
   getPlayerProfileNickname,
   getPlayerProfileStatsGame
-} from '../libs/player-profile'
+} from '../helpers/player-profile'
 import createSkillLevelElement from '../components/skill-level'
 
 const FEATURE_ATTRIBUTE = 'level-progress'

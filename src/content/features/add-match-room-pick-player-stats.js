@@ -1,13 +1,13 @@
 /** @jsx h */
 import { h } from 'dom-chef'
 import select from 'select-dom'
-import { getMatch, getPlayer, getPlayerStats } from '../libs/faceit'
-import { getTeamElements, getRoomId } from '../libs/match-room'
+import { getMatch, getPlayer, getPlayerStats } from '../helpers/faceit'
+import { getTeamElements, getRoomId } from '../helpers/match-room'
 import {
   hasFeatureAttribute,
   setFeatureAttribute,
   setStyle
-} from '../libs/dom-element'
+} from '../helpers/dom-element'
 import createPlayerStatsElement from '../components/player-stats'
 
 const FEATURE_ATTRIBUTE = 'pick-player-stats'

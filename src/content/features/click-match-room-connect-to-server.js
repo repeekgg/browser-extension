@@ -1,7 +1,10 @@
 import select from 'select-dom'
-import { getRoomId } from '../libs/match-room'
-import { notifyIf } from '../libs/utils'
-import { hasFeatureAttribute, setFeatureAttribute } from '../libs/dom-element'
+import { getRoomId } from '../helpers/match-room'
+import { notifyIf } from '../helpers/utils'
+import {
+  hasFeatureAttribute,
+  setFeatureAttribute
+} from '../helpers/dom-element'
 
 const FEATURE_ATTRIBUTE = 'connect-to-server'
 

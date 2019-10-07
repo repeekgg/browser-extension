@@ -1,10 +1,13 @@
 /** @jsx h */
 import select from 'select-dom'
-import { getRoomId } from '../libs/match-room'
-import { getSelf, getPlayerMatches } from '../libs/faceit'
-import { hasFeatureAttribute, setFeatureAttribute } from '../libs/dom-element'
-import { mapMatchesWithElo } from '../libs/matches'
-import { getIsFreeMember } from '../libs/membership'
+import { getRoomId } from '../helpers/match-room'
+import { getSelf, getPlayerMatches } from '../helpers/faceit'
+import {
+  hasFeatureAttribute,
+  setFeatureAttribute
+} from '../helpers/dom-element'
+import { mapMatchesWithElo } from '../helpers/matches'
+import { getIsFreeMember } from '../helpers/membership'
 
 const FEATURE_ATTRIBUTE = 'elo-points'
 

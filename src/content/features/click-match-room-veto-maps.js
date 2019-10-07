@@ -1,10 +1,13 @@
 import select from 'select-dom'
 import shuffle from 'lodash/shuffle'
-import { hasFeatureAttribute, setFeatureAttribute } from '../libs/dom-element'
+import {
+  hasFeatureAttribute,
+  setFeatureAttribute
+} from '../helpers/dom-element'
 import storage from '../../shared/storage'
-import { notifyIf } from '../libs/utils'
-import { getQuickMatch, getMatch, getSelf } from '../libs/faceit'
-import { getRoomId, getTeamElements } from '../libs/match-room'
+import { notifyIf } from '../helpers/utils'
+import { getQuickMatch, getMatch, getSelf } from '../helpers/faceit'
+import { getRoomId, getTeamElements } from '../helpers/match-room'
 
 const FEATURE_ATTRIBUTE = 'veto-maps'
 const VETO_DELAY = 2000

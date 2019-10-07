@@ -1,5 +1,5 @@
 import test from 'ava'
-import * as matchRoom from '../src/content/libs/match-room'
+import * as matchRoom from '../src/content/helpers/match-room'
 
 test('getRoomId', t => {
   const roomId = '466ece1d-9f16-4b64-aa2d-826c60bc022f'

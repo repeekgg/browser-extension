@@ -1,4 +1,4 @@
-import { getPlayerHistory } from '../libs/faceit'
+import { getPlayerHistory } from '../helpers/faceit'
 
 const recursionLimit = 10
 const matchesResults = {}

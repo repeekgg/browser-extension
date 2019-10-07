@@ -6,13 +6,13 @@ import {
   getTeamMemberElements,
   getNicknameElement,
   mapMatchNicknamesToPlayersMemoized
-} from '../libs/match-room'
+} from '../helpers/match-room'
 import {
   hasFeatureAttribute,
   setFeatureAttribute,
   setStyle
-} from '../libs/dom-element'
-import { getQuickMatch, getMatch, getUser } from '../libs/faceit'
+} from '../helpers/dom-element'
+import { getQuickMatch, getMatch, getUser } from '../helpers/faceit'
 import createEloElement from '../components/elo'
 
 const FEATURE_ATTRIBUTE = 'player-elo'

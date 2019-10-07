@@ -3,10 +3,13 @@ import { h } from 'dom-chef'
 import select from 'select-dom'
 import styleInject from 'style-inject'
 import get from 'lodash/get'
-import { hasFeatureAttribute, setFeatureAttribute } from '../libs/dom-element'
-import { getQuickMatch, getMatch, getPlayer } from '../libs/faceit'
-import getMatchHistory from '../libs/match-history'
-import { getPlayerProfileNickname } from '../libs/player-profile'
+import {
+  hasFeatureAttribute,
+  setFeatureAttribute
+} from '../helpers/dom-element'
+import { getQuickMatch, getMatch, getPlayer } from '../helpers/faceit'
+import getMatchHistory from '../helpers/match-history'
+import { getPlayerProfileNickname } from '../helpers/player-profile'
 
 const FEATURE_ATTRIBUTE = 'demo-download'
 

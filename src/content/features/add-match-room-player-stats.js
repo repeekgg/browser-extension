@@ -6,9 +6,12 @@ import {
   getTeamMemberElements,
   getNicknameElement,
   mapMatchNicknamesToPlayersMemoized
-} from '../libs/match-room'
-import { hasFeatureAttribute, setFeatureAttribute } from '../libs/dom-element'
-import { getQuickMatch, getMatch, getPlayerStats } from '../libs/faceit'
+} from '../helpers/match-room'
+import {
+  hasFeatureAttribute,
+  setFeatureAttribute
+} from '../helpers/dom-element'
+import { getQuickMatch, getMatch, getPlayerStats } from '../helpers/faceit'
 import createPlayerStatsElement from '../components/player-stats'
 
 const FEATURE_ATTRIBUTE = 'player-stats'

@@ -1,10 +1,10 @@
 import select from 'select-dom'
-import { getMatchState } from '../libs/match-room'
+import { getMatchState } from '../helpers/match-room'
 import {
   setStyle,
   hasFeatureAttribute,
   setFeatureAttribute
-} from '../libs/dom-element'
+} from '../helpers/dom-element'
 
 const FEATURE_ATTRIBUTE = 'focus-mode'
 

@@ -1,9 +1,12 @@
 /** @jsx h */
 import { h } from 'dom-chef'
 import select from 'select-dom'
-import { getMatch, getPlayer } from '../libs/faceit'
-import { getTeamElements, getRoomId } from '../libs/match-room'
-import { hasFeatureAttribute, setFeatureAttribute } from '../libs/dom-element'
+import { getMatch, getPlayer } from '../helpers/faceit'
+import { getTeamElements, getRoomId } from '../helpers/match-room'
+import {
+  hasFeatureAttribute,
+  setFeatureAttribute
+} from '../helpers/dom-element'
 import createEloElement from '../components/elo'
 
 const FEATURE_ATTRIBUTE = 'pick-player-elo'

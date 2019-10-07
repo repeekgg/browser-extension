@@ -1,7 +1,7 @@
 import select from 'select-dom'
 import copyToClipboard from 'copy-text-to-clipboard'
-import { getRoomId } from '../libs/match-room'
-import { notifyIf } from '../libs/utils'
+import { getRoomId } from '../helpers/match-room'
+import { notifyIf } from '../helpers/utils'
 
 const store = new Map()
 

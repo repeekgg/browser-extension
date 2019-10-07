@@ -2,11 +2,14 @@
 import select from 'select-dom'
 import { h } from 'dom-chef'
 import elementReady from 'element-ready'
-import { CACHE_TIME, getSelf } from '../libs/faceit'
-import { hasFeatureAttribute, setFeatureAttribute } from '../libs/dom-element'
-import { LEVELS } from '../libs/elo'
+import { CACHE_TIME, getSelf } from '../helpers/faceit'
+import {
+  hasFeatureAttribute,
+  setFeatureAttribute
+} from '../helpers/dom-element'
+import { LEVELS } from '../helpers/elo'
 import createSkillLevelElement from '../components/skill-level'
-import { isLoggedIn } from '../libs/utils'
+import { isLoggedIn } from '../helpers/utils'
 
 const FEATURE_ATTRIBUTE = 'level-progress'
 const REFRESH_TIME = CACHE_TIME + 15000

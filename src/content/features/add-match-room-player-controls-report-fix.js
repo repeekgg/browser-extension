@@ -1,11 +1,11 @@
 import select from 'select-dom'
-import { getTeamElements, getTeamMemberElements } from '../libs/match-room'
+import { getTeamElements, getTeamMemberElements } from '../helpers/match-room'
 
 import {
   hasFeatureAttribute,
   setFeatureAttribute,
   setStyle
-} from '../libs/dom-element'
+} from '../helpers/dom-element'
 
 const FEATURE_ATTRIBUTE = 'player-controls-report-fix'
 

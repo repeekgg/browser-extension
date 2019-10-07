@@ -5,13 +5,13 @@ import {
   getFactionDetails,
   getTeamMemberElements,
   mapPlayersToPartyColorsMemoized
-} from '../libs/match-room'
-import { getQuickMatch, getMatch } from '../libs/faceit'
+} from '../helpers/match-room'
+import { getQuickMatch, getMatch } from '../helpers/faceit'
 import {
   hasFeatureAttribute,
   setFeatureAttribute,
   setStyle
-} from '../libs/dom-element'
+} from '../helpers/dom-element'
 
 const FEATURE_ATTRIBUTE = 'player-color'
 

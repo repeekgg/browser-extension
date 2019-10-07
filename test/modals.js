@@ -1,7 +1,7 @@
 /** @jsx h */
 import test from 'ava'
 import { h } from 'dom-chef'
-import * as modals from '../src/content/libs/modals'
+import * as modals from '../src/content/helpers/modals'
 
 test('isInviteToParty', t => {
   t.true(

@@ -1,10 +1,13 @@
 /** @jsx h */
 import { h } from 'dom-chef'
 import select from 'select-dom'
-import { hasFeatureAttribute, setFeatureAttribute } from '../libs/dom-element'
-import { getRoomId, getMatchState } from '../libs/match-room'
-import { getSelf, getPlayerMatches } from '../libs/faceit'
-import { mapMatchesWithElo } from '../libs/matches'
+import {
+  hasFeatureAttribute,
+  setFeatureAttribute
+} from '../helpers/dom-element'
+import { getRoomId, getMatchState } from '../helpers/match-room'
+import { getSelf, getPlayerMatches } from '../helpers/faceit'
+import { mapMatchesWithElo } from '../helpers/matches'
 
 const FEATURE_ATTRIBUTE = 'elo-self-result'
 

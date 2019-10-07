@@ -7,12 +7,15 @@ import {
   getQuickMatch,
   getMatch,
   getSelf
-} from '../libs/faceit'
-import { mapMatchesWithElo } from '../libs/matches'
-import { getPlayerProfileNickname } from '../libs/player-profile'
-import { hasFeatureAttribute, setFeatureAttribute } from '../libs/dom-element'
-import { calculateRatingChange } from '../libs/elo'
-import getMatchHistory from '../libs/match-history'
+} from '../helpers/faceit'
+import { mapMatchesWithElo } from '../helpers/matches'
+import { getPlayerProfileNickname } from '../helpers/player-profile'
+import {
+  hasFeatureAttribute,
+  setFeatureAttribute
+} from '../helpers/dom-element'
+import { calculateRatingChange } from '../helpers/elo'
+import getMatchHistory from '../helpers/match-history'
 
 const FEATURE_ATTRIBUTE = 'elo-points'
 

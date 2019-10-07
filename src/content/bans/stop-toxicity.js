@@ -2,8 +2,11 @@
 /* eslint-disable react/jsx-child-element-spacing */
 import select from 'select-dom'
 import { h } from 'dom-chef'
-import { hasFeatureAttribute, setFeatureAttribute } from '../libs/dom-element'
-import { isLoggedIn } from '../libs/utils'
+import {
+  hasFeatureAttribute,
+  setFeatureAttribute
+} from '../helpers/dom-element'
+import { isLoggedIn } from '../helpers/utils'
 
 const FEATURE_ATTRIBUTE = 'stop-toxiciy'
 const STOP_TOXICITY_URL =

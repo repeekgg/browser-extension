@@ -1,7 +1,10 @@
 import select from 'select-dom'
-import { getPlayer } from '../libs/faceit'
-import { getTeamElements } from '../libs/match-room'
-import { hasFeatureAttribute, setFeatureAttribute } from '../libs/dom-element'
+import { getPlayer } from '../helpers/faceit'
+import { getTeamElements } from '../helpers/match-room'
+import {
+  hasFeatureAttribute,
+  setFeatureAttribute
+} from '../helpers/dom-element'
 import createFlagElement from '../components/flag'
 
 const FEATURE_ATTRIBUTE = 'pick-player-flag'

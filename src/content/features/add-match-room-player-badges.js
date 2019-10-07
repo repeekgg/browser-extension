@@ -8,9 +8,12 @@ import {
   getTeamMemberElements,
   getNicknameElement,
   mapMatchNicknamesToPlayersMemoized
-} from '../libs/match-room'
-import { hasFeatureAttribute, setFeatureAttribute } from '../libs/dom-element'
-import { getQuickMatch, getMatch } from '../libs/faceit'
+} from '../helpers/match-room'
+import {
+  hasFeatureAttribute,
+  setFeatureAttribute
+} from '../helpers/dom-element'
+import { getQuickMatch, getMatch } from '../helpers/faceit'
 import createFeaturedPlayerBadgeElement from '../components/player-badge'
 import store from '../store'
 import vipLevels from '../../shared/vip-levels'

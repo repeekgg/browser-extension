@@ -8,14 +8,14 @@ import {
   getNicknameElement,
   getFactionDetails,
   mapMatchNicknamesToPlayersMemoized
-} from '../libs/match-room'
-import { getQuickMatch, getMatch, getUser } from '../libs/faceit'
+} from '../helpers/match-room'
+import { getQuickMatch, getMatch, getUser } from '../helpers/faceit'
 import {
   hasFeatureAttribute,
   setFeatureAttribute,
   setStyle
-} from '../libs/dom-element'
-import { calculateRatingChangeMemoized } from '../libs/elo'
+} from '../helpers/dom-element'
+import { calculateRatingChangeMemoized } from '../helpers/elo'
 import storage from '../../shared/storage'
 
 const FEATURE_ATTRIBUTE = 'elo-estimation'

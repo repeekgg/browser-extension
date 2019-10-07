@@ -1,12 +1,15 @@
 /** @jsx h */
 import { h } from 'dom-chef'
 import select from 'select-dom'
-import { hasFeatureAttribute, setFeatureAttribute } from '../libs/dom-element'
-import { getPlayer, getPlayerStats } from '../libs/faceit'
+import {
+  hasFeatureAttribute,
+  setFeatureAttribute
+} from '../helpers/dom-element'
+import { getPlayer, getPlayerStats } from '../helpers/faceit'
 import {
   getPlayerProfileNickname,
   getPlayerProfileStatsGame
-} from '../libs/player-profile'
+} from '../helpers/player-profile'
 import createSectionTitleElement from '../components/section-title'
 import createKeyStatElement from '../components/key-stat'
 import createHrElement from '../components/hr'

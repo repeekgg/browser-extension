@@ -1,5 +1,5 @@
 import test from 'ava'
-import { mapTotalStats, mapAverageStats } from '../src/content/libs/stats'
+import { mapTotalStats, mapAverageStats } from '../src/content/helpers/stats'
 
 test('mapTotalStats', t => {
   const stats = {
