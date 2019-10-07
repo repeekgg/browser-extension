@@ -1,7 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 import browser from 'webextension-polyfill'
 import select from 'select-dom'
-import storage from '../../libs/storage'
+import storage from '../../shared/storage'
 
 export const isFeatureEnabled = async option => {
   const options = await storage.getAll()

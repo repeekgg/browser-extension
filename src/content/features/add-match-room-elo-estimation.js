@@ -16,7 +16,7 @@ import {
   setStyle
 } from '../libs/dom-element'
 import { calculateRatingChangeMemoized } from '../libs/elo'
-import storage from '../../libs/storage'
+import storage from '../../shared/storage'
 
 const FEATURE_ATTRIBUTE = 'elo-estimation'
 

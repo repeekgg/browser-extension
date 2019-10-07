@@ -13,7 +13,7 @@ import { hasFeatureAttribute, setFeatureAttribute } from '../libs/dom-element'
 import { getQuickMatch, getMatch } from '../libs/faceit'
 import createFeaturedPlayerBadgeElement from '../components/player-badge'
 import store from '../store'
-import vipLevels from '../../libs/vip-levels'
+import vipLevels from '../../shared/vip-levels'
 
 const FEATURE_ATTRIBUTE = 'player-badge'
 

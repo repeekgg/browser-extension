@@ -1,9 +1,9 @@
 import browser from 'webextension-polyfill'
 import OptionsSync from 'webext-options-sync'
 import semverDiff from 'semver-diff'
-import storage from '../libs/storage'
+import storage from '../shared/storage'
 import changelogs from '../changelogs'
-import { DEFAULTS, UPDATE_NOTIFICATION_TYPES } from '../libs/settings'
+import { DEFAULTS, UPDATE_NOTIFICATION_TYPES } from '../shared/settings'
 import { fetchBans, fetchVips } from './api'
 
 storage.define({

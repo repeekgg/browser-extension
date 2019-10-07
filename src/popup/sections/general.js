@@ -1,5 +1,5 @@
 import React from 'react'
-import { UPDATE_NOTIFICATION_TYPES } from '../../libs/settings'
+import { UPDATE_NOTIFICATION_TYPES } from '../../shared/settings'
 import ListSubheader from '../components/list-subheader'
 import ListItemSwitch from '../components/list-item-switch'
 import ListItemMenu from '../components/list-item-menu'

@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography'
 import ListSubheader from '../components/list-subheader'
 import ListItemLink from '../components/list-item-link'
 import ListItemText from '../components/list-item-text'
-import vipLevels from '../../libs/vip-levels'
+import vipLevels from '../../shared/vip-levels'
 
 export const DONATE = 'Donate'
 

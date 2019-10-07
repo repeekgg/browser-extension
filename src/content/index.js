@@ -1,6 +1,6 @@
 import select from 'select-dom'
 import browser from 'webextension-polyfill'
-import storage from '../libs/storage'
+import storage from '../shared/storage'
 import * as modals from './libs/modals'
 import * as pages from './libs/pages'
 import { runFeatureIf } from './libs/utils'
