@@ -6,7 +6,7 @@ import {
   hasFeatureAttribute,
   setFeatureAttribute
 } from '../helpers/dom-element'
-import { isLoggedIn } from '../helpers/user-settings'
+import { isLoggedIn } from '../helpers/user'
 
 const FEATURE_ATTRIBUTE = 'stop-toxiciy'
 const STOP_TOXICITY_URL =

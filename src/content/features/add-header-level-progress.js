@@ -9,7 +9,7 @@ import {
 } from '../helpers/dom-element'
 import { LEVELS } from '../helpers/elo'
 import createSkillLevelElement from '../components/skill-level'
-import { isLoggedIn } from '../helpers/user-settings'
+import { isLoggedIn } from '../helpers/user'
 
 const FEATURE_ATTRIBUTE = 'level-progress'
 const REFRESH_TIME = CACHE_TIME + 15000
