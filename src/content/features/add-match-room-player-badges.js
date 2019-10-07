@@ -13,7 +13,7 @@ import {
   hasFeatureAttribute,
   setFeatureAttribute
 } from '../helpers/dom-element'
-import { getQuickMatch, getMatch } from '../helpers/faceit'
+import { getQuickMatch, getMatch } from '../helpers/faceit-api'
 import createFeaturedPlayerBadgeElement from '../components/player-badge'
 import store from '../store'
 import vipLevels from '../../shared/vip-levels'

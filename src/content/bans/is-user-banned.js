@@ -1,7 +1,7 @@
 import addMonths from 'date-fns/addMonths'
 import dateIsAfter from 'date-fns/isAfter'
 import formatDate from 'date-fns/format'
-import { getSelf } from '../helpers/faceit'
+import { getSelf } from '../helpers/faceit-api'
 import store from '../store'
 
 export default async () => {

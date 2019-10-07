@@ -2,7 +2,7 @@
 import select from 'select-dom'
 import { h } from 'dom-chef'
 import elementReady from 'element-ready'
-import { CACHE_TIME, getSelf } from '../helpers/faceit'
+import { CACHE_TIME, getSelf } from '../helpers/faceit-api'
 import {
   hasFeatureAttribute,
   setFeatureAttribute

@@ -10,7 +10,7 @@ import {
   hasFeatureAttribute,
   setFeatureAttribute
 } from '../helpers/dom-element'
-import { getQuickMatch, getMatch, getUser } from '../helpers/faceit'
+import { getQuickMatch, getMatch, getUser } from '../helpers/faceit-api'
 import createFlagElement from '../components/flag'
 
 const FEATURE_ATTRIBUTE = 'country-flag'

@@ -11,7 +11,7 @@ import {
   hasFeatureAttribute,
   setFeatureAttribute
 } from '../helpers/dom-element'
-import { getQuickMatch, getMatch, getPlayerStats } from '../helpers/faceit'
+import { getQuickMatch, getMatch, getPlayerStats } from '../helpers/faceit-api'
 import createPlayerStatsElement from '../components/player-stats'
 
 const FEATURE_ATTRIBUTE = 'player-stats'

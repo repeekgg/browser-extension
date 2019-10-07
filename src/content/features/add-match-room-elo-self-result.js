@@ -6,7 +6,7 @@ import {
   setFeatureAttribute
 } from '../helpers/dom-element'
 import { getRoomId, getMatchState } from '../helpers/match-room'
-import { getSelf, getPlayerMatches } from '../helpers/faceit'
+import { getSelf, getPlayerMatches } from '../helpers/faceit-api'
 import { mapMatchesWithElo } from '../helpers/matches'
 
 const FEATURE_ATTRIBUTE = 'elo-self-result'

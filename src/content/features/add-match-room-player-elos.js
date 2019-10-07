@@ -12,7 +12,7 @@ import {
   setFeatureAttribute,
   setStyle
 } from '../helpers/dom-element'
-import { getQuickMatch, getMatch, getUser } from '../helpers/faceit'
+import { getQuickMatch, getMatch, getUser } from '../helpers/faceit-api'
 import createEloElement from '../components/elo'
 
 const FEATURE_ATTRIBUTE = 'player-elo'

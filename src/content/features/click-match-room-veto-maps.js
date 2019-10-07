@@ -6,7 +6,7 @@ import {
 } from '../helpers/dom-element'
 import storage from '../../shared/storage'
 import { notifyIf } from '../helpers/user-settings'
-import { getQuickMatch, getMatch, getSelf } from '../helpers/faceit'
+import { getQuickMatch, getMatch, getSelf } from '../helpers/faceit-api'
 import { getRoomId, getTeamElements } from '../helpers/match-room'
 
 const FEATURE_ATTRIBUTE = 'veto-maps'

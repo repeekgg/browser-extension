@@ -5,7 +5,7 @@ import {
   hasFeatureAttribute,
   setFeatureAttribute
 } from '../helpers/dom-element'
-import { getPlayer, getPlayerStats } from '../helpers/faceit'
+import { getPlayer, getPlayerStats } from '../helpers/faceit-api'
 import {
   getPlayerProfileNickname,
   getPlayerProfileStatsGame

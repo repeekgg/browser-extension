@@ -7,7 +7,7 @@ import {
   getQuickMatch,
   getMatch,
   getSelf
-} from '../helpers/faceit'
+} from '../helpers/faceit-api'
 import { mapMatchesWithElo } from '../helpers/matches'
 import { getPlayerProfileNickname } from '../helpers/player-profile'
 import {

@@ -1,7 +1,7 @@
 /** @jsx h */
 import { h } from 'dom-chef'
 import select from 'select-dom'
-import { getMatch, getPlayer, getPlayerStats } from '../helpers/faceit'
+import { getMatch, getPlayer, getPlayerStats } from '../helpers/faceit-api'
 import { getTeamElements, getRoomId } from '../helpers/match-room'
 import {
   hasFeatureAttribute,

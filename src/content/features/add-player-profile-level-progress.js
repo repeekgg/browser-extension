@@ -5,7 +5,7 @@ import {
   hasFeatureAttribute,
   setFeatureAttribute
 } from '../helpers/dom-element'
-import { getPlayer } from '../helpers/faceit'
+import { getPlayer } from '../helpers/faceit-api'
 import { LEVELS } from '../helpers/elo'
 import {
   getPlayerProfileNickname,

@@ -1,5 +1,5 @@
 import select from 'select-dom'
-import { getPlayer } from '../helpers/faceit'
+import { getPlayer } from '../helpers/faceit-api'
 import { getTeamElements } from '../helpers/match-room'
 import {
   hasFeatureAttribute,

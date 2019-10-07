@@ -7,7 +7,7 @@ import {
   hasFeatureAttribute,
   setFeatureAttribute
 } from '../helpers/dom-element'
-import { getQuickMatch, getMatch, getPlayer } from '../helpers/faceit'
+import { getQuickMatch, getMatch, getPlayer } from '../helpers/faceit-api'
 import getMatchHistory from '../helpers/match-history'
 import { getPlayerProfileNickname } from '../helpers/player-profile'
 

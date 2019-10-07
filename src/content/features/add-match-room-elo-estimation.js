@@ -9,7 +9,7 @@ import {
   getFactionDetails,
   mapMatchNicknamesToPlayersMemoized
 } from '../helpers/match-room'
-import { getQuickMatch, getMatch, getUser } from '../helpers/faceit'
+import { getQuickMatch, getMatch, getUser } from '../helpers/faceit-api'
 import {
   hasFeatureAttribute,
   setFeatureAttribute,
