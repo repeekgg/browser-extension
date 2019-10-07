@@ -1,4 +1,5 @@
 import browser from 'webextension-polyfill'
+import throttle from 'lodash/throttle'
 import storage from '../../shared/storage'
 
 export const isFeatureEnabled = async option => {
@@ -18,7 +19,7 @@ export const runFeatureIf = async (option, feature, parent) => {
   }
 }
 
-export const notifyIf = async (option, message) => {
+export const notifyIf = throttle(async (option, message) => {
   const options = await storage.getAll()
 
   if (!options.notifyDisabled && options[option]) {
@@ -27,4 +28,4 @@ export const notifyIf = async (option, message) => {
       ...message
     })
   }
-}
+}, 500)
