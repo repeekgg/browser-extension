@@ -1,5 +1,5 @@
 import select from 'select-dom'
-import { notifyIf } from '../helpers/utils'
+import { notifyIf } from '../helpers/user-settings'
 
 export default parent => {
   // Quickmatch

@@ -4,7 +4,7 @@ import {
   setFeatureAttribute
 } from '../helpers/dom-element'
 import storage from '../../shared/storage'
-import { notifyIf } from '../helpers/utils'
+import { notifyIf } from '../helpers/user-settings'
 import { getQuickMatch, getMatch, getSelf } from '../helpers/faceit'
 import { getRoomId, getTeamElements } from '../helpers/match-room'
 

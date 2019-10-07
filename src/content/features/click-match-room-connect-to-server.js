@@ -1,6 +1,6 @@
 import select from 'select-dom'
 import { getRoomId } from '../helpers/match-room'
-import { notifyIf } from '../helpers/utils'
+import { notifyIf } from '../helpers/user-settings'
 import {
   hasFeatureAttribute,
   setFeatureAttribute
