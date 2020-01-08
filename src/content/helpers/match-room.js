@@ -180,10 +180,7 @@ export const mapMatchNicknamesToPlayersMemoized = mem(
 )
 
 export const getMatchState = element => {
-  const matchStateElement = select(
-    'div[class*=VersusTeamStatus__Status]',
-    element
-  )
+  const matchStateElement = select('matchroom-versus-status h5', element)
 
   if (!matchStateElement) {
     return null
