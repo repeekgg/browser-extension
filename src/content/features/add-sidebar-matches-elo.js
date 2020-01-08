@@ -13,7 +13,7 @@ const FEATURE_ATTRIBUTE = 'elo-points'
 
 export default async () => {
   const matchHistoryElements = select.all(
-    'div[class*=ActivityList__MatchLinkHolder] > a'
+    'activity-tracker #scrollable .infinite-scroll-component a'
   )
 
   if (
@@ -45,7 +45,7 @@ export default async () => {
     const matchId = getRoomId(matchHistoryElement.getAttribute('href'))
 
     const resultElement = select(
-      'span[class*=TextLabel] > span',
+      'div > div > div:nth-child(2) > span',
       matchHistoryElement
     )
 
