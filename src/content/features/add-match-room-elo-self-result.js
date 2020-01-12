@@ -12,10 +12,7 @@ import { mapMatchesWithElo } from '../helpers/matches'
 const FEATURE_ATTRIBUTE = 'elo-self-result'
 
 export default async parent => {
-  const matchStateElement = select(
-    'div[class*=VersusTeamStatus__Status]',
-    parent
-  )
+  const matchStateElement = select('matchroom-versus-status', parent)
   const matchState = getMatchState(parent)
 
   if (
@@ -45,7 +42,7 @@ export default async parent => {
   }
 
   const { eloDiff } = match
-  const matchResultElements = select.all('div[class*=MatchScore__Result]')
+  const matchResultElements = select.all('div[class*=sc-cFlMtL]')
 
   matchResultElements.forEach(matchResultElement => {
     const result = matchResultElement.textContent
