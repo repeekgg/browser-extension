@@ -61,7 +61,7 @@ export default async parentElement => {
       return
     }
 
-    let { eloDiff, newElo, teamId, gameMode } = matchesById[matchId]
+    let { eloDiff, eloAfter, teamId, gameMode } = matchesById[matchId]
 
     if (!eloDiff) {
       let match
@@ -100,13 +100,13 @@ export default async parentElement => {
       }${eloDiff})`
     }
 
-    if (selfHasFreeMembership || !newElo) {
+    if (selfHasFreeMembership || !eloAfter) {
       return
     }
 
     const newEloElement = (
       <div style={{ color: '#fff', 'font-weight': 'normal' }}>
-        New Elo: {newElo}
+        New Elo: {eloAfter}
       </div>
     )
 
