@@ -42,6 +42,11 @@ export default async parent => {
   }
 
   const { eloDiff } = match
+
+  if (!eloDiff) {
+    return
+  }
+
   const matchResultElements = select.all('div[class*=sc-cFlMtL]')
 
   matchResultElements.forEach(matchResultElement => {

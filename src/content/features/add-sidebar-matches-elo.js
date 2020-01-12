@@ -57,6 +57,10 @@ export default async () => {
 
     const { eloDiff, eloAfter } = match
 
+    if (!eloDiff) {
+      return
+    }
+
     resultElement.textContent += ` (${eloDiff >= 0 ? '+' : ''}${eloDiff}${
       isFreeMember ? '' : ` / ${eloAfter}`
     } Elo)`
