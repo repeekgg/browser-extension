@@ -8,16 +8,16 @@ test('calculateRatingChange', t => {
   })
 
   t.deepEqual(calculateRatingChange(5000, 1000), {
-    winPoints: 10,
+    winPoints: 1,
     lossPoints: -50
   })
 
   t.deepEqual(calculateRatingChange(1000, 5000), {
     winPoints: 50,
-    lossPoints: -0
+    lossPoints: -1
   })
 
-  t.is(calculateRatingChange(1853, 1159).winPoints, 10)
+  t.is(calculateRatingChange(1853, 1159).winPoints, 1)
   t.is(calculateRatingChange(1836, 1726).winPoints, 17)
   t.is(calculateRatingChange(1813, 1789).winPoints, 23)
   t.is(calculateRatingChange(1750, 1669).lossPoints, -31)
