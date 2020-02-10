@@ -38,3 +38,8 @@ Load into the browser:
     </td>
   </tr>
 </table>
+
+Build the extension into a `dist` folder for publishing:
+```
+yarn build
+```
