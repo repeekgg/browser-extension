@@ -39,62 +39,7 @@ import addSidebarMatchesElo from './features/add-sidebar-matches-elo'
 import addMatchRoomEloSelfResult from './features/add-match-room-elo-self-result'
 import applyMatchRoomFocusMode from './features/apply-match-room-focus-mode'
 
-function observeMainContent(element) {
-  const runFeatures = () => {
-    if (pages.isRoomOverview() && matchRoomIsReady()) {
-      addMatchRoomPlayerBadges(element)
-      addMatchRoomPlayerColors(element)
-      addMatchRoomPlayerFlags(element)
-      addMatchRoomPlayerElos(element)
-      runFeatureIf(
-        'matchRoomHidePlayerControls',
-        addPlayerControlsReportFix,
-        element
-      )
-      runFeatureIf('matchRoomShowPlayerStats', addMatchRoomPlayerStats, element)
-      addMatchRoomEloEstimation(element)
-      addMatchRoomEloSelfResult(element)
-      runFeatureIf(
-        'matchRoomAutoCopyServerData',
-        copyMatchRoomCopyServerData,
-        element
-      )
-      runFeatureIf(
-        'matchRoomAutoConnectToServer',
-        clickMatchRoomConnectToServer,
-        element
-      )
-      runFeatureIf(
-        'matchRoomAutoVetoLocations',
-        clickMatchRoomVetoLocations,
-        element
-      )
-      runFeatureIf('matchRoomAutoVetoMaps', clickMatchRoomVetoMaps, element)
-      addMatchRoomPickPlayerStats(element)
-      addMatchRoomPickPlayerElos(element)
-      addMatchRoomPickPlayerFlags(element)
-      runFeatureIf('matchRoomFocusMode', applyMatchRoomFocusMode, element)
-    } else if (pages.isPlayerProfileStats()) {
-      runFeatureIf(
-        'playerProfileLevelProgress',
-        addPlayerProfileLevelProgress,
-        element
-      )
-      addPlayerProfileDownloadDemo(element)
-      addProfileMatchesEloPoints(element)
-      addPlayerProfileExtendedStats(element)
-    }
-  }
-
-  runFeatures()
-
-  const observer = new MutationObserver(runFeatures)
-  observer.observe(element, { childList: true, subtree: true })
-}
-
 function observeBody() {
-  let mainContentElement
-
   const observer = new MutationObserver(() => {
     const modalElement = select('.modal-dialog')
 
@@ -155,10 +100,63 @@ function observeBody() {
 
     addSidebarMatchesElo()
 
-    if (!mainContentElement) {
-      mainContentElement = select('#main-content')
-      if (mainContentElement) {
-        observeMainContent(mainContentElement)
+    const mainContentElement = select('#main-content')
+
+    if (mainContentElement) {
+      if (pages.isRoomOverview() && matchRoomIsReady()) {
+        addMatchRoomPlayerBadges(mainContentElement)
+        addMatchRoomPlayerColors(mainContentElement)
+        addMatchRoomPlayerFlags(mainContentElement)
+        addMatchRoomPlayerElos(mainContentElement)
+        runFeatureIf(
+          'matchRoomHidePlayerControls',
+          addPlayerControlsReportFix,
+          mainContentElement
+        )
+        runFeatureIf(
+          'matchRoomShowPlayerStats',
+          addMatchRoomPlayerStats,
+          mainContentElement
+        )
+        addMatchRoomEloEstimation(mainContentElement)
+        addMatchRoomEloSelfResult(mainContentElement)
+        runFeatureIf(
+          'matchRoomAutoCopyServerData',
+          copyMatchRoomCopyServerData,
+          mainContentElement
+        )
+        runFeatureIf(
+          'matchRoomAutoConnectToServer',
+          clickMatchRoomConnectToServer,
+          mainContentElement
+        )
+        runFeatureIf(
+          'matchRoomAutoVetoLocations',
+          clickMatchRoomVetoLocations,
+          mainContentElement
+        )
+        runFeatureIf(
+          'matchRoomAutoVetoMaps',
+          clickMatchRoomVetoMaps,
+          mainContentElement
+        )
+        addMatchRoomPickPlayerStats(mainContentElement)
+        addMatchRoomPickPlayerElos(mainContentElement)
+        addMatchRoomPickPlayerFlags(mainContentElement)
+        runFeatureIf(
+          'matchRoomFocusMode',
+          applyMatchRoomFocusMode,
+          mainContentElement
+        )
+      } else if (pages.isPlayerProfileStats()) {
+        runFeatureIf(
+          'playerProfileLevelProgress',
+          addPlayerProfileLevelProgress,
+          mainContentElement
+        )
+        addPlayerProfileDownloadDemo(mainContentElement)
+        addProfileMatchesEloPoints(mainContentElement)
+        addPlayerProfileExtendedStats(mainContentElement)
       }
     }
   })
