@@ -18,6 +18,7 @@ import { calculateRatingChange } from '../helpers/elo'
 import { getIsFreeMember } from '../helpers/membership'
 
 const FEATURE_ATTRIBUTE = 'elo-points'
+const MATCHES_PER_PAGE = 30 // FACEIT defined. Check the website to make sure this is up to date.
 let nextPage = 0
 
 export default async parentElement => {
@@ -45,20 +46,26 @@ export default async parentElement => {
     return
   }
 
-  if (matchElements.length > nextPage * 30) {
+  if (matchElements.length > nextPage * MATCHES_PER_PAGE) {
     const currentPage = nextPage
     nextPage += 1
 
     // Page generated more matches for us to fetch.
-    const matches = await getPlayerMatches(player.guid, player.flag, 30, currentPage)
+    const matches = await getPlayerMatches(
+      player.guid,
+      player.flag,
+      MATCHES_PER_PAGE,
+      currentPage
+    )
 
     const matchesById = await mapMatchesWithElo(matches, game)
-    if (!matchesById) { // No elo enabled matches found
+    if (!matchesById) {
+      // No elo enabled matches found
       return
     }
 
     matches.forEach(async (match, index) => {
-      const matchHistoryTableRow = currentPage * 30 + index
+      const matchHistoryTableRow = currentPage * MATCHES_PER_PAGE + index
       const matchElement = matchElements[matchHistoryTableRow]
       const matchId = match.matchId
       if (hasFeatureAttribute(FEATURE_ATTRIBUTE, matchElement)) {
@@ -105,7 +112,7 @@ export default async parentElement => {
         const gainedElo = eloDiff > 0
         resultElement.textContent = `${resultElement.textContent} (${
           gainedElo ? '+' : ''
-          }${eloDiff})`
+        }${eloDiff})`
       }
 
       if (selfHasFreeMembership || !eloAfter) {
