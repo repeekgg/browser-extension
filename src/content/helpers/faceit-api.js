@@ -63,9 +63,9 @@ export const getUser = userId => fetchApiMemoized(`/core/v1/users/${userId}`)
 export const getPlayer = nickname =>
   fetchApiMemoized(`/core/v1/nicknames/${nickname}`)
 
-export const getPlayerMatches = (userId, game, size = 21) =>
+export const getPlayerMatches = (userId, game, size = 21, page = 0) =>
   fetchApiMemoized(
-    `/stats/v1/stats/time/users/${userId}/games/${game}?size=${size}`
+    `/stats/v1/stats/time/users/${userId}/games/${game}?page=${page}&size=${size}`
   )
 
 export const getPlayerStats = async (userId, game, size = 20) => {
@@ -135,3 +135,6 @@ export const getPlayerHistory = async (userId, page = 0) => {
     `/match-history/v5/players/${userId}/history/?from=${from}&to=${to}&page=${page}&size=${size}&offset=${offset}`
   )
 }
+
+export const getMatchmakingQueue = queueId =>
+  fetchApiMemoized(`/queue/v1/queue/matchmaking/${queueId}`)

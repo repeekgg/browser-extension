@@ -1,15 +1,31 @@
 /* eslint-disable import/prefer-default-export */
 import { normalizeElo } from './elo'
+import { getMatchmakingQueue } from './faceit-api'
 
-export function mapMatchesWithElo(matches, game) {
-  const matchesByGame = matches.filter(match => match.game === game)
+export async function mapMatchesWithElo(matches, game) {
+  const eloEnabled = {}
+
+  const matchPromises = matches.map(async match => {
+    const competitionId = match.competitionId
+    // Note: Old matches won't have competitionId
+    if (competitionId) {
+      const queue = await getMatchmakingQueue(competitionId)
+      eloEnabled[competitionId] = queue.length > 0 && queue[0].calculateElo
+    }
+  })
+
+  await Promise.all(matchPromises)
+
+  const matchesByGame = matches.filter(match => {
+    return match.game === game && eloEnabled[match.competitionId]
+  })
 
   if (matchesByGame.length === 0) {
     return null
   }
 
   return matchesByGame.reduce((acc, { matchId, elo, ...match }, i) => {
-    if (matches.length === i + 1) {
+    if (matchesByGame.length === i + 1) {
       return acc
     }
 

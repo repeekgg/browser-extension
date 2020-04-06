@@ -30,7 +30,7 @@ export default async () => {
   const isFreeMember = getIsFreeMember(self)
 
   let matches = await getPlayerMatches(self.guid, game)
-  matches = mapMatchesWithElo(matches, game)
+  matches = await mapMatchesWithElo(matches, game)
 
   if (!matches) {
     return
