@@ -46,6 +46,13 @@ export default async parentElement => {
     return
   }
 
+  // Check if the first row has 'elo-points' applied.
+  // If it doesn't, nextPage should be 0. This is required
+  // because a user may navigate away and back to the stats page.
+  if (!hasFeatureAttribute(FEATURE_ATTRIBUTE, matchElements[0])) {
+    nextPage = 0
+  }
+
   if (matchElements.length > nextPage * MATCHES_PER_PAGE) {
     const currentPage = nextPage
     nextPage += 1
@@ -124,7 +131,6 @@ export default async parentElement => {
           New Elo: {eloAfter}
         </div>
       )
-      console.log(resultElement)
       resultElement.append(newEloElement)
     })
   }
