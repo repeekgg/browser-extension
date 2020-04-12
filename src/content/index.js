@@ -40,7 +40,7 @@ import addMatchRoomEloSelfResult from './features/add-match-room-elo-self-result
 import applyMatchRoomFocusMode from './features/apply-match-room-focus-mode'
 
 function observeBody() {
-  const observer = new MutationObserver((mutations) => {
+  const observer = new MutationObserver(mutations => {
     const modalElement = select('.modal-dialog')
     if (modalElement) {
       if (modals.isInviteToParty(modalElement)) {
@@ -154,8 +154,8 @@ function observeBody() {
           mainContentElement
         )
         const statsTable = select('div.js-match-history-stats > table > tbody')
-        mutations.forEach((mutation) => {
-          if (mutation.type === "childList" && mutation.target === statsTable) {
+        mutations.forEach(mutation => {
+          if (mutation.type === 'childList' && mutation.target === statsTable) {
             addProfileMatchesEloPoints(mainContentElement)
           }
         })
