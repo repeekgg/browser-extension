@@ -30,6 +30,7 @@ import addMatchRoomPickPlayerFlags from './features/add-match-room-pick-player-f
 import addPlayerControlsReportFix from './features/add-match-room-player-controls-report-fix'
 import addPlayerProfileDownloadDemo from './features/add-player-profile-download-demo'
 import addPlayerProfileExtendedStats from './features/add-player-profile-extended-stats'
+import addPlayerProfileBadge from './features/add-player-profile-badge'
 import clickModalClose from './features/click-modal-close'
 import isUserBanned from './bans/is-user-banned'
 import stopToxicity from './bans/stop-toxicity'
@@ -79,15 +80,19 @@ function observeBody() {
           clickModalInactiveCheck,
           modalElement
         )
-      } else if (modals.isPlayerProfileStats()) {
-        runFeatureIf(
-          'playerProfileLevelProgress',
-          addPlayerProfileLevelProgress,
-          modalElement
-        )
-        addPlayerProfileDownloadDemo(modalElement)
-        addProfileMatchesEloPoints(modalElement)
-        addPlayerProfileExtendedStats(modalElement)
+      } else if (modals.isPlayerProfile()) {
+        addPlayerProfileBadge(modalElement)
+
+        if (modals.isPlayerProfileStats()) {
+          runFeatureIf(
+            'playerProfileLevelProgress',
+            addPlayerProfileLevelProgress,
+            modalElement
+          )
+          addPlayerProfileDownloadDemo(modalElement)
+          addProfileMatchesEloPoints(modalElement)
+          addPlayerProfileExtendedStats(modalElement)
+        }
       }
     }
 
@@ -147,20 +152,29 @@ function observeBody() {
           applyMatchRoomFocusMode,
           mainContentElement
         )
-      } else if (pages.isPlayerProfileStats()) {
-        runFeatureIf(
-          'playerProfileLevelProgress',
-          addPlayerProfileLevelProgress,
-          mainContentElement
-        )
-        const statsTable = select('div.js-match-history-stats > table > tbody')
-        mutations.forEach(mutation => {
-          if (mutation.type === 'childList' && mutation.target === statsTable) {
-            addProfileMatchesEloPoints(mainContentElement)
-          }
-        })
-        addPlayerProfileDownloadDemo(mainContentElement)
-        addPlayerProfileExtendedStats(mainContentElement)
+      } else if (pages.isPlayerProfile()) {
+        addPlayerProfileBadge(mainContentElement)
+
+        if (pages.isPlayerProfileStats()) {
+          runFeatureIf(
+            'playerProfileLevelProgress',
+            addPlayerProfileLevelProgress,
+            mainContentElement
+          )
+          const statsTable = select(
+            'div.js-match-history-stats > table > tbody'
+          )
+          mutations.forEach(mutation => {
+            if (
+              mutation.type === 'childList' &&
+              mutation.target === statsTable
+            ) {
+              addProfileMatchesEloPoints(mainContentElement)
+            }
+          })
+          addPlayerProfileDownloadDemo(mainContentElement)
+          addPlayerProfileExtendedStats(mainContentElement)
+        }
       }
     }
   })

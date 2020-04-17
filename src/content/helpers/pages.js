@@ -6,3 +6,6 @@ export const isRoomOverview = path =>
 
 export const isPlayerProfileStats = path =>
   /players\/.+\/stats\//.test(path || getCurrentPath())
+
+export const isPlayerProfile = path =>
+  /players\/.*$/.test(path || getCurrentPath())
