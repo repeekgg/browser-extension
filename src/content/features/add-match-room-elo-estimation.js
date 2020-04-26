@@ -149,7 +149,7 @@ export default async parent => {
       </div>
     )
 
-    factionNicknameElement.style.lineHeight = 'normal'
+    factionNicknameElement.style.lineHeight = '1'
     factionNicknameElement.append(eloElement)
 
     const factionIndex = i + 1
