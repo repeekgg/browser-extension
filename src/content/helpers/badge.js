@@ -1,4 +1,5 @@
 import vipLevels from '../../shared/vip-levels'
+import store from '../store'
 
 export const defaultProfiles = [
   /* eslint-disable capitalized-comments */
@@ -7,18 +8,13 @@ export const defaultProfiles = [
   /* eslint-enable capitalized-comments */
 ]
 
-export function addPlayer(
-  guid,
-  role,
-  bgColor,
-  textColor,
-  description,
-  onClick
-) {
+let playerBadges
+
+function addPlayer(guid, role, bgColor, textColor, description, onClick) {
   return { guid, role, bgColor, textColor, description, onClick }
 }
 
-export function addVIP({ guid, level = 0, role, bgColor, textColor }) {
+function addVIP({ guid, level = 0, role, bgColor, textColor }) {
   return addPlayer(
     guid,
     role || `VIP ${level > 0 ? new Array(level).fill('★').join('') : ''}`,
@@ -28,4 +24,14 @@ export function addVIP({ guid, level = 0, role, bgColor, textColor }) {
       level > 0 ? ` at least ${level}0 Euros ` : ' '
     }to support the development.`
   )
+}
+
+export function getPlayerBadges() {
+  if (!playerBadges) {
+    const vips = store.get('vips')
+
+    playerBadges = [...defaultProfiles, ...vips.map(addVIP)]
+  }
+
+  return playerBadges
 }

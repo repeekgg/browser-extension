@@ -14,13 +14,10 @@ import {
   setFeatureAttribute
 } from '../helpers/dom-element'
 import { getQuickMatch, getMatch } from '../helpers/faceit-api'
-import { addVIP, defaultProfiles } from '../helpers/badge'
+import { getPlayerBadges } from '../helpers/badge'
 import createFeaturedPlayerBadgeElement from '../components/player-badge'
-import store from '../store'
 
 const FEATURE_ATTRIBUTE = 'player-badge'
-
-let playerBadges
 
 export default async parent => {
   const { teamElements, isTeamV1Element } = getTeamElements(parent)
@@ -34,11 +31,7 @@ export default async parent => {
     return
   }
 
-  if (!playerBadges) {
-    const vips = store.get('vips')
-
-    playerBadges = [...defaultProfiles, ...vips.map(addVIP)]
-  }
+  const playerBadges = getPlayerBadges()
 
   const nicknamesToPlayers = mapMatchNicknamesToPlayersMemoized(match)
 
