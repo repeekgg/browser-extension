@@ -4,7 +4,7 @@ import semverDiff from 'semver-diff'
 import storage from '../shared/storage'
 import changelogs from '../changelogs'
 import { DEFAULTS, UPDATE_NOTIFICATION_TYPES } from '../shared/settings'
-import { fetchBans, fetchVips } from './api'
+import { fetchBan, fetchVips } from './api'
 
 storage.define({
   defaults: DEFAULTS,
@@ -50,13 +50,24 @@ browser.runtime.onMessage.addListener(async message => {
       })
       break
     }
-    case 'fetchApi': {
+    case 'fetchBan': {
       try {
-        const [bans, vips] = await Promise.all([fetchBans(), fetchVips()])
-        return { bans, vips }
+        const { guid } = message
+        const ban = await fetchBan(guid)
+        return ban
       } catch (error) {
         console.error(error)
-        return { bans: [], vips: [] }
+        return null
+      }
+    }
+    case 'fetchVips': {
+      try {
+        const { guid } = message
+        const vips = fetchVips(guid)
+        return vips
+      } catch (error) {
+        console.error(error)
+        return null
       }
     }
     default:

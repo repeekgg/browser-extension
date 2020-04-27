@@ -1,5 +1,4 @@
 import select from 'select-dom'
-import browser from 'webextension-polyfill'
 import storage from '../shared/storage'
 import * as modals from './helpers/modals'
 import * as pages from './helpers/pages'
@@ -31,9 +30,8 @@ import addPlayerControlsReportFix from './features/add-match-room-player-control
 import addPlayerProfileDownloadDemo from './features/add-player-profile-download-demo'
 import addPlayerProfileExtendedStats from './features/add-player-profile-extended-stats'
 import clickModalClose from './features/click-modal-close'
-import isUserBanned from './bans/is-user-banned'
-import stopToxicity from './bans/stop-toxicity'
-import store from './store'
+import getBannedUser from './ban/get-banned-user'
+import stopToxicity from './ban/stop-toxicity'
 import clickModalInactiveCheck from './features/click-modal-inactive-check'
 import addSidebarMatchesElo from './features/add-sidebar-matches-elo'
 import addMatchRoomEloSelfResult from './features/add-match-room-elo-self-result'
@@ -179,14 +177,7 @@ function runOnce() {
     return
   }
 
-  const { bans, vips } = await browser.runtime.sendMessage({
-    action: 'fetchApi'
-  })
-  store.set('bans', bans)
-  store.set('vips', vips)
-
-  const bannedUser = await isUserBanned()
-
+  const bannedUser = await getBannedUser()
   if (bannedUser) {
     stopToxicity(bannedUser)
     return

@@ -51,7 +51,5 @@ export const DEFAULTS = {
   notifyMatchRoomAutoVetoLocations: true,
   notifyMatchRoomAutoVetoMaps: true,
   updateNotificationType: 'tab',
-  updateNotifications: [],
-  bans: [],
-  vips: []
+  updateNotifications: []
 }

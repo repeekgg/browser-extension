@@ -1,15 +1,18 @@
 import addMonths from 'date-fns/addMonths'
 import dateIsAfter from 'date-fns/isAfter'
 import formatDate from 'date-fns/format'
+import parseISO from 'date-fns/parseISO'
+import browser from 'webextension-polyfill'
 import { getSelf } from '../helpers/faceit-api'
-import store from '../store'
 
 export default async () => {
   try {
-    const self = await getSelf()
+    const { guid } = await getSelf()
 
-    const bans = store.get('bans')
-    const bannedUser = bans.find(ban => ban.guid === self.guid)
+    const bannedUser = await browser.runtime.sendMessage({
+      action: 'fetchBan',
+      guid
+    })
 
     if (!bannedUser) {
       return false
@@ -17,13 +20,13 @@ export default async () => {
 
     const { startDate, months } = bannedUser
 
-    const endDate = addMonths(startDate, months)
+    const endDate = addMonths(parseISO(startDate), months)
 
     if (dateIsAfter(new Date(), endDate)) {
       return false
     }
 
-    bannedUser.endDate = formatDate(endDate, 'YYYY-MM-DD')
+    bannedUser.endDate = formatDate(endDate, 'yyyy-MM-dd')
 
     return bannedUser
   } catch (e) {

@@ -9,8 +9,6 @@ import {
 import { isLoggedIn } from '../helpers/user'
 
 const FEATURE_ATTRIBUTE = 'stop-toxiciy'
-const STOP_TOXICITY_URL =
-  'https://twitter.com/TheNorthIsHere/status/1088845523560353792'
 
 export default async bannedUser => {
   const observer = new MutationObserver(() => {
@@ -35,19 +33,19 @@ export default async bannedUser => {
           'margin-right': 8,
           'margin-left': 24,
           'margin-bottom': 4,
-          'font-size': 18,
+          'font-size': 16,
           'text-align': 'center'
         }}
       >
         <a
-          href={STOP_TOXICITY_URL}
+          href="https://www.youtube.com/embed/GhEisp_JbXA?autoplay=1&amp;start=19"
           target="_blank"
           rel="noopener noreferrer"
           style={{ color: 'red' }}
         >
-          <div>#StopToxicity</div>
-          <div style={{ 'font-size': 9 }}>
-            Banned from using FACEIT Enhancer
+          <div>Stop Toxicity</div>
+          <div style={{ 'font-size': 10 }}>
+            Banned from FACEIT Enhancer
             <br />
             until {bannedUser.endDate}
           </div>
