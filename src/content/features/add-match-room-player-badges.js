@@ -14,7 +14,7 @@ import {
   setFeatureAttribute
 } from '../helpers/dom-element'
 import { getQuickMatch, getMatch } from '../helpers/faceit-api'
-import { getPlayerBadges } from '../helpers/badge'
+import { getPlayerBadgeByGuid } from '../helpers/badge'
 import createFeaturedPlayerBadgeElement from '../components/player-badge'
 
 const FEATURE_ATTRIBUTE = 'player-badge'
@@ -30,8 +30,6 @@ export default async parent => {
   if (!match) {
     return
   }
-
-  const playerBadges = getPlayerBadges()
 
   const nicknamesToPlayers = mapMatchNicknamesToPlayersMemoized(match)
 
@@ -61,7 +59,7 @@ export default async parent => {
         userId = player.id
       }
 
-      const playerBadge = playerBadges.find(({ guid }) => guid === userId)
+      const playerBadge = getPlayerBadgeByGuid(userId)
 
       if (!playerBadge) {
         return

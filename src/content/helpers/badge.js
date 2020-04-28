@@ -35,3 +35,9 @@ export function getPlayerBadges() {
 
   return playerBadges
 }
+
+export function getPlayerBadgeByGuid(playerGuid) {
+  const playerBadges = getPlayerBadges()
+
+  return playerBadges.find(({ guid }) => guid === playerGuid)
+}
