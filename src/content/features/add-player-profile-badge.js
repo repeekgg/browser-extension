@@ -8,7 +8,7 @@ import {
 } from '../helpers/dom-element'
 
 import createFeaturedPlayerBadgeElement from '../components/player-badge'
-import { getPlayerBadgeByGuid } from '../helpers/badge'
+import { getPlayerBadges } from '../helpers/player-badges'
 import { getPlayerProfileNickname } from '../helpers/player-profile'
 import { getPlayer } from '../helpers/faceit-api'
 
@@ -32,7 +32,7 @@ export default async parentElement => {
 
   const nickname = getPlayerProfileNickname()
   const { guid } = await getPlayer(nickname)
-  const playerBadge = getPlayerBadgeByGuid(guid)
+  const playerBadge = await getPlayerBadges(guid)
 
   if (!playerBadge) {
     return

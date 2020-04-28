@@ -62,8 +62,8 @@ browser.runtime.onMessage.addListener(async message => {
     }
     case 'fetchVips': {
       try {
-        const { guid } = message
-        const vips = fetchVips(guid)
+        const { guids } = message
+        const vips = fetchVips(guids)
         return vips
       } catch (error) {
         console.error(error)

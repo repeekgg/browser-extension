@@ -14,10 +14,12 @@ import {
   setFeatureAttribute
 } from '../helpers/dom-element'
 import { getQuickMatch, getMatch } from '../helpers/faceit-api'
-import { getPlayerBadgeByGuid } from '../helpers/badge'
+import { getPlayerBadges } from '../helpers/player-badges'
 import createFeaturedPlayerBadgeElement from '../components/player-badge'
 
 const FEATURE_ATTRIBUTE = 'player-badge'
+
+const playerBadges = {}
 
 export default async parent => {
   const { teamElements, isTeamV1Element } = getTeamElements(parent)
@@ -32,6 +34,14 @@ export default async parent => {
   }
 
   const nicknamesToPlayers = mapMatchNicknamesToPlayersMemoized(match)
+
+  if (!playerBadges[roomId]) {
+    playerBadges[roomId] = getPlayerBadges(
+      Object.values(nicknamesToPlayers).map(({ id }) => id)
+    )
+  }
+
+  playerBadges[roomId] = await playerBadges[roomId]
 
   teamElements.forEach(async teamElement => {
     const factionDetails = getFactionDetails(teamElement, isTeamV1Element)
@@ -59,7 +69,7 @@ export default async parent => {
         userId = player.id
       }
 
-      const playerBadge = getPlayerBadgeByGuid(userId)
+      const playerBadge = playerBadges[roomId][userId]
 
       if (!playerBadge) {
         return
