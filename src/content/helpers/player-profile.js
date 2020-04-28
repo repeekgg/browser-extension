@@ -2,7 +2,9 @@
 import { getCurrentPath } from './location'
 
 export const getPlayerProfileNickname = path => {
-  const match = /players(?:-modal)?\/([^/]+)\//.exec(path || getCurrentPath())
+  const match = /players(?:-modal)?\/([A-Za-z0-9_-]+)(?:\/)?/.exec(
+    path || getCurrentPath()
+  )
 
   return match && match[1]
 }
