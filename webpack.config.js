@@ -5,7 +5,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 module.exports = {
-  devtool: 'sourcemap',
+  devtool: process.env.NODE_ENV === 'production' ? false : 'sourcemap',
   context: path.resolve(__dirname, 'src'),
   entry: {
     content: './content/index.js',
@@ -63,19 +63,6 @@ module.exports = {
   optimization: {
     concatenateModules: true,
     minimizer:
-      process.env.NODE_ENV === 'production'
-        ? [
-            new UglifyJsPlugin({
-              uglifyOptions: {
-                mangle: false,
-                compress: false,
-                output: {
-                  beautify: true,
-                  indent_level: 2 // eslint-disable-line camelcase
-                }
-              }
-            })
-          ]
-        : undefined
+      process.env.NODE_ENV === 'production' ? [new UglifyJsPlugin()] : undefined
   }
 }
