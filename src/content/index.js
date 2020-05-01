@@ -31,14 +31,20 @@ import addPlayerProfileDownloadDemo from './features/add-player-profile-download
 import addPlayerProfileExtendedStats from './features/add-player-profile-extended-stats'
 import addPlayerProfileBadge from './features/add-player-profile-badge'
 import clickModalClose from './features/click-modal-close'
-import getBannedUser from './ban/get-banned-user'
-import stopToxicity from './ban/stop-toxicity'
+import getBannedUser from './helpers/get-banned-user'
+import stopToxicity from './features/stop-toxicity'
 import clickModalInactiveCheck from './features/click-modal-inactive-check'
 import addSidebarMatchesElo from './features/add-sidebar-matches-elo'
 import addMatchRoomEloSelfResult from './features/add-match-room-elo-self-result'
 import applyMatchRoomFocusMode from './features/apply-match-room-focus-mode'
 
+let checkedBan = false
+
 function observeBody() {
+  if (!checkedBan) {
+    return
+  }
+
   const observer = new MutationObserver(mutations => {
     const modalElement = select('.modal-dialog')
     if (modalElement) {
@@ -181,6 +187,10 @@ function observeBody() {
 }
 
 function runOnce() {
+  if (!checkedBan) {
+    return
+  }
+
   runFeatureIf('matchRoomHidePlayerControls', hideMatchRoomPlayerControls)
 }
 
@@ -192,6 +202,7 @@ function runOnce() {
   }
 
   const bannedUser = await getBannedUser()
+  checkedBan = true
   if (bannedUser) {
     stopToxicity(bannedUser)
     return

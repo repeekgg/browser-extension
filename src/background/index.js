@@ -4,6 +4,11 @@ import semverDiff from 'semver-diff'
 import storage from '../shared/storage'
 import changelogs from '../changelogs'
 import { DEFAULTS, UPDATE_NOTIFICATION_TYPES } from '../shared/settings'
+import {
+  ACTION_NOTIFICATION,
+  ACTION_FETCH_BAN,
+  ACTION_FETCH_VIPS
+} from '../shared/constants'
 import { fetchBan, fetchVips } from './api'
 
 storage.define({
@@ -38,7 +43,7 @@ browser.runtime.onMessage.addListener(async message => {
   }
 
   switch (message.action) {
-    case 'notification': {
+    case ACTION_NOTIFICATION: {
       const { name } = browser.runtime.getManifest()
       delete message.action
 
@@ -50,7 +55,7 @@ browser.runtime.onMessage.addListener(async message => {
       })
       break
     }
-    case 'fetchBan': {
+    case ACTION_FETCH_BAN: {
       try {
         const { guid } = message
         const ban = await fetchBan(guid)
@@ -60,7 +65,7 @@ browser.runtime.onMessage.addListener(async message => {
         return null
       }
     }
-    case 'fetchVips': {
+    case ACTION_FETCH_VIPS: {
       try {
         const { guids } = message
         const vips = fetchVips(guids)

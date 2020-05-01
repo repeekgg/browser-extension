@@ -3,14 +3,15 @@ import dateIsAfter from 'date-fns/isAfter'
 import formatDate from 'date-fns/format'
 import parseISO from 'date-fns/parseISO'
 import browser from 'webextension-polyfill'
-import { getSelf } from '../helpers/faceit-api'
+import { ACTION_FETCH_BAN } from '../../shared/constants'
+import { getSelf } from './faceit-api'
 
 export default async () => {
   try {
     const { guid } = await getSelf()
 
     const bannedUser = await browser.runtime.sendMessage({
-      action: 'fetchBan',
+      action: ACTION_FETCH_BAN,
       guid
     })
 
@@ -30,7 +31,6 @@ export default async () => {
 
     return bannedUser
   } catch (e) {
-    console.error(e)
-    return false
+    return null
   }
 }

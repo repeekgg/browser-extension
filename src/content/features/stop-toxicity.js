@@ -8,7 +8,9 @@ import {
 } from '../helpers/dom-element'
 import { isLoggedIn } from '../helpers/user'
 
-const FEATURE_ATTRIBUTE = 'stop-toxiciy'
+const FEATURE_ATTRIBUTE = Math.random()
+  .toString(36)
+  .substr(2, 9)
 
 export default async bannedUser => {
   const observer = new MutationObserver(() => {
@@ -16,7 +18,7 @@ export default async bannedUser => {
       return
     }
 
-    const headerRightElement = select('.main-header__right')
+    const headerRightElement = select(atob('Lm1haW4taGVhZGVyX19yaWdodA=='))
 
     if (!headerRightElement) {
       return
@@ -29,27 +31,18 @@ export default async bannedUser => {
 
     const stopToxicityElement = (
       <div
-        style={{
-          'margin-right': 8,
-          'margin-left': 24,
-          'margin-bottom': 4,
-          'font-size': 16,
-          'text-align': 'center'
-        }}
+        style={JSON.parse(
+          atob(
+            'eyJtYXJnaW4tcmlnaHQiOjgsIm1hcmdpbi1sZWZ0IjoyNCwibWFyZ2luLWJvdHRvbSI6NCwiZm9udC1zaXplIjoxNiwidGV4dC1hbGlnbiI6ImNlbnRlciIsICJjb2xvciI6ICJyZWQifQ=='
+          )
+        )}
       >
-        <a
-          href="https://www.youtube.com/embed/GhEisp_JbXA?autoplay=1&amp;start=19"
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{ color: 'red' }}
-        >
-          <div>Stop Toxicity</div>
-          <div style={{ 'font-size': 10 }}>
-            Banned from FACEIT Enhancer
-            <br />
-            until {bannedUser.endDate}
-          </div>
-        </a>
+        <div>{atob('U3RvcCBUb3hpY2l0eQ==')}</div>
+        <div style={JSON.parse(atob('eyJmb250LXNpemUiOjEwfQ=='))}>
+          {atob('QmFubmVkIGZyb20gRkFDRUlUIEVuaGFuY2Vy')}
+          <br />
+          {atob('dW50aWw=')} {bannedUser.endDate}
+        </div>
       </div>
     )
 
