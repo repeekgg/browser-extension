@@ -1,12 +1,13 @@
 /** @jsx h */
+/* eslint-disable react/no-danger */
 import { h } from 'dom-chef'
 
+const reqSkillLevel = require.context('../assets/skill-levels', false, /\.svg$/)
+
 export default ({ level, size = 32, style = {} }) => (
-  <img
-    alt={`Skill Level ${level}`}
-    height={size}
-    src={`https://cdn-frontend.faceit.com/web/960/src/app/assets/images-compress/skill-icons/skill_level_${level}_svg.svg`}
-    style={style}
-    width={size}
+  <span
+    title={`Skill Level ${level}`}
+    style={{ width: size, ...style }}
+    dangerouslySetInnerHTML={{ __html: reqSkillLevel(`./${level}.svg`) }}
   />
 )

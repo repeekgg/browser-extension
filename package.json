@@ -64,6 +64,7 @@
     "prettier": "^1.15.1",
     "semver": "^6.0.0",
     "sinon": "^4.4.2",
+    "svg-inline-loader": "^0.8.2",
     "uglifyjs-webpack-plugin": "^1.2.2",
     "web-ext": "^4.2.0",
     "web-ext-submit": "^4.2.0",

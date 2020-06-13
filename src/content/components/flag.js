@@ -11,9 +11,9 @@ export default ({ country, alignedRight = false }) => {
   return (
     <span
       style={{
-        width: 12,
+        width: 14,
         display: 'inline-block',
-        [`margin-${alignedRight ? 'left' : 'right'}`]: 4
+        [`margin-${alignedRight ? 'left' : 'right'}`]: 6
       }}
       title={countryName}
       dangerouslySetInnerHTML={{ __html: reqFlag(`./${country}.svg`) }}
