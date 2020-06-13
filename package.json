@@ -9,7 +9,7 @@
     "prettier": "prettier --write \"**/*.{js,json,css}\"",
     "release:amo": "web-ext-submit --source-dir dist",
     "release:cws": "webstore upload --source=dist --auto-publish",
-    "release": "run-s build release:*",
+    "release": "run-p release:*",
     "bump-version": "node scripts/bump-version.js",
     "git-release": "node scripts/git-release.js"
   },
