@@ -1,21 +1,22 @@
 /** @jsx h */
+/* eslint-disable react/no-danger */
 import { h } from 'dom-chef'
 import { getName } from 'country-list'
 
-export default ({ country, alignRight = false }) => {
-  const countryCode = country.toUpperCase()
-  const countryName = getName(countryCode) || ''
+const reqFlag = require.context('../assets/flags', false, /\.svg$/)
+
+export default ({ country, alignedRight = false }) => {
+  const countryName = getName(country) || ''
 
   return (
-    <img
-      src={`https://cdn-frontend.faceit.com/web/112-1536332382/src/app/assets/images-compress/flags/${countryCode}.png`}
-      className="flag--12"
+    <span
       style={{
-        [`margin-${alignRight ? 'left' : 'right'}`]: 6,
-        'vertical-align': 'unset'
+        width: 12,
+        display: 'inline-block',
+        [`margin-${alignedRight ? 'left' : 'right'}`]: 4
       }}
-      alt={countryName}
       title={countryName}
+      dangerouslySetInnerHTML={{ __html: reqFlag(`./${country}.svg`) }}
     />
   )
 }

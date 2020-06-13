@@ -62,7 +62,7 @@ export default async parent => {
 
       if (user) {
         const { country } = user
-        const flag = createFlagElement({ country, alignRight: !isFaction1 })
+        const flag = createFlagElement({ country, alignedRight: !isFaction1 })
         nicknameElement[isFaction1 ? 'prepend' : 'append'](flag)
       }
     })
