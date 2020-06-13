@@ -15,8 +15,7 @@
     "storage",
     "notifications",
     "clipboardWrite",
-    "https://api.faceit.com/",
-    "https://cdn.faceit.com/"
+    "https://api.faceit.com/"
   ],
   "icons": {
     "16": "icon16.png",
