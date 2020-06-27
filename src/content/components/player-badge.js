@@ -19,9 +19,7 @@ export default ({ level = 0, role, bgColor, textColor, onClick }) => {
       break
     }
     default: {
-      description = `Has donated to FACEIT Enhancer${
-        level > 0 ? ` at least ${level}0 Euros ` : ' '
-      }to support the development`
+      description = `Has supported FACEIT Enhancer`
     }
   }
 

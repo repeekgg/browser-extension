@@ -21,10 +21,7 @@ export default () => (
       )}
     />
     <ListSubheader divider>Questions?</ListSubheader>
-    <ListItemLink
-      primary="Ask the Community"
-      subreddit="submit?selftext=true"
-    />
-    <ListItemLink primary="Twitter" href="https://twitter.com/timche_" />
+    <ListItemLink primary="Ask on Reddit" subreddit="submit?selftext=true" />
+    <ListItemLink primary="Tweet Us" href="https://twitter.com/timche_" />
   </React.Fragment>
 )

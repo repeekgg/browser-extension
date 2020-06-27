@@ -26,11 +26,8 @@ export default () => (
     />
     <ListSubheader divider>Community & Social</ListSubheader>
     <ListItemLink primary="Reddit" secondary="r/FACEITEnhancer" subreddit />
-    <ListItemLink
-      primary="Steam Group"
-      steamCommunity="groups/FACEITEnhancer"
-    />
     <ListItemLink primary="Twitter" href="https://twitter.com/timche_" />
+    <ListItemLink primary="Steam" steamCommunity="groups/FACEITEnhancer" />
     <ListSubheader divider>Team</ListSubheader>
     <ListItemLink primary="azn" secondary="Creator" faceit="azn" />
     <ListItemLink
