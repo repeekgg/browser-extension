@@ -55,10 +55,14 @@ export default async parent => {
         return
       }
 
-      const socialLinks = Object.keys(user.socials).map(key => ({
-        platform: key,
-        url: user.socials[key].value
-      }))
+      const socialLinks = Object.keys(user.socials)
+        .filter(
+          key => user.socials[key].value && user.socials[key].value !== ''
+        )
+        .map(key => ({
+          platform: key,
+          url: user.socials[key].value
+        }))
 
       if (user.streaming && user.streaming.twitchId) {
         socialLinks.push({
@@ -72,14 +76,14 @@ export default async parent => {
       }
 
       const memberControlElement = select(
-        '.match-team-member__controls__space',
+        '.match-team-member__controls>a',
         memberElement
       )
 
       for (const link of socialLinks) {
         const linkElement = createPlayerLink(link)
 
-        memberControlElement.insertAdjacentElement('beforebegin', linkElement)
+        memberControlElement.insertAdjacentElement('afterend', linkElement)
       }
     })
   })
