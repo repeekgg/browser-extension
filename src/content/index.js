@@ -37,6 +37,7 @@ import clickModalInactiveCheck from './features/click-modal-inactive-check'
 import addSidebarMatchesElo from './features/add-sidebar-matches-elo'
 import addMatchRoomEloSelfResult from './features/add-match-room-elo-self-result'
 import applyMatchRoomFocusMode from './features/apply-match-room-focus-mode'
+import addMatchRoomPlayerLinks from './features/add-match-room-player-links'
 
 let checkedBan = false
 
@@ -116,6 +117,7 @@ function observeBody() {
         addMatchRoomPlayerColors(mainContentElement)
         addMatchRoomPlayerFlags(mainContentElement)
         addMatchRoomPlayerElos(mainContentElement)
+        addMatchRoomPlayerLinks(mainContentElement)
         runFeatureIf(
           'matchRoomHidePlayerControls',
           addPlayerControlsReportFix,
