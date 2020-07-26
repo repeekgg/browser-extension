@@ -10,7 +10,12 @@ import {
   hasFeatureAttribute,
   setFeatureAttribute
 } from '../helpers/dom-element'
-import { getQuickMatch, getMatch, getUser } from '../helpers/faceit-api'
+import {
+  getQuickMatch,
+  getMatch,
+  getUser,
+  getSelf
+} from '../helpers/faceit-api'
 import createPlayerLink from '../components/player-link'
 
 const FEATURE_ATTRIBUTE = 'player-links'
@@ -49,9 +54,15 @@ export default async parent => {
         userId = player.id
       }
 
+      const self = await getSelf()
+
+      if (userId === self.guid) {
+        return
+      }
+
       const user = await getUser(userId)
 
-      if (!user) {
+      if (!user || !user.socials || Object.keys(user.socials).length === 0) {
         return
       }
 
