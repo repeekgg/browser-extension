@@ -7,7 +7,7 @@ import {
 } from '../helpers/dom-element'
 import { getRoomId, getMatchState } from '../helpers/match-room'
 import { getSelf, getPlayerMatches } from '../helpers/faceit-api'
-import { mapMatchesWithElo } from '../helpers/matches'
+import { getEloChangesByMatches } from '../helpers/elo'
 
 const FEATURE_ATTRIBUTE = 'elo-self-result'
 
@@ -27,27 +27,28 @@ export default async parent => {
   const self = await getSelf()
   const game = self.flag
 
-  let matches = await getPlayerMatches(self.guid, game)
-  matches = mapMatchesWithElo(matches, game)
+  const matches = await getPlayerMatches(self.guid, game)
+  const roomId = getRoomId()
 
-  if (!matches) {
+  if (!matches.some(match => match.matchId === roomId)) {
     return
   }
 
-  const matchId = getRoomId()
-  const match = matches[matchId]
+  const eloChangesByMatches = await getEloChangesByMatches(matches, game)
 
-  if (!match) {
+  if (!eloChangesByMatches) {
     return
   }
 
-  const { eloDiff } = match
+  const eloChange = eloChangesByMatches[roomId]
 
-  if (!eloDiff) {
+  if (!eloChange) {
     return
   }
 
-  const matchResultElements = select.all('div[class*=sc-cFlMtL]')
+  const { eloDiff } = eloChange
+
+  const matchResultElements = select.all('div[class*=sc-jgjKxb]')
 
   matchResultElements.forEach(matchResultElement => {
     const result = matchResultElement.textContent

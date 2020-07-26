@@ -6,22 +6,27 @@ import {
   hasFeatureAttribute,
   setFeatureAttribute
 } from '../helpers/dom-element'
-import { mapMatchesWithElo } from '../helpers/matches'
+import { getEloChangesByMatches } from '../helpers/elo'
 import { getIsFreeMember } from '../helpers/membership'
 
-const FEATURE_ATTRIBUTE = 'elo-points'
+const FEATURE_ATTRIBUTE = 'matches-elo'
 
 export default async () => {
-  const matchHistoryElements = select.all(
-    'activity-tracker #scrollable .infinite-scroll-component a'
+  const matchHistoryElement = select(
+    'activity-tracker #scrollable .infinite-scroll-component'
   )
 
   if (
-    matchHistoryElements.length === 0 ||
-    matchHistoryElements.some(matchHistoryElement =>
-      hasFeatureAttribute(FEATURE_ATTRIBUTE, matchHistoryElement)
-    )
+    !matchHistoryElement ||
+    hasFeatureAttribute(FEATURE_ATTRIBUTE, matchHistoryElement)
   ) {
+    return
+  }
+  setFeatureAttribute(FEATURE_ATTRIBUTE, matchHistoryElement)
+
+  const matchElements = select.all('a', matchHistoryElement)
+
+  if (matchElements.length === 0) {
     return
   }
 
@@ -29,40 +34,31 @@ export default async () => {
   const game = self.flag
   const isFreeMember = getIsFreeMember(self)
 
-  let matches = await getPlayerMatches(self.guid, game)
-  matches = await mapMatchesWithElo(matches, game)
+  const matches = await getPlayerMatches(self.guid, game)
+  const eloChangesByMatches = await getEloChangesByMatches(matches, game)
 
-  if (!matches) {
+  if (!eloChangesByMatches) {
     return
   }
 
-  matchHistoryElements.forEach(matchHistoryElement => {
-    if (hasFeatureAttribute(FEATURE_ATTRIBUTE, matchHistoryElement)) {
-      return
-    }
-    setFeatureAttribute(FEATURE_ATTRIBUTE, matchHistoryElement)
-
-    const matchId = getRoomId(matchHistoryElement.getAttribute('href'))
+  matchElements.forEach(matchElement => {
+    const matchId = getRoomId(matchElement.getAttribute('href'))
 
     const resultElement = select(
       'div > div > div:nth-child(2) > span',
-      matchHistoryElement
+      matchElement
     )
 
-    const match = matches[matchId]
+    const eloChange = eloChangesByMatches[matchId]
 
-    if (!match) {
+    if (!eloChange) {
       return
     }
 
-    const { eloDiff, eloAfter } = match
-
-    if (!eloDiff) {
-      return
-    }
+    const { eloDiff, newElo } = eloChange
 
     resultElement.textContent += ` (${eloDiff >= 0 ? '+' : ''}${eloDiff}${
-      isFreeMember ? '' : ` / ${eloAfter}`
+      isFreeMember ? '' : ` / ${newElo}`
     } Elo)`
   })
 }

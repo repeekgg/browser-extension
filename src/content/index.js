@@ -46,7 +46,7 @@ function observeBody() {
     return
   }
 
-  const observer = new MutationObserver(mutations => {
+  const observer = new MutationObserver(() => {
     const modalElement = select('.modal-dialog')
     if (modalElement) {
       if (modals.isInviteToParty(modalElement)) {
@@ -167,17 +167,7 @@ function observeBody() {
             addPlayerProfileLevelProgress,
             mainContentElement
           )
-          const statsTable = select(
-            'div.js-match-history-stats > table > tbody'
-          )
-          mutations.forEach(mutation => {
-            if (
-              mutation.type === 'childList' &&
-              mutation.target === statsTable
-            ) {
-              addProfileMatchesEloPoints(mainContentElement)
-            }
-          })
+          addProfileMatchesEloPoints(mainContentElement)
           addPlayerProfileDownloadDemo(mainContentElement)
           addPlayerProfileExtendedStats(mainContentElement)
         }
