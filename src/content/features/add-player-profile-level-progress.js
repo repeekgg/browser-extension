@@ -56,7 +56,10 @@ const skillLevelElement = ({
 export default async parentElement => {
   const profileElement = select('section.profile > div.profile', parentElement)
 
-  if (hasFeatureAttribute(FEATURE_ATTRIBUTE, profileElement)) {
+  if (
+    !profileElement ||
+    hasFeatureAttribute(FEATURE_ATTRIBUTE, profileElement)
+  ) {
     return
   }
   setFeatureAttribute(FEATURE_ATTRIBUTE, profileElement)
