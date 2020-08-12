@@ -17,6 +17,7 @@ import {
   getSelf
 } from '../helpers/faceit-api'
 import createPlayerLink from '../components/player-link'
+import { validateSocialLink } from '../helpers/social-media'
 
 const FEATURE_ATTRIBUTE = 'player-links'
 
@@ -70,6 +71,7 @@ export default async parent => {
         .filter(
           key => user.socials[key].value && user.socials[key].value !== ''
         )
+        .filter(key => validateSocialLink(key, user.socials[key].value))
         .map(key => ({
           platform: key,
           url: user.socials[key].value
