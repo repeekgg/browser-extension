@@ -38,9 +38,13 @@ export default async parentElement => {
 
   const invalidLinks = Object.keys(profile.socials)
     .filter(
-      key => profile.socials[key].value && profile.socials[key].value !== ''
+      platform =>
+        profile.socials[platform].value &&
+        profile.socials[platform].value !== ''
     )
-    .filter(key => !validateSocialLink(key, profile.socials[key].value))
+    .filter(
+      platform => !validateSocialLink(platform, profile.socials[platform].value)
+    )
 
   if (invalidLinks.length === 0) {
     return

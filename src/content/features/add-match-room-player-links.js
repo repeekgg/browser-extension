@@ -69,12 +69,15 @@ export default async parent => {
 
       const socialLinks = Object.keys(user.socials)
         .filter(
-          key => user.socials[key].value && user.socials[key].value !== ''
+          platform =>
+            user.socials[platform].value && user.socials[platform].value !== ''
         )
-        .filter(key => validateSocialLink(key, user.socials[key].value))
-        .map(key => ({
-          platform: key,
-          url: user.socials[key].value
+        .filter(platform =>
+          validateSocialLink(platform, user.socials[platform].value)
+        )
+        .map(platform => ({
+          url: user.socials[platform].value,
+          platform
         }))
 
       if (user.streaming && user.streaming.twitchId) {

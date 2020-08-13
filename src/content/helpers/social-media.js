@@ -13,6 +13,6 @@ export const validateSocialLink = (platform, link) => {
     case 'youtube':
       return /http(s|):\/\/(www\.|)youtube\.com\/(user|channel)\/.+/g.test(link)
     default:
-      return true
+      return false
   }
 }
