@@ -38,6 +38,7 @@ import addSidebarMatchesElo from './features/add-sidebar-matches-elo'
 import addMatchRoomEloSelfResult from './features/add-match-room-elo-self-result'
 import applyMatchRoomFocusMode from './features/apply-match-room-focus-mode'
 import addMatchRoomPlayerLinks from './features/add-match-room-player-links'
+import addPlayerProfileLinks from './features/add-player-profile-links'
 
 let checkedBan = false
 
@@ -87,6 +88,7 @@ function observeBody() {
         )
       } else if (modals.isPlayerProfile()) {
         addPlayerProfileBadge(modalElement)
+        addPlayerProfileLinks(modalElement)
 
         if (modals.isPlayerProfileStats()) {
           runFeatureIf(
@@ -160,6 +162,7 @@ function observeBody() {
         )
       } else if (pages.isPlayerProfile()) {
         addPlayerProfileBadge(mainContentElement)
+        addPlayerProfileLinks(mainContentElement)
 
         if (pages.isPlayerProfileStats()) {
           runFeatureIf(
