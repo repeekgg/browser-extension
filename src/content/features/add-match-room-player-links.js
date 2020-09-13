@@ -66,7 +66,7 @@ export default async parent => {
       if (
         !user ||
         ((!user.socials || Object.keys(user.socials).length === 0) &&
-          !(user.streaming || user.streaming.twitchId))
+          (!user.streaming || !user.streaming.twitchId))
       ) {
         return
       }
