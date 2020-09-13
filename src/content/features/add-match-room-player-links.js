@@ -63,7 +63,11 @@ export default async parent => {
 
       const user = await getUser(userId)
 
-      if (!user || !user.socials || Object.keys(user.socials).length === 0) {
+      if (
+        !user ||
+        ((!user.socials || Object.keys(user.socials).length === 0) &&
+          !(user.streaming || user.streaming.twitchId))
+      ) {
         return
       }
 
