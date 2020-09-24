@@ -71,7 +71,7 @@ export default async parent => {
         return
       }
 
-      const socialLinks = Object.keys(user.socials)
+      const socialLinks = Object.keys(user.socials || {})
         .filter(
           platform =>
             user.socials[platform].value && user.socials[platform].value !== ''
