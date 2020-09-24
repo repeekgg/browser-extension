@@ -121,7 +121,7 @@ export default async parent => {
     )
 
     const factionNicknameElement = select(
-      `h2[ng-bind="${
+      `h2[ng-bind*="${
         isTeamV1Element
           ? `match.${factionName}_nickname`
           : `vm.currentMatch.match.teams.${factionName}.name`
