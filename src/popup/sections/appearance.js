@@ -30,6 +30,11 @@ export default ({ getSwitchProps }) => (
       {...getSwitchProps('matchRoomShowPlayerStats')}
     />
     <ListItemSwitch
+      primary="Show Map Stats"
+      secondary="Show average stats (Play Rate, Win Rate) from last 20 games."
+      {...getSwitchProps('matchRoomShowMapStats')}
+    />
+    <ListItemSwitch
       primary="Hide Player Controls"
       secondary={
         'Hide the bottom bar that includes "Add Friend", game profile, "Twitch channel", "Recommend/Report" etc. Will be displayed when hovering over the player instead.'

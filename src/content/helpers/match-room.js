@@ -151,6 +151,53 @@ export const mapPlayersToPartyColorsMemoized = mem(mapPlayersToPartyColors, {
   }
 })
 
+const mapMatchFactionRosters = match => {
+  if (match.faction1 && match.faction2) {
+    return {
+      faction1: match.faction1,
+      faction2: match.faction2
+    }
+  }
+  if (match.teams && match.teams.faction1 && match.teams.faction2) {
+    return {
+      faction1: match.teams.faction1.roster,
+      faction2: match.teams.faction2.roster
+    }
+  }
+  throw new Error(
+    `Not sure how to handle this match: ${match.guid || match.id}`
+  )
+}
+
+export const mapMatchFactionRostersMemoized = mem(mapMatchFactionRosters, {
+  cacheKey: match => JSON.stringify(match.guid || match.id)
+})
+
+export const mapMatchFactionWinRates = (
+  rosters,
+  matches,
+  mapName,
+  size = 20
+) => {
+  return Object.keys(rosters).map(factionName => {
+    const players = rosters[factionName].map(i => i.nickname)
+    const games = matches.filter(
+      match => players.includes(match.nickname) && match.i1 === mapName
+    )
+    const won = games.filter(match => match.i10 === '1')
+
+    const winRate = Math.floor((won.length / games.length || 0) * 100)
+    const playRate = Math.floor(
+      (games.length / players.length / size || 0) * 100
+    )
+
+    return {
+      winRate,
+      playRate
+    }
+  })
+}
+
 const mapMatchNicknamesToPlayers = match => {
   const nicknamesToPlayers = {}
   let allPlayers
