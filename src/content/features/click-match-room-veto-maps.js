@@ -8,7 +8,7 @@ import storage from '../../shared/storage'
 import { notifyIf } from '../helpers/user-settings'
 import { getQuickMatch, getMatch, getSelf } from '../helpers/faceit-api'
 import { getRoomId, getTeamElements } from '../helpers/match-room'
-import csgoMaps from '../helpers/maps'
+import maps from '../helpers/maps'
 
 const FEATURE_ATTRIBUTE = 'veto-maps'
 const VETO_DELAY = 2000
@@ -50,7 +50,7 @@ export default async parentElement => {
     matchRoomAutoVetoMapsShuffle: shuffleMaps,
     matchRoomAutoVetoMapsShuffleAmount: shuffleMapsAmount
   } = await storage.getAll()
-  let autoVetoItems = matchRoomAutoVetoMapItems.map(m => csgoMaps[m] || m)
+  let autoVetoItems = matchRoomAutoVetoMapItems.map(m => maps.csgo[m] || m)
 
   if (shuffleMaps) {
     const shuffledItems = shuffle(autoVetoItems.splice(0, shuffleMapsAmount))

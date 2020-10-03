@@ -17,7 +17,7 @@ import {
   getPlayerMatches,
   getQuickMatch
 } from '../helpers/faceit-api'
-import csgoMaps from '../helpers/maps'
+import maps from '../helpers/maps'
 
 const FEATURE_ATTRIBUTE = 'map-estimation'
 
@@ -73,8 +73,8 @@ export default async parentElement => {
     mapElement.firstChild.style.paddingRight = '8px'
 
     const mapName = mapElement.firstChild.textContent.trim()
-    const orginalName = Object.keys(csgoMaps).find(
-      key => csgoMaps[key] === mapName
+    const orginalName = Object.keys(maps.csgo).find(
+      key => maps.csgo[key] === mapName
     )
 
     if (!orginalName) {
