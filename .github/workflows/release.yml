@@ -11,6 +11,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - run: yarn --frozen-lockfile
+    - run: yarn lint
+    - run: yarn test
     - run: yarn build
     - run: yarn release:cws
       env:
@@ -23,6 +25,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - run: yarn --frozen-lockfile
+    - run: yarn lint
+    - run: yarn test
     - run: yarn build
     - run: yarn release:amo
       env:
