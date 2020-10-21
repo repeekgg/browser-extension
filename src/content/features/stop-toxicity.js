@@ -14,7 +14,7 @@ const FEATURE_ATTRIBUTE = Math.random()
 
 export default async bannedUser => {
   const observer = new MutationObserver(() => {
-    if (!isLoggedIn()) {
+    if (bannedUser.shadow || !isLoggedIn()) {
       return
     }
 
