@@ -182,7 +182,11 @@ function observeBody() {
           addPlayerProfileExtendedStats(mainContentElement)
         }
       } else if (pages.isTeamsOverview()) {
-        addTeamPlayerInfo(mainContentElement)
+        runFeatureIf(
+          'teamRosterPlayersInfo',
+          addTeamPlayerInfo,
+          mainContentElement
+        )
       }
     }
   })
