@@ -65,7 +65,11 @@ export default async parent => {
       if (!stats) {
         return
       }
-      const statsElement = createPlayerStatsElement(stats, !isFaction1)
+
+      const statsElement = createPlayerStatsElement({
+        ...stats,
+        alignRight: !isFaction1
+      })
 
       const memberDetailsElement = select(
         '.match-team-member__details',

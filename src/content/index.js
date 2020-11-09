@@ -40,6 +40,7 @@ import addMatchRoomEloSelfResult from './features/add-match-room-elo-self-result
 import applyMatchRoomFocusMode from './features/apply-match-room-focus-mode'
 import addMatchRoomPlayerLinks from './features/add-match-room-player-links'
 import addPlayerProfileLinks from './features/add-player-profile-links'
+import addTeamPlayerInfo from './features/add-team-player-info'
 
 let checkedBan = false
 
@@ -180,6 +181,8 @@ function observeBody() {
           addPlayerProfileDownloadDemo(mainContentElement)
           addPlayerProfileExtendedStats(mainContentElement)
         }
+      } else if (pages.isTeamsOverview()) {
+        addTeamPlayerInfo(mainContentElement)
       }
     }
   })

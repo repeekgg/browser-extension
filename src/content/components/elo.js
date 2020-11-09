@@ -2,9 +2,15 @@
 import { h } from 'dom-chef'
 import createIconElement from './icon'
 
-export default ({ elo, alignRight = false, style = {} }) => {
+export default ({
+  elo,
+  alignRight = false,
+  style = {},
+  className = undefined
+}) => {
   const eloElement = (
     <span
+      className={className}
       style={{
         display: 'flex',
         'align-items': 'center',
