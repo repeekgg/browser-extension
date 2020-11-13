@@ -44,7 +44,7 @@ export default async parentElement => {
           }}
           className="fast-delete"
           onClick={() => handleDeleteUser(friendElement, guid, player.guid)}
-          aria="Delete"
+          aria-label="Delete"
         >
           x
         </span>
