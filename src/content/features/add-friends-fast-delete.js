@@ -5,6 +5,12 @@ import select from 'select-dom'
 import { deleteUser, getPlayer } from '../helpers/faceit-api'
 import { getPlayerProfileNickname } from '../helpers/player-profile'
 
+function handleDeleteUser(playerElement, userGuid, playerGuid) {
+  deleteUser(userGuid, playerGuid).then(() => {
+    playerElement.setAttribute('hidden', true)
+  })
+}
+
 export default async parentElement => {
   const isUserProfile = select('div.page-title__edit-button', parentElement)
 
@@ -20,24 +26,24 @@ export default async parentElement => {
     parentElement
   )
 
-  friendList.forEach(friends => {
-    const friend = select('a', friends)
+  friendList.forEach(friendElement => {
+    const friendNameElement = select('a', friendElement)
 
-    const playerRequest = getPlayer(friend.innerText)
+    const playerRequest = getPlayer(friendNameElement.innerText)
     playerRequest.then(player => {
-      const isAlreadyDeletable = select('span.fast-delete', friends)
+      const isAlreadyDeletable = select('span.fast-delete', friendElement)
       if (isAlreadyDeletable) {
         return
       }
 
-      friends.children[0].append(
+      friendElement.children[0].append(
         <span
           style={{
             margin: '1em',
             cursor: 'pointer'
           }}
           className="fast-delete"
-          onClick={() => deleteUser(guid, player.guid)}
+          onClick={() => handleDeleteUser(friendElement, guid, player.guid)}
           aria="Delete"
         >
           x
