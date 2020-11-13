@@ -7,14 +7,26 @@ import { mapTotalStatsMemoized, mapAverageStatsMemoized } from './stats'
 const BASE_URL = 'https://api.faceit.com'
 export const CACHE_TIME = 600000
 
-async function fetchApi(path) {
+/**
+ * FetchApi - Used to fetch Faceit API
+ * @param {string} path - Path of the request. Required
+ * @param {string} method - Method of the request (eg: POST). Default to GET.
+ */
+async function fetchApi(path, method) {
   if (typeof path !== 'string') {
     throw new TypeError(`Expected \`path\` to be a string, got ${typeof path}`)
   }
 
+  if (typeof method !== 'string') {
+    method = 'GET'
+  }
+
   try {
     const token = localStorage.getItem('token')
-    const options = { headers: {} }
+    const options = {
+      headers: {},
+      method
+    }
 
     if (token) {
       options.headers.Authorization = `Bearer ${token}`
@@ -59,6 +71,9 @@ const fetchApiMemoized = pMemoize(fetchApi, {
 })
 
 export const getUser = userId => fetchApiMemoized(`/core/v1/users/${userId}`)
+
+export const deleteUser = (userId, friendId) =>
+  fetchApiMemoized(`/core/v1/users/${userId}/friends/${friendId}`, 'DELETE')
 
 export const getPlayer = nickname =>
   fetchApiMemoized(`/core/v1/nicknames/${nickname}`)

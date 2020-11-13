@@ -9,3 +9,6 @@ export const isPlayerProfileStats = path =>
 
 export const isPlayerProfile = path =>
   /players\/.*$/.test(path || getCurrentPath())
+
+export const isPlayerFriendList = path =>
+  /players\/.*friends$/.test(path || getCurrentPath())
