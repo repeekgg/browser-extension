@@ -39,6 +39,7 @@ import addMatchRoomEloSelfResult from './features/add-match-room-elo-self-result
 import applyMatchRoomFocusMode from './features/apply-match-room-focus-mode'
 import addMatchRoomPlayerLinks from './features/add-match-room-player-links'
 import addPlayerProfileLinks from './features/add-player-profile-links'
+import addFriendFastDelete from './features/add-friends-fast-delete'
 
 let checkedBan = false
 
@@ -163,6 +164,10 @@ function observeBody() {
       } else if (pages.isPlayerProfile()) {
         addPlayerProfileBadge(mainContentElement)
         addPlayerProfileLinks(mainContentElement)
+
+        if (pages.isPlayerFriendList()) {
+          addFriendFastDelete(mainContentElement)
+        }
 
         if (pages.isPlayerProfileStats()) {
           runFeatureIf(
