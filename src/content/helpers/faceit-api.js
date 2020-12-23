@@ -2,6 +2,7 @@ import pMemoize from 'p-memoize'
 import pRetry from 'p-retry'
 import camelcaseKeys from 'camelcase-keys'
 import format from 'date-fns/format'
+import Cookies from 'js-cookie'
 import { mapTotalStatsMemoized, mapAverageStatsMemoized } from './stats'
 
 const BASE_URL = 'https://api.faceit.com'
@@ -13,7 +14,7 @@ async function fetchApi(path) {
   }
 
   try {
-    const token = localStorage.getItem('token')
+    const token = Cookies.get('t') || localStorage.getItem('token')
     const options = { headers: {} }
 
     if (token) {
