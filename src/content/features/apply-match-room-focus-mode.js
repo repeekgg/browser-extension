@@ -1,5 +1,6 @@
 import select from 'select-dom'
-import { getMatchState } from '../helpers/match-room'
+import { getMatchState, getRoomId } from '../helpers/match-room'
+import { getSelf, getPlayerMatches } from '../helpers/faceit-api'
 import {
   setStyle,
   hasFeatureAttribute,
@@ -12,6 +13,16 @@ export default async parent => {
   const matchState = getMatchState(parent)
 
   if (!['VOTING', 'CONFIGURING', 'READY', 'ONGOING'].includes(matchState)) {
+    return
+  }
+
+  const self = await getSelf()
+  const game = self.flag
+
+  const matches = await getPlayerMatches(self.guid, game)
+  const roomId = getRoomId()
+
+  if (!matches.some(match => match.matchId === roomId)) {
     return
   }
 
