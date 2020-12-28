@@ -1,6 +1,10 @@
 import select from 'select-dom'
-import { getMatchState, getRoomId } from '../helpers/match-room'
-import { getSelf, getPlayerMatches } from '../helpers/faceit-api'
+import {
+  getMatchState,
+  getRoomId,
+  getTeamElements
+} from '../helpers/match-room'
+import { getSelf, getQuickMatch, getMatch } from '../helpers/faceit-api'
 import {
   setStyle,
   hasFeatureAttribute,
@@ -16,14 +20,30 @@ export default async parent => {
     return
   }
 
-  const self = await getSelf()
-  const game = self.flag
+  const { isTeamV1Element } = getTeamElements(parent)
 
-  const matches = await getPlayerMatches(self.guid, game)
   const roomId = getRoomId()
+  const { ...match } = isTeamV1Element
+    ? await getQuickMatch(roomId)
+    : await getMatch(roomId)
 
-  if (!matches.some(match => match.matchId === roomId)) {
-    return
+  const self = await getSelf()
+  let isSelfInLobby = false
+
+  if (match && match.teams) {
+    if (match.teams.faction1 && match.teams.faction1.roster) {
+      isSelfInLobby = match.teams.faction1.roster.some(player => {
+        return player.id === self.guid
+      })
+    }
+    if (!isSelfInLobby && match.teams.faction2 && match.teams.faction2.roster) {
+      isSelfInLobby = match.teams.faction2.roster.some(player => {
+        return player.id === self.guid
+      })
+    }
+    if (!isSelfInLobby) {
+      return
+    }
   }
 
   const teamElements = select.all('match-team-v2', parent)
