@@ -23,7 +23,7 @@ export default async parent => {
   const { isTeamV1Element } = getTeamElements(parent)
 
   const roomId = getRoomId()
-  const { ...match } = isTeamV1Element
+  const { teams } = isTeamV1Element
     ? await getQuickMatch(roomId)
     : await getMatch(roomId)
 
