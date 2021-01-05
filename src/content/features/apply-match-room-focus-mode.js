@@ -28,22 +28,10 @@ export default async parent => {
     : await getMatch(roomId)
 
   const self = await getSelf()
-  let isSelfInLobby = false
+  const isSelfInLobby = [...teams.faction1.roster, ...teams.faction2.roster].some(player => player.id === self.guid)
 
-  if (match && match.teams) {
-    if (match.teams.faction1 && match.teams.faction1.roster) {
-      isSelfInLobby = match.teams.faction1.roster.some(player => {
-        return player.id === self.guid
-      })
-    }
-    if (!isSelfInLobby && match.teams.faction2 && match.teams.faction2.roster) {
-      isSelfInLobby = match.teams.faction2.roster.some(player => {
-        return player.id === self.guid
-      })
-    }
-    if (!isSelfInLobby) {
-      return
-    }
+  if (!isSelfInLobby) {
+    return
   }
 
   const teamElements = select.all('match-team-v2', parent)
