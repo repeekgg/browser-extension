@@ -28,7 +28,10 @@ export default async parent => {
     : await getMatch(roomId)
 
   const self = await getSelf()
-  const isSelfInLobby = [...teams.faction1.roster, ...teams.faction2.roster].some(player => player.id === self.guid)
+  const isSelfInLobby = [
+    ...teams.faction1.roster, 
+    ...teams.faction2.roster
+  ].some(player => player.id === self.guid)
 
   if (!isSelfInLobby) {
     return
