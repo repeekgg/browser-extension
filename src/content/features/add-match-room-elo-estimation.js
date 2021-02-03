@@ -15,7 +15,10 @@ import {
   setFeatureAttribute,
   setStyle
 } from '../helpers/dom-element'
-import { estimateRatingChangeMemoized } from '../helpers/elo'
+import {
+  estimateRatingChangeMemoized,
+  predictRatingChange
+} from '../helpers/elo'
 import storage from '../../shared/storage'
 
 const FEATURE_ATTRIBUTE = 'elo-estimation'
@@ -114,12 +117,6 @@ export default async parent => {
   let eloElements = factions.map((faction, i) => {
     const { factionName, averageElo } = faction
 
-    const opponentAverageElo = factions[1 - i].averageElo
-    const { gain, loss } = estimateRatingChangeMemoized(
-      averageElo,
-      opponentAverageElo
-    )
-
     const factionNameElement = select(
       `h2[ng-bind*="${
         isTeamV1Element
@@ -137,6 +134,28 @@ export default async parent => {
     }
 
     setFeatureAttribute(FEATURE_ATTRIBUTE, factionNameElement)
+
+    const opponentAverageElo = factions[1 - i].averageElo
+
+    let gain
+    let loss
+
+    if (match.teams[factionName].stats) {
+      const predicatedRatingChange = predictRatingChange(
+        match.teams[factionName].stats.winProbability
+      )
+
+      gain = predicatedRatingChange.gain
+      loss = predicatedRatingChange.loss
+    } else {
+      const estimatedRatingChange = estimateRatingChangeMemoized(
+        averageElo,
+        opponentAverageElo
+      )
+
+      gain = estimatedRatingChange.gain
+      loss = estimatedRatingChange.loss
+    }
 
     const eloDiff = averageElo - opponentAverageElo
 
