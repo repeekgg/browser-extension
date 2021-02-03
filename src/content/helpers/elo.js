@@ -23,6 +23,15 @@ export function estimateRatingChange(elo1, elo2, K = 50) {
 
 export const estimateRatingChangeMemoized = mem(estimateRatingChange)
 
+export function predictRatingChange(winProbability, K = 50) {
+  const gain = Math.round(K - winProbability * K)
+
+  return {
+    gain,
+    loss: -(K - gain)
+  }
+}
+
 export const LEVELS = {
   1: [1, 800],
   2: [801, 950],
