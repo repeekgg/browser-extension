@@ -15,7 +15,7 @@ import {
   setFeatureAttribute,
   setStyle
 } from '../helpers/dom-element'
-import { calculateRatingChangeMemoized } from '../helpers/elo'
+import { estimateRatingChangeMemoized } from '../helpers/elo'
 import storage from '../../shared/storage'
 
 const FEATURE_ATTRIBUTE = 'elo-estimation'
@@ -115,12 +115,12 @@ export default async parent => {
     const { factionName, averageElo } = faction
 
     const opponentAverageElo = factions[1 - i].averageElo
-    const { winPoints, lossPoints } = calculateRatingChangeMemoized(
+    const { gain, loss } = estimateRatingChangeMemoized(
       averageElo,
       opponentAverageElo
     )
 
-    const factionNicknameElement = select(
+    const factionNameElement = select(
       `h2[ng-bind*="${
         isTeamV1Element
           ? `match.${factionName}_nickname`
@@ -130,13 +130,13 @@ export default async parent => {
     )
 
     if (
-      !factionNicknameElement ||
-      hasFeatureAttribute(FEATURE_ATTRIBUTE, factionNicknameElement)
+      !factionNameElement ||
+      hasFeatureAttribute(FEATURE_ATTRIBUTE, factionNameElement)
     ) {
       return null
     }
 
-    setFeatureAttribute(FEATURE_ATTRIBUTE, factionNicknameElement)
+    setFeatureAttribute(FEATURE_ATTRIBUTE, factionNameElement)
 
     const eloDiff = averageElo - opponentAverageElo
 
@@ -144,13 +144,12 @@ export default async parent => {
       <div className="text-muted text-md" style={{ 'margin-top': 6 }}>
         Avg. Elo: {averageElo} / Diff: {eloDiff > 0 ? `+${eloDiff}` : eloDiff}
         <br />
-        <span>Est. Win: +{winPoints}</span> /{' '}
-        <span>Est. Loss: {lossPoints}</span>
+        <span>Est. Gain: +{gain}</span> / <span>Est. Loss: {loss}</span>
       </div>
     )
 
-    factionNicknameElement.style.lineHeight = 'normal'
-    factionNicknameElement.append(eloElement)
+    factionNameElement.style.lineHeight = 'normal'
+    factionNameElement.append(eloElement)
 
     const factionIndex = i + 1
     const scoreElement = select(
@@ -162,8 +161,7 @@ export default async parent => {
     if (scoreElement && !hasFeatureAttribute(FEATURE_ATTRIBUTE, scoreElement)) {
       setFeatureAttribute(FEATURE_ATTRIBUTE, scoreElement)
 
-      const points =
-        parseFloat(scoreElement.textContent) === 1 ? winPoints : lossPoints
+      const points = parseFloat(scoreElement.textContent) === 1 ? gain : loss
 
       const pointsElement = (
         <div className="text-lg">{points > 0 ? `+${points}` : points}</div>

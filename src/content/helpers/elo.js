@@ -8,20 +8,20 @@ export function normalizeElo(elo) {
   return Number(elo.replace(',', ''))
 }
 
-export function calculateRatingChange(elo1, elo2, K = 50) {
+export function estimateRatingChange(elo1, elo2, K = 50) {
   const eloDiff = elo2 - elo1
   const percentage = 1 / (1 + Math.pow(10, eloDiff / 400))
 
-  const winPoints = round(K * (1 - percentage))
-  const lossPoints = round(K * (0 - percentage))
+  const gain = round(K * (1 - percentage))
+  const loss = round(K * (0 - percentage))
 
   return {
-    winPoints: winPoints || 1,
-    lossPoints: lossPoints || -1
+    gain: gain || 1,
+    loss: loss || -1
   }
 }
 
-export const calculateRatingChangeMemoized = mem(calculateRatingChange)
+export const estimateRatingChangeMemoized = mem(estimateRatingChange)
 
 export const LEVELS = {
   1: [1, 800],
