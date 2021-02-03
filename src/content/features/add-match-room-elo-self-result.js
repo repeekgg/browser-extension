@@ -48,14 +48,17 @@ export default async parent => {
 
   const { eloDiff } = eloChange
 
-  const matchResultElements = select.all('div[class*=sc-jgjKxb]')
+  const matchResultElements = select.all('div[class*=sc-cnIlNO]')
 
   matchResultElements.forEach(matchResultElement => {
     const result = matchResultElement.textContent
 
     const eloElement = (
-      <div className="text-muted" style={{ 'font-size': 14 }}>
-        {result === 'W' ? '+' : '-'} {Math.abs(eloDiff)} Elo
+      <div className="text-muted text-md">
+        <b>
+          {result === 'W' ? '+' : '-'}
+          {Math.abs(eloDiff)} Elo
+        </b>
       </div>
     )
 
