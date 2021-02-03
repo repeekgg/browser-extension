@@ -29,7 +29,7 @@ export default async parent => {
 
   const self = await getSelf()
   const isSelfInLobby = [
-    ...teams.faction1.roster, 
+    ...teams.faction1.roster,
     ...teams.faction2.roster
   ].some(player => player.id === self.guid)
 
