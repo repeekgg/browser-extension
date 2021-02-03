@@ -9,7 +9,12 @@ import {
   getFactionDetails,
   mapMatchNicknamesToPlayersMemoized
 } from '../helpers/match-room'
-import { getQuickMatch, getMatch, getUser } from '../helpers/faceit-api'
+import {
+  getQuickMatch,
+  getMatch,
+  getUser,
+  getSelf
+} from '../helpers/faceit-api'
 import {
   hasFeatureAttribute,
   setFeatureAttribute,
@@ -24,12 +29,6 @@ import storage from '../../shared/storage'
 const FEATURE_ATTRIBUTE = 'elo-estimation'
 
 export default async parent => {
-  const { matchRoomFocusMode } = await storage.getAll()
-
-  if (matchRoomFocusMode) {
-    return
-  }
-
   const { teamElements, isTeamV1Element } = getTeamElements(parent)
 
   const roomId = getRoomId()
@@ -42,6 +41,12 @@ export default async parent => {
   }
 
   const nicknamesToPlayers = mapMatchNicknamesToPlayersMemoized(match)
+  const { matchRoomFocusMode } = await storage.getAll()
+  const self = await getSelf()
+
+  if (nicknamesToPlayers[self.nickname] && matchRoomFocusMode) {
+    return
+  }
 
   let factions = await Promise.all(
     teamElements.map(async teamElement => {
