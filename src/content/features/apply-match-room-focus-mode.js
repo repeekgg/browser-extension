@@ -37,6 +37,16 @@ export default async parent => {
     return
   }
 
+  const balanceIndicatorElement = select('.match__team-balance', parent)
+  if (
+    balanceIndicatorElement &&
+    hasFeatureAttribute(FEATURE_ATTRIBUTE, balanceIndicatorElement)
+  ) {
+    return
+  }
+  setFeatureAttribute(FEATURE_ATTRIBUTE, balanceIndicatorElement)
+  setStyle(balanceIndicatorElement, 'opacity: 0')
+
   const teamElements = select.all('match-team-v2', parent)
 
   teamElements.forEach(teamElement => {
