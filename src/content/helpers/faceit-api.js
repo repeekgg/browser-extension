@@ -139,3 +139,12 @@ export const getPlayerHistory = async (userId, page = 0) => {
 
 export const getMatchmakingQueue = queueId =>
   fetchApiMemoized(`/queue/v1/queue/matchmaking/${queueId}`)
+
+export const getPlayerBans = async userId => {
+  const limit = 20
+  const offset = 0
+
+  return fetchApiMemoized(
+    `/queue/v1/ban?userId=${userId}&organizerId=faceit&offset=${offset}&limit=${limit}`
+  )
+}
