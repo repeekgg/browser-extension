@@ -1,14 +1,14 @@
 /** @jsx h */
 import { h } from 'dom-chef'
 
-const stat = (value, label, worse, paddingTop = true) => (
+const stat = (value, label, worse, firstElement = true) => (
   <div
     title={label}
     style={{
       flex: 1,
       color: worse ? 'red' : 'green',
-      'padding-top': paddingTop && '5px',
-      'padding-bottom': '5px'
+      'padding-top': firstElement && '3px',
+      'padding-bottom': firstElement ? '1px' : '3px'
     }}
   >
     {value}
