@@ -131,6 +131,11 @@ function observeBody() {
           addMatchRoomPlayerStats,
           mainContentElement
         )
+        runFeatureIf(
+          'matchRoomMapsStats',
+          addMatchRoomMapsStats,
+          mainContentElement
+        )
         addMatchRoomEloEstimation(mainContentElement)
         addMatchRoomEloSelfResult(mainContentElement)
         runFeatureIf(
@@ -159,11 +164,6 @@ function observeBody() {
         runFeatureIf(
           'matchRoomFocusMode',
           applyMatchRoomFocusMode,
-          mainContentElement
-        )
-        runFeatureIf(
-          'matchRoomMapsStats',
-          addMatchRoomMapsStats,
           mainContentElement
         )
       } else if (pages.isPlayerProfile()) {
