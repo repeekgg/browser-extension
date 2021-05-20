@@ -65,7 +65,6 @@ export default async parent => {
     isTeamV1Element
   )
   console.log('END', teamStats)
-  const currentMapsStats = {}
   mapsNameOnMatch.forEach(map => {
     const statTeamA = teamStats[0].mapsStats[map.mapName]
       ? teamStats[0].mapsStats[map.mapName].winRate
@@ -84,7 +83,6 @@ export default async parent => {
       }
     ]
   })
-  console.log('RESULT STAT FOR MAPS', currentMapsStats)
 
   console.log('mapsNameOnMatch', mapsNameOnMatch)
   mapsNameOnMatch.forEach(({ element, stats }) => {
