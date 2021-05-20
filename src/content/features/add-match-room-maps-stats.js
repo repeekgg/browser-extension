@@ -59,33 +59,16 @@ export default async parent => {
     mapName: `de_${map.label.toLowerCase()}`
   }))
 
-  const teamStats = await getTeamStatsMemoized(
+  const mapsWithTeamStats = await getTeamStatsMemoized(
     match,
     teamElements,
-    isTeamV1Element
+    isTeamV1Element,
+    mapsNameOnMatch
   )
-  console.log('END', teamStats)
-  mapsNameOnMatch.forEach(map => {
-    const statTeamA = teamStats[0].mapsStats[map.mapName]
-      ? teamStats[0].mapsStats[map.mapName].winRate
-      : 0
-    const statTeamB = teamStats[1].mapsStats[map.mapName]
-      ? teamStats[1].mapsStats[map.mapName].winRate
-      : 0
-    map.stats = [
-      {
-        percent: statTeamA,
-        mapsCount: teamStats[0].mapsStats[map.mapName].mapsCount
-      },
-      {
-        percent: statTeamB,
-        mapsCount: teamStats[1].mapsStats[map.mapName].mapsCount
-      }
-    ]
-  })
+  console.log('teamStats', mapsWithTeamStats)
 
   console.log('mapsNameOnMatch', mapsNameOnMatch)
-  mapsNameOnMatch.forEach(({ element, stats }) => {
+  mapsWithTeamStats.forEach(({ element, stats }) => {
     const statsElement = createMapStatsElement(stats)
 
     const mapDetailsElement = select('.sc-kHPmWf', element)

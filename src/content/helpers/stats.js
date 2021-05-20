@@ -124,7 +124,12 @@ export const mapPercentStats = stats => {
 
 export const mapPercentStatsMemoized = mem(mapPercentStats)
 
-const getTeamStats = async (match, teamElements, isTeamV1Element) => {
+const getTeamStats = async (
+  match,
+  teamElements,
+  isTeamV1Element,
+  mapsNameOnMatch
+) => {
   const { teams, game } = match
   const teamsData = [
     {
@@ -195,7 +200,26 @@ const getTeamStats = async (match, teamElements, isTeamV1Element) => {
       }
     }
   })
-  return teamsData
+
+  mapsNameOnMatch.forEach(map => {
+    const statTeamA = teamsData[0].mapsStats[map.mapName]
+      ? teamsData[0].mapsStats[map.mapName].winRate
+      : 0
+    const statTeamB = teamsData[1].mapsStats[map.mapName]
+      ? teamsData[1].mapsStats[map.mapName].winRate
+      : 0
+    map.stats = [
+      {
+        percent: statTeamA,
+        mapsCount: teamsData[0].mapsStats[map.mapName].mapsCount
+      },
+      {
+        percent: statTeamB,
+        mapsCount: teamsData[1].mapsStats[map.mapName].mapsCount
+      }
+    ]
+  })
+  return mapsNameOnMatch
 }
 
 export const getTeamStatsMemoized = mem(getTeamStats)
