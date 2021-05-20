@@ -39,6 +39,7 @@ import addMatchRoomEloSelfResult from './features/add-match-room-elo-self-result
 import applyMatchRoomFocusMode from './features/apply-match-room-focus-mode'
 import addMatchRoomPlayerLinks from './features/add-match-room-player-links'
 import addPlayerProfileLinks from './features/add-player-profile-links'
+import addMatchRoomMapsStats from './features/add-match-room-maps-stats'
 
 let checkedBan = false
 
@@ -158,6 +159,11 @@ function observeBody() {
         runFeatureIf(
           'matchRoomFocusMode',
           applyMatchRoomFocusMode,
+          mainContentElement
+        )
+        runFeatureIf(
+          'matchRoomMapsStats',
+          addMatchRoomMapsStats,
           mainContentElement
         )
       } else if (pages.isPlayerProfile()) {

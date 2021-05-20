@@ -1,4 +1,10 @@
 import mem from 'mem'
+import {
+  getTeamMemberElements,
+  getNicknameElement,
+  mapMatchNicknamesToPlayersMemoized
+} from './match-room'
+import { getPlayerStats } from './faceit-api'
 
 const TOTAL_STATS_MAP = {
   m1: 'matches'
@@ -74,3 +80,122 @@ export const mapAverageStats = stats =>
     )
 
 export const mapAverageStatsMemoized = mem(mapAverageStats)
+
+const MAP_PERCENT_STATS = {
+  i1: 'map'
+}
+
+export const mapPercentStats = stats => {
+  const mapsWinrate = stats
+    .map(stat =>
+      Object.keys(MAP_PERCENT_STATS).reduce((acc, curr) => {
+        return {
+          ...acc,
+          ...{
+            map: stat[curr],
+            winRate: stat.i2 === stat.teamId ? 100 : 0
+          }
+        }
+      }, {})
+    )
+    .reduce((acc, curr) => {
+      if (curr.map in acc) {
+        acc[curr.map].winRate += curr.winRate
+        acc[curr.map].mapsCount += 1
+      } else {
+        acc[curr.map] = {
+          winRate: curr.winRate,
+          mapsCount: 1
+        }
+      }
+
+      return acc
+    }, {})
+
+  for (const key in mapsWinrate) {
+    if (Object.hasOwnProperty.call(mapsWinrate, key)) {
+      mapsWinrate[key].winRate = Math.trunc(
+        mapsWinrate[key].winRate / mapsWinrate[key].mapsCount
+      )
+    }
+  }
+  return mapsWinrate
+}
+
+export const mapPercentStatsMemoized = mem(mapPercentStats)
+
+const getTeamStats = async (match, teamElements, isTeamV1Element) => {
+  const { teams, game } = match
+  const teamsData = [
+    {
+      name: teams.faction1.name,
+      players: teams.faction1.roster.map(player => player.id),
+      mapsStats: {}
+    },
+    {
+      name: teams.faction2.name,
+      players: teams.faction2.roster.map(player => player.id),
+      mapsStats: {}
+    }
+  ]
+
+  const nicknamesToPlayers = mapMatchNicknamesToPlayersMemoized(match)
+  const userIds = []
+  const statsPromises = []
+  for (const teamElement of teamElements) {
+    const memberElements = getTeamMemberElements(teamElement)
+
+    for (const memberElement of memberElements) {
+      const nicknameElement = getNicknameElement(memberElement, isTeamV1Element)
+      const nickname = nicknameElement.textContent
+      const player = nicknamesToPlayers[nickname]
+
+      let userId
+      if (isTeamV1Element) {
+        userId = player.guid
+      } else {
+        userId = player.id
+      }
+      userIds.push(userId)
+      statsPromises.push(getPlayerStats(userId, game))
+    }
+  }
+
+  const stats = await Promise.all(statsPromises)
+  userIds.forEach((userId, key) => {
+    const { maps } = stats[key]
+
+    if (!maps) {
+      return
+    }
+    teamsData.forEach(team => {
+      if (team.players.includes(userId)) {
+        for (const mapName in maps) {
+          if (Object.hasOwnProperty.call(maps, mapName)) {
+            if (mapName in team.mapsStats) {
+              team.mapsStats[mapName].winRate += maps[mapName].winRate
+              team.mapsStats[mapName].mapsCount += maps[mapName].mapsCount
+            } else {
+              team.mapsStats[mapName] = {
+                winRate: maps[mapName].winRate,
+                mapsCount: maps[mapName].mapsCount
+              }
+            }
+          }
+        }
+      }
+    })
+  })
+
+  teamsData.forEach(({ mapsStats }) => {
+    for (const map in mapsStats) {
+      if (Object.hasOwnProperty.call(mapsStats, map)) {
+        mapsStats[map].winRate = Math.trunc(mapsStats[map].winRate / 5)
+        mapsStats[map].mapsCount = Math.trunc(mapsStats[map].mapsCount / 5)
+      }
+    }
+  })
+  return teamsData
+}
+
+export const getTeamStatsMemoized = mem(getTeamStats)

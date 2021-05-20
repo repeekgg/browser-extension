@@ -3,7 +3,11 @@ import pRetry from 'p-retry'
 import camelcaseKeys from 'camelcase-keys'
 import format from 'date-fns/format'
 import Cookies from 'js-cookie'
-import { mapTotalStatsMemoized, mapAverageStatsMemoized } from './stats'
+import {
+  mapTotalStatsMemoized,
+  mapAverageStatsMemoized,
+  mapPercentStatsMemoized
+} from './stats'
 
 const BASE_URL = 'https://api.faceit.com'
 export const CACHE_TIME = 600000
@@ -83,7 +87,6 @@ export const getPlayerStats = async (userId, game, size = 20) => {
   }
 
   totalStats = mapTotalStatsMemoized(totalStats.lifetime)
-
   let averageStats = await fetchApiMemoized(
     `/stats/api/v1/stats/time/users/${userId}/games/${game}?size=${size}`
   )
@@ -97,12 +100,14 @@ export const getPlayerStats = async (userId, game, size = 20) => {
   if (averageStats.length <= 1) {
     return null
   }
-
+  let mapsStats = averageStats
   averageStats = mapAverageStatsMemoized(averageStats)
 
+  mapsStats = mapPercentStatsMemoized(mapsStats)
   return {
     ...totalStats,
-    ...averageStats
+    ...averageStats,
+    maps: mapsStats
   }
 }
 
