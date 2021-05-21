@@ -109,7 +109,8 @@ export default async parentElement => {
             padding: '5px 9px',
             flex: '1 1 10%',
             borderRight: '1px solid rgb(51, 51, 51)',
-            borderLeft: '1px solid rgb(51, 51, 51)'
+            borderLeft: '1px solid rgb(51, 51, 51)',
+            textAlign: 'center'
           }}
         >
           VS

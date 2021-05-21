@@ -8,7 +8,8 @@ export default {
     de_nuke: 'Nuke',
     de_cache: 'Cache',
     de_train: 'Train',
-    de_vertigo: 'Vertigo'
+    de_vertigo: 'Vertigo',
+    de_ancient: 'Ancient'
   }
 }
 /* eslint-enable camelcase */
