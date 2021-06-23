@@ -19,7 +19,7 @@ const maps = {
   de_overpass: 'Overpass',
   de_inferno: 'Inferno',
   de_nuke: 'Nuke',
-  de_cache: 'Cache',
+  de_ancient: 'Ancient',
   de_train: 'Train',
   de_vertigo: 'Vertigo'
 }
