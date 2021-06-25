@@ -173,12 +173,7 @@ export const mapMatchFactionRostersMemoized = mem(mapMatchFactionRosters, {
   cacheKey: match => JSON.stringify(match.guid || match.id)
 })
 
-export const mapMatchFactionWinRates = (
-  rosters,
-  matches,
-  mapName,
-  size = 20
-) => {
+export const mapMatchFactionWinRates = (rosters, matches, mapName) => {
   return Object.keys(rosters).map(factionName => {
     const players = rosters[factionName].map(i => i.nickname)
     const games = matches.filter(
@@ -187,13 +182,11 @@ export const mapMatchFactionWinRates = (
     const won = games.filter(match => match.i10 === '1')
 
     const winRate = Math.floor((won.length / games.length || 0) * 100)
-    const playRate = Math.floor(
-      (games.length / players.length / size || 0) * 100
-    )
+    const gamesPlayed = games.length
 
     return {
       winRate,
-      playRate
+      gamesPlayed
     }
   })
 }

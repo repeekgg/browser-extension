@@ -31,7 +31,7 @@ export default ({ getSwitchProps }) => (
     />
     <ListItemSwitch
       primary="Show Map Stats"
-      secondary="Show average stats (Play Rate, Win Rate) from last 20 games."
+      secondary="Show map stats (Games Played, Win Rate) from last 20 games."
       {...getSwitchProps('matchRoomShowMapStats')}
     />
     <ListItemSwitch

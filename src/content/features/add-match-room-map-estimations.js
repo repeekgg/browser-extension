@@ -100,9 +100,9 @@ export default async parentElement => {
       >
         <div
           style={{ padding: '5px 9px', flex: '1 1 45%', cursor: 'help' }}
-          title="Play Rate (PR) / Win Rate (WR) in last 20 matches"
+          title="Games played / Win rate in last 20 matches"
         >
-          {rosters[0].playRate}% PR / {rosters[0].winRate}% WR
+          {rosters[0].gamesPlayed} Games / {rosters[0].winRate}% Win
         </div>
         <div
           style={{
@@ -122,9 +122,9 @@ export default async parentElement => {
             textAlign: 'right',
             cursor: 'help'
           }}
-          title="Play Rate (PR) / Win Rate (WR) in last 20 matches"
+          title="Games played / Win rate in last 20 matches"
         >
-          {rosters[1].playRate}% PR / {rosters[1].winRate}% WR
+          {rosters[1].gamesPlayed} Games / {rosters[1].winRate}% Win
         </div>
       </div>
     )
