@@ -32,7 +32,7 @@ export default ({ level = 0, role, bgColor, textColor, onClick }) => {
         padding: '.2em .5em .3em',
         display: 'inline',
         fontSize: '75%',
-        fontWeight: '700',
+        fontWeight: 700,
         lineHeight: 1,
         textAlign: 'center',
         whiteSpace: 'nowrap',

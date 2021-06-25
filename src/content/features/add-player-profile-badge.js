@@ -17,19 +17,19 @@ const FEATURE_ATTRIBUTE = 'profile-badge'
 export default async parentElement => {
   const playerBanner = select('parasite-player-banner', parentElement)
 
-  if (playerBanner === null || playerBanner.shadowRoot === null) {
+  if (!playerBanner || !playerBanner.shadowRoot) {
     return
   }
 
   const playerNameElement = select('h5[size="5"]', playerBanner.shadowRoot)
 
-  if (playerNameElement === null || playerNameElement.parentElement === null) {
+  if (!playerNameElement || !playerNameElement.parentElement) {
     return
   }
 
   const wrapper = playerNameElement.parentElement.parentElement
 
-  if (wrapper === null) {
+  if (!wrapper) {
     return
   }
 
@@ -52,7 +52,17 @@ export default async parentElement => {
   )
 
   const badgeWrapper = (
-    <div style={{ marginBottom: '.5em' }}>{featuredPlayerBadgeElement}</div>
+    <div
+      style={{
+        marginBottom: '.5em',
+        marginTop:
+          wrapper.firstElementChild === playerNameElement.parentElement
+            ? undefined
+            : '.5em'
+      }}
+    >
+      {featuredPlayerBadgeElement}
+    </div>
   )
 
   wrapper.insertBefore(badgeWrapper, playerNameElement.parentElement)
