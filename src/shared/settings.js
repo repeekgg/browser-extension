@@ -16,7 +16,7 @@ export const MATCH_ROOM_VETO_MAP_ITEMS = [
   'de_overpass',
   'de_inferno',
   'de_nuke',
-  'de_cache',
+  'de_ancient',
   'de_train',
   'de_vertigo'
 ]
