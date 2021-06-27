@@ -2,12 +2,7 @@
 import { h } from 'dom-chef'
 import createIconElement from './icon'
 
-export default ({
-  elo,
-  alignRight = false,
-  style = {},
-  className = undefined
-}) => {
+export default ({ elo, className, alignRight = false, style = {} }) => {
   const eloElement = (
     <span
       className={className}
