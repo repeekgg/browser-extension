@@ -15,20 +15,29 @@ import { getPlayer } from '../helpers/faceit-api'
 const FEATURE_ATTRIBUTE = 'profile-badge'
 
 export default async parentElement => {
-  const badgeElement = select(
-    'div.page-title__content > div.page-title__content__title',
-    parentElement
-  )
+  const playerBanner = select('parasite-player-banner', parentElement)
 
-  if (badgeElement === null) {
+  if (!playerBanner || !playerBanner.shadowRoot) {
     return
   }
 
-  if (hasFeatureAttribute(FEATURE_ATTRIBUTE, badgeElement)) {
+  const playerNameElement = select('h5[size="5"]', playerBanner.shadowRoot)
+
+  if (!playerNameElement || !playerNameElement.parentElement) {
     return
   }
 
-  setFeatureAttribute(FEATURE_ATTRIBUTE, badgeElement)
+  const wrapper = playerNameElement.parentElement.parentElement
+
+  if (!wrapper) {
+    return
+  }
+
+  if (hasFeatureAttribute(FEATURE_ATTRIBUTE, wrapper)) {
+    return
+  }
+
+  setFeatureAttribute(FEATURE_ATTRIBUTE, wrapper)
 
   const nickname = getPlayerProfileNickname()
   const { guid } = await getPlayer(nickname)
@@ -42,7 +51,19 @@ export default async parentElement => {
     playerBadge
   )
 
-  const badgeWrapper = <div className="mb-sm">{featuredPlayerBadgeElement}</div>
+  const badgeWrapper = (
+    <div
+      style={{
+        marginBottom: '.5em',
+        marginTop:
+          wrapper.firstElementChild === playerNameElement.parentElement
+            ? undefined
+            : '.5em'
+      }}
+    >
+      {featuredPlayerBadgeElement}
+    </div>
+  )
 
-  badgeElement.insertBefore(badgeWrapper, badgeElement.firstChild)
+  wrapper.insertBefore(badgeWrapper, playerNameElement.parentElement)
 }

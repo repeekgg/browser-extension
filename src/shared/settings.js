@@ -29,6 +29,7 @@ export const DEFAULTS = {
   partyAutoAcceptInvite: false,
   matchQueueAutoReady: false,
   matchRoomShowPlayerStats: false,
+  matchRoomShowMapStats: false,
   matchRoomAutoCopyServerData: false,
   matchRoomAutoConnectToServer: false,
   matchRoomHidePlayerControls: true,
