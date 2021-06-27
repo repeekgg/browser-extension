@@ -25,11 +25,19 @@ export default ({ level = 0, role, bgColor, textColor, onClick }) => {
 
   return (
     <span
-      className="label"
       style={{
         background: bgColor || vipLevels[level].bgColor,
         color: textColor || vipLevels[level].textColor,
-        cursor: 'help'
+        cursor: 'help',
+        padding: '.2em .5em .3em',
+        display: 'inline',
+        fontSize: '75%',
+        fontWeight: 700,
+        lineHeight: 1,
+        textAlign: 'center',
+        whiteSpace: 'nowrap',
+        verticalAlign: 'baseline',
+        borderRadius: '.25em'
       }}
       title={description}
       onClick={onClick}
