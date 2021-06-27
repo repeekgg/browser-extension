@@ -8,22 +8,10 @@ import storage from '../../shared/storage'
 import { notifyIf } from '../helpers/user-settings'
 import { getQuickMatch, getMatch, getSelf } from '../helpers/faceit-api'
 import { getRoomId, getTeamElements } from '../helpers/match-room'
+import maps from '../helpers/maps'
 
 const FEATURE_ATTRIBUTE = 'veto-maps'
 const VETO_DELAY = 2000
-
-/* eslint-disable camelcase */
-const maps = {
-  de_dust2: 'Dust2',
-  de_mirage: 'Mirage',
-  de_overpass: 'Overpass',
-  de_inferno: 'Inferno',
-  de_nuke: 'Nuke',
-  de_cache: 'Cache',
-  de_train: 'Train',
-  de_vertigo: 'Vertigo'
-}
-/* eslint-enable camelcase */
 
 export default async parentElement => {
   const { isTeamV1Element } = getTeamElements(parentElement)
@@ -62,7 +50,7 @@ export default async parentElement => {
     matchRoomAutoVetoMapsShuffle: shuffleMaps,
     matchRoomAutoVetoMapsShuffleAmount: shuffleMapsAmount
   } = await storage.getAll()
-  let autoVetoItems = matchRoomAutoVetoMapItems.map(m => maps[m] || m)
+  let autoVetoItems = matchRoomAutoVetoMapItems.map(m => maps.csgo[m] || m)
 
   if (shuffleMaps) {
     const shuffledItems = shuffle(autoVetoItems.splice(0, shuffleMapsAmount))

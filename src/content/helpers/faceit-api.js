@@ -64,9 +64,9 @@ export const getUser = userId => fetchApiMemoized(`/core/v1/users/${userId}`)
 export const getPlayer = nickname =>
   fetchApiMemoized(`/core/v1/nicknames/${nickname}`)
 
-export const getPlayerMatches = (userId, game, size = 21, page = 0) =>
+export const getPlayerMatches = (userId, game, size = 20) =>
   fetchApiMemoized(
-    `/stats/v1/stats/time/users/${userId}/games/${game}?page=${page}&size=${size}`
+    `/stats/v1/stats/time/users/${userId}/games/${game}?size=${size}`
   )
 
 export const getPlayerStats = async (userId, game, size = 20) => {
@@ -75,7 +75,7 @@ export const getPlayerStats = async (userId, game, size = 20) => {
   }
 
   let totalStats = await fetchApiMemoized(
-    `/stats/api/v1/stats/users/${userId}/games/${game}`
+    `/stats/v1/stats/users/${userId}/games/${game}`
   )
 
   if (!totalStats || Object.keys(totalStats).length === 0) {
@@ -85,7 +85,7 @@ export const getPlayerStats = async (userId, game, size = 20) => {
   totalStats = mapTotalStatsMemoized(totalStats.lifetime)
 
   let averageStats = await fetchApiMemoized(
-    `/stats/api/v1/stats/time/users/${userId}/games/${game}?size=${size}`
+    `/stats/v1/stats/time/users/${userId}/games/${game}?size=${size}`
   )
 
   if (!averageStats || !Array.isArray(averageStats)) {
