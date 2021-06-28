@@ -62,6 +62,6 @@ export const DEFAULTS = {
   notifyMatchRoomAutoVetoLocations: true,
   notifyMatchRoomAutoVetoMaps: true,
   updateNotificationType: 'tab',
-  teamRosterPlayersInfo: true,
-  updateNotifications: []
+  updateNotifications: [],
+  teamRosterPlayersInfo: true
 }
