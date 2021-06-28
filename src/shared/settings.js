@@ -11,12 +11,7 @@ export const MATCH_ROOM_VETO_LOCATION_REGIONS = Object.keys(
 )
 
 // I was not sure how to limit max veto picks to 4 in list-item-menu, so I added this to use it.
-export const MAX_VETO_OPTIONS = [
-  'MAP 1',
-  'MAP 3',
-  'MAP 5',
-  'MAP 7'
-]
+export const MAX_VETO_OPTIONS = ['MAP 1', 'MAP 3', 'MAP 5', 'MAP 7']
 
 export const MATCH_ROOM_VETO_MAP_ITEMS = [
   'de_dust2',

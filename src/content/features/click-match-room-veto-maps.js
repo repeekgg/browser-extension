@@ -92,9 +92,9 @@ export default async parentElement => {
       if (vetoButtonElement) {
         setTimeout(() => {
           vetoButtonElement.click()
-          if (!(vetoMapsLimit && autoVetoLimitReached)){
-            vetoMapCounter = vetoMapCounter +1
-            if(vetoMapCounter == vetoMapsLimitAmount){
+          if (!(vetoMapsLimit && autoVetoLimitReached)) {
+            vetoMapCounter += 1
+            if (vetoMapCounter === vetoMapsLimitAmount) {
               autoVetoLimitReached = true
             }
           }
