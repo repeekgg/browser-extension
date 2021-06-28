@@ -48,7 +48,9 @@ export default async parentElement => {
   const {
     matchRoomAutoVetoMapItems,
     matchRoomAutoVetoMapsShuffle: shuffleMaps,
-    matchRoomAutoVetoMapsShuffleAmount: shuffleMapsAmount
+    matchRoomAutoVetoMapsShuffleAmount: shuffleMapsAmount,
+    matchRoomAutoVetoMapsLimit: vetoMapsLimit,
+    matchRoomAutoVetoMapsLimitAmount: vetoMapsLimitAmount
   } = await storage.getAll()
   let autoVetoItems = matchRoomAutoVetoMapItems.map(m => maps.csgo[m] || m)
 
@@ -72,6 +74,9 @@ export default async parentElement => {
 
   setFeatureAttribute(FEATURE_ATTRIBUTE, votingListElement)
 
+  let autoVetoLimitReached = false
+  let vetoMapCounter = 0
+
   const autoVeto = () => {
     const isVetoTurn = select.exists('button', votingListElement)
 
@@ -87,6 +92,12 @@ export default async parentElement => {
       if (vetoButtonElement) {
         setTimeout(() => {
           vetoButtonElement.click()
+          if (!(vetoMapsLimit && autoVetoLimitReached)){
+            vetoMapCounter = vetoMapCounter +1
+            if(vetoMapCounter == vetoMapsLimitAmount){
+              autoVetoLimitReached = true
+            }
+          }
         }, VETO_DELAY)
       }
       return Boolean(vetoButtonElement)
