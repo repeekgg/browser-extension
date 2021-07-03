@@ -1,7 +1,8 @@
 import React from 'react'
 import {
   MATCH_ROOM_VETO_LOCATION_REGIONS,
-  MATCH_ROOM_VETO_MAP_ITEMS
+  MATCH_ROOM_VETO_MAP_ITEMS,
+  MAX_VETO_OPTIONS
 } from '../../shared/settings'
 import ListSubheader from '../components/list-subheader'
 import ListItemMenu from '../components/list-item-menu'
@@ -44,6 +45,17 @@ export default ({ getMenuProps, getSortableProps, getSwitchProps }) => (
       options={MATCH_ROOM_VETO_MAP_ITEMS.map((_, index) => index + 1)}
       mapOption={option => `First ${option}`}
       {...getMenuProps('matchRoomAutoVetoMapsShuffleAmount')}
+    />
+    <ListItemSwitch
+      primary="Veto Limit"
+      secondary="Limit the amount of maps gets auto vetoed."
+      {...getSwitchProps('matchRoomAutoVetoMapsLimit')}
+    />
+    <ListItemMenu
+      primary="Veto Limit Amount"
+      options={MAX_VETO_OPTIONS.map((_, index) => index + 1)}
+      mapOption={option => `First ${option}`}
+      {...getMenuProps('matchRoomAutoVetoMapsLimitAmount')}
     />
     <ListItemText secondary="Sorted by favourite to least favourite. Least favourite will be vetoed first." />
     <ListItemsSortable {...getSortableProps('matchRoomAutoVetoMapItems')} />
