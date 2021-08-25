@@ -49,6 +49,8 @@ export default async parentElement => {
     matchRoomAutoVetoMapItems,
     matchRoomAutoVetoMapsShuffle: shuffleMaps,
     matchRoomAutoVetoMapsShuffleAmount: shuffleMapsAmount,
+
+    // Auto veto limit variables.
     matchRoomAutoVetoMapsLimit: vetoMapsLimit,
     matchRoomAutoVetoMapsLimitAmount: vetoMapsLimitAmount
   } = await storage.getAll()
@@ -90,11 +92,26 @@ export default async parentElement => {
       )
       if (vetoButtonElement) {
         setTimeout(() => {
-          if (vetoMapCounter < vetoMapsLimitAmount) {
-            vetoButtonElement.click()
-            if (vetoMapsLimit) {
+          /*
+           * Added Auto Veto Limit:
+           *
+           * Default: vetoMapsLimit = false (No Limit on Veto)
+           *          vetoMapsLimitAmount = 4 (Maximum a team can veto)
+           *          vetoMapCounter = 1-4 (Keep a check on number of maps veteod)
+           *
+           * Logic: If vetoMapsLimit = false, auto veto maximum possible maps
+           *        else check
+           *             if counter <= set_value (default=4)
+           *                auto veto and increment counter
+           *             else just wait for player to veto.
+           */
+          if (vetoMapsLimit) {
+            if (vetoMapCounter < vetoMapsLimitAmount) {
+              vetoButtonElement.click()
               vetoMapCounter += 1
             }
+          } else {
+            vetoButtonElement.click()
           }
         }, VETO_DELAY)
       }
