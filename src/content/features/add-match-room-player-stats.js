@@ -63,7 +63,7 @@ export default async parent => {
       let stats = await getPlayerStats(userId, game)
 
       if (!stats) {
-        //Set stats to default 0 instead of not loading the UI.
+        // Set stats to default 0 instead of not loading the UI.
         stats = {
           matches: '--',
           winRate: 0,
