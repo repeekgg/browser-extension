@@ -16,7 +16,9 @@ export default ({ country, alignedRight = false }) => {
         [`margin-${alignedRight ? 'left' : 'right'}`]: 6
       }}
       title={countryName}
-      dangerouslySetInnerHTML={{ __html: reqFlag(`./${country}.svg`) }}
+      dangerouslySetInnerHTML={{
+        __html: reqFlag(`./${country.toLowerCase()}.svg`)
+      }}
     />
   )
 }
