@@ -60,10 +60,18 @@ export default async parent => {
         userId = player.id
       }
 
-      const stats = await getPlayerStats(userId, game)
+      let stats = await getPlayerStats(userId, game)
 
       if (!stats) {
-        return
+        //Set stats to default 0 instead of not loading the UI.
+        stats = {
+          matches: '--',
+          winRate: 0,
+          averageKDRatio: 0.0,
+          averageKRRatio: 0.0,
+          averageHeadshots: 0,
+          averageKills: 0
+        }
       }
 
       const statsElement = createPlayerStatsElement({
