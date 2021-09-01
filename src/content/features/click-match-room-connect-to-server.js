@@ -1,11 +1,12 @@
 import select from 'select-dom'
-import { getRoomId } from '../helpers/match-room'
+import { getRoomId, getTeamElements } from '../helpers/match-room'
 import { notifyIf } from '../helpers/user-settings'
 import {
   hasFeatureAttribute,
   setFeatureAttribute
 } from '../helpers/dom-element'
 import storage from '../../shared/storage'
+import { getSelf, getQuickMatch, getMatch } from '../helpers/faceit-api'
 
 const FEATURE_ATTRIBUTE = 'connect-to-server'
 
@@ -18,13 +19,28 @@ export default async parent => {
     return
   }
 
+  const { isTeamV1Element } = getTeamElements(parent)
+  const roomId = getRoomId()
+  const { teams } = isTeamV1Element
+    ? await getQuickMatch(roomId)
+    : await getMatch(roomId)
+
+  const self = await getSelf()
+  const isSelfInMatch = [
+    ...teams.faction1.roster,
+    ...teams.faction2.roster
+  ].some(player => player.id === self.guid)
+
+  if (!isSelfInMatch) {
+    return
+  }
+
   if (hasFeatureAttribute(FEATURE_ATTRIBUTE, goToServerElement)) {
     return
   }
   setFeatureAttribute(FEATURE_ATTRIBUTE, goToServerElement)
 
   const { matchRoomLastConnectToServer } = await storage.getAll()
-  const roomId = getRoomId()
 
   if (matchRoomLastConnectToServer === roomId) {
     return
