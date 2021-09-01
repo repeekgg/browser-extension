@@ -6,7 +6,7 @@ import { getName } from 'country-list'
 const reqFlag = require.context('../assets/flags', false, /\.svg$/)
 
 export default ({ country, alignedRight = false }) => {
-  const countryName = getName(country) || ''
+  const countryName = getName(country.toUpperCase()) || ''
 
   return (
     <span
@@ -16,7 +16,9 @@ export default ({ country, alignedRight = false }) => {
         [`margin-${alignedRight ? 'left' : 'right'}`]: 6
       }}
       title={countryName}
-      dangerouslySetInnerHTML={{ __html: reqFlag(`./${country}.svg`) }}
+      dangerouslySetInnerHTML={{
+        __html: reqFlag(`./${country.toLowerCase()}.svg`)
+      }}
     />
   )
 }
