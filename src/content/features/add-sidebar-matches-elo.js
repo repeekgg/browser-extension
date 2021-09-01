@@ -57,6 +57,8 @@ export default async () => {
 
     const { eloDiff, newElo } = eloChange
 
+    resultElement.style.color = `${eloDiff < 0 ? '#e6194c' : ''}`
+
     resultElement.textContent += ` (${eloDiff >= 0 ? '+' : ''}${eloDiff}${
       isFreeMember ? '' : ` / ${newElo}`
     } Elo)`
