@@ -1,3 +1,5 @@
+/** @jsx h */
+import { h } from 'dom-chef'
 import select from 'select-dom'
 import {
   getTeamElements,
@@ -62,16 +64,32 @@ export default async parent => {
 
       let stats = await getPlayerStats(userId, game)
 
-      if (!stats) {
-        // Set stats to default 0 instead of not loading the UI.
-        stats = {
-          matches: '--',
-          winRate: 0,
-          averageKDRatio: 0.0,
-          averageKRRatio: 0.0,
-          averageHeadshots: 0,
-          averageKills: 0
-        }
+      if (stats === false) {
+        return
+      }
+
+      const memberDetailsElement = select(
+        '.match-team-member__details',
+        memberElement
+      )
+
+      if (stats === null) {
+        const noStatsAvailableElement = (
+          <div
+            className="text-muted"
+            style={{
+              'border-top': '1px solid #333',
+              padding: '5px 9px',
+              'font-size': 12
+            }}
+          >
+            No last 20 matches stats available
+          </div>
+        )
+
+        memberDetailsElement.after(noStatsAvailableElement)
+
+        return
       }
 
       const statsElement = createPlayerStatsElement({
@@ -79,10 +97,6 @@ export default async parent => {
         alignRight: !isFaction1
       })
 
-      const memberDetailsElement = select(
-        '.match-team-member__details',
-        memberElement
-      )
       memberDetailsElement.after(statsElement)
     })
   })

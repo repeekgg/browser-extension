@@ -6,7 +6,7 @@ import { getName } from 'country-list'
 const reqFlag = require.context('../assets/flags', false, /\.svg$/)
 
 export default ({ country, alignedRight = false }) => {
-  const countryName = getName(country) || ''
+  const countryName = getName(country.toUpperCase()) || ''
 
   return (
     <span

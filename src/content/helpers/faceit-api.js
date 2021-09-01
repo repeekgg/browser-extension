@@ -71,7 +71,7 @@ export const getPlayerMatches = (userId, game, size = 20) =>
 
 export const getPlayerStats = async (userId, game, size = 20) => {
   if (game !== 'csgo') {
-    return null
+    return false
   }
 
   let totalStats = await fetchApiMemoized(

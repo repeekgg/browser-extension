@@ -48,7 +48,7 @@ export default async parent => {
 
   const { eloDiff } = eloChange
 
-  const matchResultElements = select.all('div[class*=sc-cnIlNO]')
+  const matchResultElements = select.all('div[class*=sc-iiOQnZ]')
 
   matchResultElements.forEach(matchResultElement => {
     const result = matchResultElement.textContent
