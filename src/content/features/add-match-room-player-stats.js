@@ -62,7 +62,7 @@ export default async parent => {
         userId = player.id
       }
 
-      let stats = await getPlayerStats(userId, game)
+      const stats = await getPlayerStats(userId, game)
 
       if (stats === false) {
         return
