@@ -39,6 +39,7 @@ export const DEFAULTS = {
   matchRoomAutoVetoMapsShuffleAmount: 3,
   matchRoomAutoVetoMapItems: MATCH_ROOM_VETO_MAP_ITEMS,
   matchRoomFocusMode: false,
+  matchRoomLastConnectToServer: '',
   modalCloseMatchVictory: false,
   modalCloseMatchDefeat: false,
   modalCloseGlobalRankingUpdate: false,

@@ -5,6 +5,7 @@ import {
   hasFeatureAttribute,
   setFeatureAttribute
 } from '../helpers/dom-element'
+import storage from '../../shared/storage'
 
 const FEATURE_ATTRIBUTE = 'connect-to-server'
 
@@ -22,20 +23,17 @@ export default async parent => {
   }
   setFeatureAttribute(FEATURE_ATTRIBUTE, goToServerElement)
 
-  const connectedToServer =
-    JSON.parse(localStorage.getItem('faceitEnhancer.connectedToServer')) || []
-
+  const { matchRoomLastConnectToServer } = await storage.getAll()
   const roomId = getRoomId()
 
-  if (connectedToServer.includes(roomId)) {
+  if (matchRoomLastConnectToServer === roomId) {
     return
   }
 
+  storage.set({ matchRoomLastConnectToServer: roomId })
+
   setTimeout(() => {
     goToServerElement.click()
-
-    connectedToServer.push(roomId)
-    localStorage.setItem(JSON.stringify(connectedToServer))
   }, DELAY)
 
   notifyIf('notifyMatchRoomAutoConnectToServer', {
