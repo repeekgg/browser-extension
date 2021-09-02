@@ -94,7 +94,7 @@ export const getPlayerStats = async (userId, game, size = 20) => {
 
   averageStats = averageStats.filter(stats => stats.gameMode.includes('5v5'))
 
-  if (averageStats.length <= 0) {
+  if (averageStats.length <= 1) {
     return null
   }
 

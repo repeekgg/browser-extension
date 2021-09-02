@@ -39,26 +39,6 @@ export const mapAverageStats = stats =>
       (acc, curr, i) =>
         Object.keys(curr).reduce((acc2, curr2) => {
           let value
-          if (stats.length === 1) {
-            if (curr2 === 'winRate') {
-              const results = [curr[curr2]]
-              const wins = results.filter(x => x === 'win').length
-              value = Math.round((wins / results.length) * 100)
-            } else {
-              value = (curr[curr2] / stats.length).toFixed(2) / 1
-              if (
-                curr2 === AVERAGE_STATS_MAP.c4 ||
-                curr2 === AVERAGE_STATS_MAP.i6
-              ) {
-                value = Math.round(value)
-              }
-            }
-            return {
-              ...acc2,
-              [curr2]: value
-            }
-          }
-
           if (stats.length === i + 1) {
             if (curr2 === 'winRate') {
               const results = [...acc[curr2], curr[curr2]]

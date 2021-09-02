@@ -1,8 +1,7 @@
 import React from 'react'
 import {
   MATCH_ROOM_VETO_LOCATION_REGIONS,
-  MATCH_ROOM_VETO_MAP_ITEMS,
-  MAX_VETO_OPTIONS
+  MATCH_ROOM_VETO_MAP_ITEMS
 } from '../../shared/settings'
 import ListSubheader from '../components/list-subheader'
 import ListItemMenu from '../components/list-item-menu'
@@ -53,7 +52,7 @@ export default ({ getMenuProps, getSortableProps, getSwitchProps }) => (
     />
     <ListItemMenu
       primary="Veto Limit Amount"
-      options={MAX_VETO_OPTIONS.map((_, index) => index + 1)}
+      options={[...Array(4).keys()].map((_, index) => index + 1)}
       mapOption={option => `First ${option}`}
       {...getMenuProps('matchRoomAutoVetoMapsLimitAmount')}
     />
