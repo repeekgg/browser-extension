@@ -80,16 +80,16 @@ export default async parentElement => {
     <section>
       <h2 className="header-text-3 heading-border">Level Progress</h2>
       <div className="row flex flex-stretch">
-        <div className="col-lg-4 flex-column-stretch">
+        <div className="col-sm-4 flex-column-stretch">
           {keyStatElement({
             key: 'Level',
             stat: createSkillLevelElement({ level: currentLevel })
           })}
         </div>
-        <div className="col-lg-4 flex-column-stretch">
+        <div className="col-sm-4 flex-column-stretch">
           {keyStatElement({ key: 'Elo', stat: faceitElo })}
         </div>
-        <div className="col-lg-4 flex-column-stretch">
+        <div className="col-sm-4 flex-column-stretch">
           {currentLevel === 10
             ? keyStatElement({ key: `Maximum level reached`, stat: '🔥' })
             : keyStatElement({

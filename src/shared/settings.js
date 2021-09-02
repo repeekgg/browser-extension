@@ -16,7 +16,7 @@ export const MATCH_ROOM_VETO_MAP_ITEMS = [
   'de_overpass',
   'de_inferno',
   'de_nuke',
-  'de_cache',
+  'de_ancient',
   'de_train',
   'de_vertigo'
 ]
@@ -39,6 +39,7 @@ export const DEFAULTS = {
   matchRoomAutoVetoMapsShuffleAmount: 3,
   matchRoomAutoVetoMapItems: MATCH_ROOM_VETO_MAP_ITEMS,
   matchRoomFocusMode: false,
+  matchRoomLastConnectToServer: '',
   modalCloseMatchVictory: false,
   modalCloseMatchDefeat: false,
   modalCloseGlobalRankingUpdate: false,
@@ -51,5 +52,6 @@ export const DEFAULTS = {
   notifyMatchRoomAutoVetoLocations: true,
   notifyMatchRoomAutoVetoMaps: true,
   updateNotificationType: 'tab',
-  updateNotifications: []
+  updateNotifications: [],
+  teamRosterPlayersInfo: true
 }

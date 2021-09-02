@@ -1,3 +1,5 @@
+/** @jsx h */
+import { h } from 'dom-chef'
 import select from 'select-dom'
 import {
   getTeamElements,
@@ -62,15 +64,39 @@ export default async parent => {
 
       const stats = await getPlayerStats(userId, game)
 
-      if (!stats) {
+      if (stats === false) {
         return
       }
-      const statsElement = createPlayerStatsElement(stats, !isFaction1)
 
       const memberDetailsElement = select(
         '.match-team-member__details',
         memberElement
       )
+
+      if (stats === null) {
+        const noStatsAvailableElement = (
+          <div
+            className="text-muted"
+            style={{
+              'border-top': '1px solid #333',
+              padding: '5px 9px',
+              'font-size': 12
+            }}
+          >
+            No last 20 matches stats available
+          </div>
+        )
+
+        memberDetailsElement.after(noStatsAvailableElement)
+
+        return
+      }
+
+      const statsElement = createPlayerStatsElement({
+        ...stats,
+        alignRight: !isFaction1
+      })
+
       memberDetailsElement.after(statsElement)
     })
   })

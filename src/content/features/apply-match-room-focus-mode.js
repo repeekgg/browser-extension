@@ -21,19 +21,18 @@ export default async parent => {
   }
 
   const { isTeamV1Element } = getTeamElements(parent)
-
   const roomId = getRoomId()
   const { teams } = isTeamV1Element
     ? await getQuickMatch(roomId)
     : await getMatch(roomId)
 
   const self = await getSelf()
-  const isSelfInLobby = [
+  const isSelfInMatch = [
     ...teams.faction1.roster,
     ...teams.faction2.roster
   ].some(player => player.id === self.guid)
 
-  if (!isSelfInLobby) {
+  if (!isSelfInMatch) {
     return
   }
 

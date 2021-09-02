@@ -17,20 +17,12 @@ storage.define({
     savedOptions => {
       if (
         savedOptions.matchRoomAutoVetoMapItems &&
-        savedOptions.matchRoomAutoVetoMapItems.includes('de_cbble')
+        savedOptions.matchRoomAutoVetoMapItems.includes('de_cache')
       ) {
         savedOptions.matchRoomAutoVetoMapItems = savedOptions.matchRoomAutoVetoMapItems.filter(
-          map => map !== 'de_cbble'
+          map => map !== 'de_cache'
         )
-        savedOptions.matchRoomAutoVetoMapItems.push('de_vertigo')
-      }
-
-      if (savedOptions.bans) {
-        delete savedOptions.bans
-      }
-
-      if (savedOptions.vips) {
-        delete savedOptions.vips
+        savedOptions.matchRoomAutoVetoMapItems.push('de_ancient')
       }
     },
     OptionsSync.migrations.removeUnused
