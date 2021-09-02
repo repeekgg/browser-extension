@@ -39,6 +39,7 @@ export const mapAverageStats = stats =>
       (acc, curr, i) =>
         Object.keys(curr).reduce((acc2, curr2) => {
           let value
+
           if (stats.length === i + 1) {
             if (curr2 === 'winRate') {
               const results = [...acc[curr2], curr[curr2]]
