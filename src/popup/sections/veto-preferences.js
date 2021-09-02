@@ -53,7 +53,7 @@ export default ({ getMenuProps, getSortableProps, getSwitchProps }) => (
     <ListItemMenu
       primary="Veto Limit Amount"
       options={MATCH_ROOM_VETO_MAP_ITEMS.filter(
-        (_, index) => index % 2 == 0
+        (_, index) => index % 2 === 0
       ).map((_, index) => index + 1)}
       mapOption={option => `First ${option}`}
       {...getMenuProps('matchRoomAutoVetoMapsLimitAmount')}
