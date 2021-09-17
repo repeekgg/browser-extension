@@ -50,7 +50,7 @@
     "babel-preset-react": "^6.24.1",
     "babel-register": "^6.26.0",
     "browser-env": "^3.2.5",
-    "chrome-webstore-upload-cli": "^1.2.0",
+    "chrome-webstore-upload-cli": "^1.2.2",
     "clean-webpack-plugin": "^0.1.18",
     "copy-webpack-plugin": "^4.5.1",
     "cross-env": "^5.1.5",
