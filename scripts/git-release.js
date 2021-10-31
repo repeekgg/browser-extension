@@ -3,7 +3,7 @@ const execa = require('execa')
 
 ;(async () => {
   try {
-    const gitPushMainProc = execa('git', ['push', 'origin', 'Main'])
+    const gitPushMainProc = execa('git', ['push', 'origin', 'main'])
     gitPushMainProc.stdout.pipe(process.stdout)
     await gitPushMainProc
 
