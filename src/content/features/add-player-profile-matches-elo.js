@@ -13,30 +13,36 @@ import {
 } from '../helpers/dom-element'
 import { getIsFreeMember } from '../helpers/membership'
 
-const FEATURE_ATTRIBUTE = 'elo-points'
+const FEATURE_ATTRIBUTE = 'matches-elo'
 
 export default async parentElement => {
-  const matchHistoryElement = select(
-    'div.js-match-history-stats',
+  const playerProfileParasiteElement = select(
+    'parasite-player-profile-content',
     parentElement
   )
-  const matchElements = select.all(
-    'tbody > tr.match-history-stats__row',
-    matchHistoryElement
+
+  if (!playerProfileParasiteElement) {
+    return
+  }
+
+  const playerProfileElement = select(
+    '.sc-egCXko',
+    playerProfileParasiteElement.shadowRoot
   )
 
+  const matchElements = select.all('.sc-dDxMOP', playerProfileElement)
+
+  matchElements.shift()
+
   if (
-    !matchHistoryElement ||
+    !playerProfileElement ||
+    playerProfileElement.children.length < 10 ||
     matchElements.length === 0 ||
-    hasFeatureAttribute(FEATURE_ATTRIBUTE, matchHistoryElement)
+    hasFeatureAttribute(FEATURE_ATTRIBUTE, playerProfileElement)
   ) {
     return
   }
-  setFeatureAttribute(FEATURE_ATTRIBUTE, matchHistoryElement)
-
-  if (matchElements.length === 0) {
-    return
-  }
+  setFeatureAttribute(FEATURE_ATTRIBUTE, playerProfileElement)
 
   const nickname = getPlayerProfileNickname()
   const game = getPlayerProfileStatsGame()
@@ -86,7 +92,13 @@ export default async parentElement => {
     }
 
     const newEloElement = (
-      <div style={{ color: '#fff', 'font-weight': 'normal' }}>
+      <div
+        style={{
+          color: '#fff',
+          fontWeight: 'normal',
+          textTransform: 'none'
+        }}
+      >
         New Elo: {newElo}
       </div>
     )

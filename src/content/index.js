@@ -18,7 +18,7 @@ import clickMatchRoomConnectToServer from './features/click-match-room-connect-t
 import addHeaderLevelProgress from './features/add-header-level-progress'
 import hideMatchRoomPlayerControls from './features/hide-match-room-player-controls'
 import hideFaceitClientHasLandedBanner from './features/hide-faceit-client-has-landed-banner'
-import addProfileMatchesEloPoints from './features/add-profile-matches-elo-points'
+import addPlayerProfileMatchesElo from './features/add-player-profile-matches-elo'
 import clickMatchRoomVetoLocations from './features/click-match-room-veto-locations'
 import clickMatchRoomVetoMaps from './features/click-match-room-veto-maps'
 import clickModalMatchRoomCaptainOk from './features/click-modal-match-room-captain-ok'
@@ -27,7 +27,7 @@ import addMatchRoomPickPlayerStats from './features/add-match-room-pick-player-s
 import addMatchRoomPickPlayerElos from './features/add-match-room-pick-player-elos'
 import addMatchRoomPickPlayerFlags from './features/add-match-room-pick-player-flags'
 import addPlayerControlsReportFix from './features/add-match-room-player-controls-report-fix'
-import addPlayerProfileDownloadDemo from './features/add-player-profile-download-demo'
+import addPlayerProfileMatchesDemo from './features/add-player-profile-matches-demo'
 import addPlayerProfileExtendedStats from './features/add-player-profile-extended-stats'
 import addPlayerProfileBadge from './features/add-player-profile-badge'
 import clickModalClose from './features/click-modal-close'
@@ -48,8 +48,9 @@ function observeBody() {
     return
   }
 
-  const observer = new MutationObserver(() => {
+  const observer = new MutationObserver(mutationList => {
     const modalElement = select('.modal-dialog')
+
     if (modalElement) {
       if (modals.isInviteToParty(modalElement)) {
         runFeatureIf(
@@ -97,8 +98,8 @@ function observeBody() {
             addPlayerProfileLevelProgress,
             modalElement
           )
-          addPlayerProfileDownloadDemo(modalElement)
-          addProfileMatchesEloPoints(modalElement)
+          addPlayerProfileMatchesDemo(modalElement)
+          addPlayerProfileMatchesElo(modalElement)
           addPlayerProfileExtendedStats(modalElement)
         }
       }
@@ -171,8 +172,8 @@ function observeBody() {
             addPlayerProfileLevelProgress,
             mainContentElement
           )
-          addProfileMatchesEloPoints(mainContentElement)
-          addPlayerProfileDownloadDemo(mainContentElement)
+          addPlayerProfileMatchesElo(mainContentElement)
+          addPlayerProfileMatchesDemo(mainContentElement)
           addPlayerProfileExtendedStats(mainContentElement)
         }
       } else if (pages.isTeamsOverview()) {
@@ -181,6 +182,17 @@ function observeBody() {
           addTeamPlayerInfo,
           mainContentElement
         )
+      }
+    }
+
+    for (const mutation of mutationList) {
+      for (const addedNode of mutation.addedNodes) {
+        if (addedNode.shadowRoot) {
+          observer.observe(addedNode.shadowRoot, {
+            childList: true,
+            subtree: true
+          })
+        }
       }
     }
   })
