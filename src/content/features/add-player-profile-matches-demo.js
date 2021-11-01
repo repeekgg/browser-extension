@@ -2,6 +2,7 @@
 import { h } from 'dom-chef'
 import select from 'select-dom'
 import get from 'lodash/get'
+import debounce from 'lodash/debounce'
 import {
   hasFeatureAttribute,
   setFeatureAttribute
@@ -20,7 +21,7 @@ import createButton from '../components/button'
 
 const FEATURE_ATTRIBUTE = 'matches-demo'
 
-export default async parentElement => {
+export default debounce(async parentElement => {
   const playerProfileParasiteElement = select(
     'parasite-player-profile-content',
     parentElement
@@ -31,17 +32,16 @@ export default async parentElement => {
   }
 
   const playerProfileElement = select(
-    '.sc-egCXko',
+    '#__next > div',
     playerProfileParasiteElement.shadowRoot
   )
 
-  const matchElements = select.all('.sc-dDxMOP', playerProfileElement)
+  const matchElements = select.all('table > tbody > tr', playerProfileElement)
 
   matchElements.shift()
 
   if (
     !playerProfileElement ||
-    playerProfileElement.children.length < 10 ||
     matchElements.length === 0 ||
     hasFeatureAttribute(FEATURE_ATTRIBUTE, playerProfileElement)
   ) {
@@ -49,7 +49,7 @@ export default async parentElement => {
   }
   setFeatureAttribute(FEATURE_ATTRIBUTE, playerProfileElement)
 
-  const matchElementsHead = select('.sc-dDxMOP', playerProfileElement)
+  const matchElementsHead = select('table > tbody > tr', playerProfileElement)
 
   matchElementsHead.append(
     <th
@@ -109,4 +109,4 @@ export default async parentElement => {
       matchElement.children[matchElement.children.length - 1]
     )
   })
-}
+}, 250)

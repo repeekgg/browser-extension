@@ -1,6 +1,7 @@
 /** @jsx h */
 import { h } from 'dom-chef'
 import select from 'select-dom'
+import debounce from 'lodash/debounce'
 import { getPlayer, getPlayerMatches, getSelf } from '../helpers/faceit-api'
 import { getEloChangesByMatches } from '../helpers/elo'
 import {
@@ -15,7 +16,7 @@ import { getIsFreeMember } from '../helpers/membership'
 
 const FEATURE_ATTRIBUTE = 'matches-elo'
 
-export default async parentElement => {
+export default debounce(async parentElement => {
   const playerProfileParasiteElement = select(
     'parasite-player-profile-content',
     parentElement
@@ -26,17 +27,16 @@ export default async parentElement => {
   }
 
   const playerProfileElement = select(
-    '.sc-egCXko',
+    '#__next > div',
     playerProfileParasiteElement.shadowRoot
   )
 
-  const matchElements = select.all('.sc-dDxMOP', playerProfileElement)
+  const matchElements = select.all('table > tbody > tr', playerProfileElement)
 
   matchElements.shift()
 
   if (
     !playerProfileElement ||
-    playerProfileElement.children.length < 10 ||
     matchElements.length === 0 ||
     hasFeatureAttribute(FEATURE_ATTRIBUTE, playerProfileElement)
   ) {
@@ -50,7 +50,7 @@ export default async parentElement => {
   const self = await getSelf()
   const selfIsFreeMember = getIsFreeMember(self)
 
-  const matches = await getPlayerMatches(player.guid, game)
+  const matches = await getPlayerMatches(player.guid, game, 21)
   const eloChangesByMatches = await getEloChangesByMatches(matches, game)
 
   if (!eloChangesByMatches) {
@@ -105,4 +105,4 @@ export default async parentElement => {
 
     resultElement.append(newEloElement)
   })
-}
+}, 250)

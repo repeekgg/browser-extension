@@ -1,6 +1,7 @@
 /** @jsx h */
 import { h } from 'dom-chef'
 import select from 'select-dom'
+import debounce from 'lodash/debounce'
 import {
   hasFeatureAttribute,
   setFeatureAttribute
@@ -16,7 +17,7 @@ import createHrElement from '../components/hr'
 
 const FEATURE_ATTRIBUTE = 'extended-stats'
 
-export default async parentElement => {
+export default debounce(async parentElement => {
   const playerProfileParasiteElement = select(
     'parasite-player-profile-content',
     parentElement
@@ -27,13 +28,12 @@ export default async parentElement => {
   }
 
   const playerProfileElement = select(
-    '.sc-egCXko',
+    '#__next > div',
     playerProfileParasiteElement.shadowRoot
   )
 
   if (
     !playerProfileElement ||
-    playerProfileElement.children.length < 10 ||
     hasFeatureAttribute(FEATURE_ATTRIBUTE, playerProfileElement)
   ) {
     return
@@ -101,9 +101,9 @@ export default async parentElement => {
     </div>
   )
 
-  const gamePreferencesElement = select('.sc-fCjnCc', playerProfileElement)
-
-  playerProfileElement.insertBefore(statsElement, gamePreferencesElement)
+  const gamePreferencesElement = playerProfileElement.children[3]
 
   playerProfileElement.insertBefore(createHrElement(), gamePreferencesElement)
-}
+
+  playerProfileElement.insertBefore(statsElement, gamePreferencesElement)
+}, 250)
