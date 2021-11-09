@@ -2,16 +2,17 @@
 
 > Browser extension that enhances the FACEIT experience and adds useful features
 
-Originally created to replace the FACEIT HELPER browser extension, that got broken after FACEIT updated their website and FACEIT HELPER wasn't maintained anymore, FACEIT Enhancer became a must-have browser extension with over 390.000 users and growing for FACEIT users. 
+Originally created to replace the FACEIT HELPER browser extension, that got broken after FACEIT updated their website and FACEIT HELPER wasn't maintained anymore, FACEIT Enhancer became a must-have browser extension with over 700.000 users and growing for FACEIT users.
 
 The goal of FACEIT Enhancer is to make everyone's life easier with automatation and showing additional information that normally only 3rd party websites are exposing from the FACEIT API, but these websites are usually full of ads and other shady stuff to make a profit out of it.
 
-After releasing FACEIT Enhancer, I got approached by FACEIT and was asked to join them. Ultimately this project landed me a job at FACEIT, which wasn't my plan at all, and to this date I'm still part of them.
+After releasing FACEIT Enhancer, I got approached by FACEIT and was asked to join them. Ultimately this project landed me a job at FACEIT in June 2018, which wasn't my plan at all actually. I've left FACEIT in September 2021.
 
 - [Initial Announcement](https://www.reddit.com/r/GlobalOffensive/comments/82eq8j/ive_developed_faceit_enhancer_to_enhance_the/) (2018-03-09)
 - [First Update Post](https://www.reddit.com/r/GlobalOffensive/comments/83pdza/update_faceit_enhancer_now_shows_player_country/) (2018-03-12)
 - [Follow Up Post](https://www.reddit.com/r/GlobalOffensive/comments/872nl8/ive_developed_faceit_enhancer_to_enhance_the/) (2018-03-25)
 - [FACEIT Job Announcement](https://www.reddit.com/r/FACEITEnhancer/comments/8jvh8x/i_will_soon_work_at_faceit_thanks_to_you_guys/) (2018-08-05)
+- [Leaving FACEIT Announcement](https://twitter.com/timche_/status/1437437603456897033) (2021-09-13)
 
 # Install
 
@@ -82,10 +83,6 @@ yarn build
 
 - [Tim Cheung](https://github.com/timche) (Creator, [@timche_](https://twitter.com/timche_))
 - [Daniel Skogly](https://github.com/poacher2k) ([@poacher2k](https://twitter.com/poacher2k))
-
-# Credits
-
-FACEIT Enhancer was heavily inspired by [Refined Github](https://github.com/sindresorhus/refined-github) in terms of project structure, build and deployment, extension code and readme file.
 
 # Disclaimer
 
