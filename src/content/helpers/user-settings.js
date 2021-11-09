@@ -15,7 +15,7 @@ export const runFeatureIf = async (option, feature, parent) => {
   const featureEnabled = await isFeatureEnabled(option)
 
   if (featureEnabled) {
-    feature(parent)
+    return feature(parent)
   }
 }
 

@@ -66,7 +66,6 @@ export default async parentElement => {
 
   if (
     !playerProfileElement ||
-    playerProfileElement.children.length < 10 ||
     hasFeatureAttribute(FEATURE_ATTRIBUTE, playerProfileElement)
   ) {
     return
@@ -191,9 +190,9 @@ export default async parentElement => {
     </div>
   )
 
-  const mainStatsElement = select('.sc-jpGZec', playerProfileElement)
+  const gameSelectorElement = playerProfileElement.children[1]
 
-  playerProfileElement.insertBefore(levelProgressElement, mainStatsElement)
+  playerProfileElement.insertBefore(levelProgressElement, gameSelectorElement)
 
-  playerProfileElement.insertBefore(createHrElement(), mainStatsElement)
+  playerProfileElement.insertBefore(createHrElement(), gameSelectorElement)
 }

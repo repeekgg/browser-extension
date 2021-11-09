@@ -2,7 +2,6 @@
 import { h } from 'dom-chef'
 import select from 'select-dom'
 import get from 'lodash/get'
-import debounce from 'lodash/debounce'
 import {
   hasFeatureAttribute,
   setFeatureAttribute
@@ -21,7 +20,7 @@ import createButton from '../components/button'
 
 const FEATURE_ATTRIBUTE = 'matches-demo'
 
-export default debounce(async parentElement => {
+export default async parentElement => {
   const playerProfileParasiteElement = select(
     'parasite-player-profile-content',
     parentElement
@@ -109,4 +108,4 @@ export default debounce(async parentElement => {
       matchElement.children[matchElement.children.length - 1]
     )
   })
-}, 250)
+}

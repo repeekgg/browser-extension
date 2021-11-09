@@ -1,4 +1,5 @@
 import select from 'select-dom'
+import debounce from 'lodash/debounce'
 import storage from '../shared/storage'
 import * as modals from './helpers/modals'
 import * as pages from './helpers/pages'
@@ -42,6 +43,17 @@ import addPlayerProfileLinks from './features/add-player-profile-links'
 import addTeamPlayerInfo from './features/add-team-player-info'
 
 let checkedBan = false
+
+const debouncedPlayerProfileStatsFeatures = debounce(async parentElement => {
+  await runFeatureIf(
+    'playerProfileLevelProgress',
+    addPlayerProfileLevelProgress,
+    parentElement
+  )
+  await addPlayerProfileMatchesDemo(parentElement)
+  await addPlayerProfileMatchesElo(parentElement)
+  await addPlayerProfileExtendedStats(parentElement)
+}, 200)
 
 function observeBody() {
   if (!checkedBan) {
@@ -93,14 +105,7 @@ function observeBody() {
         addPlayerProfileLinks(modalElement)
 
         if (modals.isPlayerProfileStats()) {
-          runFeatureIf(
-            'playerProfileLevelProgress',
-            addPlayerProfileLevelProgress,
-            modalElement
-          )
-          addPlayerProfileMatchesDemo(modalElement)
-          addPlayerProfileMatchesElo(modalElement)
-          addPlayerProfileExtendedStats(modalElement)
+          debouncedPlayerProfileStatsFeatures(modalElement)
         }
       }
     }
@@ -167,14 +172,7 @@ function observeBody() {
         addPlayerProfileLinks(mainContentElement)
 
         if (pages.isPlayerProfileStats()) {
-          runFeatureIf(
-            'playerProfileLevelProgress',
-            addPlayerProfileLevelProgress,
-            mainContentElement
-          )
-          addPlayerProfileMatchesElo(mainContentElement)
-          addPlayerProfileMatchesDemo(mainContentElement)
-          addPlayerProfileExtendedStats(mainContentElement)
+          debouncedPlayerProfileStatsFeatures(mainContentElement)
         }
       } else if (pages.isTeamsOverview()) {
         runFeatureIf(

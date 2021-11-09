@@ -1,7 +1,6 @@
 /** @jsx h */
 import { h } from 'dom-chef'
 import select from 'select-dom'
-import debounce from 'lodash/debounce'
 import { getPlayer, getPlayerMatches, getSelf } from '../helpers/faceit-api'
 import { getEloChangesByMatches } from '../helpers/elo'
 import {
@@ -16,7 +15,7 @@ import { getIsFreeMember } from '../helpers/membership'
 
 const FEATURE_ATTRIBUTE = 'matches-elo'
 
-export default debounce(async parentElement => {
+export default async parentElement => {
   const playerProfileParasiteElement = select(
     'parasite-player-profile-content',
     parentElement
@@ -105,4 +104,4 @@ export default debounce(async parentElement => {
 
     resultElement.append(newEloElement)
   })
-}, 250)
+}
