@@ -30,7 +30,7 @@ export default async parentElement => {
     faction2Leader = match.teams.faction2.leader
   }
 
-  if (![faction1Leader, faction2Leader].includes(self.guid)) {
+  if (![faction1Leader, faction2Leader].includes(self.id)) {
     return
   }
 

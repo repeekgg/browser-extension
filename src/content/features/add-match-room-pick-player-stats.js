@@ -57,8 +57,7 @@ export default async parentElement => {
       return
     }
 
-    const { guid } = player
-    const stats = await getPlayerStats(guid, game)
+    const stats = await getPlayerStats(player.id, game)
 
     if (!stats) {
       return

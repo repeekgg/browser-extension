@@ -41,11 +41,11 @@ export default async parentElement => {
 
   const nickname = getPlayerProfileNickname()
   const game = getPlayerProfileStatsGame()
-  const { guid, infractions = {} } = await getPlayer(nickname)
+  const { infractions = {}, ...player } = await getPlayer(nickname)
 
   const { afk = 0, leaver = 0 } = infractions
 
-  const playerStats = await getPlayerStats(guid, game)
+  const playerStats = await getPlayerStats(player.id, game)
 
   if (!playerStats) {
     return

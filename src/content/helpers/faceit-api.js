@@ -43,7 +43,10 @@ async function fetchApi(path) {
       payload
     } = json
 
-    if ((result && result !== 'ok') || (code && code !== 'OPERATION-OK')) {
+    if (
+      (result && result.toUpperCase() !== 'OK') ||
+      (code && code.toUpperCase() !== 'OPERATION-OK')
+    ) {
       throw new Error(json)
     }
 

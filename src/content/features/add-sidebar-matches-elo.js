@@ -34,7 +34,7 @@ export default async () => {
   const game = self.flag
   const isFreeMember = getIsFreeMember(self)
 
-  const matches = await getPlayerMatches(self.guid, game)
+  const matches = await getPlayerMatches(self.id, game)
   const eloChangesByMatches = await getEloChangesByMatches(matches, game)
 
   if (!eloChangesByMatches) {
