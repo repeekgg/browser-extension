@@ -48,13 +48,13 @@ export default async parentElement => {
       return
     }
 
-    const { country, guid, csgoName, games, csgoSkillLevel } = player
+    const { country, csgoName, games, csgoSkillLevel } = player
 
     const memberDetailsElement = select('.users-list__details', memberElement)
 
-    if (badges[guid]) {
+    if (badges[player.id]) {
       const featuredPlayerBadgeElement = createFeaturedPlayerBadgeElement(
-        badges[guid]
+        badges[player.id]
       )
 
       memberDetailsElement.insertAdjacentElement(

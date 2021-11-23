@@ -8,7 +8,7 @@
     "lint": "xo",
     "prettier": "prettier --write \"**/*.{js,json,css}\"",
     "release:amo": "web-ext-submit --source-dir dist",
-    "release:cws": "webstore upload --source=dist --auto-publish",
+    "release:cws": "chrome-webstore-upload upload --source=dist --auto-publish",
     "release": "run-p release:*",
     "bump-version": "node scripts/bump-version.js",
     "git-release": "node scripts/git-release.js"
@@ -50,7 +50,7 @@
     "babel-preset-react": "^6.24.1",
     "babel-register": "^6.26.0",
     "browser-env": "^3.2.5",
-    "chrome-webstore-upload-cli": "^1.2.0",
+    "chrome-webstore-upload-cli": "^2.0.1",
     "clean-webpack-plugin": "^0.1.18",
     "copy-webpack-plugin": "^4.5.1",
     "cross-env": "^5.1.5",

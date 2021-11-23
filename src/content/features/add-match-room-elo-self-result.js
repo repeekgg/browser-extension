@@ -27,7 +27,7 @@ export default async parent => {
   const self = await getSelf()
   const game = self.flag
 
-  const matches = await getPlayerMatches(self.guid, game)
+  const matches = await getPlayerMatches(self.id, game)
   const roomId = getRoomId()
 
   if (!matches.some(match => match.matchId === roomId)) {

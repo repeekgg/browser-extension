@@ -2,8 +2,19 @@
 import { h } from 'dom-chef'
 
 export default ({ key, stat }) => (
-  <div className="key-stat well" style={{ height: '100%' }}>
-    <div className="key-stat__value text-gray">{stat}</div>
-    {key}
+  <div
+    style={{
+      flex: 1,
+      background: '#161616',
+      padding: 24,
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      alignItems: 'center',
+      textAlign: 'center'
+    }}
+  >
+    <div style={{ fontSize: 16, fontWeight: 'bold' }}>{stat}</div>
+    <div style={{ textTransform: 'uppercase' }}>{key}</div>
   </div>
 )

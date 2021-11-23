@@ -30,7 +30,7 @@ export default async parent => {
   const isSelfInMatch = [
     ...teams.faction1.roster,
     ...teams.faction2.roster
-  ].some(player => player.id === self.guid)
+  ].some(player => player.id === self.id)
 
   if (!isSelfInMatch) {
     return

@@ -3,9 +3,9 @@ const execa = require('execa')
 
 ;(async () => {
   try {
-    const gitPushMasterProc = execa('git', ['push', 'origin', 'master'])
-    gitPushMasterProc.stdout.pipe(process.stdout)
-    await gitPushMasterProc
+    const gitPushMainProc = execa('git', ['push', 'origin', 'main'])
+    gitPushMainProc.stdout.pipe(process.stdout)
+    await gitPushMainProc
 
     const version = (
       await execa.stdout('git', ['log', '-1', '--pretty=%B'])

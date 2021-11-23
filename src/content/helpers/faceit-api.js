@@ -43,7 +43,10 @@ async function fetchApi(path) {
       payload
     } = json
 
-    if ((result && result !== 'ok') || (code && code !== 'OPERATION-OK')) {
+    if (
+      (result && result.toUpperCase() !== 'OK') ||
+      (code && code.toUpperCase() !== 'OPERATION-OK')
+    ) {
       throw new Error(json)
     }
 
@@ -59,10 +62,10 @@ const fetchApiMemoized = pMemoize(fetchApi, {
   maxAge: CACHE_TIME
 })
 
-export const getUser = userId => fetchApiMemoized(`/core/v1/users/${userId}`)
+export const getUser = userId => fetchApiMemoized(`/users/v1/users/${userId}`)
 
 export const getPlayer = nickname =>
-  fetchApiMemoized(`/core/v1/nicknames/${nickname}`)
+  fetchApiMemoized(`/users/v1/nicknames/${nickname}`)
 
 export const getPlayerMatches = (userId, game, size = 20) =>
   fetchApiMemoized(
@@ -112,16 +115,9 @@ export const getQuickMatch = matchId =>
 export const getMatch = matchId =>
   fetchApiMemoized(`/match/v2/match/${matchId}`)
 
-export const getTeam = teamId => fetchApiMemoized(`/core/v1/teams/${teamId}`)
+export const getTeam = teamId => fetchApiMemoized(`/teams/v1/teams/${teamId}`)
 
-export const getSelf = () => fetchApiMemoized('/core/v1/sessions/me')
-
-export const getQuickMatchPlayers = async (game, region, matchType) =>
-  (
-    await fetchApi(
-      `/core/v1/quickmatches/players?game=${game}&matchType=${matchType}&region=${region}`
-    )
-  ).total
+export const getSelf = () => fetchApiMemoized('/users/v1/sessions/me')
 
 export const getHubQueue = async id =>
   (await fetchApi(`/queue/v1/queue/hub/${id}`))[0]

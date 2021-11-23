@@ -57,7 +57,7 @@ export default async parent => {
 
       const self = await getSelf()
 
-      if (userId === self.guid) {
+      if (userId === self.id) {
         return
       }
 

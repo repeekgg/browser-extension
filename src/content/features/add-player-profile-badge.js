@@ -40,8 +40,8 @@ export default async parentElement => {
   setFeatureAttribute(FEATURE_ATTRIBUTE, wrapper)
 
   const nickname = getPlayerProfileNickname()
-  const { guid } = await getPlayer(nickname)
-  const playerBadge = await getPlayerBadges(guid)
+  const player = await getPlayer(nickname)
+  const playerBadge = await getPlayerBadges(player.id)
 
   if (!playerBadge) {
     return
