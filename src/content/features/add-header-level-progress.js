@@ -43,10 +43,9 @@ export default async () => {
     const { skillLevel, faceitElo = 1000 } = games[game]
     const [levelMinElo, levelMaxElo] = LEVELS[skillLevel]
 
-    const toProgressWidth = levelMaxElo
-      ? `${100 -
-          ((faceitElo - levelMinElo) / (levelMaxElo - levelMinElo)) * 100}%`
-      : 0
+    const progressWidth = levelMaxElo
+      ? `${((faceitElo - levelMinElo) / (levelMaxElo - levelMinElo)) * 100}%`
+      : '100%'
 
     const levelBelow = LEVELS[skillLevel - 1]
     const levelAbove = LEVELS[skillLevel + 1]
@@ -123,16 +122,15 @@ export default async () => {
                 margin: '1px 0',
                 height: 2,
                 width: 110,
-                background:
-                  'linear-gradient(90deg,#c00000,red,#fd8003,#ffc000,#ff0,#92d050,#52ba28,#47a123,#00b050)'
+                background: '#4b4e4e'
               }}
             >
               <div
                 style={{
                   height: '100%',
-                  width: toProgressWidth,
-                  background: '#4b4e4e',
-                  float: 'right'
+                  width: progressWidth,
+                  background:
+                    'linear-gradient(270deg,#ff5500 0%,rgba(255,85,0,0.08) 100%)'
                 }}
               />
             </div>
