@@ -1,11 +1,11 @@
 import pMemoize from 'p-memoize'
-import pRetry from 'p-retry'
 import camelcaseKeys from 'camelcase-keys'
 import format from 'date-fns/format'
 import Cookies from 'js-cookie'
+import browser from 'webextension-polyfill'
+import { ACTION_FETCH_FACEIT_API } from '../../shared/constants'
 import { mapTotalStatsMemoized, mapAverageStatsMemoized } from './stats'
 
-const BASE_URL = 'https://api.faceit.com'
 export const CACHE_TIME = 600000
 
 async function fetchApi(path) {
@@ -21,36 +21,26 @@ async function fetchApi(path) {
       options.headers.Authorization = `Bearer ${token}`
     }
 
-    const response = await pRetry(
-      () =>
-        fetch(`${BASE_URL}${path}`, options).then(res => {
-          if (res.status === 404) {
-            throw new pRetry.AbortError(res.statusText)
-          } else if (!res.ok) {
-            throw new Error(res.statusText)
-          }
-          return res
-        }),
-      {
-        retries: 3
-      }
-    )
+    const response = await browser.runtime.sendMessage({
+      action: ACTION_FETCH_FACEIT_API,
+      path,
+      options
+    })
 
-    const json = await response.json()
     const {
       result, // Status for old API(?)
       code, // Status for new API(?)
       payload
-    } = json
+    } = response
 
     if (
       (result && result.toUpperCase() !== 'OK') ||
       (code && code.toUpperCase() !== 'OPERATION-OK')
     ) {
-      throw new Error(json)
+      throw new Error(response)
     }
 
-    return camelcaseKeys(payload || json, { deep: true })
+    return camelcaseKeys(payload || response, { deep: true })
   } catch (err) {
     console.error(err)
 

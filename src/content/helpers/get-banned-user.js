@@ -8,11 +8,11 @@ import { getSelf } from './faceit-api'
 
 export default async () => {
   try {
-    const { guid } = await getSelf()
+    const { id } = await getSelf()
 
     const bannedUser = await browser.runtime.sendMessage({
       action: ACTION_FETCH_BAN,
-      guid
+      guid: id
     })
 
     if (!bannedUser) {

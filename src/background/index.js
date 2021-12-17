@@ -7,9 +7,11 @@ import { DEFAULTS, UPDATE_NOTIFICATION_TYPES } from '../shared/settings'
 import {
   ACTION_NOTIFICATION,
   ACTION_FETCH_BAN,
-  ACTION_FETCH_VIPS
+  ACTION_FETCH_VIPS,
+  ACTION_FETCH_FACEIT_API
 } from '../shared/constants'
 import { fetchBan, fetchVips } from './api'
+import faceitApi from './faceit-api'
 
 storage.define({
   defaults: DEFAULTS,
@@ -62,6 +64,16 @@ browser.runtime.onMessage.addListener(async message => {
         const { guids } = message
         const vips = await fetchVips(guids)
         return vips
+      } catch (error) {
+        console.error(error)
+        return null
+      }
+    }
+    case ACTION_FETCH_FACEIT_API: {
+      try {
+        const { path, options } = message
+        const response = await faceitApi(path, options)
+        return response
       } catch (error) {
         console.error(error)
         return null
