@@ -1,7 +1,7 @@
 {
   "name": "FACEIT Enhancer",
   "description": "Enhances the FACEIT experience and adds useful features.",
-  "version": "2.11.4",
+  "version": "2.11.5",
   "manifest_version": 2,
   "homepage_url": "https://faceit-enhancer.com/",
   "minimum_chrome_version": "51",
@@ -25,12 +25,8 @@
   "content_scripts": [
     {
       "run_at": "document_end",
-      "matches": [
-        "https://www.faceit.com/*"
-      ],
-      "js": [
-        "content.js"
-      ]
+      "matches": ["https://www.faceit.com/*"],
+      "js": ["content.js"]
     }
   ],
   "browser_action": {
@@ -38,9 +34,7 @@
     "default_popup": "popup.html"
   },
   "background": {
-    "scripts": [
-      "background.js"
-    ],
+    "scripts": ["background.js"],
     "persistent": false
   }
 }
