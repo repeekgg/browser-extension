@@ -6,7 +6,6 @@ export default parent => {
     'button[class="sc-clsHhM gYYSzb sc-fbkhIv cupfpU"]:not([disabled])',
     parent
   )
-  console.log(acceptButton)
 
   if (acceptButton) {
     acceptButton.click()
