@@ -67,7 +67,7 @@ export default async parentElement => {
   const nickname = getPlayerProfileNickname()
   const player = await getPlayer(nickname)
   const game = getPlayerProfileStatsGame()
-  const matches = await getPlayerMatches(player.id, game)
+  const matches = await getPlayerMatches(player.id, game, matchElements.length)
 
   matchElements.forEach(async (matchElement, index) => {
     const matchId = matches[index].matchId

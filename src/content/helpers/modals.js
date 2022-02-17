@@ -3,7 +3,7 @@ import * as pages from './pages'
 import { getCurrentPath } from './location'
 
 export const isInviteToParty = parent =>
-  select.exists('h3[translate-once="INVITE-TO-PARTY"]', parent)
+  parent.querySelector('h5').textContent === 'Invite to party'
 
 export const isMatchQueuing = parent =>
   select.exists('h3[translate-once="QUICK-MATCH-QUEUING"]', parent)

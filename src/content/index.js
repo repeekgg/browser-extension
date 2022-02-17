@@ -61,16 +61,32 @@ function observeBody() {
   }
 
   const observer = new MutationObserver(mutationList => {
+    // New react modals
+    const modalContainer = select('#parasite-modal-container').shadowRoot
+    if (modalContainer) {
+      const reactModals = modalContainer.querySelectorAll(
+        '.ReactModal__Content'
+      )
+
+      reactModals.forEach(modal => {
+        if (modal.querySelector('h5')) {
+          console.log('modal open')
+          if (modals.isInviteToParty(modal)) {
+            runFeatureIf(
+              'partyAutoAcceptInvite',
+              clickModalPartyInviteAccept,
+              modal
+            )
+          }
+        }
+      })
+    }
+
+    // Old angular modals
     const modalElement = select('.modal-dialog')
 
     if (modalElement) {
-      if (modals.isInviteToParty(modalElement)) {
-        runFeatureIf(
-          'partyAutoAcceptInvite',
-          clickModalPartyInviteAccept,
-          modalElement
-        )
-      } else if (modals.isMatchQueuing(modalElement)) {
+      if (modals.isMatchQueuing(modalElement)) {
         runFeatureIf(
           'matchQueueAutoReady',
           clickModalMatchQueuingContinue,
@@ -188,14 +204,21 @@ function observeBody() {
         if (addedNode.shadowRoot) {
           observer.observe(addedNode.shadowRoot, {
             childList: true,
-            subtree: true
+            subtree: true,
+            attributes: true,
+            attributeFilter: ['aria-hidden']
           })
         }
       }
     }
   })
 
-  observer.observe(document.body, { childList: true, subtree: true })
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true,
+    attributes: true,
+    attributeFilter: ['aria-hidden']
+  })
 }
 
 function runOnce() {

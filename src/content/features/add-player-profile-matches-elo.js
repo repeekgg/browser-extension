@@ -49,7 +49,11 @@ export default async parentElement => {
   const self = await getSelf()
   const selfIsFreeMember = getIsFreeMember(self)
 
-  const matches = await getPlayerMatches(player.id, game, 21)
+  const matches = await getPlayerMatches(
+    player.id,
+    game,
+    matchElements.length + 1
+  )
   const eloChangesByMatches = await getEloChangesByMatches(matches, game)
 
   if (!eloChangesByMatches) {

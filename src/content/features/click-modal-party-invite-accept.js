@@ -3,9 +3,10 @@ import { notifyIf } from '../helpers/user-settings'
 
 export default parent => {
   const acceptButton = select(
-    'button[ng-click="acceptInvite()"][translate-once="ACCEPT"]:not([disabled])',
+    'button[class="sc-clsHhM gYYSzb sc-fbkhIv cupfpU"]:not([disabled])',
     parent
   )
+  console.log(acceptButton)
 
   if (acceptButton) {
     acceptButton.click()
