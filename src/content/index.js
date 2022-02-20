@@ -61,9 +61,12 @@ function observeBody() {
   }
 
   const observer = new MutationObserver(mutationList => {
-    const modalElement = select('.modal-dialog')
+    ;(async () => {
+      const modalElement = select('.modal-dialog')
+      if (!modalElement) {
+        return
+      }
 
-    if (modalElement) {
       if (modals.isInviteToParty(modalElement)) {
         runFeatureIf(
           'partyAutoAcceptInvite',
@@ -108,7 +111,7 @@ function observeBody() {
           debouncedPlayerProfileStatsFeatures(modalElement)
         }
       }
-    }
+    })()
 
     runFeatureIf('headerShowElo', addHeaderLevelProgress)
     runFeatureIf(
@@ -117,10 +120,11 @@ function observeBody() {
     )
 
     addSidebarMatchesElo()
-
-    const mainContentElement = select('#main-content')
-
-    if (mainContentElement) {
+    ;(async () => {
+      const mainContentElement = select('#main-content')
+      if (!mainContentElement) {
+        return
+      }
       if (pages.isRoomOverview() && matchRoomIsReady()) {
         addMatchRoomPlayerBadges(mainContentElement)
         addMatchRoomPlayerColors(mainContentElement)
@@ -181,18 +185,19 @@ function observeBody() {
           mainContentElement
         )
       }
-    }
-
-    for (const mutation of mutationList) {
-      for (const addedNode of mutation.addedNodes) {
-        if (addedNode.shadowRoot) {
+    })()
+    ;(async () => {
+      mutationList
+        .flatMap(mutation => mutation.addedNodes)
+        .filter(node => node.shadowRoot)
+        .forEach(addedNode => {
+          console.log('observing shadow', addedNode)
           observer.observe(addedNode.shadowRoot, {
             childList: true,
             subtree: true
           })
-        }
-      }
-    }
+        })
+    })()
   })
 
   observer.observe(document.body, { childList: true, subtree: true })
