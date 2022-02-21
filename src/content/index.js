@@ -191,7 +191,6 @@ function observeBody() {
         .flatMap(mutation => mutation.addedNodes)
         .filter(node => node.shadowRoot)
         .forEach(addedNode => {
-          console.log('observing shadow', addedNode)
           observer.observe(addedNode.shadowRoot, {
             childList: true,
             subtree: true
