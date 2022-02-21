@@ -5,7 +5,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 module.exports = {
-  devtool: process.env.NODE_ENV === 'production' ? false : 'sourcemap',
+  devtool: process.env.NODE_ENV === 'production' ? false : 'inline-source-map',
   context: path.resolve(__dirname, 'src'),
   entry: {
     content: './content/index.js',
