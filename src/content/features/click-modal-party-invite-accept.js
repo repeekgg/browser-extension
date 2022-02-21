@@ -1,7 +1,7 @@
 import select from 'select-dom'
 import { notifyIf } from '../helpers/user-settings'
 
-export default parent => {
+export default async parent => {
   const acceptButton = select(
     'button[ng-click="acceptInvite()"][translate-once="ACCEPT"]:not([disabled])',
     parent
