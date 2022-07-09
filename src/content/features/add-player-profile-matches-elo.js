@@ -1,7 +1,7 @@
 /** @jsx h */
 import { h } from 'dom-chef'
 import select from 'select-dom'
-import { getPlayer, getPlayerMatches, getSelf } from '../helpers/faceit-api'
+import { getPlayer, getPlayerMatches } from '../helpers/faceit-api'
 import { getEloChangesByMatches } from '../helpers/elo'
 import {
   getPlayerProfileNickname,
@@ -11,7 +11,6 @@ import {
   hasFeatureAttribute,
   setFeatureAttribute
 } from '../helpers/dom-element'
-import { getIsFreeMember } from '../helpers/membership'
 
 const FEATURE_ATTRIBUTE = 'matches-elo'
 
@@ -46,8 +45,7 @@ export default async parentElement => {
   const nickname = getPlayerProfileNickname()
   const game = getPlayerProfileStatsGame()
   const player = await getPlayer(nickname)
-  const self = await getSelf()
-  const selfIsFreeMember = getIsFreeMember(self)
+  const currentElo = player.games.csgo.faceitElo
 
   const matches = await getPlayerMatches(player.id, game, 21)
   const eloChangesByMatches = await getEloChangesByMatches(matches, game)
@@ -86,19 +84,24 @@ export default async parentElement => {
 
     resultElement.textContent += ` (${eloDiff >= 0 ? '+' : ''}${eloDiff})`
 
-    if (selfIsFreeMember) {
-      return
-    }
-
     const newEloElement = (
       <div
         style={{
+          display: 'flex',
           color: '#fff',
           fontWeight: 'normal',
           textTransform: 'none'
         }}
       >
-        New Elo: {newElo}
+        New Elo:
+        <div
+          style={{
+            color: newElo >= currentElo ? '#32d35a' : '#ff002b',
+            padding: '0 0 0 5px'
+          }}
+        >
+          {newElo}
+        </div>
       </div>
     )
 
