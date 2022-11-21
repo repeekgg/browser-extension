@@ -18,7 +18,8 @@ export const MATCH_ROOM_VETO_MAP_ITEMS = [
   'de_nuke',
   'de_ancient',
   'de_train',
-  'de_vertigo'
+  'de_vertigo',
+  'de_anubis'
 ]
 
 export const DEFAULTS = {
