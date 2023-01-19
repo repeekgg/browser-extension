@@ -2,33 +2,33 @@ name: Release
 
 on:
   push:
-    tags: 
+    tags:
       - '**'
 
 jobs:
   cws:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - run: yarn --frozen-lockfile
-    - run: yarn lint
-    - run: yarn test
-    - run: yarn build
-    - run: yarn release:cws
-      env:
-        EXTENSION_ID: ${{ secrets.EXTENSION_ID }}
-        CLIENT_ID: ${{ secrets.CLIENT_ID }}
-        CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
-        REFRESH_TOKEN: ${{ secrets.REFRESH_TOKEN }}
+      - uses: actions/checkout@v3
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run test
+      - run: npm run build
+      - run: npm run release:cws
+        env:
+          EXTENSION_ID: ${{ secrets.EXTENSION_ID }}
+          CLIENT_ID: ${{ secrets.CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+          REFRESH_TOKEN: ${{ secrets.REFRESH_TOKEN }}
   amo:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - run: yarn --frozen-lockfile
-    - run: yarn lint
-    - run: yarn test
-    - run: yarn build
-    - run: yarn release:amo
-      env:
-        WEB_EXT_API_KEY: ${{ secrets.WEB_EXT_API_KEY }}
-        WEB_EXT_API_SECRET: ${{ secrets.WEB_EXT_API_SECRET }}
+      - uses: actions/checkout@v3
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run test
+      - run: npm run build
+      - run: npm run release:amo
+        env:
+          WEB_EXT_API_KEY: ${{ secrets.WEB_EXT_API_KEY }}
+          WEB_EXT_API_SECRET: ${{ secrets.WEB_EXT_API_SECRET }}

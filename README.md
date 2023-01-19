@@ -39,16 +39,17 @@ All features are configurable to your personal preferences.
 Clone repository and install npm dependencies:
 
 ```sh
-yarn install
+npm install
 ```
 
 Build the extension into a `dist` folder, listen for file changes and automatically rebuild:
 
 ```sh
-yarn dev
+npm run dev
 ```
 
 Load into the browser:
+
 <table>
   <tr>
     <th>Chrome</th>
@@ -76,12 +77,12 @@ Load into the browser:
 Build the extension into a `dist` folder for publishing:
 
 ```sh
-yarn build
+npm run build
 ```
 
 # Maintainers
 
-- [Tim Cheung](https://github.com/timche) (Creator, [@timche_](https://twitter.com/timche_))
+- [Tim Cheung](https://github.com/timche) (Creator, [@timche\_](https://twitter.com/timche_))
 - [Daniel Skogly](https://github.com/poacher2k) ([@poacher2k](https://twitter.com/poacher2k))
 
 # Disclaimer
