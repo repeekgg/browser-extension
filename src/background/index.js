@@ -1,9 +1,8 @@
 import browser from 'webextension-polyfill'
-import OptionsSync from 'webext-options-sync'
 import semverDiff from 'semver-diff'
 import storage from '../shared/storage'
 import changelogs from '../changelogs'
-import { DEFAULTS, UPDATE_NOTIFICATION_TYPES } from '../shared/settings'
+import { UPDATE_NOTIFICATION_TYPES } from '../shared/settings'
 import {
   ACTION_NOTIFICATION,
   ACTION_FETCH_BAN,
@@ -12,24 +11,6 @@ import {
 } from '../shared/constants'
 import { fetchBan, fetchVips } from './api'
 import faceitApi from './faceit-api'
-
-storage.define({
-  defaults: DEFAULTS,
-  migrations: [
-    savedOptions => {
-      if (
-        savedOptions.matchRoomAutoVetoMapItems &&
-        savedOptions.matchRoomAutoVetoMapItems.includes('de_cache')
-      ) {
-        savedOptions.matchRoomAutoVetoMapItems = savedOptions.matchRoomAutoVetoMapItems.filter(
-          map => map !== 'de_cache'
-        )
-        savedOptions.matchRoomAutoVetoMapItems.push('de_ancient')
-      }
-    },
-    OptionsSync.migrations.removeUnused
-  ]
-})
 
 browser.runtime.onMessage.addListener(async message => {
   if (!message) {

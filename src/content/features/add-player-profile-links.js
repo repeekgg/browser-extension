@@ -1,4 +1,3 @@
-/** @jsx h */
 import select from 'select-dom'
 
 import {

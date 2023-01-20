@@ -3,7 +3,7 @@
   "scripts": {
     "precommit": "lint-staged",
     "dev": "webpack --mode=development --watch",
-    "build": "cross-env NODE_ENV=production webpack --mode=production",
+    "build": "webpack --mode=production",
     "test": "cross-env BABEL_ENV=testing ava",
     "lint": "xo",
     "prettier": "prettier --write \"**/*.{js,json,css}\"",
@@ -19,8 +19,8 @@
     "copy-text-to-clipboard": "^1.0.4",
     "country-list": "^2.1.0",
     "date-fns": "^2.4.1",
-    "detect-browser": "^2.1.0",
-    "dom-chef": "^3.1.0",
+    "detect-browser": "^5.3.0",
+    "dom-chef": "^5.1.0",
     "element-ready": "^3.1.0",
     "js-cookie": "^2.2.1",
     "ky": "^0.11.1",
@@ -34,10 +34,11 @@
     "select-dom": "^4.1.1",
     "semver-diff": "^2.1.0",
     "style-inject": "^0.3.0",
-    "webext-options-sync": "^0.15.0",
+    "webext-options-sync": "^4.0.0",
     "webextension-polyfill": "^0.2.1"
   },
   "devDependencies": {
+    "ajv": "^8.12.0",
     "ava": "^0.25.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.2.2",
@@ -51,9 +52,10 @@
     "babel-register": "^6.26.0",
     "browser-env": "^3.2.5",
     "chrome-webstore-upload-cli": "^2.0.1",
-    "clean-webpack-plugin": "^0.1.18",
-    "copy-webpack-plugin": "^4.5.1",
+    "clean-webpack-plugin": "^4.0.0",
+    "copy-webpack-plugin": "^11.0.0",
     "cross-env": "^5.1.5",
+    "esbuild-loader": "^2.21.0",
     "eslint-config-xo-react": "^0.16.0",
     "eslint-plugin-prettier": "^2.6.0",
     "eslint-plugin-react": "^7.7.0",
@@ -66,11 +68,11 @@
     "semver": "^6.0.0",
     "sinon": "^4.4.2",
     "svg-inline-loader": "^0.8.2",
-    "uglifyjs-webpack-plugin": "^1.2.2",
+    "terser-webpack-plugin": "^5.3.6",
     "web-ext": "^4.2.0",
     "web-ext-submit": "^4.2.0",
-    "webpack": "4.19.0",
-    "webpack-cli": "^2.0.10",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1",
     "write-json-file": "^3.2.0",
     "xo": "^0.20.3"
   },
@@ -121,12 +123,7 @@
     ],
     "babel": {
       "plugins": [
-        [
-          "transform-react-jsx",
-          {
-            "pragma": "h"
-          }
-        ]
+        "transform-react-jsx"
       ]
     }
   },

@@ -1,5 +1,4 @@
-/** @jsx h */
-import { h } from 'dom-chef'
+import React from 'dom-chef'
 import select from 'select-dom'
 import { getPlayer, getPlayerMatches, getSelf } from '../helpers/faceit-api'
 import { getEloChangesByMatches } from '../helpers/elo'

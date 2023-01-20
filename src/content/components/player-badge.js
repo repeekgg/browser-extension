@@ -1,5 +1,4 @@
-/** @jsx h */
-import { h } from 'dom-chef'
+import React from 'dom-chef'
 import vipLevels from '../../shared/vip-levels'
 
 export default ({ level = 0, role, bgColor, textColor, onClick }) => {

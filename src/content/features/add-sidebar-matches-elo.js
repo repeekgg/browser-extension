@@ -1,4 +1,3 @@
-/** @jsx h */
 import select from 'select-dom'
 import { getRoomId } from '../helpers/match-room'
 import { getSelf, getPlayerMatches } from '../helpers/faceit-api'

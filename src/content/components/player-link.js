@@ -1,5 +1,4 @@
-/** @jsx h */
-import { h } from 'dom-chef'
+import React from 'dom-chef'
 import createIconElement from './icon'
 
 export default ({ platform, url }) => {

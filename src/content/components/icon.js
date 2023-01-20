@@ -1,5 +1,4 @@
-/** @jsx h */
-import { h } from 'dom-chef'
+import React from 'dom-chef'
 
 export default ({ icon, size, textLight = false, style = {} }) => (
   <i
