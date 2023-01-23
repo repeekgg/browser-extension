@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - run: npm ci --legacy-peer-deps
+      - run: npm ci
       - run: npm run lint
       - run: npm run test
       - run: npm run build
@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - run: npm ci --legacy-peer-deps
+      - run: npm ci
       - run: npm run lint
       - run: npm run test
       - run: npm run build
