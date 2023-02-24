@@ -1,6 +1,5 @@
 import select from 'select-dom'
 import React from 'dom-chef'
-import elementReady from 'element-ready'
 import { CACHE_TIME, getSelf } from '../helpers/faceit-api'
 import {
   hasFeatureAttribute,
@@ -18,16 +17,31 @@ export default async () => {
     return
   }
 
-  const headerRightElement = select('.main-header__right')
+  const mainHeaderActionsElement = select('parasite-main-header-actions')
 
-  if (!headerRightElement) {
+  if (!mainHeaderActionsElement) {
     return
   }
 
-  if (hasFeatureAttribute(FEATURE_ATTRIBUTE, headerRightElement)) {
+  const parasiteRootElement = select(
+    '#__next',
+    mainHeaderActionsElement.shadowRoot
+  )
+
+  if (!parasiteRootElement) {
     return
   }
-  setFeatureAttribute(FEATURE_ATTRIBUTE, headerRightElement)
+
+  const targetElement = parasiteRootElement.firstElementChild?.lastElementChild
+
+  if (!targetElement) {
+    return
+  }
+
+  if (hasFeatureAttribute(FEATURE_ATTRIBUTE, targetElement)) {
+    return
+  }
+  setFeatureAttribute(FEATURE_ATTRIBUTE, targetElement)
 
   let levelElement
 
@@ -55,106 +69,96 @@ export default async () => {
       : '∞'
 
     levelElement = (
-      <div
-        style={{
-          display: 'flex',
-          'align-items': 'center',
-          'margin-right': 8,
-          'margin-left': 24
-        }}
-      >
-        <div style={{ 'margin-right': 4 }}>
-          <div
-            className="text-light"
-            style={{
-              display: 'flex',
-              'justify-content': 'space-between'
-            }}
-          >
-            <a
-              className="text-sm text-muted bold"
-              style={{ 'align-self': 'flex-end' }}
-              onClick={async e => {
-                e.preventDefault()
-                const selectGameElementSelector =
-                  'div[ng-click="vm.openGameSelectorModal()"'
-
-                let selectGameElement = select(selectGameElementSelector)
-
-                if (!selectGameElement) {
-                  const logoElement = select('a[href="/en/home"]')
-
-                  if (!logoElement) {
-                    return
-                  }
-
-                  logoElement.click()
-
-                  selectGameElement = await elementReady(
-                    selectGameElementSelector
-                  )
-                }
-
-                selectGameElement.click()
+      <>
+        <div
+          style={{
+            width: 1,
+            background: '#404040',
+            marginLeft: 16,
+            marginRight: 16
+          }}
+        />
+        <div
+          style={{
+            display: 'flex',
+            fontSize: 12,
+            color: 'rgba(255,255,255,0.6)',
+            alignItems: 'center'
+          }}
+        >
+          <div style={{ 'margin-right': 4 }}>
+            <div
+              style={{
+                display: 'flex',
+                'justify-content': 'space-between',
+                alignItems: 'flex-end'
               }}
-              href="#"
             >
               <div>{game.toUpperCase()}</div>
-            </a>
-            <div
-              style={{
-                display: 'flex',
-                'align-items': 'center',
-                'justify-content': 'flex-end'
-              }}
-            >
-              {faceitElo}
-              <i
-                className="icon-ELO-icon text-light"
-                style={{ 'margin-left': 4 }}
-              />
-            </div>
-          </div>
-          <div>
-            <div
-              style={{
-                margin: '1px 0',
-                height: 2,
-                width: 110,
-                background: '#4b4e4e'
-              }}
-            >
               <div
                 style={{
-                  height: '100%',
-                  width: progressWidth,
-                  background: '#f50'
+                  display: 'flex',
+                  'align-items': 'center',
+                  'justify-content': 'flex-end',
+                  fontSize: 14,
+                  gap: 4
                 }}
-              />
+              >
+                {faceitElo}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width={16}
+                  height={16}
+                  fill="none"
+                  color="secondary"
+                  viewBox="0 0 24 12"
+                >
+                  <path
+                    fill="rgba(255,255,255,0.6)"
+                    d="M12 3c0 .463-.105.902-.292 1.293l1.998 2A2.97 2.97 0 0 1 15 6a2.99 2.99 0 0 1 1.454.375l1.921-1.921a3 3 0 1 1 1.5 1.328l-2.093 2.093a3 3 0 1 1-5.49-.168l-1.999-2a2.992 2.992 0 0 1-2.418.074L5.782 7.876a3 3 0 1 1-1.328-1.5l1.921-1.921A3 3 0 1 1 12 3z"
+                  />
+                </svg>
+              </div>
             </div>
-            <div
-              className="text-sm text-muted bold"
-              style={{
-                display: 'flex',
-                'justify-content': 'space-between'
-              }}
-            >
-              {levelMinElo}
-              <span>
-                {levelBelowEloDiff}/{levelAboveEloDiff}
-              </span>
-              <span>{levelMaxElo ? levelMaxElo : '∞'}</span>
+            <div>
+              <div
+                style={{
+                  marginTop: 1,
+                  height: 2,
+                  width: 110,
+                  background: '#4b4e4e'
+                }}
+              >
+                <div
+                  style={{
+                    height: '100%',
+                    width: progressWidth,
+                    background: '#f50'
+                  }}
+                />
+              </div>
+              <div
+                style={{
+                  display: 'flex',
+                  'justify-content': 'space-between'
+                }}
+              >
+                {levelMinElo}
+                <span>
+                  {levelBelowEloDiff}/{levelAboveEloDiff}
+                </span>
+                <span>{levelMaxElo ? levelMaxElo : '∞'}</span>
+              </div>
             </div>
           </div>
+          {createSkillLevelElement({
+            level: skillLevel
+          })}
         </div>
-        {createSkillLevelElement({ level: skillLevel })}
-      </div>
+      </>
     )
 
-    headerRightElement.insertBefore(
-      levelElement,
-      headerRightElement.children[headerRightElement.children.length - 1]
-    )
+    targetElement.insertBefore(levelElement, targetElement.children[1])
   }
 
   addLevelElement()
