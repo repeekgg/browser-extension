@@ -18,7 +18,7 @@ export default async () => {
     return
   }
 
-  const headerRightElement = select('.main-header__right')
+  const headerRightElement = select('.fi-navbar__main')
 
   if (!headerRightElement) {
     return
