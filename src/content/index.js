@@ -9,24 +9,15 @@ import clickModalPartyInviteAccept from './features/click-modal-party-invite-acc
 import clickModalMatchQueuingContinue from './features/click-modal-match-queuing-continue'
 import clickModalMatchReady from './features/click-modal-match-ready'
 import addMatchRoomPlayerBadges from './features/add-match-room-player-badges'
-import addMatchRoomPlayerColors from './features/add-match-room-player-colors'
-import addMatchRoomPlayerFlags from './features/add-match-room-player-flags'
-import addMatchRoomPlayerElos from './features/add-match-room-player-elos'
-import addMatchRoomEloEstimation from './features/add-match-room-elo-estimation'
 import copyMatchRoomCopyServerData from './features/copy-match-room-copy-server-data'
 import clickMatchRoomConnectToServer from './features/click-match-room-connect-to-server'
 import addHeaderLevelProgress from './features/add-header-level-progress'
-import hideMatchRoomPlayerControls from './features/hide-match-room-player-controls'
 import hideFaceitClientHasLandedBanner from './features/hide-faceit-client-has-landed-banner'
 import addPlayerProfileMatchesElo from './features/add-player-profile-matches-elo'
 import clickMatchRoomVetoLocations from './features/click-match-room-veto-locations'
 import clickMatchRoomVetoMaps from './features/click-match-room-veto-maps'
 import clickModalMatchRoomCaptainOk from './features/click-modal-match-room-captain-ok'
 import addPlayerProfileLevelProgress from './features/add-player-profile-level-progress'
-import addMatchRoomPickPlayerStats from './features/add-match-room-pick-player-stats'
-import addMatchRoomPickPlayerElos from './features/add-match-room-pick-player-elos'
-import addMatchRoomPickPlayerFlags from './features/add-match-room-pick-player-flags'
-import addPlayerControlsReportFix from './features/add-match-room-player-controls-report-fix'
 import addPlayerProfileMatchesDemo from './features/add-player-profile-matches-demo'
 import addPlayerProfileExtendedStats from './features/add-player-profile-extended-stats'
 import addPlayerProfileBadge from './features/add-player-profile-badge'
@@ -35,9 +26,7 @@ import getBannedUser from './helpers/get-banned-user'
 import stopToxicity from './features/stop-toxicity'
 import clickModalInactiveCheck from './features/click-modal-inactive-check'
 import addSidebarMatchesElo from './features/add-sidebar-matches-elo'
-import addMatchRoomEloSelfResult from './features/add-match-room-elo-self-result'
 import applyMatchRoomFocusMode from './features/apply-match-room-focus-mode'
-import addMatchRoomPlayerLinks from './features/add-match-room-player-links'
 import addPlayerProfileLinks from './features/add-player-profile-links'
 import addTeamPlayerInfo from './features/add-team-player-info'
 
@@ -122,17 +111,6 @@ function observeBody() {
     if (mainContentElement) {
       if (pages.isRoomOverview() && matchRoomIsReady()) {
         addMatchRoomPlayerBadges(mainContentElement)
-        addMatchRoomPlayerColors(mainContentElement)
-        addMatchRoomPlayerFlags(mainContentElement)
-        addMatchRoomPlayerElos(mainContentElement)
-        addMatchRoomPlayerLinks(mainContentElement)
-        runFeatureIf(
-          'matchRoomHidePlayerControls',
-          addPlayerControlsReportFix,
-          mainContentElement
-        )
-        addMatchRoomEloEstimation(mainContentElement)
-        addMatchRoomEloSelfResult(mainContentElement)
         runFeatureIf(
           'matchRoomAutoCopyServerData',
           copyMatchRoomCopyServerData,
@@ -153,9 +131,6 @@ function observeBody() {
           clickMatchRoomVetoMaps,
           mainContentElement
         )
-        addMatchRoomPickPlayerStats(mainContentElement)
-        addMatchRoomPickPlayerElos(mainContentElement)
-        addMatchRoomPickPlayerFlags(mainContentElement)
         runFeatureIf(
           'matchRoomFocusMode',
           applyMatchRoomFocusMode,
@@ -196,8 +171,6 @@ async function runOnce() {
   if (!checkedBan) {
     return
   }
-
-  runFeatureIf('matchRoomHidePlayerControls', hideMatchRoomPlayerControls)
 
   // Match room players stats have been integrated natively
   const { matchRoomShowPlayerStats } = await storage.getAll()

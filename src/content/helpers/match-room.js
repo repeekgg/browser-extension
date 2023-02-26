@@ -62,15 +62,8 @@ export const getIsFaction1 = factionName => factionName.includes('faction1')
 export const getTeamMemberElements = parent =>
   select.all('.match-team-member', parent)
 
-export const getNicknameElement = (parent, isTeamV1Element) =>
-  select(
-    `strong[${
-      isTeamV1Element
-        ? 'ng-bind="::teamMember.nickname"'
-        : 'ng-bind="vm.teamMember.nickname"'
-    }]`,
-    parent
-  )
+export const getNicknameElement = parent =>
+  select(`strong[ng-bind="vm.teamMember.nickname"]`, parent)
 
 export const getFactionIsPremadeV1 = factionType => factionType === 'premade'
 

@@ -29,13 +29,6 @@ export default ({ getSwitchProps }) => (
       secondary="Show total stats (Matches, Win Rate) & average stats (Kills, Headshots %, K/D, K/R) from last 20 games."
       {...getSwitchProps('matchRoomShowPlayerStats')}
     />
-    <ListItemSwitch
-      primary="Hide Player Controls"
-      secondary={
-        'Hide the bottom bar that includes "Add Friend", game profile, "Twitch channel", "Recommend/Report" etc. Will be displayed when hovering over the player instead.'
-      }
-      {...getSwitchProps('matchRoomHidePlayerControls')}
-    />
     <ListSubheader divider>Team page</ListSubheader>
     <ListItemSwitch
       primary="Detailed Team Information"

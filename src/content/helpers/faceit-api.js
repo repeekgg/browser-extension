@@ -99,9 +99,6 @@ export const getPlayerStats = async (userId, game, size = 20) => {
   }
 }
 
-export const getQuickMatch = matchId =>
-  fetchApiMemoized(`/core/v1/matches/${matchId}?withStats=true`)
-
 export const getMatch = matchId =>
   fetchApiMemoized(`/match/v2/match/${matchId}`)
 
