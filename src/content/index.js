@@ -12,7 +12,6 @@ import addMatchRoomPlayerBadges from './features/add-match-room-player-badges'
 import addMatchRoomPlayerColors from './features/add-match-room-player-colors'
 import addMatchRoomPlayerFlags from './features/add-match-room-player-flags'
 import addMatchRoomPlayerElos from './features/add-match-room-player-elos'
-import addMatchRoomPlayerStats from './features/add-match-room-player-stats'
 import addMatchRoomEloEstimation from './features/add-match-room-elo-estimation'
 import copyMatchRoomCopyServerData from './features/copy-match-room-copy-server-data'
 import clickMatchRoomConnectToServer from './features/click-match-room-connect-to-server'
@@ -132,11 +131,6 @@ function observeBody() {
           addPlayerControlsReportFix,
           mainContentElement
         )
-        runFeatureIf(
-          'matchRoomShowPlayerStats',
-          addMatchRoomPlayerStats,
-          mainContentElement
-        )
         addMatchRoomEloEstimation(mainContentElement)
         addMatchRoomEloSelfResult(mainContentElement)
         runFeatureIf(
@@ -198,12 +192,18 @@ function observeBody() {
   observer.observe(document.body, { childList: true, subtree: true })
 }
 
-function runOnce() {
+async function runOnce() {
   if (!checkedBan) {
     return
   }
 
   runFeatureIf('matchRoomHidePlayerControls', hideMatchRoomPlayerControls)
+
+  // Match room players stats have been integrated natively
+  const { matchRoomShowPlayerStats } = await storage.getAll()
+  if (typeof matchRoomShowPlayerStats === 'boolean') {
+    localStorage.setItem('enhancerStats', matchRoomShowPlayerStats)
+  }
 }
 
 ;(async () => {
