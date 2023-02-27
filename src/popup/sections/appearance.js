@@ -1,6 +1,7 @@
 import React from 'react'
 import ListSubheader from '../components/list-subheader'
 import ListItemSwitch from '../components/list-item-switch'
+import ListItemLink from '../components/list-item-link'
 
 export const APPEARANCE = 'Appearance'
 
@@ -19,15 +20,17 @@ export default ({ getSwitchProps }) => (
       {...getSwitchProps('playerProfileLevelProgress')}
     />
     <ListSubheader divider>Match Room</ListSubheader>
+    <ListItemLink
+      primary="Show Player Stats"
+      secondary={
+        'This feature got implemented natively by FACEIT and can be configured in your CS:GO game settings under "Show extended statistics in the matchroom" on FACEIT.'
+      }
+      href="https://www.faceit.com/en/settings/games"
+    />
     <ListItemSwitch
       primary="Focus Mode"
       secondary="Hide all players and focus only on the match like a pro. Players are shown when the match is finished. All other match room settings are ignored regardless of their setting."
       {...getSwitchProps('matchRoomFocusMode')}
-    />
-    <ListItemSwitch
-      primary="Show Player Stats"
-      secondary="Show total stats (Matches, Win Rate) & average stats (Kills, Headshots %, K/D, K/R) from last 20 games."
-      {...getSwitchProps('matchRoomShowPlayerStats')}
     />
     <ListSubheader divider>Team page</ListSubheader>
     <ListItemSwitch

@@ -167,18 +167,6 @@ function observeBody() {
   observer.observe(document.body, { childList: true, subtree: true })
 }
 
-async function runOnce() {
-  if (!checkedBan) {
-    return
-  }
-
-  // Match room players stats have been integrated natively
-  const { matchRoomShowPlayerStats } = await storage.getAll()
-  if (typeof matchRoomShowPlayerStats === 'boolean') {
-    localStorage.setItem('enhancerStats', matchRoomShowPlayerStats)
-  }
-}
-
 ;(async () => {
   const { extensionEnabled } = await storage.getAll()
 
@@ -194,5 +182,4 @@ async function runOnce() {
   }
 
   observeBody()
-  runOnce()
 })()
