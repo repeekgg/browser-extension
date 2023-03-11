@@ -36,6 +36,11 @@ All features are configurable to your personal preferences.
 
 # Development
 
+Prerequisites:
+
+- Node.js: `>=18.14.2 <19`
+- npm: `>=9.5.0 <10`
+
 Clone repository and install npm dependencies:
 
 ```sh

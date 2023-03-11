@@ -1,5 +1,9 @@
 {
   "private": true,
+  "engines": {
+    "node": ">=18.14.2 <19",
+    "npm": ">=9.5.0 <10"
+  },
   "scripts": {
     "precommit": "lint-staged",
     "dev": "webpack --mode=development --watch",
