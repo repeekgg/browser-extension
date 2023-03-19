@@ -1,5 +1,6 @@
 import browser from 'webextension-polyfill'
 import semverDiff from 'semver-diff'
+import ky from 'ky'
 import storage from '../shared/storage'
 import changelogs from '../changelogs'
 import { UPDATE_NOTIFICATION_TYPES } from '../shared/settings'
@@ -7,9 +8,10 @@ import {
   ACTION_NOTIFICATION,
   ACTION_FETCH_BAN,
   ACTION_FETCH_VIPS,
-  ACTION_FETCH_FACEIT_API
+  ACTION_FETCH_FACEIT_API,
+  ACTION_FETCH_SKIN_OF_THE_MATCH
 } from '../shared/constants'
-import { fetchBan, fetchVips } from './api'
+import { fetchBan, fetchVips, fetchConfig } from './api'
 import faceitApi from './faceit-api'
 
 browser.runtime.onMessage.addListener(async message => {
@@ -55,6 +57,33 @@ browser.runtime.onMessage.addListener(async message => {
         const { path, options } = message
         const response = await faceitApi(path, options)
         return response
+      } catch (error) {
+        console.error(error)
+        return null
+      }
+    }
+    case ACTION_FETCH_SKIN_OF_THE_MATCH: {
+      try {
+        const { features } = await fetchConfig()
+
+        if (!features.skinOfTheMatchApi) {
+          return null
+        }
+
+        const { players } = message
+        const response = await ky.post(
+          'https://api.skinport.com/v1/faceit-enhancer',
+          {
+            json: players,
+            timeout: 25000
+          }
+        )
+
+        if (!features.skinOfTheMatch) {
+          return null
+        }
+
+        return response.json()
       } catch (error) {
         console.error(error)
         return null
