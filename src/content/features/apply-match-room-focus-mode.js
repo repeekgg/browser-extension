@@ -1,10 +1,7 @@
+import React from 'dom-chef'
 import select from 'select-dom'
-import {
-  getMatchState,
-  getRoomId,
-  getTeamElements
-} from '../helpers/match-room'
-import { getSelf, getQuickMatch, getMatch } from '../helpers/faceit-api'
+import { getRoomId } from '../helpers/match-room'
+import { getSelf, getMatch } from '../helpers/faceit-api'
 import {
   setStyle,
   hasFeatureAttribute,
@@ -14,17 +11,14 @@ import {
 const FEATURE_ATTRIBUTE = 'focus-mode'
 
 export default async parent => {
-  const matchState = getMatchState(parent)
+  const parasiteRootElement = select('#parasite-container', parent).shadowRoot
 
-  if (!['VOTING', 'CONFIGURING', 'READY', 'ONGOING'].includes(matchState)) {
+  const roomId = getRoomId()
+  const { status, teams } = await getMatch(roomId)
+
+  if (!['VOTING', 'CONFIGURING', 'READY', 'ONGOING'].includes(status)) {
     return
   }
-
-  const { isTeamV1Element } = getTeamElements(parent)
-  const roomId = getRoomId()
-  const { teams } = isTeamV1Element
-    ? await getQuickMatch(roomId)
-    : await getMatch(roomId)
 
   const self = await getSelf()
   const isSelfInMatch = [
@@ -36,24 +30,73 @@ export default async parent => {
     return
   }
 
-  const balanceIndicatorElement = select('.match__team-balance', parent)
-  if (
-    balanceIndicatorElement &&
-    hasFeatureAttribute(FEATURE_ATTRIBUTE, balanceIndicatorElement)
-  ) {
-    return
-  }
-  setFeatureAttribute(FEATURE_ATTRIBUTE, balanceIndicatorElement)
-  setStyle(balanceIndicatorElement, 'opacity: 0')
+  const matchRoomOverviewElement = select(
+    '#MATCHROOM-OVERVIEW',
+    parasiteRootElement
+  )
 
-  const teamElements = select.all('match-team-v2', parent)
+  if (matchRoomOverviewElement) {
+    const teamBalanceElement =
+      matchRoomOverviewElement.children[0].children[0].children[3]
 
-  teamElements.forEach(teamElement => {
-    if (hasFeatureAttribute(FEATURE_ATTRIBUTE, teamElement)) {
-      return
+    if (
+      teamBalanceElement &&
+      !hasFeatureAttribute(FEATURE_ATTRIBUTE, teamBalanceElement)
+    ) {
+      setFeatureAttribute(FEATURE_ATTRIBUTE, teamBalanceElement)
+      setStyle(teamBalanceElement, 'display: none')
     }
-    setFeatureAttribute(FEATURE_ATTRIBUTE, teamElement)
 
-    setStyle(teamElement, 'opacity: 0')
-  })
+    const teamNameElements = [
+      matchRoomOverviewElement.children[0]?.children[0]?.children[1]
+        ?.children[0],
+      matchRoomOverviewElement.children[0]?.children[0]?.children[1]
+        ?.children[2]
+    ]
+
+    teamNameElements.forEach(teamNameElement => {
+      if (
+        teamNameElement &&
+        !hasFeatureAttribute(FEATURE_ATTRIBUTE, teamNameElement)
+      ) {
+        setFeatureAttribute(FEATURE_ATTRIBUTE, teamNameElement)
+        setStyle(teamNameElement, 'visibility: hidden')
+      }
+    })
+
+    const teamElements = [
+      select('[name="roster1"]', matchRoomOverviewElement),
+      select('[name="roster2"]', matchRoomOverviewElement)
+    ]
+
+    teamElements.forEach(teamElement => {
+      if (teamElement && !hasFeatureAttribute(FEATURE_ATTRIBUTE, teamElement)) {
+        setFeatureAttribute(FEATURE_ATTRIBUTE, teamElement)
+        setStyle(teamElement, 'visibility: hidden')
+      }
+    })
+
+    if (!hasFeatureAttribute(FEATURE_ATTRIBUTE, matchRoomOverviewElement)) {
+      setFeatureAttribute(FEATURE_ATTRIBUTE, matchRoomOverviewElement)
+
+      matchRoomOverviewElement.append(
+        <div
+          style={{
+            position: 'absolute',
+            bottom: 8,
+            left: 0,
+            right: 0,
+            display: 'flex',
+            justifyContent: 'center',
+            fontSize: 12,
+            color: 'rgba(255, 255, 255, 0.6)'
+          }}
+        >
+          <div style={{ background: '#1f1f1f', borderRadius: 4, padding: 8 }}>
+            Focus mode powered by FACEIT Enhancer
+          </div>
+        </div>
+      )
+    }
+  }
 }

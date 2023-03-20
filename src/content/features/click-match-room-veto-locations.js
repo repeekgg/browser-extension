@@ -5,32 +5,22 @@ import {
 } from '../helpers/dom-element'
 import storage from '../../shared/storage'
 import { notifyIf } from '../helpers/user-settings'
-import { getQuickMatch, getMatch, getSelf } from '../helpers/faceit-api'
-import { getRoomId, getTeamElements } from '../helpers/match-room'
+import { getMatch, getSelf } from '../helpers/faceit-api'
+import { getRoomId } from '../helpers/match-room'
 
 const FEATURE_ATTRIBUTE = 'veto-locations'
 const VETO_DELAY = 2000
 
 export default async parentElement => {
-  const { isTeamV1Element } = getTeamElements(parentElement)
   const roomId = getRoomId()
-  const { region, ...match } = isTeamV1Element
-    ? await getQuickMatch(roomId)
-    : await getMatch(roomId)
+  const { region, ...match } = await getMatch(roomId)
   const self = await getSelf()
 
-  let faction1Leader
-  let faction2Leader
-
-  if (isTeamV1Element) {
-    faction1Leader = match.faction1Leader
-    faction2Leader = match.faction2Leader
-  } else {
-    faction1Leader = match.teams.faction1.leader
-    faction2Leader = match.teams.faction2.leader
-  }
-
-  if (![faction1Leader, faction2Leader].includes(self.id)) {
+  if (
+    ![match.teams.faction1.leader, match.teams.faction2.leader].includes(
+      self.id
+    )
+  ) {
     return
   }
 

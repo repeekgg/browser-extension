@@ -1,5 +1,4 @@
-/** @jsx h */
-import { h } from 'dom-chef'
+import React from 'dom-chef'
 
 const stat = (value, label, flex = 1) => (
   <div style={{ flex, padding: '5px 9px' }}>

@@ -19,9 +19,19 @@ export const MATCH_TEAM_V1 = 'match-team'
 export const MATCH_TEAM_V2 = 'match-team-v2'
 export const MEMBERS_ATTRIBUTE = '[members]:not([members=""])'
 
-export const matchRoomIsReady = () =>
-  select.exists(`${MATCH_TEAM_V1}${MEMBERS_ATTRIBUTE}`) ||
-  select.exists(`${MATCH_TEAM_V2}${MEMBERS_ATTRIBUTE}`)
+export const matchRoomIsReady = () => {
+  const parasiteContainer = select('#parasite-container')
+
+  if (!parasiteContainer) {
+    return false
+  }
+
+  return (
+    select.exists(`[name="roster1"]`, parasiteContainer.shadowRoot) &&
+    select.exists(`[name="roster2"]`, parasiteContainer.shadowRoot) &&
+    select.exists(`[name="info"]`, parasiteContainer.shadowRoot)
+  )
+}
 
 export const getTeamElements = parent => {
   let teamElements = select.all(MATCH_TEAM_V1, parent)
@@ -62,15 +72,8 @@ export const getIsFaction1 = factionName => factionName.includes('faction1')
 export const getTeamMemberElements = parent =>
   select.all('.match-team-member', parent)
 
-export const getNicknameElement = (parent, isTeamV1Element) =>
-  select(
-    `strong[${
-      isTeamV1Element
-        ? 'ng-bind="::teamMember.nickname"'
-        : 'ng-bind="vm.teamMember.nickname"'
-    }]`,
-    parent
-  )
+export const getNicknameElement = parent =>
+  select(`strong[ng-bind="vm.teamMember.nickname"]`, parent)
 
 export const getFactionIsPremadeV1 = factionType => factionType === 'premade'
 

@@ -1,7 +1,6 @@
-/** @jsx h */
 /* eslint-disable react/jsx-child-element-spacing */
 import select from 'select-dom'
-import { h } from 'dom-chef'
+import React from 'dom-chef'
 import {
   hasFeatureAttribute,
   setFeatureAttribute

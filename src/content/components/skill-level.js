@@ -1,6 +1,5 @@
-/** @jsx h */
 /* eslint-disable react/no-danger */
-import { h } from 'dom-chef'
+import React from 'dom-chef'
 
 const reqSkillLevel = require.context('../assets/skill-levels', false, /\.svg$/)
 

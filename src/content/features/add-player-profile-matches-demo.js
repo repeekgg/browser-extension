@@ -1,17 +1,11 @@
-/** @jsx h */
-import { h } from 'dom-chef'
+import React from 'dom-chef'
 import select from 'select-dom'
 import get from 'lodash/get'
 import {
   hasFeatureAttribute,
   setFeatureAttribute
 } from '../helpers/dom-element'
-import {
-  getQuickMatch,
-  getMatch,
-  getPlayer,
-  getPlayerMatches
-} from '../helpers/faceit-api'
+import { getMatch, getPlayer, getPlayerMatches } from '../helpers/faceit-api'
 import {
   getPlayerProfileNickname,
   getPlayerProfileStatsGame
@@ -88,8 +82,7 @@ export default async parentElement => {
           text: 'Watch Demo',
           onClick: async e => {
             e.stopPropagation()
-            const match =
-              (await getQuickMatch(matchId)) || (await getMatch(matchId))
+            const match = await getMatch(matchId)
             const demoUrl =
               get(match, 'externalMatches[0].stats.demoFileUrl') ||
               match.demoUrl ||
