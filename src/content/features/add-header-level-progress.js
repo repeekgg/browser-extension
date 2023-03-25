@@ -32,7 +32,7 @@ export default async () => {
     return
   }
 
-  const targetElement = parasiteRootElement.firstElementChild?.lastElementChild
+  const targetElement = parasiteRootElement.firstElementChild
 
   if (!targetElement) {
     return
@@ -69,93 +69,82 @@ export default async () => {
       : '∞'
 
     levelElement = (
-      <>
-        <div
-          style={{
-            width: 1,
-            background: '#404040',
-            marginLeft: 16,
-            marginRight: 16
-          }}
-        />
-        <div
-          style={{
-            display: 'flex',
-            fontSize: 12,
-            color: 'rgba(255,255,255,0.6)',
-            alignItems: 'center'
-          }}
-        >
-          <div style={{ 'margin-right': 4 }}>
+      <div
+        style={{
+          display: 'flex',
+          fontSize: 12,
+          color: 'rgba(255,255,255,0.6)',
+          alignItems: 'center'
+        }}
+      >
+        {createSkillLevelElement({
+          level: skillLevel
+        })}
+        <div style={{ 'margin-left': 4 }}>
+          <div
+            style={{
+              display: 'flex',
+              'justify-content': 'space-between',
+              alignItems: 'flex-end'
+            }}
+          >
             <div
               style={{
                 display: 'flex',
-                'justify-content': 'space-between',
-                alignItems: 'flex-end'
+                'align-items': 'center',
+                'justify-content': 'flex-end',
+                gap: 4
               }}
             >
-              <div>{game.toUpperCase()}</div>
-              <div
-                style={{
-                  display: 'flex',
-                  'align-items': 'center',
-                  'justify-content': 'flex-end',
-                  fontSize: 14,
-                  gap: 4
-                }}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width={16}
+                height={16}
+                fill="none"
+                color="secondary"
+                viewBox="0 0 24 12"
               >
-                {faceitElo}
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width={16}
-                  height={16}
-                  fill="none"
-                  color="secondary"
-                  viewBox="0 0 24 12"
-                >
-                  <path
-                    fill="rgba(255,255,255,0.6)"
-                    d="M12 3c0 .463-.105.902-.292 1.293l1.998 2A2.97 2.97 0 0 1 15 6a2.99 2.99 0 0 1 1.454.375l1.921-1.921a3 3 0 1 1 1.5 1.328l-2.093 2.093a3 3 0 1 1-5.49-.168l-1.999-2a2.992 2.992 0 0 1-2.418.074L5.782 7.876a3 3 0 1 1-1.328-1.5l1.921-1.921A3 3 0 1 1 12 3z"
-                  />
-                </svg>
-              </div>
-            </div>
-            <div>
-              <div
-                style={{
-                  marginTop: 1,
-                  height: 2,
-                  width: 110,
-                  background: '#4b4e4e'
-                }}
-              >
-                <div
-                  style={{
-                    height: '100%',
-                    width: progressWidth,
-                    background: '#f50'
-                  }}
+                <path
+                  fill="rgba(255,255,255,0.6)"
+                  d="M12 3c0 .463-.105.902-.292 1.293l1.998 2A2.97 2.97 0 0 1 15 6a2.99 2.99 0 0 1 1.454.375l1.921-1.921a3 3 0 1 1 1.5 1.328l-2.093 2.093a3 3 0 1 1-5.49-.168l-1.999-2a2.992 2.992 0 0 1-2.418.074L5.782 7.876a3 3 0 1 1-1.328-1.5l1.921-1.921A3 3 0 1 1 12 3z"
                 />
-              </div>
+              </svg>
+              {faceitElo}
+            </div>
+            <div>{game.toUpperCase()}</div>
+          </div>
+          <div>
+            <div
+              style={{
+                marginTop: 1,
+                height: 2,
+                width: 110,
+                background: '#4b4e4e'
+              }}
+            >
               <div
                 style={{
-                  display: 'flex',
-                  'justify-content': 'space-between'
+                  height: '100%',
+                  width: progressWidth,
+                  background: '#f50'
                 }}
-              >
-                {levelMinElo}
-                <span>
-                  {levelBelowEloDiff}/{levelAboveEloDiff}
-                </span>
-                <span>{levelMaxElo ? levelMaxElo : '∞'}</span>
-              </div>
+              />
+            </div>
+            <div
+              style={{
+                display: 'flex',
+                'justify-content': 'space-between'
+              }}
+            >
+              {levelMinElo}
+              <span>
+                {levelBelowEloDiff}/{levelAboveEloDiff}
+              </span>
+              <span>{levelMaxElo ? levelMaxElo : '∞'}</span>
             </div>
           </div>
-          {createSkillLevelElement({
-            level: skillLevel
-          })}
         </div>
-      </>
+      </div>
     )
 
     targetElement.insertBefore(levelElement, targetElement.children[1])
