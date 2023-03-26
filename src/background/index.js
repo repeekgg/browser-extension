@@ -5,6 +5,7 @@ import storage from '../shared/storage'
 import changelogs from '../changelogs'
 import { UPDATE_NOTIFICATION_TYPES } from '../shared/settings'
 import {
+  IS_PRODUCTION,
   ACTION_NOTIFICATION,
   ACTION_FETCH_BAN,
   ACTION_FETCH_VIPS,
@@ -66,20 +67,22 @@ browser.runtime.onMessage.addListener(async message => {
       try {
         const { features } = await fetchConfig()
 
-        if (!features.skinOfTheMatchApi) {
+        if (IS_PRODUCTION && !features.skinOfTheMatchApi) {
           return null
         }
 
-        const { players } = message
-        const response = await ky.post(
+        const { steamIds } = message
+        const response = await ky(
           'https://api.skinport.com/v1/faceit-enhancer',
           {
-            json: players,
+            searchParams: {
+              steamids: steamIds.join(',')
+            },
             timeout: 25000
           }
         )
 
-        if (!features.skinOfTheMatch) {
+        if (IS_PRODUCTION && !features.skinOfTheMatch) {
           return null
         }
 

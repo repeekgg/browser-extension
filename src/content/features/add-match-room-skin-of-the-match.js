@@ -40,7 +40,7 @@ export default async parentElement => {
   const roomId = getRoomId()
   const match = await getMatch(roomId)
 
-  if (!match) {
+  if (!match || match.game !== 'csgo') {
     return
   }
 
@@ -51,7 +51,7 @@ export default async parentElement => {
 
   const skinOfTheMatch = await browser.runtime.sendMessage({
     action: ACTION_FETCH_SKIN_OF_THE_MATCH,
-    players: players.map(({ gameId }) => ({ steam_id: gameId })) // eslint-disable-line camelcase
+    steamIds: players.map(({ gameId }) => gameId)
   })
 
   if (!skinOfTheMatch) {
@@ -91,7 +91,8 @@ export default async parentElement => {
 
   const skinOfTheMatchElement = (
     <a
-      href={skinOfTheMatch.skin.skinport_url || 'https://skinport.com'}
+      href={`${skinOfTheMatch.skin.skinport_url ||
+        'https://skinport.com'}?r=faceit-enhancer&utm_source=faceit-enhancer`}
       target="_blank"
       rel="noreferrer noopener"
       style={{
