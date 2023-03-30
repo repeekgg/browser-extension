@@ -67,7 +67,13 @@ export default async parentElement => {
   }
 
   const { locale } = new Intl.DateTimeFormat().resolvedOptions()
-  const currency = countryToCurrency[locale.split('-').pop()] || 'USD'
+  const currency =
+    countryToCurrency[
+      locale
+        .split('-')
+        .pop()
+        .toUpperCase()
+    ] || 'USD'
 
   await new Promise(resolve => {
     const image = new Image()
