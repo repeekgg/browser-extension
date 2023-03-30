@@ -7,32 +7,29 @@ import {
 } from '../helpers/dom-element'
 import { LEVELS } from '../helpers/elo'
 import createSkillLevelElement from '../components/skill-level'
-import { isLoggedIn } from '../helpers/user'
 
 const FEATURE_ATTRIBUTE = 'level-progress'
 const REFRESH_TIME = CACHE_TIME + 15000
 
 export default async () => {
-  if (!isLoggedIn()) {
-    return
-  }
+  const parasiteParentElement = select('parasite-main-header')
 
-  const mainHeaderActionsElement = select('parasite-main-header-actions')
-
-  if (!mainHeaderActionsElement) {
+  if (!parasiteParentElement) {
     return
   }
 
   const parasiteRootElement = select(
     '#__next',
-    mainHeaderActionsElement.shadowRoot
+    parasiteParentElement.shadowRoot
   )
 
   if (!parasiteRootElement) {
     return
   }
 
-  const targetElement = parasiteRootElement.firstElementChild
+  const targetElement =
+    parasiteRootElement.firstElementChild?.lastElementChild?.lastElementChild
+      ?.firstElementChild?.firstElementChild?.lastElementChild
 
   if (!targetElement) {
     return
@@ -74,7 +71,9 @@ export default async () => {
           display: 'flex',
           fontSize: 12,
           color: 'rgba(255,255,255,0.6)',
-          alignItems: 'center'
+          alignItems: 'center',
+          marginRight: 8,
+          marginLeft: 4
         }}
       >
         {createSkillLevelElement({
@@ -147,7 +146,7 @@ export default async () => {
       </div>
     )
 
-    targetElement.insertBefore(levelElement, targetElement.children[1])
+    targetElement.insertBefore(levelElement, targetElement.children[2])
   }
 
   addLevelElement()
