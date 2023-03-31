@@ -21,6 +21,7 @@ import addPlayerProfileLevelProgress from './features/add-player-profile-level-p
 import addPlayerProfileMatchesDemo from './features/add-player-profile-matches-demo'
 import addPlayerProfileExtendedStats from './features/add-player-profile-extended-stats'
 import addPlayerProfileBadge from './features/add-player-profile-badge'
+import addPlayerProfileBan from './features/add-player-profile-ban'
 import clickModalClose from './features/click-modal-close'
 import getBannedUser from './helpers/get-banned-user'
 import stopToxicity from './features/stop-toxicity'
@@ -91,6 +92,7 @@ function observeBody() {
       } else if (modals.isPlayerProfile()) {
         addPlayerProfileBadge(modalElement)
         addPlayerProfileLinks(modalElement)
+        addPlayerProfileBan(modalElement)
 
         if (modals.isPlayerProfileStats()) {
           debouncedPlayerProfileStatsFeatures(modalElement)
@@ -139,6 +141,7 @@ function observeBody() {
       } else if (pages.isPlayerProfile()) {
         addPlayerProfileBadge(mainContentElement)
         addPlayerProfileLinks(mainContentElement)
+        addPlayerProfileBan(mainContentElement)
 
         if (pages.isPlayerProfileStats()) {
           debouncedPlayerProfileStatsFeatures(mainContentElement)
