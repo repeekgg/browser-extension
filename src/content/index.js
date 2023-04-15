@@ -49,53 +49,69 @@ function observeBody() {
   }
 
   const observer = new MutationObserver(mutationList => {
-    const modalElement = select('.modal-dialog')
+    const legacyModalElement = select('.modal-dialog')
 
-    if (modalElement) {
-      if (modals.isInviteToParty(modalElement)) {
+    if (legacyModalElement) {
+      if (modals.isInviteToParty(legacyModalElement)) {
         runFeatureIf(
           'partyAutoAcceptInvite',
           clickModalPartyInviteAccept,
-          modalElement
+          legacyModalElement
         )
-      } else if (modals.isMatchQueuing(modalElement)) {
+      } else if (modals.isMatchQueuing(legacyModalElement)) {
         runFeatureIf(
           'matchQueueAutoReady',
           clickModalMatchQueuingContinue,
-          modalElement
+          legacyModalElement
         )
-      } else if (modals.isMatchReady(modalElement)) {
-        runFeatureIf('matchQueueAutoReady', clickModalMatchReady, modalElement)
-      } else if (modals.isMatchRoomCaptain(modalElement)) {
+      } else if (modals.isMatchRoomCaptain(legacyModalElement)) {
         runFeatureIf(
           ['matchRoomAutoVetoLocations', 'matchRoomAutoVetoMaps'],
           clickModalMatchRoomCaptainOk,
-          modalElement
+          legacyModalElement
         )
-      } else if (modals.isMatchVictory(modalElement)) {
-        runFeatureIf('modalCloseMatchVictory', clickModalClose, modalElement)
-      } else if (modals.isMatchDefeat(modalElement)) {
-        runFeatureIf('modalCloseMatchDefeat', clickModalClose, modalElement)
-      } else if (modals.isGlobalRankingUpdate(modalElement)) {
+      } else if (modals.isMatchVictory(legacyModalElement)) {
+        runFeatureIf(
+          'modalCloseMatchVictory',
+          clickModalClose,
+          legacyModalElement
+        )
+      } else if (modals.isMatchDefeat(legacyModalElement)) {
+        runFeatureIf(
+          'modalCloseMatchDefeat',
+          clickModalClose,
+          legacyModalElement
+        )
+      } else if (modals.isGlobalRankingUpdate(legacyModalElement)) {
         runFeatureIf(
           'modalCloseGlobalRankingUpdate',
           clickModalClose,
-          modalElement
+          legacyModalElement
         )
-      } else if (modals.isInactive(modalElement)) {
+      } else if (modals.isInactive(legacyModalElement)) {
         runFeatureIf(
           'modalClickInactiveCheck',
           clickModalInactiveCheck,
-          modalElement
+          legacyModalElement
         )
       } else if (modals.isPlayerProfile()) {
-        addPlayerProfileBadge(modalElement)
-        addPlayerProfileLinks(modalElement)
+        addPlayerProfileBadge(legacyModalElement)
+        addPlayerProfileLinks(legacyModalElement)
 
         if (modals.isPlayerProfileStats()) {
-          debouncedPlayerProfileStatsFeatures(modalElement)
+          debouncedPlayerProfileStatsFeatures(legacyModalElement)
         }
       }
+    }
+
+    const parasiteFuseModalElement = select('.FuseModalPortal')
+
+    if (parasiteFuseModalElement?.shadowRoot) {
+      runFeatureIf(
+        'matchQueueAutoReady',
+        clickModalMatchReady,
+        parasiteFuseModalElement.shadowRoot
+      )
     }
 
     runFeatureIf('headerShowElo', addHeaderLevelProgress)
