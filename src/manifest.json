@@ -1,9 +1,9 @@
 {
-  "name": "FACEIT Enhancer",
-  "description": "Enhances the FACEIT experience and adds useful features.",
+  "name": "Repeek (formerly FACEIT Enhancer)",
+  "description": "Repeek enhances your experience on FACEIT and adds useful features",
   "version": "2.12.5",
   "manifest_version": 2,
-  "homepage_url": "https://faceit-enhancer.com/",
+  "homepage_url": "https://repeek.gg",
   "minimum_chrome_version": "51",
   "applications": {
     "gecko": {
@@ -29,6 +29,7 @@
       "js": ["content.js"]
     }
   ],
+  "web_accessible_resources": ["content.css"],
   "browser_action": {
     "default_icon": "icon48.png",
     "default_popup": "popup.html"

@@ -10,7 +10,7 @@ export default ({ href, faceit, steamCommunity, subreddit, ...props }) => {
   } else if (steamCommunity) {
     link = `http://steamcommunity.com/${steamCommunity}`
   } else if (subreddit) {
-    link = `https://www.reddit.com/r/FACEITEnhancer/${
+    link = `https://www.reddit.com/r/repeekgg/${
       typeof subreddit === 'string' ? subreddit : ''
     }`
   }

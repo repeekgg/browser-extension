@@ -17,7 +17,7 @@ export default createMuiTheme({
       secondary: '#999b9d'
     },
     background: {
-      default: '#1E2222'
+      default: '#171717'
     }
   },
   typography: {

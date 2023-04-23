@@ -93,7 +93,7 @@ export default async parent => {
           }}
         >
           <div style={{ background: '#1f1f1f', borderRadius: 4, padding: 8 }}>
-            Focus mode powered by FACEIT Enhancer
+            Focus mode powered by Repeek
           </div>
         </div>
       )

@@ -16,24 +16,23 @@ export default () => (
     />
     <ListItemLink
       primary="Website"
-      secondary="faceit-enhancer.com"
-      href="https://faceit-enhancer.com"
+      secondary="repeek.gg"
+      href="https://repeek.gg"
     />
     <ListItemLink
       primary="Source Code"
       secondary="GitHub"
-      href="https://github.com/faceit-enhancer/faceit-enhancer"
+      href="https://github.com/repeekgg/browser-extension"
     />
     <ListSubheader divider>Community & Social</ListSubheader>
-    <ListItemLink primary="Reddit" secondary="r/FACEITEnhancer" subreddit />
-    <ListItemLink primary="Twitter" href="https://twitter.com/timche_" />
-    <ListItemLink primary="Steam" steamCommunity="groups/FACEITEnhancer" />
-    <ListSubheader divider>Team</ListSubheader>
-    <ListItemLink primary="azn" secondary="Creator" faceit="azn" />
+    <ListItemLink primary="Reddit" secondary="r/repeekgg" subreddit />
     <ListItemLink
-      primary="poacher2k"
-      secondary="Developer"
-      faceit="poacher2k"
+      primary="Twitter"
+      href="https://twitter.com/repeekgg"
+      secondary="@repeekgg"
     />
+    <ListItemLink primary="Steam" steamCommunity="groups/repeekdotgg" />
+    <ListSubheader divider>Team</ListSubheader>
+    <ListItemLink primary="azn" secondary="Creator & Developer" faceit="azn" />
   </React.Fragment>
 )

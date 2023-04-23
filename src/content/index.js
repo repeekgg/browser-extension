@@ -29,6 +29,7 @@ import addSidebarMatchesElo from './features/add-sidebar-matches-elo'
 import applyMatchRoomFocusMode from './features/apply-match-room-focus-mode'
 import addPlayerProfileLinks from './features/add-player-profile-links'
 import addTeamPlayerInfo from './features/add-team-player-info'
+import repeekNotification from './features/repeek-notification'
 
 let checkedBan = false
 
@@ -189,6 +190,8 @@ function observeBody() {
   if (!extensionEnabled) {
     return
   }
+
+  repeekNotification()
 
   const bannedUser = await getBannedUser()
   checkedBan = true

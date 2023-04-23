@@ -1,10 +1,11 @@
 import React from 'react'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
-import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
+import LogoMark from './logo-mark'
+import LogoType from './logo-type'
 
 export default class extends React.Component {
   state = {
@@ -25,11 +26,24 @@ export default class extends React.Component {
     const { anchorEl } = this.state
 
     return (
-      <AppBar position="static" color="secondary">
-        <Toolbar>
-          <Typography variant="h6" color="primary" style={{ flex: 1 }}>
-            FACEIT Enhancer
-          </Typography>
+      <AppBar
+        position="static"
+        style={{
+          background: '#171717',
+          borderBottom: '1px solid #262626'
+        }}
+      >
+        <Toolbar style={{ paddingLeft: 16, paddingRight: 16 }}>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 12
+            }}
+          >
+            <LogoMark style={{ height: 40, width: 'auto' }} />
+            <LogoType style={{ height: 16, width: 'auto' }} />
+          </div>
           {showUpdateNotifications && (
             <React.Fragment>
               <Button

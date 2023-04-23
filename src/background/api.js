@@ -1,6 +1,6 @@
 import ky from 'ky'
 
-const BASE_URL = 'https://api.faceit-enhancer.com'
+const BASE_URL = 'https://api.repeek.gg'
 
 const api = ky.extend({ prefixUrl: BASE_URL })
 

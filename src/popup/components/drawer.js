@@ -43,8 +43,8 @@ const styles = () => ({
     position: 'relative',
     width: 190,
     height: '100%',
-    background: '#1A1A1D',
-    border: 'none'
+    background: '#171717',
+    borderRight: '1px solid #262626'
   }
 })
 

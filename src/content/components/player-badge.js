@@ -6,19 +6,19 @@ export default ({ level = 0, role, bgColor, textColor, onClick }) => {
 
   switch (role) {
     case 'Creator': {
-      description = 'Has created FACEIT Enhancer'
+      description = 'Has created Repeek'
       break
     }
     case 'Developer': {
-      description = 'Is part of FACEIT Enhancer developer team'
+      description = 'Is part of Repeek developer team'
       break
     }
     case 'Code Contributor': {
-      description = 'Has contributed to FACEIT Enhancer code'
+      description = 'Has contributed to Repeek code'
       break
     }
     default: {
-      description = `Has supported FACEIT Enhancer`
+      description = `Has supported Repeek`
     }
   }
 
@@ -41,7 +41,7 @@ export default ({ level = 0, role, bgColor, textColor, onClick }) => {
       title={description}
       onClick={onClick}
     >
-      FACEIT Enhancer{' '}
+      Repeek{' '}
       {role || `VIP ${level > 0 ? new Array(level).fill('★').join('') : ''}`}
     </span>
   )
