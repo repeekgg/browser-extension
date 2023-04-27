@@ -31,7 +31,7 @@ export default async () => {
       <div className="flex gap-2 mt-2">
         <a
           className={buttonLinkClassNames}
-          href="https://repeek.gg/blog/faceit-enhancer-becomes-repeek"
+          href="https://repeek.gg/blog/faceit-enhancer-becomes-repeek?utm_source=faceit&utm_medium=repeek&utm_campaign=repeek-announcement"
           title="Repeek blog"
           target="_blank"
           rel="noopener noreferrer"
