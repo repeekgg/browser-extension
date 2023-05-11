@@ -4,12 +4,14 @@ import storage from '../shared/storage'
 import changelogs from '../changelogs'
 import { UPDATE_NOTIFICATION_TYPES } from '../shared/settings'
 import {
+  IS_PRODUCTION,
   ACTION_NOTIFICATION,
   ACTION_FETCH_BAN,
   ACTION_FETCH_VIPS,
-  ACTION_FETCH_FACEIT_API
+  ACTION_FETCH_FACEIT_API,
+  ACTION_FETCH_SKIN_OF_THE_MATCH
 } from '../shared/constants'
-import { fetchBan, fetchVips } from './api'
+import api, { fetchBan, fetchVips, fetchConfig } from './api'
 import faceitApi from './faceit-api'
 
 browser.runtime.onMessage.addListener(async message => {
@@ -54,6 +56,32 @@ browser.runtime.onMessage.addListener(async message => {
       try {
         const { path, options } = message
         const response = await faceitApi(path, options)
+        return response
+      } catch (error) {
+        console.error(error)
+        return null
+      }
+    }
+    case ACTION_FETCH_SKIN_OF_THE_MATCH: {
+      try {
+        const { features } = await fetchConfig()
+
+        if (IS_PRODUCTION && !features.skinOfTheMatchApi) {
+          return null
+        }
+
+        const { steamIds } = message
+        const response = await api('v1/most_valuable_skin', {
+          searchParams: {
+            steamids: steamIds.join(',')
+          },
+          timeout: 20000
+        }).json()
+
+        if (IS_PRODUCTION && !features.skinOfTheMatch) {
+          return null
+        }
+
         return response
       } catch (error) {
         console.error(error)

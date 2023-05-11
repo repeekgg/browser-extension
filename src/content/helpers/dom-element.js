@@ -1,4 +1,4 @@
-export const ENHANCER_ATTRIBUTE = 'data-faceit-enhancer'
+export const ENHANCER_ATTRIBUTE = 'data-repeek'
 
 export const setFeatureAttribute = (featureName, element) =>
   element.setAttribute(`${ENHANCER_ATTRIBUTE}-${featureName}`, '')

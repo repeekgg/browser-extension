@@ -30,6 +30,7 @@ import applyMatchRoomFocusMode from './features/apply-match-room-focus-mode'
 import addPlayerProfileLinks from './features/add-player-profile-links'
 import addTeamPlayerInfo from './features/add-team-player-info'
 import repeekNotification from './features/repeek-notification'
+import addMatchRoomSkinOfTheMatch from './features/add-match-room-skin-of-the-match'
 
 let checkedBan = false
 
@@ -128,6 +129,7 @@ function observeBody() {
     if (mainContentElement) {
       if (pages.isRoomOverview() && matchRoomIsReady()) {
         addMatchRoomPlayerBadges(mainContentElement)
+        addMatchRoomSkinOfTheMatch(mainContentElement)
         runFeatureIf(
           'matchRoomAutoCopyServerData',
           copyMatchRoomCopyServerData,
