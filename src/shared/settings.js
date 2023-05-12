@@ -40,6 +40,7 @@ export const DEFAULTS = {
   matchRoomAutoVetoMapItems: MATCH_ROOM_VETO_MAP_ITEMS,
   matchRoomFocusMode: false,
   matchRoomLastConnectToServer: '',
+  matchRoomSkinOfTheMatch: true,
   modalCloseMatchVictory: false,
   modalCloseMatchDefeat: false,
   modalCloseGlobalRankingUpdate: false,

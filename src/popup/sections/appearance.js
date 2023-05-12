@@ -23,7 +23,7 @@ export default ({ getSwitchProps }) => (
     <ListItemLink
       primary="Show Player Stats"
       secondary={
-        'This feature got implemented natively by FACEIT and can be configured in your CS:GO game settings under "Show extended statistics in the matchroom" on FACEIT.'
+        'This feature got implemented natively by FACEIT and can be configured in your CS:GO game settings under "Show extended statistics in the matchroom" on FACEIT. Click here to open your CS:GO game settings on FACEIT.'
       }
       href="https://www.faceit.com/en/settings/games"
     />
@@ -31,6 +31,11 @@ export default ({ getSwitchProps }) => (
       primary="Focus Mode"
       secondary="Hide all players and focus only on the match like a pro. Players are shown when the match is finished. All other match room settings are ignored regardless of their setting."
       {...getSwitchProps('matchRoomFocusMode')}
+    />
+    <ListItemSwitch
+      primary="Skin Of The Match"
+      secondary="Show the most valuable skin of all players in the match."
+      {...getSwitchProps('matchRoomSkinOfTheMatch')}
     />
     <ListSubheader divider>Team page</ListSubheader>
     <ListItemSwitch

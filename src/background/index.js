@@ -75,10 +75,10 @@ browser.runtime.onMessage.addListener(async message => {
           searchParams: {
             steamids: steamIds.join(',')
           },
-          timeout: 20000
+          timeout: 30000
         }).json()
 
-        if (IS_PRODUCTION && !features.skinOfTheMatch) {
+        if (IS_PRODUCTION && !features.skinOfTheMatchWidget) {
           return null
         }
 

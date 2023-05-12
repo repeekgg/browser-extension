@@ -58,6 +58,13 @@ export default async parentElement => {
     return
   }
 
+  const skinNameMatch = skinOfTheMatch.skin.name.match(/(.+) \((.+)\)/)
+
+  if (skinNameMatch) {
+    skinOfTheMatch.skin.name = skinNameMatch[1]
+    skinOfTheMatch.skin.exterior = skinNameMatch[2]
+  }
+
   const skinOfTheMatchPlayer = players.find(
     ({ gameId }) => gameId === skinOfTheMatch.steam_id
   )
@@ -106,23 +113,28 @@ export default async parentElement => {
         animation: '0.5s ease-out fadeIn',
         position: 'relative',
         display: 'block',
-        marginTop: 32
+        marginTop: 32,
+        fontSize: 12
       }}
       className="font-sans bg-gradient-to-tl from-neutral-950 from-50% to-neutral-900 rounded-md border border-neutral-700"
     >
       <div
         style={{
-          fontSize: 14,
           padding: 8,
           position: 'relative',
           zIndex: 2
         }}
       >
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            marginBottom: 8
+          }}
+        >
           <div>
             <div
               style={{
-                fontSize: 12,
                 color: 'rgba(255,255,255,0.6)',
                 marginBottom: 2,
                 display: 'flex',
@@ -137,7 +149,7 @@ export default async parentElement => {
                 fill="none"
                 viewBox="0 0 107 128"
                 style={{
-                  height: 12,
+                  height: 14,
                   width: 'auto',
                   fill: 'rgba(255,255,255,0.6)'
                 }}
@@ -159,8 +171,7 @@ export default async parentElement => {
             </div>
             <div
               style={{
-                fontWeight: 'bold',
-                marginBottom: 8
+                fontWeight: 'bold'
               }}
             >
               Skin Of The Match
@@ -175,14 +186,13 @@ export default async parentElement => {
           >
             <div
               style={{
-                fontSize: 12,
                 color: 'rgba(255,255,255,0.6)',
                 marginBottom: 2
               }}
             >
               Powered by
             </div>
-            <div style={{ width: 100 }}>
+            <div style={{ width: 90 }}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -214,42 +224,63 @@ export default async parentElement => {
         <div
           style={{
             display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center'
+            gap: 16,
+            justifyContent: 'center'
           }}
         >
-          <img
-            src={`${skinOfTheMatch.skin.image}/256x128`}
-            style={{ width: '33%' }}
-          />
+          <div style={{ width: '30%' }}>
+            <img
+              src={`${skinOfTheMatch.skin.image}/256x128`}
+              style={{ width: '100%' }}
+            />
+          </div>
           <div
             style={{
               display: 'flex',
-              gap: 4,
-              marginBottom: 2,
-              color: 'rgba(255,255,255,0.6)',
-              alignItems: 'center'
+              justifyContent: 'center',
+              flexDirection: 'column',
+              gap: 2,
+              maxWidth: '50%'
             }}
           >
-            <img
-              src={skinOfTheMatchPlayer.avatar}
+            <div
               style={{
-                width: 16,
-                height: 16,
-                borderRadius: '50%',
-                background: '#303030'
+                display: 'flex',
+                gap: 4,
+                marginBottom: 2,
+                color: 'rgba(255,255,255,0.6)'
               }}
-            />
-            <div style={{ fontSize: 12 }}>{skinOfTheMatchPlayer.nickname}</div>
-          </div>
-          <div style={{ fontWeight: 'bold', textAlign: 'center' }}>
-            {skinOfTheMatch.skin.name}
-          </div>
-          <div style={{ textAlign: 'center' }}>
-            {new Intl.NumberFormat(locale, {
-              style: 'currency',
-              currency
-            }).format(skinOfTheMatch.skin.price[currency])}
+            >
+              {skinOfTheMatchPlayer.avatar ? (
+                <img
+                  src={skinOfTheMatchPlayer.avatar}
+                  style={{
+                    width: 14,
+                    height: 14,
+                    borderRadius: '50%'
+                  }}
+                />
+              ) : (
+                <div
+                  style={{
+                    width: 14,
+                    height: 14,
+                    borderRadius: '50%',
+                    background: '#303030'
+                  }}
+                />
+              )}
+              <div>{skinOfTheMatchPlayer.nickname}</div>
+            </div>
+            <div style={{ fontWeight: 'bold' }}>{skinOfTheMatch.skin.name}</div>
+            <div style={{ color: 'rgba(255,255,255,0.6)' }}>
+              {skinOfTheMatch.skin.exterior}
+              {skinOfTheMatch.skin.exterior && ' · '}
+              {new Intl.NumberFormat(locale, {
+                style: 'currency',
+                currency
+              }).format(skinOfTheMatch.skin.price[currency])}
+            </div>
           </div>
         </div>
       </div>
@@ -280,9 +311,9 @@ export default async parentElement => {
           bottom: 0,
           borderRadius: 4,
           background: skinOfTheMatch.skin.color
-            ? `radial-gradient(75% 75% at 50% 100%, ${hexToRgba(
+            ? `radial-gradient(66% 66% at 50% 100%, ${hexToRgba(
                 skinOfTheMatch.skin.color,
-                0.25
+                0.15
               )} 0%, transparent 100%)`
             : undefined,
           animation: skinOfTheMatch.skin.color
