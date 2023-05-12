@@ -106,14 +106,16 @@ function observeBody() {
       }
     }
 
-    const parasiteFuseModalElement = select('.FuseModalPortal')
+    const parasiteFuseModalElements = select.all('.FuseModalPortal')
 
-    if (parasiteFuseModalElement?.shadowRoot) {
-      runFeatureIf(
-        'matchQueueAutoReady',
-        clickModalMatchReady,
-        parasiteFuseModalElement.shadowRoot
-      )
+    for (const parasiteFuseModalElement of parasiteFuseModalElements) {
+      if (parasiteFuseModalElement?.shadowRoot) {
+        runFeatureIf(
+          'matchQueueAutoReady',
+          clickModalMatchReady,
+          parasiteFuseModalElement.shadowRoot
+        )
+      }
     }
 
     runFeatureIf('headerShowElo', addHeaderLevelProgress)
