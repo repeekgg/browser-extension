@@ -10,10 +10,17 @@ import {
 import { getRoomId } from '../helpers/match-room'
 import { getMatch } from '../helpers/faceit-api'
 import countryToCurrency from '../helpers/country-to-currency'
+import storage from '../../shared/storage'
 
 const FEATURE_ATTRIBUTE = 'skin-of-the-match'
 
 export default async parentElement => {
+  const { matchRoomSkinOfTheMatch } = await storage.getAll()
+
+  if (matchRoomSkinOfTheMatch === false) {
+    return
+  }
+
   const parasiteRootElement = select('#parasite-container', parentElement)
     .shadowRoot
 
