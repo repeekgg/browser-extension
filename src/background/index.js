@@ -70,7 +70,7 @@ browser.runtime.onMessage.addListener(async message => {
           return null
         }
 
-        const { steamIds } = message
+        const { steamIds, matchId } = message
         const response = await api('v1/most_valuable_skin', {
           searchParams: {
             steamids: steamIds.join(',')
@@ -81,6 +81,15 @@ browser.runtime.onMessage.addListener(async message => {
         if (IS_PRODUCTION && !features.skinOfTheMatchWidget) {
           return null
         }
+
+        api.post('v1/stats', {
+          json: {
+            eventName: 'Skin Of The Match Viewed',
+            data: {
+              matchId
+            }
+          }
+        })
 
         return response
       } catch (error) {

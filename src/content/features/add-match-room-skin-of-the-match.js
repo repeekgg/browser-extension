@@ -58,7 +58,8 @@ export default async parentElement => {
 
   const skinOfTheMatch = await browser.runtime.sendMessage({
     action: ACTION_FETCH_SKIN_OF_THE_MATCH,
-    steamIds: players.map(({ gameId }) => gameId)
+    steamIds: players.map(({ gameId }) => gameId),
+    matchId: match.id
   })
 
   if (!skinOfTheMatch) {
