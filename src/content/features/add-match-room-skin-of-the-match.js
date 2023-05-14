@@ -264,7 +264,7 @@ export default async parentElement => {
               justifyContent: 'center'
             }}
           >
-            <div style={{ width: '25%' }}>
+            <div style={{ width: '25%', display: 'flex' }}>
               <img
                 src={`${skinOfTheMatch.skin.image}/256x128`}
                 style={{ width: '100%' }}
