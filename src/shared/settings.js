@@ -2,7 +2,7 @@ export const UPDATE_NOTIFICATION_TYPES = ['tab', 'badge', 'disabled']
 
 export const MATCH_ROOM_VETO_LOCATION_ITEMS = {
   EU: ['UK', 'Sweden', 'France', 'Germany', 'Netherlands'],
-  US: ['Chicago', 'Dallas', 'Denver'],
+  US: ['Chicago', 'Dallas', 'Denver', 'LosAngeles', 'NewYork'],
   Oceania: ['Sydney', 'Melbourne']
 }
 
@@ -11,13 +11,13 @@ export const MATCH_ROOM_VETO_LOCATION_REGIONS = Object.keys(
 )
 
 export const MATCH_ROOM_VETO_MAP_ITEMS = [
-  'de_dust2',
-  'de_mirage',
-  'de_overpass',
-  'de_inferno',
-  'de_nuke',
   'de_ancient',
-  'de_train',
+  'de_anubis',
+  'de_dust2',
+  'de_inferno',
+  'de_mirage',
+  'de_nuke',
+  'de_overpass',
   'de_vertigo'
 ]
 
