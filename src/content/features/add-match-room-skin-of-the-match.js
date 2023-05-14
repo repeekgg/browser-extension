@@ -111,7 +111,7 @@ export default async parentElement => {
         .tooltip {
           display: none;
           position: absolute;
-          top: calc(100% + 4px);
+          bottom: calc(100% + 4px);
           left: 0;
           right: 0;
           opacity: 0;
@@ -204,7 +204,12 @@ export default async parentElement => {
                     d="M79.83 64.033v-10.31L60.276 63.9l1.876 16.873 4.794-10.992 12.882-5.748Z"
                   />
                 </svg>
-                Repeek
+                <div>
+                  Repeek{' '}
+                  <span style={{ fontSize: 10 }}>
+                    (formerly FACEIT Enhancer)
+                  </span>
+                </div>
               </div>
               <div
                 style={{
@@ -233,7 +238,7 @@ export default async parentElement => {
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 100 13"
-                style={{ height: 9 }}
+                style={{ height: 10 }}
               >
                 <g clipPath="url(#clip0_817_1952)">
                   <path
@@ -323,13 +328,6 @@ export default async parentElement => {
         </div>
       </a>
       <div className="tooltip">
-        <span
-          style={{
-            border: '8px solid transparent',
-            borderTop: 0,
-            borderBottom: '8px solid #0a0a0a'
-          }}
-        />
         <div
           style={{
             color: 'rgba(255,255,255,0.6)',
@@ -344,6 +342,13 @@ export default async parentElement => {
           This feature is provided by Repeek (formerly FACEIT Enhancer) and not
           affiliated with FACEIT.
         </div>
+        <span
+          style={{
+            border: '8px solid transparent',
+            borderTop: '8px solid #0a0a0a',
+            borderBottom: 0
+          }}
+        />
       </div>
     </div>
   )
