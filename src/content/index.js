@@ -31,6 +31,7 @@ import addPlayerProfileLinks from './features/add-player-profile-links'
 import addTeamPlayerInfo from './features/add-team-player-info'
 import repeekNotification from './features/repeek-notification'
 import addMatchRoomSkinOfTheMatch from './features/add-match-room-skin-of-the-match'
+import logger from './helpers/logger'
 
 let checkedBan = false
 
@@ -54,13 +55,7 @@ function observeBody() {
     const legacyModalElement = select('.modal-dialog')
 
     if (legacyModalElement) {
-      if (modals.isInviteToParty(legacyModalElement)) {
-        runFeatureIf(
-          'partyAutoAcceptInvite',
-          clickModalPartyInviteAccept,
-          legacyModalElement
-        )
-      } else if (modals.isMatchQueuing(legacyModalElement)) {
+      if (modals.isMatchQueuing(legacyModalElement)) {
         runFeatureIf(
           'matchQueueAutoReady',
           clickModalMatchQueuingContinue,
@@ -188,6 +183,55 @@ function observeBody() {
   observer.observe(document.body, { childList: true, subtree: true })
 }
 
+async function observeParasiteModalContainer() {
+  const loggerContext = 'observe-parasite-modal-container'
+
+  try {
+    let interval
+    let timeout
+
+    const parasiteModalContainerShadowRoot = await new Promise(
+      (resolve, reject) => {
+        interval = setInterval(() => {
+          const parasiteModalContainerElement = select(
+            '#parasite-modal-container'
+          )
+
+          if (parasiteModalContainerElement?.shadowRoot) {
+            clearInterval(interval)
+            clearTimeout(timeout)
+            resolve(parasiteModalContainerElement.shadowRoot)
+          }
+        }, 200)
+
+        timeout = setTimeout(() => {
+          clearInterval(interval)
+          reject(
+            new Error('Could not find parasite modal container shadow root')
+          )
+        }, 10000)
+      }
+    )
+
+    logger.debug(loggerContext, 'Found parasite modal container shadow root')
+
+    const observer = new MutationObserver(() => {
+      runFeatureIf(
+        'partyAutoAcceptInvite',
+        clickModalPartyInviteAccept,
+        parasiteModalContainerShadowRoot
+      )
+    })
+
+    observer.observe(parasiteModalContainerShadowRoot, {
+      childList: true,
+      subtree: true
+    })
+  } catch (error) {
+    logger.error(loggerContext, error)
+  }
+}
+
 ;(async () => {
   const { extensionEnabled } = await storage.getAll()
 
@@ -205,4 +249,5 @@ function observeBody() {
   }
 
   observeBody()
+  observeParasiteModalContainer()
 })()

@@ -5,6 +5,11 @@ const logger = {
     if (IS_PRODUCTION === false) {
       console.log(`[${context}] ${message}`)
     }
+  },
+  error(context, message) {
+    if (IS_PRODUCTION === false) {
+      console.error(`[${context}] ${message}`)
+    }
   }
 }
 
