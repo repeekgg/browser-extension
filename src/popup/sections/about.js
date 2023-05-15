@@ -1,5 +1,4 @@
 import React from 'react'
-import changelogs from '../../changelogs'
 import { version } from '../../manifest'
 import ListSubheader from '../components/list-subheader'
 import ListItemLink from '../components/list-item-link'
@@ -9,11 +8,7 @@ export const ABOUT = 'About'
 export default () => (
   <React.Fragment>
     <ListSubheader>About</ListSubheader>
-    <ListItemLink
-      primary="Version"
-      secondary={version}
-      href={changelogs[version]}
-    />
+    <ListItemLink primary="Version" secondary={version} />
     <ListItemLink
       primary="Website"
       secondary="repeek.gg"

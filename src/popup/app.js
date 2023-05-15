@@ -1,7 +1,5 @@
 import React from 'react'
-import browser from 'webextension-polyfill'
 import storage from '../shared/storage'
-import changelogs from '../changelogs'
 import { MATCH_ROOM_VETO_LOCATION_REGIONS } from '../shared/settings'
 import AppBar from './components/app-bar'
 import Drawer from './components/drawer'
@@ -27,25 +25,6 @@ export default class App extends React.Component {
       options: { ...options, ...storageOptions },
       loading: false
     }))
-  }
-
-  onClickUpdateNotification = async versionClicked => {
-    const updateNotifications = this.state.options.updateNotifications.filter(
-      updateVersion => updateVersion !== versionClicked
-    )
-
-    await storage.set({ updateNotifications })
-
-    browser.browserAction.setBadgeText({
-      text:
-        updateNotifications.length > 0
-          ? updateNotifications.length.toString()
-          : ''
-    })
-
-    browser.tabs.create({
-      url: changelogs[versionClicked]
-    })
   }
 
   getUpdateOption = option => newValue => {
@@ -96,15 +75,10 @@ export default class App extends React.Component {
 
   render() {
     const { options, loading } = this.state
-    const { updateNotificationType, updateNotifications } = options
 
     return (
       <React.Fragment>
-        <AppBar
-          showUpdateNotifications={updateNotificationType === 'badge'}
-          updateNotifications={updateNotifications}
-          onClickUpdateNotification={this.onClickUpdateNotification}
-        />
+        <AppBar />
         <Drawer
           loading={loading}
           items={{

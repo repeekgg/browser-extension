@@ -1,5 +1,3 @@
-export const UPDATE_NOTIFICATION_TYPES = ['tab', 'badge', 'disabled']
-
 export const MATCH_ROOM_VETO_LOCATION_ITEMS = {
   EU: ['UK', 'Sweden', 'France', 'Germany', 'Netherlands'],
   US: ['Chicago', 'Dallas', 'Denver', 'LosAngeles', 'NewYork'],
@@ -52,8 +50,6 @@ export const DEFAULTS = {
   notifyMatchRoomAutoConnectToServer: true,
   notifyMatchRoomAutoVetoLocations: true,
   notifyMatchRoomAutoVetoMaps: true,
-  updateNotificationType: 'tab',
-  updateNotifications: [],
   teamRosterPlayersInfo: true,
   repeekNotificationClosed: false
 }
