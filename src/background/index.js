@@ -2,12 +2,11 @@ import browser from 'webextension-polyfill'
 import {
   IS_PRODUCTION,
   ACTION_NOTIFICATION,
-  ACTION_FETCH_BAN,
   ACTION_FETCH_VIPS,
   ACTION_FETCH_FACEIT_API,
   ACTION_FETCH_SKIN_OF_THE_MATCH
 } from '../shared/constants'
-import api, { fetchBan, fetchVips, fetchConfig } from './api'
+import api, { fetchVips, fetchConfig } from './api'
 import faceitApi from './faceit-api'
 
 browser.runtime.onMessage.addListener(async message => {
@@ -27,16 +26,6 @@ browser.runtime.onMessage.addListener(async message => {
         iconUrl: 'icon.png'
       })
       break
-    }
-    case ACTION_FETCH_BAN: {
-      try {
-        const { guid } = message
-        const ban = await fetchBan(guid)
-        return ban
-      } catch (error) {
-        console.error(error)
-        return null
-      }
     }
     case ACTION_FETCH_VIPS: {
       try {

@@ -22,8 +22,6 @@ import addPlayerProfileMatchesDemo from './features/add-player-profile-matches-d
 import addPlayerProfileExtendedStats from './features/add-player-profile-extended-stats'
 import addPlayerProfileBadge from './features/add-player-profile-badge'
 import clickModalClose from './features/click-modal-close'
-import getBannedUser from './helpers/get-banned-user'
-import stopToxicity from './features/stop-toxicity'
 import clickModalInactiveCheck from './features/click-modal-inactive-check'
 import addSidebarMatchesElo from './features/add-sidebar-matches-elo'
 import applyMatchRoomFocusMode from './features/apply-match-room-focus-mode'
@@ -32,8 +30,6 @@ import addTeamPlayerInfo from './features/add-team-player-info'
 import repeekNotification from './features/repeek-notification'
 import addMatchRoomSkinOfTheMatch from './features/add-match-room-skin-of-the-match'
 import logger from './helpers/logger'
-
-let checkedBan = false
 
 const debouncedPlayerProfileStatsFeatures = debounce(async parentElement => {
   await runFeatureIf(
@@ -47,10 +43,6 @@ const debouncedPlayerProfileStatsFeatures = debounce(async parentElement => {
 }, 200)
 
 function observeBody() {
-  if (!checkedBan) {
-    return
-  }
-
   const observer = new MutationObserver(mutationList => {
     const legacyModalElement = select('.modal-dialog')
 
@@ -240,13 +232,6 @@ async function observeParasiteModalContainer() {
   }
 
   repeekNotification()
-
-  const bannedUser = await getBannedUser()
-  checkedBan = true
-  if (bannedUser) {
-    stopToxicity(bannedUser)
-    return
-  }
 
   observeBody()
   observeParasiteModalContainer()
