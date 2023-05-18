@@ -42,6 +42,8 @@ const debouncedPlayerProfileStatsFeatures = debounce(async parentElement => {
   await addPlayerProfileExtendedStats(parentElement)
 }, 200)
 
+const addHeaderLevelProgressDebounced = debounce(addHeaderLevelProgress, 300)
+
 function observeBody() {
   const observer = new MutationObserver(mutationList => {
     const legacyModalElement = select('.modal-dialog')
@@ -105,7 +107,7 @@ function observeBody() {
       }
     }
 
-    runFeatureIf('headerShowElo', addHeaderLevelProgress)
+    runFeatureIf('headerShowElo', addHeaderLevelProgressDebounced)
     runFeatureIf(
       'hideFaceitClientHasLandedBanner',
       hideFaceitClientHasLandedBanner
