@@ -9,7 +9,6 @@ import {
 } from '../helpers/dom-element'
 import { getRoomId } from '../helpers/match-room'
 import { getMatch } from '../helpers/faceit-api'
-import countryToCurrency from '../helpers/country-to-currency'
 import storage from '../../shared/storage'
 
 const FEATURE_ATTRIBUTE = 'skin-of-the-match'
@@ -80,15 +79,6 @@ export default async parentElement => {
   if (!skinOfTheMatchPlayer) {
     return
   }
-
-  const { locale } = new Intl.DateTimeFormat().resolvedOptions()
-  const currency =
-    countryToCurrency[
-      locale
-        .split('-')
-        .pop()
-        .toUpperCase()
-    ] || 'USD'
 
   await new Promise(resolve => {
     const image = new Image()
@@ -318,10 +308,10 @@ export default async parentElement => {
               <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: 10 }}>
                 {skinOfTheMatch.skin.exterior}
                 {skinOfTheMatch.skin.exterior && ' · '}
-                {new Intl.NumberFormat(locale, {
+                {new Intl.NumberFormat(undefined, {
                   style: 'currency',
-                  currency
-                }).format(skinOfTheMatch.skin.price[currency])}
+                  currency: skinOfTheMatch.skin.price.currency
+                }).format(skinOfTheMatch.skin.price.value)}
               </div>
             </div>
           </div>
