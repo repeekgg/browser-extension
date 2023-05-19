@@ -1,6 +1,5 @@
 import React from 'dom-chef'
 import select from 'select-dom'
-import hexToRgba from 'hex-to-rgba'
 import browser from 'webextension-polyfill'
 import { ACTION_FETCH_SKIN_OF_THE_MATCH } from '../../shared/constants'
 import {
@@ -113,13 +112,49 @@ export default async parentElement => {
           flex-direction: column;
           align-items: center;
           opacity: 1;
+        }
+
+        @keyframes spotlightFadeIn {
+          from {
+            opacity: 0;
+          }
+
+          to {
+            opacity: 0.075;
+          }
+        }
+
+        .spotlight {
+          opacity: 0.075;
+        }
+        
+        .spotlightTrigger:hover .spotlight {
+          opacity: 0.15;
+        }
+
+        @keyframes rotateSkin {
+          from {
+            transform: translate(0);
+          }
+
+          50% {
+            transform: translate(0, -2.5px);
+          }
+
+          100% {
+            transform: translate(0);
+          }
+        }
+        
+        .skinImageTrigger:hover .skinImage {
+          animation: 2.5s ease-in-out rotateSkin infinite;
         }`}
     </style>
   )
 
   const skinOfTheMatchElement = (
     <div
-      className="tooltipTrigger"
+      className="tooltipTrigger spotlightTrigger skinImageTrigger"
       style={{
         position: 'relative',
         fontFamily:
@@ -255,7 +290,7 @@ export default async parentElement => {
           <div
             style={{
               display: 'flex',
-              gap: 16,
+              gap: 12,
               justifyContent: 'center'
             }}
           >
@@ -263,6 +298,7 @@ export default async parentElement => {
               <img
                 src={`${skinOfTheMatch.skin.image}/256x128`}
                 style={{ width: '100%' }}
+                className="skinImage"
               />
             </div>
             <div
@@ -351,28 +387,25 @@ export default async parentElement => {
   skinOfTheMatchWrapper.shadowRoot.appendChild(skinOfTheMatchElement)
   infoColumnElement.appendChild(skinOfTheMatchWrapper)
 
-  setTimeout(() => {
-    skinOfTheMatchElement.childNodes[0].appendChild(
-      <div
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          background: skinOfTheMatch.skin.color
-            ? `radial-gradient(66% 66% at 50% 100%, ${hexToRgba(
-                skinOfTheMatch.skin.color,
-                0.075
-              )} 0%, transparent 100%)`
-            : undefined,
-          animation: skinOfTheMatch.skin.color
-            ? '500ms ease-out fadeIn'
-            : undefined,
-          zIndex: 1,
-          borderRadius: 6
-        }}
-      />
-    )
-  }, 250)
+  if (skinOfTheMatch.skin.color) {
+    setTimeout(() => {
+      skinOfTheMatchElement.childNodes[0].appendChild(
+        <div
+          className="spotlight"
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: `radial-gradient(66% 66% at 50% 100%, ${skinOfTheMatch.skin.color} 0%, transparent 100%)`,
+            animation: '500ms ease-out spotlightFadeIn',
+            zIndex: 1,
+            borderRadius: 6,
+            transition: 'opacity 250ms ease-out'
+          }}
+        />
+      )
+    }, 500)
+  }
 }
