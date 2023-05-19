@@ -12,33 +12,33 @@ const FEATURE_ATTRIBUTE = 'level-progress'
 const REFRESH_TIME = CACHE_TIME + 15000
 
 export default async () => {
-  const parasiteParentElement = select('parasite-main-header')
-
-  if (!parasiteParentElement) {
-    return
-  }
-
-  const parasiteRootElement = select(
-    '#__next',
-    parasiteParentElement.shadowRoot
+  const parasiteMainHeaderContainerElement = select(
+    'parasite-main-header-container'
   )
 
-  if (!parasiteRootElement) {
+  if (!parasiteMainHeaderContainerElement) {
     return
   }
 
-  const targetElement =
-    parasiteRootElement.firstElementChild?.lastElementChild?.lastElementChild
-      ?.firstElementChild?.firstElementChild?.lastElementChild
+  const parasiteNextElement = select(
+    '#__next',
+    parasiteMainHeaderContainerElement.shadowRoot
+  )
 
-  if (!targetElement) {
+  const rightHeaderElement =
+    parasiteNextElement?.firstChild?.firstChild?.lastChild?.lastChild
+      ?.firstChild?.firstChild
+
+  if (rightHeaderElement?.childNodes.length !== 3) {
     return
   }
 
-  if (hasFeatureAttribute(FEATURE_ATTRIBUTE, targetElement)) {
+  const rightHeaderTargetElement = rightHeaderElement.lastChild
+
+  if (hasFeatureAttribute(FEATURE_ATTRIBUTE, rightHeaderTargetElement)) {
     return
   }
-  setFeatureAttribute(FEATURE_ATTRIBUTE, targetElement)
+  setFeatureAttribute(FEATURE_ATTRIBUTE, rightHeaderTargetElement)
 
   let levelElement
 
@@ -146,7 +146,10 @@ export default async () => {
       </div>
     )
 
-    targetElement.insertBefore(levelElement, targetElement.children[2])
+    rightHeaderTargetElement.insertBefore(
+      levelElement,
+      rightHeaderTargetElement.children[2]
+    )
   }
 
   addLevelElement()
