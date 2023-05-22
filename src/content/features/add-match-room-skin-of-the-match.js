@@ -135,14 +135,17 @@ export default async parentElement => {
         @keyframes rotateSkin {
           from {
             transform: translate(0);
+            filter: saturate(1.25) brightness(1.25) drop-shadow(0px 4px 3px black);
           }
 
           50% {
-            transform: translate(0, -2.5px);
+            transform: translate(0, -4px);
+            filter: saturate(1.25) brightness(1.25) drop-shadow(0px 8px 7px black);
           }
 
           100% {
             transform: translate(0);
+            filter: saturate(1.25) brightness(1.25) drop-shadow(0px 4px 3px black);
           }
         }
         
@@ -290,14 +293,18 @@ export default async parentElement => {
           <div
             style={{
               display: 'flex',
-              gap: 12,
+              gap: 10,
               justifyContent: 'center'
             }}
           >
             <div style={{ width: '25%', display: 'flex' }}>
               <img
                 src={`${skinOfTheMatch.skin.image}/256x128`}
-                style={{ width: '100%' }}
+                style={{
+                  width: '100%',
+                  filter:
+                    'saturate(1.25) brightness(1.25) drop-shadow(0px 4px 3px black)'
+                }}
                 className="skinImage"
               />
             </div>
