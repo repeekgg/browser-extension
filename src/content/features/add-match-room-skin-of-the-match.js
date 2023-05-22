@@ -7,7 +7,7 @@ import {
   setFeatureAttribute
 } from '../helpers/dom-element'
 import { getRoomId } from '../helpers/match-room'
-import { getMatch } from '../helpers/faceit-api'
+import { getMatch, getSelf } from '../helpers/faceit-api'
 import storage from '../../shared/storage'
 
 const FEATURE_ATTRIBUTE = 'skin-of-the-match'
@@ -43,7 +43,7 @@ export default async parentElement => {
   setFeatureAttribute(FEATURE_ATTRIBUTE, infoColumnElement)
 
   const roomId = getRoomId()
-  const match = await getMatch(roomId)
+  const [match, self] = await Promise.all([getMatch(roomId), getSelf()])
 
   if (!match || match.game !== 'csgo') {
     return
@@ -78,6 +78,8 @@ export default async parentElement => {
   if (!skinOfTheMatchPlayer) {
     return
   }
+
+  const isSelfSkinOfTheMatchPlayer = skinOfTheMatchPlayer.id === self.id
 
   await new Promise(resolve => {
     const image = new Image()
@@ -343,7 +345,15 @@ export default async parentElement => {
                     }}
                   />
                 )}
-                <div>{skinOfTheMatchPlayer.nickname}</div>
+                <div
+                  style={{
+                    color: isSelfSkinOfTheMatchPlayer
+                      ? skinOfTheMatch.skin.color
+                      : undefined
+                  }}
+                >
+                  {skinOfTheMatchPlayer.nickname}
+                </div>
               </div>
               <div style={{ fontWeight: 'bold' }}>
                 {skinOfTheMatch.skin.name}
