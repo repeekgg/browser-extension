@@ -52,7 +52,7 @@ module.exports = (_env, argv) => {
               new TerserPlugin({
                 parallel: true,
                 terserOptions: {
-                  mangle: false,
+                  mangle: true,
                   output: {
                     beautify: true,
                     indent_level: 2 // eslint-disable-line camelcase
