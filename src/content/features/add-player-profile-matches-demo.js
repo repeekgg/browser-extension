@@ -14,35 +14,29 @@ import createButton from '../components/button'
 
 const FEATURE_ATTRIBUTE = 'matches-demo'
 
-export default async parentElement => {
-  const playerProfileParasiteElement = select(
-    'parasite-player-profile-content',
-    parentElement
+export default async () => {
+  const parasitePlayerProfileElement = select(
+    'parasite-player-profile-content > div'
   )
 
-  if (!playerProfileParasiteElement) {
-    return
-  }
-
-  const playerProfileElement = select(
-    '#__next > div',
-    playerProfileParasiteElement.shadowRoot
+  const matchElements = select.all(
+    'table > tbody > tr',
+    parasitePlayerProfileElement
   )
 
-  const matchElements = select.all('table > tbody > tr', playerProfileElement)
-
-  matchElements.shift()
+  const matchElementsHead = matchElements.shift()
 
   if (
-    !playerProfileElement ||
     matchElements.length === 0 ||
-    hasFeatureAttribute(FEATURE_ATTRIBUTE, playerProfileElement)
+    !matchElementsHead ||
+    !parasitePlayerProfileElement ||
+    parasitePlayerProfileElement.children.length < 13 ||
+    hasFeatureAttribute(FEATURE_ATTRIBUTE, parasitePlayerProfileElement)
   ) {
     return
   }
-  setFeatureAttribute(FEATURE_ATTRIBUTE, playerProfileElement)
 
-  const matchElementsHead = select('table > tbody > tr', playerProfileElement)
+  setFeatureAttribute(FEATURE_ATTRIBUTE, parasitePlayerProfileElement)
 
   matchElementsHead.append(
     <th
@@ -51,7 +45,7 @@ export default async parentElement => {
         padding: 8,
         marginBottom: 8,
         textAlign: 'left',
-        width: 130
+        width: 160
       }}
     >
       Demo
@@ -61,9 +55,9 @@ export default async parentElement => {
   const nickname = getPlayerProfileNickname()
   const player = await getPlayer(nickname)
   const game = getPlayerProfileStatsGame()
-  const matches = await getPlayerMatches(player.id, game)
+  const matches = await getPlayerMatches(player.id, game, 30)
 
-  matchElements.forEach(async (matchElement, index) => {
+  matchElements.forEach((matchElement, index) => {
     const matchId = matches[index].matchId
 
     if (!matchId) {
