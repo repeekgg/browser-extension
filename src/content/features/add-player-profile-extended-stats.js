@@ -15,28 +15,21 @@ import createHrElement from '../components/hr'
 
 const FEATURE_ATTRIBUTE = 'extended-stats'
 
-export default async parentElement => {
-  const playerProfileParasiteElement = select(
-    'parasite-player-profile-content',
-    parentElement
-  )
-
-  if (!playerProfileParasiteElement) {
-    return
-  }
-
-  const playerProfileElement = select(
-    '#__next > div',
-    playerProfileParasiteElement.shadowRoot
+export default async () => {
+  const parasitePlayerProfileElement = select(
+    'parasite-player-profile-content > div'
   )
 
   if (
-    !playerProfileElement ||
-    hasFeatureAttribute(FEATURE_ATTRIBUTE, playerProfileElement)
+    parasitePlayerProfileElement?.children.length !== 13 ||
+    hasFeatureAttribute(FEATURE_ATTRIBUTE, parasitePlayerProfileElement)
   ) {
     return
   }
-  setFeatureAttribute(FEATURE_ATTRIBUTE, playerProfileElement)
+
+  setFeatureAttribute(FEATURE_ATTRIBUTE, parasitePlayerProfileElement)
+
+  const eloAndLevelProgressElement = parasitePlayerProfileElement.children[4]
 
   const nickname = getPlayerProfileNickname()
   const game = getPlayerProfileStatsGame()
@@ -58,50 +51,52 @@ export default async parentElement => {
   } = playerStats
 
   const statsElement = (
-    <div style={{ marginBottom: 32 }}>
-      <div style={{ display: 'flex', gap: 16 }}>
-        <div style={{ flex: 2 }}>
-          {createSectionTitleElement({ title: 'Last 20 Matches Statistics' })}
-          <div style={{ display: 'flex', gap: 16 }}>
-            {createKeyStatElement({
-              key: 'Average Kills',
-              stat: averageKills
-            })}
-            {createKeyStatElement({
-              key: 'Average Headshots %',
-              stat: averageHeadshots
-            })}
-            {createKeyStatElement({
-              key: 'Average K/D',
-              stat: averageKDRatio
-            })}
-            {createKeyStatElement({
-              key: 'Average K/R',
-              stat: averageKRRatio
-            })}
+    <>
+      <div style={{ marginBottom: 32 }}>
+        <div style={{ display: 'flex', gap: 16 }}>
+          <div style={{ flex: 2 }}>
+            {createSectionTitleElement({ title: 'Last 20 Matches Statistics' })}
+            <div style={{ display: 'flex', gap: 16 }}>
+              {createKeyStatElement({
+                key: 'Average Kills',
+                stat: averageKills
+              })}
+              {createKeyStatElement({
+                key: 'Average Headshots %',
+                stat: averageHeadshots
+              })}
+              {createKeyStatElement({
+                key: 'Average K/D',
+                stat: averageKDRatio
+              })}
+              {createKeyStatElement({
+                key: 'Average K/R',
+                stat: averageKRRatio
+              })}
+            </div>
+            <div />
           </div>
-          <div />
-        </div>
-        <div style={{ flex: 1 }}>
-          {createSectionTitleElement({ title: 'Other Statistics' })}
-          <div style={{ display: 'flex', gap: 16 }}>
-            {createKeyStatElement({
-              key: 'AFK Times',
-              stat: afk
-            })}
-            {createKeyStatElement({
-              key: 'Leave Times',
-              stat: leaver
-            })}
+          <div style={{ flex: 1 }}>
+            {createSectionTitleElement({ title: 'Other Statistics' })}
+            <div style={{ display: 'flex', gap: 16 }}>
+              {createKeyStatElement({
+                key: 'AFK Times',
+                stat: afk
+              })}
+              {createKeyStatElement({
+                key: 'Leave Times',
+                stat: leaver
+              })}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+      {createHrElement()}
+    </>
   )
 
-  const gamePreferencesElement = playerProfileElement.children[6]
-
-  playerProfileElement.insertBefore(statsElement, gamePreferencesElement)
-
-  playerProfileElement.insertBefore(createHrElement(), gamePreferencesElement)
+  parasitePlayerProfileElement.insertBefore(
+    statsElement,
+    eloAndLevelProgressElement
+  )
 }
