@@ -1,31 +1,39 @@
 import select from 'select-dom'
 import { notifyIf } from '../helpers/user-settings'
-import logger from '../helpers/logger'
+import {
+  hasFeatureAttribute,
+  setFeatureAttribute
+} from '../helpers/dom-element'
 
 const FEATURE_NAME = 'click-modal-match-ready'
 
-export default parentElement => {
-  const matchCheckInModalElement = select(
-    'div[class*="MatchCheckInModal"]',
-    parentElement
-  )
+export default async () => {
+  const fuseModalPortalElements = select.all('.FuseModalPortal')
 
-  if (!matchCheckInModalElement) {
-    logger.debug(FEATURE_NAME, 'No check in modal found')
+  fuseModalPortalElements.forEach(fuseModalPortalElement => {
+    const matchCheckInModalElement = select(
+      'div[class*="MatchCheckInModal"]',
+      fuseModalPortalElement
+    )
 
-    return
-  }
+    if (
+      !matchCheckInModalElement ||
+      hasFeatureAttribute(FEATURE_NAME, fuseModalPortalElement)
+    ) {
+      return
+    }
 
-  const acceptButton = select('button:not([disabled])', parentElement)
+    setFeatureAttribute(FEATURE_NAME, fuseModalPortalElement)
 
-  if (acceptButton) {
-    acceptButton.click()
+    const acceptButton = select('button', fuseModalPortalElement)
 
-    logger.debug(FEATURE_NAME, 'Check in modal button clicked')
+    if (acceptButton) {
+      acceptButton.click()
 
-    notifyIf('notifyPartyAutoAcceptInvite', {
-      title: 'Match Readied Up',
-      message: 'A match has been readied up.'
-    })
-  }
+      notifyIf('notifyPartyAutoAcceptInvite', {
+        title: 'Match Readied Up',
+        message: 'A match has been readied up.'
+      })
+    }
+  })
 }
