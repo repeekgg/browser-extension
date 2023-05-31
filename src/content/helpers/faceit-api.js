@@ -104,7 +104,11 @@ export const getMatch = matchId =>
 
 export const getTeam = teamId => fetchApiMemoized(`/teams/v1/teams/${teamId}`)
 
-export const getSelf = () => fetchApiMemoized('/users/v1/sessions/me')
+export const getSelf = ({ memoized = true } = {}) => {
+  const fetchFn = memoized ? fetchApiMemoized : fetchApi
+
+  return fetchFn('/users/v1/sessions/me')
+}
 
 export const getHubQueue = async id =>
   (await fetchApi(`/queue/v1/queue/hub/${id}`))[0]
