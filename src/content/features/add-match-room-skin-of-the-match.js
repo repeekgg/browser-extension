@@ -12,20 +12,14 @@ import storage from '../../shared/storage'
 
 const FEATURE_ATTRIBUTE = 'skin-of-the-match'
 
-export default async parentElement => {
+export default async () => {
   const { matchRoomSkinOfTheMatch } = await storage.getAll()
 
   if (matchRoomSkinOfTheMatch === false) {
     return
   }
 
-  const parasiteRootElement = select('#parasite-container', parentElement)
-    .shadowRoot
-
-  const matchRoomOverviewElement = select(
-    '#MATCHROOM-OVERVIEW',
-    parasiteRootElement
-  )
+  const matchRoomOverviewElement = select('#MATCHROOM-OVERVIEW')
 
   if (!matchRoomOverviewElement) {
     return
@@ -80,12 +74,6 @@ export default async parentElement => {
   }
 
   const isSelfSkinOfTheMatchPlayer = skinOfTheMatchPlayer.id === self.id
-
-  await new Promise(resolve => {
-    const image = new Image()
-    image.src = `${skinOfTheMatch.skin.image}/256x128`
-    image.addEventListener('load', resolve)
-  })
 
   const styles = (
     <style>
