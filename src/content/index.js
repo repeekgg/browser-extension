@@ -11,7 +11,7 @@ import addMatchRoomPlayerBadges from './features/add-match-room-player-badges'
 import copyMatchRoomCopyServerData from './features/copy-match-room-copy-server-data'
 import clickMatchRoomConnectToServer from './features/click-match-room-connect-to-server'
 import addHeaderLevelProgress from './features/add-header-level-progress'
-import hideFaceitClientHasLandedBanner from './features/hide-faceit-client-has-landed-banner'
+import closeFaceitClientDownloadBanner from './features/close-faceit-client-download-banner'
 import addPlayerProfileMatchesElo from './features/add-player-profile-matches-elo'
 import clickMatchRoomVetoLocations from './features/click-match-room-veto-locations'
 import clickMatchRoomVetoMaps from './features/click-match-room-veto-maps'
@@ -95,7 +95,7 @@ function observeBody() {
     runFeatureIf('headerShowElo', addHeaderLevelProgress)
     runFeatureIf(
       'hideFaceitClientHasLandedBanner',
-      hideFaceitClientHasLandedBanner
+      closeFaceitClientDownloadBanner
     )
     runFeatureIf('partyAutoAcceptInvite', clickModalPartyInviteAccept)
 
