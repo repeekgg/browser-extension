@@ -48,28 +48,21 @@ const createSkillLevelElement = ({
   )
 }
 
-export default async parentElement => {
-  const playerProfileParasiteElement = select(
-    'parasite-player-profile-content',
-    parentElement
-  )
-
-  if (!playerProfileParasiteElement) {
-    return
-  }
-
-  const playerProfileElement = select(
-    '#__next > div',
-    playerProfileParasiteElement.shadowRoot
+export default async () => {
+  const parasitePlayerProfileElement = select(
+    'parasite-player-profile-content > div'
   )
 
   if (
-    !playerProfileElement ||
-    hasFeatureAttribute(FEATURE_ATTRIBUTE, playerProfileElement)
+    parasitePlayerProfileElement?.children.length !== 13 ||
+    hasFeatureAttribute(FEATURE_ATTRIBUTE, parasitePlayerProfileElement)
   ) {
     return
   }
-  setFeatureAttribute(FEATURE_ATTRIBUTE, playerProfileElement)
+
+  setFeatureAttribute(FEATURE_ATTRIBUTE, parasitePlayerProfileElement)
+
+  const mainStatsElement = parasitePlayerProfileElement.children[1]
 
   const nickname = getPlayerProfileNickname()
   const player = await getPlayer(nickname)
@@ -84,114 +77,116 @@ export default async parentElement => {
   const progressWidth = (faceitElo / 2000) * 100
 
   const levelProgressElement = (
-    <div style={{ marginBottom: 32 }}>
-      {createSectionTitleElement({ title: 'Level Progress' })}
-      <div style={{ display: 'flex', gap: 16, marginBottom: 16 }}>
-        {createKeyStatElement({
-          key: 'Level',
-          stat: createSkillLevelIconElement({ level: currentLevel })
-        })}
-        {createKeyStatElement({ key: 'Elo', stat: faceitElo })}
-        {currentLevel === 10
-          ? createKeyStatElement({ key: `Maximum level reached`, stat: '🔥' })
-          : createKeyStatElement({
-              key: `Points needed to reach level ${currentLevel + 1}`,
-              stat: LEVELS[currentLevel + 1][0] - faceitElo
-            })}
-      </div>
-      <div style={{ display: 'flex' }}>
-        <div style={{ width: '92%' }}>
-          <div style={{ display: 'flex' }}>
-            {createSkillLevelElement({
-              level: 1,
-              currentLevel,
-              eloFrom: 1,
-              eloTo: 800,
-              width: 40
-            })}
-            {createSkillLevelElement({
-              level: 2,
-              currentLevel,
-              eloFrom: 801,
-              eloTo: 950
-            })}
-            {createSkillLevelElement({
-              level: 3,
-              currentLevel,
-              eloFrom: 951,
-              eloTo: 1100
-            })}
-            {createSkillLevelElement({
-              level: 4,
-              currentLevel,
-              eloFrom: 1101,
-              eloTo: 1250
-            })}
-            {createSkillLevelElement({
-              level: 5,
-              currentLevel,
-              eloFrom: 1251,
-              eloTo: 1400
-            })}
-            {createSkillLevelElement({
-              level: 6,
-              currentLevel,
-              eloFrom: 1401,
-              eloTo: 1550
-            })}
-            {createSkillLevelElement({
-              level: 7,
-              currentLevel,
-              eloFrom: 1551,
-              eloTo: 1700
-            })}
-            {createSkillLevelElement({
-              level: 8,
-              currentLevel,
-              eloFrom: 1701,
-              eloTo: 1850
-            })}
-            {createSkillLevelElement({
-              level: 9,
-              currentLevel,
-              eloFrom: 1851,
-              eloTo: 2000
-            })}
+    <>
+      <div style={{ marginBottom: 32 }}>
+        {createSectionTitleElement({ title: 'Level Progress' })}
+        <div style={{ display: 'flex', gap: 16, marginBottom: 16 }}>
+          {createKeyStatElement({
+            key: 'Level',
+            stat: createSkillLevelIconElement({ level: currentLevel })
+          })}
+          {createKeyStatElement({ key: 'Elo', stat: faceitElo })}
+          {currentLevel === 10
+            ? createKeyStatElement({ key: `Maximum level reached`, stat: '🔥' })
+            : createKeyStatElement({
+                key: `Points needed to reach level ${currentLevel + 1}`,
+                stat: LEVELS[currentLevel + 1][0] - faceitElo
+              })}
+        </div>
+        <div style={{ display: 'flex' }}>
+          <div style={{ width: '92%' }}>
+            <div style={{ display: 'flex' }}>
+              {createSkillLevelElement({
+                level: 1,
+                currentLevel,
+                eloFrom: 1,
+                eloTo: 800,
+                width: 40
+              })}
+              {createSkillLevelElement({
+                level: 2,
+                currentLevel,
+                eloFrom: 801,
+                eloTo: 950
+              })}
+              {createSkillLevelElement({
+                level: 3,
+                currentLevel,
+                eloFrom: 951,
+                eloTo: 1100
+              })}
+              {createSkillLevelElement({
+                level: 4,
+                currentLevel,
+                eloFrom: 1101,
+                eloTo: 1250
+              })}
+              {createSkillLevelElement({
+                level: 5,
+                currentLevel,
+                eloFrom: 1251,
+                eloTo: 1400
+              })}
+              {createSkillLevelElement({
+                level: 6,
+                currentLevel,
+                eloFrom: 1401,
+                eloTo: 1550
+              })}
+              {createSkillLevelElement({
+                level: 7,
+                currentLevel,
+                eloFrom: 1551,
+                eloTo: 1700
+              })}
+              {createSkillLevelElement({
+                level: 8,
+                currentLevel,
+                eloFrom: 1701,
+                eloTo: 1850
+              })}
+              {createSkillLevelElement({
+                level: 9,
+                currentLevel,
+                eloFrom: 1851,
+                eloTo: 2000
+              })}
+            </div>
+            <div style={{ height: 4, background: '#323737' }}>
+              <div
+                style={{
+                  width: progressWidth > 100 ? '100%' : `${progressWidth}%`,
+                  height: '100%',
+                  background: '#f50'
+                }}
+              />
+            </div>
           </div>
-          <div style={{ height: 4, background: '#323737' }}>
+          <div style={{ width: '8%' }}>
+            {createSkillLevelElement({
+              level: 10,
+              currentLevel,
+              eloFrom: 2001,
+              eloTo: '∞',
+              width: 100,
+              borderRight: false
+            })}
             <div
               style={{
-                width: progressWidth > 100 ? '100%' : `${progressWidth}%`,
-                height: '100%',
-                background: '#f50'
+                width: '100%',
+                height: 4,
+                background: progressWidth > 100 ? '#f50' : '#323737'
               }}
             />
           </div>
         </div>
-        <div style={{ width: '8%' }}>
-          {createSkillLevelElement({
-            level: 10,
-            currentLevel,
-            eloFrom: 2001,
-            eloTo: '∞',
-            width: 100,
-            borderRight: false
-          })}
-          <div
-            style={{
-              width: '100%',
-              height: 4,
-              background: progressWidth > 100 ? '#f50' : '#323737'
-            }}
-          />
-        </div>
       </div>
-    </div>
+      {createHrElement()}
+    </>
   )
 
-  const gameSelectorElement = playerProfileElement.children[1]
-
-  playerProfileElement.insertBefore(levelProgressElement, gameSelectorElement)
-
-  playerProfileElement.insertBefore(createHrElement(), gameSelectorElement)
+  parasitePlayerProfileElement.insertBefore(
+    levelProgressElement,
+    mainStatsElement
+  )
 }

@@ -1,5 +1,4 @@
 import select from 'select-dom'
-import debounce from 'lodash/debounce'
 import storage from '../shared/storage'
 import * as modals from './helpers/modals'
 import * as pages from './helpers/pages'
@@ -29,16 +28,12 @@ import addTeamPlayerInfo from './features/add-team-player-info'
 import repeekNotification from './features/repeek-notification'
 import addMatchRoomSkinOfTheMatch from './features/add-match-room-skin-of-the-match'
 
-const debouncedPlayerProfileStatsFeatures = debounce(async parentElement => {
-  await runFeatureIf(
-    'playerProfileLevelProgress',
-    addPlayerProfileLevelProgress,
-    parentElement
-  )
-  await addPlayerProfileMatchesDemo(parentElement)
-  await addPlayerProfileMatchesElo(parentElement)
-  await addPlayerProfileExtendedStats(parentElement)
-}, 200)
+function playerProfileStatsFeatures() {
+  runFeatureIf('playerProfileLevelProgress', addPlayerProfileLevelProgress)
+  addPlayerProfileMatchesDemo()
+  addPlayerProfileMatchesElo()
+  addPlayerProfileExtendedStats()
+}
 
 function observeBody() {
   const observer = new MutationObserver(() => {
@@ -86,7 +81,7 @@ function observeBody() {
         addPlayerProfileLinks(legacyModalElement)
 
         if (modals.isPlayerProfileStats()) {
-          debouncedPlayerProfileStatsFeatures(legacyModalElement)
+          playerProfileStatsFeatures(legacyModalElement)
         }
       }
     }
@@ -137,7 +132,7 @@ function observeBody() {
         addPlayerProfileLinks(mainContentElement)
 
         if (pages.isPlayerProfileStats()) {
-          debouncedPlayerProfileStatsFeatures(mainContentElement)
+          playerProfileStatsFeatures(mainContentElement)
         }
       } else if (pages.isTeamsOverview()) {
         runFeatureIf(
