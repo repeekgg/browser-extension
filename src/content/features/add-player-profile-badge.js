@@ -13,14 +13,14 @@ import { getPlayer } from '../helpers/faceit-api'
 
 const FEATURE_ATTRIBUTE = 'profile-badge'
 
-export default async parentElement => {
-  const playerBanner = select('parasite-player-banner', parentElement)
+export default async () => {
+  const playerBanner = select('parasite-player-banner')
 
-  if (!playerBanner || !playerBanner.shadowRoot) {
+  if (!playerBanner) {
     return
   }
 
-  const playerNameElement = select('h5[size="5"]', playerBanner.shadowRoot)
+  const playerNameElement = select('h5[size="5"]', playerBanner)
 
   if (!playerNameElement || !playerNameElement.parentElement) {
     return
