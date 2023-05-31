@@ -8,14 +8,14 @@ import { mapTotalStatsMemoized, mapAverageStatsMemoized } from './stats'
 
 export const CACHE_TIME = 600000
 
-async function fetchApi(path) {
+async function fetchApi(path, fetchOptions = {}, camelcaseKeysOptions = {}) {
   if (typeof path !== 'string') {
     throw new TypeError(`Expected \`path\` to be a string, got ${typeof path}`)
   }
 
   try {
     const token = Cookies.get('t') || localStorage.getItem('token')
-    const options = { headers: {} }
+    const options = { headers: {}, ...fetchOptions }
 
     if (token) {
       options.headers.Authorization = `Bearer ${token}`
@@ -40,7 +40,10 @@ async function fetchApi(path) {
       throw new Error(response)
     }
 
-    return camelcaseKeys(payload || response, { deep: true })
+    return camelcaseKeys(payload || response, {
+      deep: true,
+      ...camelcaseKeysOptions
+    })
   } catch (err) {
     console.error(err)
 
@@ -128,3 +131,13 @@ export const getPlayerHistory = async (userId, page = 0) => {
 
 export const getMatchmakingQueue = queueId =>
   fetchApiMemoized(`/queue/v1/queue/matchmaking/${queueId}`)
+
+export const getPlayerSummaries = userIds =>
+  fetchApi(
+    '/user-summary/v2/list',
+    {
+      method: 'POST',
+      body: JSON.stringify({ ids: userIds })
+    },
+    { exclude: userIds }
+  )
