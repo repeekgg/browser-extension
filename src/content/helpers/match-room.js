@@ -19,20 +19,6 @@ export const MATCH_TEAM_V1 = 'match-team'
 export const MATCH_TEAM_V2 = 'match-team-v2'
 export const MEMBERS_ATTRIBUTE = '[members]:not([members=""])'
 
-export const matchRoomIsReady = () => {
-  const parasiteContainer = select('#parasite-container')
-
-  if (!parasiteContainer) {
-    return false
-  }
-
-  return (
-    select.exists(`[name="roster1"]`, parasiteContainer.shadowRoot) &&
-    select.exists(`[name="roster2"]`, parasiteContainer.shadowRoot) &&
-    select.exists(`[name="info"]`, parasiteContainer.shadowRoot)
-  )
-}
-
 export const getTeamElements = parent => {
   let teamElements = select.all(MATCH_TEAM_V1, parent)
   let isTeamV1Element = true

@@ -4,7 +4,6 @@ import storage from '../shared/storage'
 import * as modals from './helpers/modals'
 import * as pages from './helpers/pages'
 import { runFeatureIf } from './helpers/user-settings'
-import { matchRoomIsReady } from './helpers/match-room'
 import clickModalPartyInviteAccept from './features/click-modal-party-invite-accept'
 import clickModalMatchQueuingContinue from './features/click-modal-match-queuing-continue'
 import clickModalMatchReady from './features/click-modal-match-ready'
@@ -29,7 +28,6 @@ import addPlayerProfileLinks from './features/add-player-profile-links'
 import addTeamPlayerInfo from './features/add-team-player-info'
 import repeekNotification from './features/repeek-notification'
 import addMatchRoomSkinOfTheMatch from './features/add-match-room-skin-of-the-match'
-import logger from './helpers/logger'
 
 const debouncedPlayerProfileStatsFeatures = debounce(async parentElement => {
   await runFeatureIf(
@@ -43,7 +41,7 @@ const debouncedPlayerProfileStatsFeatures = debounce(async parentElement => {
 }, 200)
 
 function observeBody() {
-  const observer = new MutationObserver(mutationList => {
+  const observer = new MutationObserver(() => {
     const legacyModalElement = select('.modal-dialog')
 
     if (legacyModalElement) {
@@ -93,30 +91,20 @@ function observeBody() {
       }
     }
 
-    const parasiteFuseModalElements = select.all('.FuseModalPortal')
-
-    for (const parasiteFuseModalElement of parasiteFuseModalElements) {
-      if (parasiteFuseModalElement?.shadowRoot) {
-        runFeatureIf(
-          'matchQueueAutoReady',
-          clickModalMatchReady,
-          parasiteFuseModalElement.shadowRoot
-        )
-      }
-    }
-
+    runFeatureIf('matchQueueAutoReady', clickModalMatchReady)
     runFeatureIf('headerShowElo', addHeaderLevelProgress)
     runFeatureIf(
       'hideFaceitClientHasLandedBanner',
       hideFaceitClientHasLandedBanner
     )
+    runFeatureIf('partyAutoAcceptInvite', clickModalPartyInviteAccept)
 
     addSidebarMatchesElo()
 
     const mainContentElement = select('#main-content')
 
     if (mainContentElement) {
-      if (pages.isRoomOverview() && matchRoomIsReady()) {
+      if (pages.isRoomOverview()) {
         addMatchRoomPlayerBadges(mainContentElement)
         addMatchRoomSkinOfTheMatch(mainContentElement)
         runFeatureIf(
@@ -159,72 +147,12 @@ function observeBody() {
         )
       }
     }
-
-    for (const mutation of mutationList) {
-      for (const addedNode of mutation.addedNodes) {
-        if (addedNode.shadowRoot) {
-          observer.observe(addedNode.shadowRoot, {
-            childList: true,
-            subtree: true
-          })
-        }
-      }
-    }
   })
 
   observer.observe(document.body, { childList: true, subtree: true })
 }
 
-async function observeParasiteModalContainer() {
-  const loggerContext = 'observe-parasite-modal-container'
-
-  try {
-    let interval
-    let timeout
-
-    const parasiteModalContainerShadowRoot = await new Promise(
-      (resolve, reject) => {
-        interval = setInterval(() => {
-          const parasiteModalContainerElement = select(
-            '#parasite-modal-container'
-          )
-
-          if (parasiteModalContainerElement?.shadowRoot) {
-            clearInterval(interval)
-            clearTimeout(timeout)
-            resolve(parasiteModalContainerElement.shadowRoot)
-          }
-        }, 200)
-
-        timeout = setTimeout(() => {
-          clearInterval(interval)
-          reject(
-            new Error('Could not find parasite modal container shadow root')
-          )
-        }, 10000)
-      }
-    )
-
-    logger.debug(loggerContext, 'Found parasite modal container shadow root')
-
-    const observer = new MutationObserver(() => {
-      runFeatureIf(
-        'partyAutoAcceptInvite',
-        clickModalPartyInviteAccept,
-        parasiteModalContainerShadowRoot
-      )
-    })
-
-    observer.observe(parasiteModalContainerShadowRoot, {
-      childList: true,
-      subtree: true
-    })
-  } catch (error) {
-    logger.error(loggerContext, error)
-  }
-}
-
-;(async () => {
+async function initContent() {
   const { extensionEnabled } = await storage.getAll()
 
   if (!extensionEnabled) {
@@ -234,5 +162,6 @@ async function observeParasiteModalContainer() {
   repeekNotification()
 
   observeBody()
-  observeParasiteModalContainer()
-})()
+}
+
+initContent()
