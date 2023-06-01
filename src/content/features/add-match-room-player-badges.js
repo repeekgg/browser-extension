@@ -1,13 +1,5 @@
-import React from 'dom-chef'
 import select from 'select-dom'
-import {
-  getTeamElements,
-  getRoomId,
-  getFactionDetails,
-  getTeamMemberElements,
-  getNicknameElement,
-  mapMatchNicknamesToPlayersMemoized
-} from '../helpers/match-room'
+import { getRoomId } from '../helpers/match-room'
 import {
   hasFeatureAttribute,
   setFeatureAttribute
@@ -16,67 +8,73 @@ import { getMatch } from '../helpers/faceit-api'
 import { getPlayerBadges } from '../helpers/player-badges'
 import createFeaturedPlayerBadgeElement from '../components/player-badge'
 
-const FEATURE_ATTRIBUTE = 'player-badge'
+const FEATURE_ATTRIBUTE = 'match-room-player-badges'
 
-const playerBadges = {}
+export default async () => {
+  const matchRoomContentElement = select(
+    '#MATCHROOM-OVERVIEW > div:nth-child(3)'
+  )
 
-export default async parent => {
-  const { teamElements } = getTeamElements(parent)
+  if (
+    !matchRoomContentElement ||
+    hasFeatureAttribute(FEATURE_ATTRIBUTE, matchRoomContentElement)
+  ) {
+    return
+  }
+
+  setFeatureAttribute(FEATURE_ATTRIBUTE, matchRoomContentElement)
 
   const roomId = getRoomId()
   const match = await getMatch(roomId)
 
-  if (!match) {
-    return
-  }
+  const matchPlayers = [
+    ...match.teams.faction1.roster,
+    ...match.teams.faction2.roster
+  ]
 
-  const nicknamesToPlayers = mapMatchNicknamesToPlayersMemoized(match)
+  const matchPlayerBadges = await getPlayerBadges(
+    matchPlayers.map(matchPlayer => matchPlayer.id)
+  )
 
-  if (!playerBadges[roomId]) {
-    playerBadges[roomId] = getPlayerBadges(
-      Object.values(nicknamesToPlayers).map(({ id }) => id)
+  const matchPlayerElements = ['roster1', 'roster2']
+    .reduce(
+      (acc, roster) => [
+        ...acc,
+        ...select.all(
+          `div[name="${roster}"] div > div:first-child > div > div > div[size="40"]`,
+          matchRoomContentElement
+        )
+      ],
+      []
     )
-  }
+    .map(
+      avatarElement =>
+        avatarElement.parentElement.parentElement.parentElement.parentElement
+    )
 
-  playerBadges[roomId] = await playerBadges[roomId]
+  matchPlayerElements.forEach(matchPlayerElement => {
+    const matchPlayerNicknameElement = select(
+      'div:nth-child(2) > div > div',
+      matchPlayerElement
+    )
 
-  teamElements.forEach(async teamElement => {
-    const factionDetails = getFactionDetails(teamElement)
+    const playerBadge =
+      matchPlayerBadges[
+        matchPlayers.find(
+          matchPlayer =>
+            matchPlayer.nickname === matchPlayerNicknameElement.innerText
+        )?.id
+      ]
 
-    if (!factionDetails) {
-      return
+    if (playerBadge) {
+      const playerBadgeElement = createFeaturedPlayerBadgeElement(playerBadge)
+
+      const matchPlayerInfoElement = select(
+        'div:nth-child(2) > div',
+        matchPlayerElement
+      )
+
+      matchPlayerInfoElement.prepend(playerBadgeElement)
     }
-
-    const memberElements = getTeamMemberElements(teamElement)
-
-    memberElements.forEach(async memberElement => {
-      if (hasFeatureAttribute(FEATURE_ATTRIBUTE, memberElement)) {
-        return
-      }
-      setFeatureAttribute(FEATURE_ATTRIBUTE, memberElement)
-
-      const nicknameElement = getNicknameElement(memberElement)
-      const nickname = nicknameElement.textContent
-      const player = nicknamesToPlayers[nickname]
-
-      const playerBadge = playerBadges[roomId][player.id]
-
-      if (!playerBadge) {
-        return
-      }
-
-      const featuredPlayerBadgeElement = createFeaturedPlayerBadgeElement(
-        playerBadge
-      )
-
-      const memberDetailsElement = select(
-        '.match-team-member__details__name',
-        memberElement
-      )
-      memberDetailsElement.insertAdjacentElement(
-        'afterbegin',
-        <div style={{ 'margin-top': 5 }}>{featuredPlayerBadgeElement}</div>
-      )
-    })
   })
 }
