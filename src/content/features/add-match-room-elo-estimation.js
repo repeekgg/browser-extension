@@ -73,45 +73,93 @@ export default async () => {
     predictRatingChange(match.teams[faction].stats.winProbability)
   )
 
-  const faction1HeaderElement = matchFactionsHeaderElement.firstChild.firstChild
-  const faction2HeaderElement = matchFactionsHeaderElement.lastChild.firstChild
-
   const faction1AverageEloDiff = faction1AverageElo - faction2AverageElo
   const faction2AverageEloDiff = faction2AverageElo - faction1AverageElo
 
-  const factionEloEstimations = [
-    [
-      faction1HeaderElement,
-      faction1AverageElo,
-      faction1AverageEloDiff,
-      faction1PredictedEloChange
-    ],
-    [
-      faction2HeaderElement,
-      faction2AverageElo,
-      faction2AverageEloDiff,
-      faction2PredictedEloChange
-    ]
-  ]
+  const addFactionEloEstimations = () => {
+    const faction1HeaderElement =
+      select(
+        'div:nth-child(1) > a > div:nth-child(1)',
+        matchFactionsHeaderElement
+      ) ||
+      select('div:nth-child(1) > div:nth-child(1)', matchFactionsHeaderElement)
 
-  factionEloEstimations.forEach(
-    ([
-      factionHeaderElement,
-      factionAverageElo,
-      factionAverageEloDiff,
-      factionPredictedEloChange
-    ]) => {
-      factionHeaderElement.appendChild(
-        <div
-          style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)', marginTop: 2 }}
-        >
-          Avg. Elo: {factionAverageElo} / Diff:{' '}
-          {`${factionAverageEloDiff > 0 ? '+' : ''}${factionAverageEloDiff}`}
-          <br />
-          <span>Est. Gain: +{factionPredictedEloChange.gain}</span> /{' '}
-          <span>Est. Loss: {factionPredictedEloChange.loss}</span>
-        </div>
-      )
+    const faction2HeaderElement =
+      select(
+        'div:nth-child(3) > a > div:nth-child(1)',
+        matchFactionsHeaderElement
+      ) ||
+      select('div:nth-child(3) > div:nth-child(1)', matchFactionsHeaderElement)
+
+    const factionEloEstimations = [
+      [
+        faction1HeaderElement,
+        faction1AverageElo,
+        faction1AverageEloDiff,
+        faction1PredictedEloChange
+      ],
+      [
+        faction2HeaderElement,
+        faction2AverageElo,
+        faction2AverageEloDiff,
+        faction2PredictedEloChange
+      ]
+    ]
+
+    factionEloEstimations.forEach(
+      (
+        [
+          factionHeaderElement,
+          factionAverageElo,
+          factionAverageEloDiff,
+          factionPredictedEloChange
+        ],
+        index
+      ) => {
+        const factionFeatureAttribute = `${FEATURE_ATTRIBUTE}-faction${index +
+          1}`
+
+        if (
+          !factionHeaderElement ||
+          hasFeatureAttribute(factionFeatureAttribute, factionHeaderElement)
+        ) {
+          return
+        }
+
+        setFeatureAttribute(factionFeatureAttribute, factionHeaderElement)
+
+        factionHeaderElement.appendChild(
+          <div
+            style={{
+              fontSize: 12,
+              color: 'rgba(255,255,255,0.6)',
+              marginTop: 2,
+              lineHeight: '14px'
+            }}
+          >
+            Avg. Elo: {factionAverageElo} / Diff:{' '}
+            {`${factionAverageEloDiff > 0 ? '+' : ''}${factionAverageEloDiff}`}
+            <br />
+            <span>Est. Gain: +{factionPredictedEloChange.gain}</span> /{' '}
+            <span>Est. Loss: {factionPredictedEloChange.loss}</span>
+          </div>
+        )
+      }
+    )
+  }
+
+  addFactionEloEstimations()
+
+  const observer = new MutationObserver(() => {
+    try {
+      addFactionEloEstimations()
+    } catch (error) {
+      observer.disconnect()
     }
-  )
+  })
+
+  observer.observe(matchFactionsHeaderElement, {
+    childList: true,
+    subtree: true
+  })
 }
