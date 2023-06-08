@@ -55,10 +55,13 @@ browser.runtime.onMessage.addListener(async message => {
           return null
         }
 
-        const { steamIds, matchId } = message
+        const { steamIds, matchId, organizerId } = message
         const response = await api('v1/skin_of_the_match', {
           searchParams: {
-            steam_ids: steamIds.join(',') // eslint-disable-line camelcase
+            /* eslint-disable camelcase */
+            steam_ids: steamIds.join(','),
+            organizer_id: organizerId
+            /* eslint-enable camelcase */
           },
           timeout: 30000
         }).json()
@@ -72,7 +75,9 @@ browser.runtime.onMessage.addListener(async message => {
             json: {
               eventName: 'Skin Of The Match Viewed',
               data: {
-                matchId
+                /* eslint-disable camelcase */
+                match_id: matchId
+                /* eslint-enable camelcase */
               }
             }
           })
