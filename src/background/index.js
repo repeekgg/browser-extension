@@ -56,13 +56,21 @@ browser.runtime.onMessage.addListener(async message => {
         }
 
         const { steamIds, matchId, organizerId } = message
+
+        const searchParams = {
+          /* eslint-disable camelcase */
+          steam_ids: steamIds.join(',')
+          /* eslint-enable camelcase */
+        }
+
+        if (typeof organizerId === 'string') {
+          /* eslint-disable camelcase */
+          searchParams.organizer_id = organizerId
+          /* eslint-enable camelcase */
+        }
+
         const response = await api('v1/skin_of_the_match', {
-          searchParams: {
-            /* eslint-disable camelcase */
-            steam_ids: steamIds.join(','),
-            organizer_id: organizerId
-            /* eslint-enable camelcase */
-          },
+          searchParams,
           timeout: 30000
         }).json()
 
