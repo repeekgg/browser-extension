@@ -12,7 +12,7 @@ const FEATURE_ATTRIBUTE = 'matches-elo'
 
 export default async () => {
   const matchHistoryElement = select(
-    'parasite-activity-tracker .infinite-scroll-component'
+    'parasite-root-container .infinite-scroll-component'
   )
 
   if (
@@ -23,7 +23,7 @@ export default async () => {
   }
   setFeatureAttribute(FEATURE_ATTRIBUTE, matchHistoryElement)
 
-  const matchLinkElements = select.all('a', matchHistoryElement)
+  const matchLinkElements = select.all('a[href*="/room/"]', matchHistoryElement)
 
   if (matchLinkElements.length === 0) {
     return
