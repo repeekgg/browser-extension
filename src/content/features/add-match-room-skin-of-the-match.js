@@ -81,7 +81,8 @@ export default async () => {
   const statsEventData = {
     /* eslint-disable camelcase */
     match_id: match.id,
-    organizer_id: match.organizerId
+    organizer_id: match.organizerId,
+    skin: skinOfTheMatch.skin.skinport_url.split('/').pop()
     /* eslint-enable camelcase */
   }
 
