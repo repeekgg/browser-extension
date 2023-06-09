@@ -1,7 +1,10 @@
 import React from 'dom-chef'
 import select from 'select-dom'
 import browser from 'webextension-polyfill'
-import { ACTION_FETCH_SKIN_OF_THE_MATCH } from '../../shared/constants'
+import {
+  ACTION_FETCH_SKIN_OF_THE_MATCH,
+  ACTION_POST_STATS_EVENT
+} from '../../shared/constants'
 import {
   hasFeatureAttribute,
   setFeatureAttribute
@@ -51,7 +54,6 @@ export default async () => {
   const skinOfTheMatch = await browser.runtime.sendMessage({
     action: ACTION_FETCH_SKIN_OF_THE_MATCH,
     steamIds: players.map(({ gameId }) => gameId),
-    matchId: match.id,
     organizerId: match.organizerId
   })
 
@@ -75,6 +77,13 @@ export default async () => {
   }
 
   const isSelfSkinOfTheMatchPlayer = skinOfTheMatchPlayer.id === self.id
+
+  const statsEventData = {
+    /* eslint-disable camelcase */
+    match_id: match.id,
+    organizer_id: match.organizerId
+    /* eslint-enable camelcase */
+  }
 
   const styles = (
     <style>
@@ -172,6 +181,13 @@ export default async () => {
           border: '1px solid rgb(64 64 64)',
           backgroundImage:
             'linear-gradient(to left top, rgb(10, 10, 10) 50%, rgb(23, 23, 23))'
+        }}
+        onClick={() => {
+          browser.runtime.sendMessage({
+            action: ACTION_POST_STATS_EVENT,
+            eventName: 'skin_of_the_match_clicked',
+            data: statsEventData
+          })
         }}
       >
         <div
@@ -414,4 +430,10 @@ export default async () => {
       )
     }, 500)
   }
+
+  browser.runtime.sendMessage({
+    action: ACTION_POST_STATS_EVENT,
+    eventName: 'skin_of_the_match_viewed',
+    data: statsEventData
+  })
 }

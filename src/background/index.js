@@ -4,7 +4,8 @@ import {
   ACTION_NOTIFICATION,
   ACTION_FETCH_VIPS,
   ACTION_FETCH_FACEIT_API,
-  ACTION_FETCH_SKIN_OF_THE_MATCH
+  ACTION_FETCH_SKIN_OF_THE_MATCH,
+  ACTION_POST_STATS_EVENT
 } from '../shared/constants'
 import api, { fetchVips, fetchConfig } from './api'
 import faceitApi from './faceit-api'
@@ -55,7 +56,7 @@ browser.runtime.onMessage.addListener(async message => {
           return null
         }
 
-        const { steamIds, matchId, organizerId } = message
+        const { steamIds, organizerId } = message
 
         const searchParams = {
           /* eslint-disable camelcase */
@@ -78,24 +79,35 @@ browser.runtime.onMessage.addListener(async message => {
           return null
         }
 
-        if (IS_PRODUCTION) {
-          api.post('v1/stats', {
-            json: {
-              eventName: 'Skin Of The Match Viewed',
-              data: {
-                /* eslint-disable camelcase */
-                match_id: matchId
-                /* eslint-enable camelcase */
-              }
-            }
-          })
-        }
-
         return response
       } catch (error) {
         console.error(error)
         return null
       }
+    }
+    case ACTION_POST_STATS_EVENT: {
+      try {
+        const { eventName, data } = message
+
+        const json = {
+          eventName,
+          data
+        }
+
+        if (!IS_PRODUCTION) {
+          console.log('v1/stats', json)
+
+          return
+        }
+
+        api.post('v1/stats', {
+          json
+        })
+      } catch (error) {
+        console.error(error)
+      }
+
+      break
     }
     default:
   }
