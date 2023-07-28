@@ -1,6 +1,7 @@
 import React from 'dom-chef'
 import select from 'select-dom'
-import { getPlayer, getPlayerMatches } from '../helpers/faceit-api'
+import random from 'lodash/random'
+import { getPlayer, getPlayerMatches, getSelf } from '../helpers/faceit-api'
 import { getEloChangesByMatches } from '../helpers/elo'
 import {
   getPlayerProfileNickname,
@@ -10,6 +11,7 @@ import {
   hasFeatureAttribute,
   setFeatureAttribute
 } from '../helpers/dom-element'
+import { getIsFreeMember } from '../helpers/membership'
 
 const FEATURE_ATTRIBUTE = 'matches-elo'
 
@@ -36,6 +38,9 @@ export default async () => {
   }
 
   setFeatureAttribute(FEATURE_ATTRIBUTE, parasitePlayerProfileElement)
+
+  const self = await getSelf()
+  const selfIsFreeMember = getIsFreeMember(self)
 
   const nickname = getPlayerProfileNickname()
   const game = getPlayerProfileStatsGame()
@@ -83,8 +88,12 @@ export default async () => {
         style={{
           display: 'flex',
           gap: 4,
-          alignItems: 'center'
+          alignItems: 'center',
+          cursor: selfIsFreeMember && 'help'
         }}
+        title={
+          selfIsFreeMember ? 'This feature requires FACEIT Premium' : undefined
+        }
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -99,9 +108,15 @@ export default async () => {
           />
         </svg>
         <span
-          style={{ color: '#fff', fontWeight: 'normal', textTransform: 'none' }}
+          style={{
+            color: '#fff',
+            fontWeight: 'normal',
+            textTransform: 'none',
+            filter: selfIsFreeMember && 'blur(4px)',
+            opacity: selfIsFreeMember && 0.33
+          }}
         >
-          {newElo}
+          {selfIsFreeMember ? random(1000, 3000) : newElo}
         </span>
       </div>
     )
