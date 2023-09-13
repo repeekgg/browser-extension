@@ -53,3 +53,23 @@ export const DEFAULTS = {
   teamRosterPlayersInfo: true,
   repeekNotificationClosed: false
 }
+
+if (process.env.NODE_ENV !== 'production') {
+  DEFAULTS.matchRoomAutoVetoMapItems = [
+    'Aim Map',
+    'Aim Map CL',
+    'Aim Ak47 v2',
+    'Aim 9h Ak',
+    'Aim FACEIT Clean',
+    'Aim FACEIT NoAwp',
+    'Aim Map Usp S',
+    'Aim 100hp',
+    'Aim Redline(Original)',
+    'Aim Awp Row',
+    'AWP India',
+    'Aim Castles(Pistols)',
+    'Aim Map Only Pistol',
+    'IMB Pistols Map',
+    'Training Aim Pistols Map'
+  ]
+}
