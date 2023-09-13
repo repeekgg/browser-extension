@@ -8,6 +8,7 @@ import {
   setFeatureAttribute
 } from '../helpers/dom-element'
 import { predictRatingChange } from '../helpers/elo'
+import { isSupportedGame } from '../helpers/games'
 
 const FEATURE_ATTRIBUTE = 'match-room-elo-estimation'
 
@@ -28,7 +29,7 @@ export default async () => {
   const roomId = getRoomId()
   const match = await getMatch(roomId)
 
-  if (!match || match.game !== 'csgo' || match.state === 'FINISHED') {
+  if (!match || !isSupportedGame(match.game) || match.state === 'FINISHED') {
     return
   }
 
@@ -59,7 +60,9 @@ export default async () => {
     const factionTotalElo = factionPlayers.reduce(
       (factionTotalElo, player) =>
         factionTotalElo +
-        playerSummaries[player.id].games.find(game => game.game === 'csgo').elo,
+        playerSummaries[player.id].games.find(game =>
+          isSupportedGame(game.game)
+        ).elo,
       0
     )
 

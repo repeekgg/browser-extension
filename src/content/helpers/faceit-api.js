@@ -5,6 +5,7 @@ import Cookies from 'js-cookie'
 import browser from 'webextension-polyfill'
 import { ACTION_FETCH_FACEIT_API } from '../../shared/constants'
 import { mapTotalStatsMemoized, mapAverageStatsMemoized } from './stats'
+import { isSupportedGame } from './games'
 
 export const CACHE_TIME = 600000
 
@@ -66,7 +67,7 @@ export const getPlayerMatches = (userId, game, size = 20) =>
   )
 
 export const getPlayerStats = async (userId, game, size = 20) => {
-  if (game !== 'csgo') {
+  if (!isSupportedGame(game)) {
     return false
   }
 

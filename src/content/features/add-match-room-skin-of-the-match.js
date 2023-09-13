@@ -12,6 +12,7 @@ import {
 import { getRoomId } from '../helpers/match-room'
 import { getMatch, getSelf } from '../helpers/faceit-api'
 import storage from '../../shared/storage'
+import { isSupportedGame } from '../helpers/games'
 
 const FEATURE_ATTRIBUTE = 'skin-of-the-match'
 
@@ -42,7 +43,7 @@ export default async () => {
   const roomId = getRoomId()
   const [match, self] = await Promise.all([getMatch(roomId), getSelf()])
 
-  if (!match || match.game !== 'csgo') {
+  if (!match || !isSupportedGame(match.game)) {
     return
   }
 
