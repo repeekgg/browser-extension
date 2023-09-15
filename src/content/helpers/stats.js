@@ -4,7 +4,7 @@ const TOTAL_STATS_MAP = {
   m1: 'matches'
 }
 
-export const mapTotalStats = stats =>
+export const mapTotalStats = (stats) =>
   Object.keys(TOTAL_STATS_MAP).reduce(
     (acc, curr) => ({
       ...acc,
@@ -22,9 +22,9 @@ const AVERAGE_STATS_MAP = {
   i6: 'averageKills'
 }
 
-export const mapAverageStats = stats =>
+export const mapAverageStats = (stats) =>
   stats
-    .map(stat =>
+    .map((stat) =>
       Object.keys(AVERAGE_STATS_MAP).reduce(
         (acc, curr) => ({
           ...acc,
@@ -43,7 +43,7 @@ export const mapAverageStats = stats =>
           if (stats.length === i + 1) {
             if (curr2 === 'winRate') {
               const results = [...acc[curr2], curr[curr2]]
-              const wins = results.filter(x => x === 'win').length
+              const wins = results.filter((x) => x === 'win').length
               value = Math.round((wins / results.length) * 100)
             } else {
               value =

@@ -46,9 +46,8 @@ export default async () => {
     return
   }
 
-  const featuredPlayerBadgeElement = createFeaturedPlayerBadgeElement(
-    playerBadge
-  )
+  const featuredPlayerBadgeElement =
+    createFeaturedPlayerBadgeElement(playerBadge)
 
   const badgeWrapper = (
     <div

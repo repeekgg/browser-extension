@@ -42,7 +42,7 @@ export default async () => {
     return
   }
 
-  matchLinkElements.forEach(matchLinkElement => {
+  matchLinkElements.forEach((matchLinkElement) => {
     const matchId = getRoomId(matchLinkElement.getAttribute('href'))
 
     const resultElement = select(

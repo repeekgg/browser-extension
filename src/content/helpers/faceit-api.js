@@ -56,9 +56,9 @@ const fetchApiMemoized = pMemoize(fetchApi, {
   maxAge: CACHE_TIME
 })
 
-export const getUser = userId => fetchApiMemoized(`/users/v1/users/${userId}`)
+export const getUser = (userId) => fetchApiMemoized(`/users/v1/users/${userId}`)
 
-export const getPlayer = nickname =>
+export const getPlayer = (nickname) =>
   fetchApiMemoized(`/users/v1/nicknames/${nickname}`)
 
 export const getPlayerMatches = (userId, game, size = 20) =>
@@ -89,7 +89,7 @@ export const getPlayerStats = async (userId, game, size = 20) => {
     return null
   }
 
-  averageStats = averageStats.filter(stats => stats.gameMode.includes('5v5'))
+  averageStats = averageStats.filter((stats) => stats.gameMode.includes('5v5'))
 
   if (averageStats.length <= 1) {
     return null
@@ -103,10 +103,10 @@ export const getPlayerStats = async (userId, game, size = 20) => {
   }
 }
 
-export const getMatch = matchId =>
+export const getMatch = (matchId) =>
   fetchApiMemoized(`/match/v2/match/${matchId}`)
 
-export const getTeam = teamId => fetchApiMemoized(`/teams/v1/teams/${teamId}`)
+export const getTeam = (teamId) => fetchApiMemoized(`/teams/v1/teams/${teamId}`)
 
 export const getSelf = ({ memoized = true } = {}) => {
   const fetchFn = memoized ? fetchApiMemoized : fetchApi
@@ -114,7 +114,7 @@ export const getSelf = ({ memoized = true } = {}) => {
   return fetchFn('/users/v1/sessions/me')
 }
 
-export const getHubQueue = async id =>
+export const getHubQueue = async (id) =>
   (await fetchApi(`/queue/v1/queue/hub/${id}`))[0]
 
 export const getPlayerHistory = async (userId, page = 0) => {
@@ -130,10 +130,10 @@ export const getPlayerHistory = async (userId, page = 0) => {
   )
 }
 
-export const getMatchmakingQueue = queueId =>
+export const getMatchmakingQueue = (queueId) =>
   fetchApiMemoized(`/queue/v1/queue/matchmaking/${queueId}`)
 
-export const getPlayerSummaries = userIds =>
+export const getPlayerSummaries = (userIds) =>
   fetchApi(
     '/user-summary/v2/list',
     {

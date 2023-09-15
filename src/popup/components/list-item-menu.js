@@ -8,7 +8,7 @@ export default class ListItemMenu extends React.Component {
     anchorEl: null
   }
 
-  onClickListItem = event => this.setState({ anchorEl: event.currentTarget })
+  onClickListItem = (event) => this.setState({ anchorEl: event.currentTarget })
 
   onClickMenuItem = (event, index) => {
     const { options, onChangeOption } = this.props
@@ -37,7 +37,7 @@ export default class ListItemMenu extends React.Component {
             <MenuItem
               key={option}
               selected={selected === option}
-              onClick={event => this.onClickMenuItem(event, index)}
+              onClick={(event) => this.onClickMenuItem(event, index)}
             >
               {mapOption ? mapOption(option) : option}
             </MenuItem>

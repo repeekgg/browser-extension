@@ -33,7 +33,7 @@ export default async () => {
   ]
 
   const matchPlayerBadges = await getPlayerBadges(
-    matchPlayers.map(matchPlayer => matchPlayer.id)
+    matchPlayers.map((matchPlayer) => matchPlayer.id)
   )
 
   const matchPlayerElements = ['roster1', 'roster2']
@@ -48,11 +48,11 @@ export default async () => {
       []
     )
     .map(
-      avatarElement =>
+      (avatarElement) =>
         avatarElement.parentElement.parentElement.parentElement.parentElement
     )
 
-  matchPlayerElements.forEach(matchPlayerElement => {
+  matchPlayerElements.forEach((matchPlayerElement) => {
     const matchPlayerNicknameElement = select(
       'div:nth-child(2) > div > div',
       matchPlayerElement
@@ -61,7 +61,7 @@ export default async () => {
     const playerBadge =
       matchPlayerBadges[
         matchPlayers.find(
-          matchPlayer =>
+          (matchPlayer) =>
             matchPlayer.nickname === matchPlayerNicknameElement.innerText
         )?.id
       ]

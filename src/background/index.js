@@ -10,7 +10,7 @@ import {
 import api, { fetchVips, fetchConfig } from './api'
 import faceitApi from './faceit-api'
 
-browser.runtime.onMessage.addListener(async message => {
+browser.runtime.onMessage.addListener(async (message) => {
   if (!message) {
     return
   }

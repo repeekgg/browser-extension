@@ -4,14 +4,15 @@ import { DEFAULTS } from './settings'
 const storage = new OptionsSync({
   defaults: DEFAULTS,
   migrations: [
-    savedOptions => {
+    (savedOptions) => {
       if (
         savedOptions.matchRoomAutoVetoMapItems &&
         savedOptions.matchRoomAutoVetoMapItems.includes('de_cache')
       ) {
-        savedOptions.matchRoomAutoVetoMapItems = savedOptions.matchRoomAutoVetoMapItems.filter(
-          map => map !== 'de_cache'
-        )
+        savedOptions.matchRoomAutoVetoMapItems =
+          savedOptions.matchRoomAutoVetoMapItems.filter(
+            (map) => map !== 'de_cache'
+          )
         savedOptions.matchRoomAutoVetoMapItems.push('de_ancient')
       }
     },

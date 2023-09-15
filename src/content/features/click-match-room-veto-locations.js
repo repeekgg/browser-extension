@@ -11,7 +11,7 @@ import { getRoomId } from '../helpers/match-room'
 const FEATURE_ATTRIBUTE = 'veto-locations'
 const VETO_DELAY = 2000
 
-export default async parentElement => {
+export default async (parentElement) => {
   const roomId = getRoomId()
   const { region, ...match } = await getMatch(roomId)
   const self = await getSelf()
@@ -42,7 +42,7 @@ export default async parentElement => {
     return
   }
 
-  const isVetoLocations = autoVetoItems.some(item =>
+  const isVetoLocations = autoVetoItems.some((item) =>
     select.exists(`div[title="${item}"]`, votingListElement)
   )
 
@@ -62,7 +62,7 @@ export default async parentElement => {
       return
     }
 
-    autoVetoItems.some(item => {
+    autoVetoItems.some((item) => {
       const vetoButtonElement = select(
         `div[title="${item}"] * button`,
         votingListElement

@@ -74,7 +74,7 @@ export default async () => {
       >
         {createButton({
           text: 'Watch Demo',
-          onClick: async e => {
+          onClick: async (e) => {
             e.stopPropagation()
             const match = await getMatch(matchId)
             const demoUrl =

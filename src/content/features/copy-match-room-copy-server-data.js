@@ -7,7 +7,7 @@ const store = new Map()
 
 const connectRegExp = /(connect \d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}:\d{1,5})/
 
-export default async parent => {
+export default async (parent) => {
   const roomId = getRoomId()
 
   if (store.has(roomId)) {

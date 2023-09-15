@@ -43,12 +43,8 @@ export default async () => {
     return
   }
 
-  const {
-    averageKills,
-    averageHeadshots,
-    averageKDRatio,
-    averageKRRatio
-  } = playerStats
+  const { averageKills, averageHeadshots, averageKDRatio, averageKRRatio } =
+    playerStats
 
   const statsElement = (
     <>

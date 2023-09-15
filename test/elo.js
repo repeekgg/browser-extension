@@ -4,7 +4,7 @@ import {
   predictRatingChange
 } from '../src/content/helpers/elo'
 
-test('estimateRatingChange', t => {
+test('estimateRatingChange', (t) => {
   t.deepEqual(estimateRatingChange(2000, 2000), {
     gain: 25,
     loss: -25
@@ -33,7 +33,7 @@ test('estimateRatingChange', t => {
   t.is(estimateRatingChange(1727, 1639).loss, -31)
 })
 
-test.failing('estimateRatingChange is off by +-1', t => {
+test.failing('estimateRatingChange is off by +-1', (t) => {
   t.is(estimateRatingChange(1789, 1865).gain, 31) // Actual: 30
   t.is(estimateRatingChange(1907, 1816).loss, -32) // Actual: -31
   t.is(estimateRatingChange(1787, 1783).gain, 24) // Actual: 25
@@ -42,7 +42,7 @@ test.failing('estimateRatingChange is off by +-1', t => {
   t.is(estimateRatingChange(2134, 2073).loss, -30) // Actual: -29
 })
 
-test('predictRatingChange', t => {
+test('predictRatingChange', (t) => {
   t.deepEqual(predictRatingChange(0.5), {
     gain: 25,
     loss: -25

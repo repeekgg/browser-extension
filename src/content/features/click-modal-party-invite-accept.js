@@ -4,7 +4,7 @@ import { notifyIf } from '../helpers/user-settings'
 export default async () => {
   const reactModalPortalElements = select.all('.ReactModalPortal')
 
-  reactModalPortalElements.forEach(reactModalPortalElement => {
+  reactModalPortalElements.forEach((reactModalPortalElement) => {
     if (
       ![
         'Click accept to join the party',
@@ -26,7 +26,7 @@ export default async () => {
         'Klik terima untuk gabung ke kelompok',
         'คลิกยอมรับเพื่อเข้าร่วมปาร์ตี้',
         'Klikni „Prihvati” za pridruživanje grupi'
-      ].some(text => reactModalPortalElement.innerHTML.indexOf(text) !== -1)
+      ].some((text) => reactModalPortalElement.innerHTML.indexOf(text) !== -1)
     ) {
       return
     }

@@ -1,7 +1,7 @@
 import test from 'ava'
 import { mapTotalStats, mapAverageStats } from '../src/content/helpers/stats'
 
-test('mapTotalStats', t => {
+test('mapTotalStats', (t) => {
   const stats = {
     m1: 1,
     unnecessary: true
@@ -10,7 +10,7 @@ test('mapTotalStats', t => {
   t.deepEqual(mapTotalStats(stats), { matches: stats.m1 })
 })
 
-test('mapAverageStats', t => {
+test('mapAverageStats', (t) => {
   const createStat = (c2, c3, c4, i6, i2, teamId) => ({
     c2: c2.toString(),
     c3: c3.toString(),

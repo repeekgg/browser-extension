@@ -13,7 +13,7 @@ import maps from '../helpers/maps'
 const FEATURE_ATTRIBUTE = 'veto-maps'
 const VETO_DELAY = 2000
 
-export default async parentElement => {
+export default async (parentElement) => {
   const roomId = getRoomId()
   const match = await getMatch(roomId)
   const self = await getSelf()
@@ -40,7 +40,7 @@ export default async parentElement => {
     matchRoomAutoVetoMapsShuffle: shuffleMaps,
     matchRoomAutoVetoMapsShuffleAmount: shuffleMapsAmount
   } = await storage.getAll()
-  let autoVetoItems = matchRoomAutoVetoMapItems.map(m => maps.csgo[m] || m)
+  let autoVetoItems = matchRoomAutoVetoMapItems.map((m) => maps.csgo[m] || m)
 
   if (shuffleMaps) {
     const shuffledItems = shuffle(autoVetoItems.splice(0, shuffleMapsAmount))
@@ -49,7 +49,7 @@ export default async parentElement => {
 
   autoVetoItems = autoVetoItems.reverse()
 
-  const isVetoMaps = autoVetoItems.some(item =>
+  const isVetoMaps = autoVetoItems.some((item) =>
     select.exists(`div[title="${item}"]`, votingListElement)
   )
 
@@ -69,7 +69,7 @@ export default async parentElement => {
       return
     }
 
-    autoVetoItems.some(item => {
+    autoVetoItems.some((item) => {
       const vetoButtonElement = select(
         `div[title="${item}"] * button`,
         votingListElement

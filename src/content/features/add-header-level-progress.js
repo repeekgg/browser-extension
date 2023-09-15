@@ -59,7 +59,7 @@ export default async () => {
     const levelElement = (
       <a
         href={createPathname(selfStatsPathname)}
-        onClick={event => {
+        onClick={(event) => {
           event.preventDefault()
 
           navigateTo(selfStatsPathname)

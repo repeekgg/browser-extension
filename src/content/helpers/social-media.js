@@ -1,4 +1,4 @@
-export const getPlatformFromTab = attr => {
+export const getPlatformFromTab = (attr) => {
   const match = (attr || '').match(/profile\.socials\.([^.]+)\.value/)
 
   return match === null || match[1] === undefined ? null : match[1]

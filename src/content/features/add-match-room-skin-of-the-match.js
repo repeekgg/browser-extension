@@ -167,8 +167,9 @@ export default async () => {
       }}
     >
       <a
-        href={`${skinOfTheMatch.skin.skinport_url ||
-          'https://skinport.com'}?r=repeek&utm_source=repeek&utm_medium=browser_extension`}
+        href={`${
+          skinOfTheMatch.skin.skinport_url || 'https://skinport.com'
+        }?r=repeek&utm_source=repeek&utm_medium=browser_extension`}
         target="_blank"
         rel="noreferrer noopener"
         style={{

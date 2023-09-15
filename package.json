@@ -70,7 +70,7 @@
     "lint-staged": "^7.0.0",
     "load-json-file": "^6.0.0",
     "npm-run-all": "^4.1.2",
-    "prettier": "^1.15.1",
+    "prettier": "^2.8.8",
     "semver": "^6.0.0",
     "sinon": "^4.4.2",
     "svg-inline-loader": "^0.8.2",

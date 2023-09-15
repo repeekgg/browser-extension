@@ -18,7 +18,7 @@ class Drawer extends React.Component {
       <div style={{ display: 'flex', overflow: 'hidden', height: '100%' }}>
         <MUIDrawer variant="permanent" classes={{ paper: classes.drawerPaper }}>
           <List>
-            {Object.keys(items).map(item => (
+            {Object.keys(items).map((item) => (
               <ListItemText
                 key={item}
                 primary={item}

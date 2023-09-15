@@ -10,7 +10,7 @@ const FEATURE_NAME = 'click-modal-match-ready'
 export default async () => {
   const fuseModalPortalElements = select.all('.FuseModalPortal')
 
-  fuseModalPortalElements.forEach(fuseModalPortalElement => {
+  fuseModalPortalElements.forEach((fuseModalPortalElement) => {
     const matchCheckInModalElement = select(
       'div[class*="MatchCheckInModal"]',
       fuseModalPortalElement

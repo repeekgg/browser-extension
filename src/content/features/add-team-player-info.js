@@ -18,7 +18,7 @@ import createSkillLevelElement from '../components/skill-level'
 
 const FEATURE_ATTRIBUTE = 'team-player-stats'
 
-export default async parentElement => {
+export default async (parentElement) => {
   const teamId = getTeamId()
 
   const team = await getTeam(teamId)
@@ -31,7 +31,7 @@ export default async parentElement => {
 
   const badges = await getPlayerBadges(team.members.map(({ guid }) => guid))
 
-  memberElements.forEach(async memberElement => {
+  memberElements.forEach(async (memberElement) => {
     if (hasFeatureAttribute(FEATURE_ATTRIBUTE, memberElement)) {
       return
     }

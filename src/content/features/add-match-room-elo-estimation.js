@@ -43,24 +43,24 @@ export default async () => {
 
   if (
     matchRoomFocusMode &&
-    matchPlayers.some(player => player.id === self.id)
+    matchPlayers.some((player) => player.id === self.id)
   ) {
     return
   }
 
   const playerSummaries = await getPlayerSummaries(
-    matchPlayers.map(player => player.id)
+    matchPlayers.map((player) => player.id)
   )
 
   const factions = ['faction1', 'faction2']
 
-  const [faction1AverageElo, faction2AverageElo] = factions.map(faction => {
+  const [faction1AverageElo, faction2AverageElo] = factions.map((faction) => {
     const factionPlayers = match.teams[faction].roster
 
     const factionTotalElo = factionPlayers.reduce(
       (factionTotalElo, player) =>
         factionTotalElo +
-        playerSummaries[player.id].games.find(game =>
+        playerSummaries[player.id].games.find((game) =>
           isSupportedGame(game.game)
         ).elo,
       0
@@ -69,11 +69,8 @@ export default async () => {
     return Math.floor(factionTotalElo / factionPlayers.length)
   })
 
-  const [
-    faction1PredictedEloChange,
-    faction2PredictedEloChange
-  ] = factions.map(faction =>
-    predictRatingChange(match.teams[faction].stats.winProbability)
+  const [faction1PredictedEloChange, faction2PredictedEloChange] = factions.map(
+    (faction) => predictRatingChange(match.teams[faction].stats.winProbability)
   )
 
   const faction1AverageEloDiff = faction1AverageElo - faction2AverageElo
@@ -119,8 +116,9 @@ export default async () => {
         ],
         index
       ) => {
-        const factionFeatureAttribute = `${FEATURE_ATTRIBUTE}-faction${index +
-          1}`
+        const factionFeatureAttribute = `${FEATURE_ATTRIBUTE}-faction${
+          index + 1
+        }`
 
         if (
           !factionHeaderElement ||

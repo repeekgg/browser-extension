@@ -28,7 +28,7 @@ export default async () => {
   const isSelfInMatch = [
     ...teams.faction1.roster,
     ...teams.faction2.roster
-  ].some(player => player.id === self.id)
+  ].some((player) => player.id === self.id)
 
   if (!isSelfInMatch) {
     return
@@ -50,7 +50,7 @@ export default async () => {
     matchRoomOverviewElement.children[0]?.children[0]?.children[1]?.children[2]
   ]
 
-  teamNameElements.forEach(teamNameElement => {
+  teamNameElements.forEach((teamNameElement) => {
     if (
       teamNameElement &&
       !hasFeatureAttribute(FEATURE_ATTRIBUTE, teamNameElement)
@@ -65,7 +65,7 @@ export default async () => {
     select('[name="roster2"]', matchRoomOverviewElement)
   ]
 
-  teamElements.forEach(teamElement => {
+  teamElements.forEach((teamElement) => {
     if (teamElement && !hasFeatureAttribute(FEATURE_ATTRIBUTE, teamElement)) {
       setFeatureAttribute(FEATURE_ATTRIBUTE, teamElement)
       setStyle(teamElement, 'visibility: hidden')

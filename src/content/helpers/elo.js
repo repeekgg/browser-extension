@@ -48,7 +48,7 @@ export const LEVELS = {
 export async function getEloChangesByMatches(matches) {
   const eloMatches = (
     await Promise.all(
-      matches.map(async match => {
+      matches.map(async (match) => {
         const { competitionId } = match
 
         if (competitionId) {

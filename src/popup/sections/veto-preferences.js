@@ -42,7 +42,7 @@ export default ({ getMenuProps, getSortableProps, getSwitchProps }) => (
     <ListItemMenu
       primary="Shuffle Amount"
       options={MATCH_ROOM_VETO_MAP_ITEMS.map((_, index) => index + 1)}
-      mapOption={option => `First ${option}`}
+      mapOption={(option) => `First ${option}`}
       {...getMenuProps('matchRoomAutoVetoMapsShuffleAmount')}
     />
     <ListItemText secondary="Sorted by favourite to least favourite. Least favourite will be vetoed first." />

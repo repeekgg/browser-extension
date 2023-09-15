@@ -2,10 +2,10 @@ import browser from 'webextension-polyfill'
 import throttle from 'lodash/throttle'
 import storage from '../../shared/storage'
 
-export const isFeatureEnabled = async option => {
+export const isFeatureEnabled = async (option) => {
   const options = await storage.getAll()
   const featureEnabled = Array.isArray(option)
-    ? option.some(opt => options[opt])
+    ? option.some((opt) => options[opt])
     : options[option]
 
   return featureEnabled

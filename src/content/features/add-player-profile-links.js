@@ -11,7 +11,7 @@ import { validateSocialLink, getPlatformFromTab } from '../helpers/social-media'
 
 const FEATURE_ATTRIBUTE = 'profile-links'
 
-export default async parentElement => {
+export default async (parentElement) => {
   const socialTabsElement = select('div.social-tabs > ul.nav', parentElement)
 
   if (socialTabsElement === null) {
@@ -37,12 +37,13 @@ export default async parentElement => {
 
   const invalidLinks = Object.keys(profile.socials)
     .filter(
-      platform =>
+      (platform) =>
         profile.socials[platform].value &&
         profile.socials[platform].value !== ''
     )
     .filter(
-      platform => !validateSocialLink(platform, profile.socials[platform].value)
+      (platform) =>
+        !validateSocialLink(platform, profile.socials[platform].value)
     )
 
   if (invalidLinks.length === 0) {
