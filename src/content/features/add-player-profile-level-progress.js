@@ -100,55 +100,55 @@ export default async () => {
                 level: 1,
                 currentLevel,
                 eloFrom: 1,
-                eloTo: 800,
+                eloTo: 500,
                 width: 40
               })}
               {createSkillLevelElement({
                 level: 2,
                 currentLevel,
-                eloFrom: 801,
-                eloTo: 950
+                eloFrom: 501,
+                eloTo: 750
               })}
               {createSkillLevelElement({
                 level: 3,
                 currentLevel,
-                eloFrom: 951,
-                eloTo: 1100
+                eloFrom: 751,
+                eloTo: 900
               })}
               {createSkillLevelElement({
                 level: 4,
                 currentLevel,
-                eloFrom: 1101,
-                eloTo: 1250
+                eloFrom: 901,
+                eloTo: 1050
               })}
               {createSkillLevelElement({
                 level: 5,
                 currentLevel,
-                eloFrom: 1251,
-                eloTo: 1400
+                eloFrom: 1051,
+                eloTo: 1200
               })}
               {createSkillLevelElement({
                 level: 6,
                 currentLevel,
-                eloFrom: 1401,
-                eloTo: 1550
+                eloFrom: 1201,
+                eloTo: 1350
               })}
               {createSkillLevelElement({
                 level: 7,
                 currentLevel,
-                eloFrom: 1551,
-                eloTo: 1700
+                eloFrom: 1351,
+                eloTo: 1530
               })}
               {createSkillLevelElement({
                 level: 8,
                 currentLevel,
-                eloFrom: 1701,
-                eloTo: 1850
+                eloFrom: 1531,
+                eloTo: 1750
               })}
               {createSkillLevelElement({
                 level: 9,
                 currentLevel,
-                eloFrom: 1851,
+                eloFrom: 1751,
                 eloTo: 2000
               })}
             </div>
