@@ -5,7 +5,7 @@ import {
   setFeatureAttribute
 } from '../helpers/dom-element'
 import { getPlayer } from '../helpers/faceit-api'
-import { LEVELS } from '../helpers/elo'
+import { SKILL_LEVELS_BY_GAME } from '../helpers/elo'
 import {
   getPlayerProfileNickname,
   getPlayerProfileStatsGame
@@ -73,6 +73,12 @@ export default async () => {
 
   const { games } = player
   const game = getPlayerProfileStatsGame()
+  const skillLevels = SKILL_LEVELS_BY_GAME[game]
+
+  if (!skillLevels) {
+    return
+  }
+
   const { skillLevel: currentLevel, faceitElo = 1000 } = games[game]
   const progressWidth = (faceitElo / 2000) * 100
 
@@ -90,7 +96,7 @@ export default async () => {
             ? createKeyStatElement({ key: `Maximum level reached`, stat: '🔥' })
             : createKeyStatElement({
                 key: `Points needed to reach level ${currentLevel + 1}`,
-                stat: LEVELS[currentLevel + 1][0] - faceitElo
+                stat: skillLevels[currentLevel + 1][0] - faceitElo
               })}
         </div>
         <div style={{ display: 'flex' }}>
@@ -99,57 +105,57 @@ export default async () => {
               {createSkillLevelElement({
                 level: 1,
                 currentLevel,
-                eloFrom: 1,
-                eloTo: 800,
+                eloFrom: skillLevels[1][0],
+                eloTo: skillLevels[1][1],
                 width: 40
               })}
               {createSkillLevelElement({
                 level: 2,
                 currentLevel,
-                eloFrom: 801,
-                eloTo: 950
+                eloFrom: skillLevels[2][0],
+                eloTo: skillLevels[2][1]
               })}
               {createSkillLevelElement({
                 level: 3,
                 currentLevel,
-                eloFrom: 951,
-                eloTo: 1100
+                eloFrom: skillLevels[3][0],
+                eloTo: skillLevels[3][1]
               })}
               {createSkillLevelElement({
                 level: 4,
                 currentLevel,
-                eloFrom: 1101,
-                eloTo: 1250
+                eloFrom: skillLevels[4][0],
+                eloTo: skillLevels[4][1]
               })}
               {createSkillLevelElement({
                 level: 5,
                 currentLevel,
-                eloFrom: 1251,
-                eloTo: 1400
+                eloFrom: skillLevels[5][0],
+                eloTo: skillLevels[5][1]
               })}
               {createSkillLevelElement({
                 level: 6,
                 currentLevel,
-                eloFrom: 1401,
-                eloTo: 1550
+                eloFrom: skillLevels[6][0],
+                eloTo: skillLevels[6][1]
               })}
               {createSkillLevelElement({
                 level: 7,
                 currentLevel,
-                eloFrom: 1551,
-                eloTo: 1700
+                eloFrom: skillLevels[7][0],
+                eloTo: skillLevels[7][1]
               })}
               {createSkillLevelElement({
                 level: 8,
                 currentLevel,
-                eloFrom: 1701,
-                eloTo: 1850
+                eloFrom: skillLevels[8][0],
+                eloTo: skillLevels[8][1]
               })}
               {createSkillLevelElement({
                 level: 9,
                 currentLevel,
-                eloFrom: 1851,
-                eloTo: 2000
+                eloFrom: skillLevels[9][0],
+                eloTo: skillLevels[9][1]
               })}
             </div>
             <div style={{ height: 4, background: '#323737' }}>
@@ -166,7 +172,7 @@ export default async () => {
             {createSkillLevelElement({
               level: 10,
               currentLevel,
-              eloFrom: 2001,
+              eloFrom: skillLevels[10][0],
               eloTo: '∞',
               width: 100,
               borderRight: false

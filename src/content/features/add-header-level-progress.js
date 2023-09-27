@@ -5,7 +5,7 @@ import {
   hasFeatureAttribute,
   setFeatureAttribute
 } from '../helpers/dom-element'
-import { LEVELS } from '../helpers/elo'
+import { SKILL_LEVELS_BY_GAME } from '../helpers/elo'
 import createSkillLevelElement from '../components/skill-level'
 import { createPathname, navigateTo } from '../helpers/navigation'
 
@@ -39,15 +39,22 @@ export default async () => {
     }
 
     const { flag: game, games, nickname } = self
+
+    const skillLevels = SKILL_LEVELS_BY_GAME[game]
+
+    if (!skillLevels) {
+      return
+    }
+
     const { skillLevel, faceitElo = 1000 } = games[game]
-    const [levelMinElo, levelMaxElo] = LEVELS[skillLevel]
+    const [levelMinElo, levelMaxElo] = skillLevels[skillLevel]
 
     const progressWidth = levelMaxElo
       ? `${((faceitElo - levelMinElo) / (levelMaxElo - levelMinElo)) * 100}%`
       : '100%'
 
-    const levelBelow = LEVELS[skillLevel - 1]
-    const levelAbove = LEVELS[skillLevel + 1]
+    const levelBelow = skillLevels[skillLevel - 1]
+    const levelAbove = skillLevels[skillLevel + 1]
 
     const levelBelowEloDiff = levelBelow ? `-${faceitElo - levelBelow[1]}` : 0
     const levelAboveEloDiff = levelMaxElo
