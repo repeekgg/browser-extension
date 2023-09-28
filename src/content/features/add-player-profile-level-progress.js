@@ -107,13 +107,14 @@ export default async () => {
                 currentLevel,
                 eloFrom: skillLevels[1][0],
                 eloTo: skillLevels[1][1],
-                width: 40
+                width: 25
               })}
               {createSkillLevelElement({
                 level: 2,
                 currentLevel,
                 eloFrom: skillLevels[2][0],
-                eloTo: skillLevels[2][1]
+                eloTo: skillLevels[2][1],
+                width: 12.5
               })}
               {createSkillLevelElement({
                 level: 3,
@@ -143,19 +144,22 @@ export default async () => {
                 level: 7,
                 currentLevel,
                 eloFrom: skillLevels[7][0],
-                eloTo: skillLevels[7][1]
+                eloTo: skillLevels[7][1],
+                width: 9
               })}
               {createSkillLevelElement({
                 level: 8,
                 currentLevel,
                 eloFrom: skillLevels[8][0],
-                eloTo: skillLevels[8][1]
+                eloTo: skillLevels[8][1],
+                width: 11
               })}
               {createSkillLevelElement({
                 level: 9,
                 currentLevel,
                 eloFrom: skillLevels[9][0],
-                eloTo: skillLevels[9][1]
+                eloTo: skillLevels[9][1],
+                width: 12.5
               })}
             </div>
             <div style={{ height: 4, background: '#323737' }}>
