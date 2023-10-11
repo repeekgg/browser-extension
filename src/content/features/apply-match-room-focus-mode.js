@@ -20,7 +20,7 @@ export default async () => {
   const roomId = getRoomId()
   const { status, teams } = await getMatch(roomId)
 
-  if (!['VOTING', 'CONFIGURING', 'READY', 'ONGOING'].includes(status)) {
+  if (status !== 'LIVE') {
     return
   }
 
