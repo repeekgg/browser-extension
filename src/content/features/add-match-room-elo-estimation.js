@@ -1,6 +1,6 @@
 import React from 'dom-chef'
 import select from 'select-dom'
-import { getMatch, getPlayerSummaries, getSelf } from '../helpers/faceit-api'
+import { getMatch, getSelf } from '../helpers/faceit-api'
 import { getRoomId } from '../helpers/match-room'
 import storage from '../../shared/storage'
 import {
@@ -48,23 +48,18 @@ export default async () => {
     return
   }
 
-  const playerSummaries = await getPlayerSummaries(
-    matchPlayers.map((player) => player.id)
-  )
-
   const factions = ['faction1', 'faction2']
 
   const [faction1AverageElo, faction2AverageElo] = factions.map((faction) => {
     const factionPlayers = match.teams[faction].roster
 
-    const factionTotalElo = factionPlayers.reduce(
-      (factionTotalElo, player) =>
-        factionTotalElo +
-        playerSummaries[player.id].games.find((game) =>
-          isSupportedGame(game.game)
-        ).elo,
-      0
-    )
+    const factionTotalElo = factionPlayers.reduce((factionTotalElo, player) => {
+      if (!player.elo) {
+        return factionTotalElo
+      }
+
+      return factionTotalElo + player.elo
+    }, 0)
 
     return Math.floor(factionTotalElo / factionPlayers.length)
   })
