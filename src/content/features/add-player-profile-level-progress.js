@@ -54,7 +54,7 @@ export default async () => {
   )
 
   if (
-    parasitePlayerProfileElement?.children.length !== 13 ||
+    parasitePlayerProfileElement?.children.length < 14 ||
     hasFeatureAttribute(FEATURE_ATTRIBUTE, parasitePlayerProfileElement)
   ) {
     return
