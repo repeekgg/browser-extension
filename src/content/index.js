@@ -43,7 +43,7 @@ function playerProfileStatsFeatures() {
 
   const statsContentElement = statsContentRootElement.children[0]
 
-  if (statsContentElement.children.length !== 14) {
+  if (statsContentElement.children.length < 14) {
     return
   }
 
