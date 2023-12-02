@@ -23,7 +23,6 @@ import clickModalClose from './features/click-modal-close'
 import clickModalInactiveCheck from './features/click-modal-inactive-check'
 import addSidebarMatchesElo from './features/add-sidebar-matches-elo'
 import applyMatchRoomFocusMode from './features/apply-match-room-focus-mode'
-import addPlayerProfileLinks from './features/add-player-profile-links'
 import addTeamPlayerInfo from './features/add-team-player-info'
 import repeekNotification from './features/repeek-notification'
 import addMatchRoomSkinOfTheMatch from './features/add-match-room-skin-of-the-match'
@@ -99,7 +98,6 @@ function observeBody() {
         )
       } else if (modals.isPlayerProfile()) {
         addPlayerProfileBadge(legacyModalElement)
-        addPlayerProfileLinks(legacyModalElement)
 
         if (modals.isPlayerProfileStats()) {
           playerProfileStatsFeatures(legacyModalElement)
@@ -151,7 +149,6 @@ function observeBody() {
         )
       } else if (pages.isPlayerProfile()) {
         addPlayerProfileBadge(mainContentElement)
-        addPlayerProfileLinks(mainContentElement)
 
         if (pages.isPlayerProfileStats()) {
           playerProfileStatsFeatures(mainContentElement)
