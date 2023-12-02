@@ -1,11 +1,9 @@
 import React from 'dom-chef'
 import select from 'select-dom'
-
 import {
   hasFeatureAttribute,
   setFeatureAttribute
 } from '../helpers/dom-element'
-
 import createFeaturedPlayerBadgeElement from '../components/player-badge'
 import { getPlayerBadges } from '../helpers/player-badges'
 import { getPlayerProfileNickname } from '../helpers/player-profile'
@@ -14,29 +12,18 @@ import { getPlayer } from '../helpers/faceit-api'
 const FEATURE_ATTRIBUTE = 'profile-badge'
 
 export default async () => {
-  const playerBanner = select('parasite-player-banner')
+  const playerNameElement = select('#parasite-container h5[size="5"]')
 
-  if (!playerBanner) {
+  const playerMainInfoElement = playerNameElement?.parentElement?.parentElement
+
+  if (
+    !playerMainInfoElement ||
+    hasFeatureAttribute(FEATURE_ATTRIBUTE, playerMainInfoElement)
+  ) {
     return
   }
 
-  const playerNameElement = select('h5[size="5"]', playerBanner)
-
-  if (!playerNameElement || !playerNameElement.parentElement) {
-    return
-  }
-
-  const wrapper = playerNameElement.parentElement.parentElement
-
-  if (!wrapper) {
-    return
-  }
-
-  if (hasFeatureAttribute(FEATURE_ATTRIBUTE, wrapper)) {
-    return
-  }
-
-  setFeatureAttribute(FEATURE_ATTRIBUTE, wrapper)
+  setFeatureAttribute(FEATURE_ATTRIBUTE, playerMainInfoElement)
 
   const nickname = getPlayerProfileNickname()
   const player = await getPlayer(nickname)
@@ -46,22 +33,15 @@ export default async () => {
     return
   }
 
-  const featuredPlayerBadgeElement =
-    createFeaturedPlayerBadgeElement(playerBadge)
-
-  const badgeWrapper = (
+  const playerBadgeElement = (
     <div
       style={{
-        marginBottom: '.5em',
-        marginTop:
-          wrapper.firstElementChild === playerNameElement.parentElement
-            ? undefined
-            : '.5em'
+        marginBottom: 4
       }}
     >
-      {featuredPlayerBadgeElement}
+      {createFeaturedPlayerBadgeElement(playerBadge)}
     </div>
   )
 
-  wrapper.insertBefore(badgeWrapper, playerNameElement.parentElement)
+  playerMainInfoElement.prepend(playerBadgeElement)
 }
