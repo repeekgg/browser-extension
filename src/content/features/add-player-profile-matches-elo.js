@@ -15,29 +15,20 @@ import { getIsFreeMember } from '../helpers/membership'
 
 const FEATURE_ATTRIBUTE = 'matches-elo'
 
-export default async () => {
-  const parasitePlayerProfileElement = select(
-    'parasite-player-profile-content > div'
-  )
-
-  const matchElements = select.all(
-    'table > tbody > tr',
-    parasitePlayerProfileElement
-  )
+export default async (statsContentElement) => {
+  const matchElements = select.all('table > tbody > tr', statsContentElement)
 
   // Remove table head row
   matchElements.shift()
 
   if (
     matchElements.length === 0 ||
-    !parasitePlayerProfileElement ||
-    parasitePlayerProfileElement.children.length < 13 ||
-    hasFeatureAttribute(FEATURE_ATTRIBUTE, parasitePlayerProfileElement)
+    hasFeatureAttribute(FEATURE_ATTRIBUTE, statsContentElement)
   ) {
     return
   }
 
-  setFeatureAttribute(FEATURE_ATTRIBUTE, parasitePlayerProfileElement)
+  setFeatureAttribute(FEATURE_ATTRIBUTE, statsContentElement)
 
   const self = await getSelf()
   const selfIsFreeMember = getIsFreeMember(self)
@@ -62,7 +53,7 @@ export default async () => {
     if (
       !match ||
       match.i18 !== scoreElement.textContent.trim() ||
-      match.i1 !== mapElement.textContent.trim()
+      match.i1.indexOf(mapElement.textContent.trim().toLowerCase()) === -1
     ) {
       return
     }

@@ -1,5 +1,4 @@
 import React from 'dom-chef'
-import select from 'select-dom'
 import {
   hasFeatureAttribute,
   setFeatureAttribute
@@ -15,21 +14,14 @@ import createHrElement from '../components/hr'
 
 const FEATURE_ATTRIBUTE = 'extended-stats'
 
-export default async () => {
-  const parasitePlayerProfileElement = select(
-    'parasite-player-profile-content > div'
-  )
-
-  if (
-    parasitePlayerProfileElement?.children.length < 14 ||
-    hasFeatureAttribute(FEATURE_ATTRIBUTE, parasitePlayerProfileElement)
-  ) {
+export default async (statsContentElement) => {
+  if (hasFeatureAttribute(FEATURE_ATTRIBUTE, statsContentElement)) {
     return
   }
 
-  setFeatureAttribute(FEATURE_ATTRIBUTE, parasitePlayerProfileElement)
+  setFeatureAttribute(FEATURE_ATTRIBUTE, statsContentElement)
 
-  const eloAndLevelProgressElement = parasitePlayerProfileElement.children[4]
+  const mainStatisticsElement = statsContentElement.children[3]
 
   const nickname = getPlayerProfileNickname()
   const game = getPlayerProfileStatsGame()
@@ -46,8 +38,8 @@ export default async () => {
   const { averageKills, averageHeadshots, averageKDRatio, averageKRRatio } =
     playerStats
 
-  const statsElement = (
-    <>
+  const extendedStatsElement = (
+    <div>
       <div style={{ marginBottom: 32 }}>
         <div style={{ display: 'flex', gap: 16 }}>
           <div style={{ flex: 2 }}>
@@ -88,11 +80,8 @@ export default async () => {
         </div>
       </div>
       {createHrElement()}
-    </>
+    </div>
   )
 
-  parasitePlayerProfileElement.insertBefore(
-    statsElement,
-    eloAndLevelProgressElement
-  )
+  mainStatisticsElement.insertAdjacentElement('afterend', extendedStatsElement)
 }

@@ -1,5 +1,4 @@
 import React from 'dom-chef'
-import select from 'select-dom'
 import {
   hasFeatureAttribute,
   setFeatureAttribute
@@ -48,21 +47,14 @@ const createSkillLevelElement = ({
   )
 }
 
-export default async () => {
-  const parasitePlayerProfileElement = select(
-    'parasite-player-profile-content > div'
-  )
-
-  if (
-    parasitePlayerProfileElement?.children.length < 14 ||
-    hasFeatureAttribute(FEATURE_ATTRIBUTE, parasitePlayerProfileElement)
-  ) {
+export default async (statsContentElement) => {
+  if (hasFeatureAttribute(FEATURE_ATTRIBUTE, statsContentElement)) {
     return
   }
 
-  setFeatureAttribute(FEATURE_ATTRIBUTE, parasitePlayerProfileElement)
+  setFeatureAttribute(FEATURE_ATTRIBUTE, statsContentElement)
 
-  const mainStatsElement = parasitePlayerProfileElement.children[1]
+  const gameSelectorElement = statsContentElement.children[0]
 
   const nickname = getPlayerProfileNickname()
   const player = await getPlayer(nickname)
@@ -83,7 +75,7 @@ export default async () => {
   const progressWidth = (faceitElo / 2000) * 100
 
   const levelProgressElement = (
-    <>
+    <div>
       <div style={{ marginBottom: 32 }}>
         {createSectionTitleElement({ title: 'Level Progress' })}
         <div style={{ display: 'flex', gap: 16, marginBottom: 16 }}>
@@ -192,11 +184,8 @@ export default async () => {
         </div>
       </div>
       {createHrElement()}
-    </>
+    </div>
   )
 
-  parasitePlayerProfileElement.insertBefore(
-    levelProgressElement,
-    mainStatsElement
-  )
+  gameSelectorElement.insertAdjacentElement('afterend', levelProgressElement)
 }

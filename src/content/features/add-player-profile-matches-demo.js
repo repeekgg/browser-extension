@@ -14,29 +14,20 @@ import createButton from '../components/button'
 
 const FEATURE_ATTRIBUTE = 'matches-demo'
 
-export default async () => {
-  const parasitePlayerProfileElement = select(
-    'parasite-player-profile-content > div'
-  )
-
-  const matchElements = select.all(
-    'table > tbody > tr',
-    parasitePlayerProfileElement
-  )
+export default async (statsContentElement) => {
+  const matchElements = select.all('table > tbody > tr', statsContentElement)
 
   const matchElementsHead = matchElements.shift()
 
   if (
     matchElements.length === 0 ||
     !matchElementsHead ||
-    !parasitePlayerProfileElement ||
-    parasitePlayerProfileElement.children.length < 13 ||
-    hasFeatureAttribute(FEATURE_ATTRIBUTE, parasitePlayerProfileElement)
+    hasFeatureAttribute(FEATURE_ATTRIBUTE, statsContentElement)
   ) {
     return
   }
 
-  setFeatureAttribute(FEATURE_ATTRIBUTE, parasitePlayerProfileElement)
+  setFeatureAttribute(FEATURE_ATTRIBUTE, statsContentElement)
 
   matchElementsHead.append(
     <th
@@ -90,9 +81,8 @@ export default async () => {
       </td>
     )
 
-    matchElement.insertBefore(
-      downloadButtonElement,
-      matchElement.children[matchElement.children.length - 1]
-    )
+    matchElement.children[
+      matchElement.children.length - 1
+    ].insertAdjacentElement('beforebegin', downloadButtonElement)
   })
 }

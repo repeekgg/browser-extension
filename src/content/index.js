@@ -30,10 +30,30 @@ import addMatchRoomSkinOfTheMatch from './features/add-match-room-skin-of-the-ma
 import addMatchRoomEloEstimation from './features/add-match-room-elo-estimation'
 
 function playerProfileStatsFeatures() {
-  runFeatureIf('playerProfileLevelProgress', addPlayerProfileLevelProgress)
-  addPlayerProfileMatchesDemo()
-  addPlayerProfileMatchesElo()
-  addPlayerProfileExtendedStats()
+  const parasiteContainerElement = select('#parasite-container')
+
+  if (parasiteContainerElement?.children.length !== 4) {
+    return
+  }
+
+  const statsContentRootElement = parasiteContainerElement.children[2]
+
+  if (statsContentRootElement.children.length !== 1) {
+    return
+  }
+
+  const statsContentElement = statsContentRootElement.children[0]
+
+  if (statsContentElement.children.length !== 14) {
+    return
+  }
+
+  runFeatureIf('playerProfileLevelProgress', () =>
+    addPlayerProfileLevelProgress(statsContentElement)
+  )
+  addPlayerProfileMatchesDemo(statsContentElement)
+  addPlayerProfileMatchesElo(statsContentElement)
+  addPlayerProfileExtendedStats(statsContentElement)
 }
 
 function observeBody() {
