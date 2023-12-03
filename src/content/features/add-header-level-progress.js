@@ -123,7 +123,7 @@ export default async () => {
                 style={{
                   marginTop: 1,
                   height: 2,
-                  width: 110,
+                  width: 120,
                   background: '#4b4e4e'
                 }}
               >
@@ -138,7 +138,8 @@ export default async () => {
               <div
                 style={{
                   display: 'flex',
-                  'justify-content': 'space-between'
+                  'justify-content': 'space-between',
+                  fontSize: 10
                 }}
               >
                 {levelMinElo}
