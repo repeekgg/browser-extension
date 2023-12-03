@@ -28,8 +28,12 @@ import repeekNotification from './features/repeek-notification'
 import addMatchRoomSkinOfTheMatch from './features/add-match-room-skin-of-the-match'
 import addMatchRoomEloEstimation from './features/add-match-room-elo-estimation'
 
-function playerProfileStatsFeatures() {
-  const parasiteContainerElement = select('#parasite-container')
+function addPlayerProfileStatsFeatures(isPlayerProfileModal) {
+  const parasiteContainerElement = select(
+    isPlayerProfileModal
+      ? 'parasite-player-profile > div'
+      : '#parasite-container'
+  )
 
   if (parasiteContainerElement?.children.length !== 4) {
     return
@@ -97,10 +101,10 @@ function observeBody() {
           legacyModalElement
         )
       } else if (modals.isPlayerProfile()) {
-        addPlayerProfileBadge(legacyModalElement)
+        addPlayerProfileBadge(true)
 
         if (modals.isPlayerProfileStats()) {
-          playerProfileStatsFeatures(legacyModalElement)
+          addPlayerProfileStatsFeatures(true)
         }
       }
     }
@@ -148,10 +152,10 @@ function observeBody() {
           mainContentElement
         )
       } else if (pages.isPlayerProfile()) {
-        addPlayerProfileBadge(mainContentElement)
+        addPlayerProfileBadge()
 
         if (pages.isPlayerProfileStats()) {
-          playerProfileStatsFeatures(mainContentElement)
+          addPlayerProfileStatsFeatures()
         }
       } else if (pages.isTeamsOverview()) {
         runFeatureIf(

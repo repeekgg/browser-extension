@@ -11,8 +11,14 @@ import { getPlayer } from '../helpers/faceit-api'
 
 const FEATURE_ATTRIBUTE = 'profile-badge'
 
-export default async () => {
-  const playerNameElement = select('#parasite-container h5[size="5"]')
+export default async (isPlayerProfileModal) => {
+  const playerNameElement = select(
+    `${
+      isPlayerProfileModal
+        ? 'parasite-player-profile > div'
+        : '#parasite-container'
+    } h5[size="5"]`
+  )
 
   const playerMainInfoElement = playerNameElement?.parentElement?.parentElement
 
