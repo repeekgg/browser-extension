@@ -7,22 +7,24 @@ import {
 const FEATURE_ATTRIBUTE = 'close-faceit-client-download-banner'
 
 export default () => {
-  const parasiteHeaderMessageBarElement = select('parasite-header-message-bar')
-
-  if (!parasiteHeaderMessageBarElement) {
-    return
-  }
-
-  const parasiteHeaderMessageBarButtonElements = select.all(
-    'button',
-    parasiteHeaderMessageBarElement
+  const headerMessageBarElement = select(
+    'parasite-main-header-container #header-message-bar'
   )
 
-  if (parasiteHeaderMessageBarButtonElements.length !== 2) {
+  if (!headerMessageBarElement) {
     return
   }
 
-  const closeButtonElement = parasiteHeaderMessageBarButtonElements[1]
+  const headerMessageBarButtonElements = select.all(
+    'button',
+    headerMessageBarElement
+  )
+
+  if (headerMessageBarButtonElements.length !== 2) {
+    return
+  }
+
+  const closeButtonElement = headerMessageBarButtonElements[1]
 
   if (hasFeatureAttribute(FEATURE_ATTRIBUTE, closeButtonElement)) {
     return
