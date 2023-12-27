@@ -38,7 +38,11 @@ export default async (parentElement) => {
   const {
     matchRoomAutoVetoMapItems,
     matchRoomAutoVetoMapsShuffle: shuffleMaps,
-    matchRoomAutoVetoMapsShuffleAmount: shuffleMapsAmount
+    matchRoomAutoVetoMapsShuffleAmount: shuffleMapsAmount,
+
+    // Auto veto limit variables.
+    matchRoomAutoVetoMapsLimit: vetoMapsLimit,
+    matchRoomAutoVetoMapsLimitAmount: vetoMapsLimitAmount
   } = await storage.getAll()
   let autoVetoItems = matchRoomAutoVetoMapItems.map((m) => maps.csgo[m] || m)
 
@@ -62,6 +66,8 @@ export default async (parentElement) => {
 
   setFeatureAttribute(FEATURE_ATTRIBUTE, votingListElement)
 
+  let vetoMapCounter = 0
+
   const autoVeto = () => {
     const isVetoTurn = select.exists('button', votingListElement)
 
@@ -76,7 +82,27 @@ export default async (parentElement) => {
       )
       if (vetoButtonElement) {
         setTimeout(() => {
-          vetoButtonElement.click()
+          /*
+           * Added Auto Veto Limit:
+           *
+           * Default: vetoMapsLimit = false (No Limit on Veto)
+           *          vetoMapsLimitAmount = 4 (Maximum a team can veto)
+           *          vetoMapCounter = 1-4 (Keep a check on number of maps veteod)
+           *
+           * Logic: If vetoMapsLimit = false, auto veto maximum possible maps
+           *        else check
+           *             if counter <= set_value (default=4)
+           *                auto veto and increment counter
+           *             else just wait for player to veto.
+           */
+          if (vetoMapsLimit) {
+            if (vetoMapCounter < vetoMapsLimitAmount) {
+              vetoButtonElement.click()
+              vetoMapCounter += 1
+            }
+          } else {
+            vetoButtonElement.click()
+          }
         }, VETO_DELAY)
       }
       return Boolean(vetoButtonElement)

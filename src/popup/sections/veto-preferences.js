@@ -45,6 +45,19 @@ export default ({ getMenuProps, getSortableProps, getSwitchProps }) => (
       mapOption={(option) => `First ${option}`}
       {...getMenuProps('matchRoomAutoVetoMapsShuffleAmount')}
     />
+    <ListItemSwitch
+      primary="Veto Limit"
+      secondary="Limit the amount of maps gets auto vetoed."
+      {...getSwitchProps('matchRoomAutoVetoMapsLimit')}
+    />
+    <ListItemMenu
+      primary="Veto Limit Amount"
+      options={MATCH_ROOM_VETO_MAP_ITEMS.filter(
+        (_, index) => index % 2 === 0
+      ).map((_, index) => index + 1)}
+      mapOption={option => `First ${option}`}
+      {...getMenuProps('matchRoomAutoVetoMapsLimitAmount')}
+    />
     <ListItemText secondary="Sorted by favourite to least favourite. Least favourite will be vetoed first." />
     <ListItemsSortable {...getSortableProps('matchRoomAutoVetoMapItems')} />
   </React.Fragment>

@@ -35,6 +35,8 @@ export const DEFAULTS = {
   matchRoomAutoVetoMaps: false,
   matchRoomAutoVetoMapsShuffle: false,
   matchRoomAutoVetoMapsShuffleAmount: 3,
+  matchRoomAutoVetoMapsLimit: false,
+  matchRoomAutoVetoMapsLimitAmount: 4,
   matchRoomAutoVetoMapItems: MATCH_ROOM_VETO_MAP_ITEMS,
   matchRoomFocusMode: false,
   matchRoomLastConnectToServer: '',
