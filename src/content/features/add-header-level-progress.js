@@ -8,18 +8,21 @@ import {
 import { SKILL_LEVELS_BY_GAME } from '../helpers/elo'
 import createSkillLevelElement from '../components/skill-level'
 import { createPathname, navigateTo } from '../helpers/navigation'
+import { isBeta } from '../helpers/is-beta'
 
 const FEATURE_ATTRIBUTE = 'level-progress'
 const REFRESH_TIME = 300000 // 5 Minutes
 
 export default async () => {
   const parasiteMainHeaderContainerElement = select(
-    'parasite-main-header-container'
+    isBeta ? '#main-header-height-wrapper' : 'parasite-main-header-container'
   )
 
-  const rightHeaderElement =
-    parasiteMainHeaderContainerElement?.firstChild?.firstChild?.lastChild
-      ?.lastChild?.firstChild?.firstChild.lastChild
+  const rightHeaderElement = isBeta
+    ? parasiteMainHeaderContainerElement?.children[1].lastChild?.lastChild
+        ?.firstChild?.firstChild.lastChild
+    : parasiteMainHeaderContainerElement?.firstChild?.firstChild?.lastChild
+        ?.lastChild?.firstChild?.firstChild.lastChild
 
   if (rightHeaderElement?.parentNode?.childNodes.length !== 3) {
     return

@@ -3,6 +3,7 @@ import storage from '../shared/storage'
 import * as modals from './helpers/modals'
 import * as pages from './helpers/pages'
 import { runFeatureIf } from './helpers/user-settings'
+import { isBeta } from './helpers/is-beta'
 import clickModalPartyInviteAccept from './features/click-modal-party-invite-accept'
 import clickModalMatchQueuingContinue from './features/click-modal-match-queuing-continue'
 import clickModalMatchReady from './features/click-modal-match-ready'
@@ -32,6 +33,8 @@ function addPlayerProfileStatsFeatures(isPlayerProfileModal) {
   const parasiteContainerElement = select(
     isPlayerProfileModal
       ? 'parasite-player-profile > div'
+      : isBeta
+      ? '#main-layout-content'
       : '#parasite-container'
   )
 
