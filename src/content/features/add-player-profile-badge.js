@@ -8,6 +8,7 @@ import createFeaturedPlayerBadgeElement from '../components/player-badge'
 import { getPlayerBadges } from '../helpers/player-badges'
 import { getPlayerProfileNickname } from '../helpers/player-profile'
 import { getPlayer } from '../helpers/faceit-api'
+import { isBeta } from '../helpers/is-beta'
 
 const FEATURE_ATTRIBUTE = 'profile-badge'
 
@@ -15,7 +16,11 @@ export default async (isPlayerProfileModal) => {
   const playerNameElement = select(
     `${
       isPlayerProfileModal
-        ? 'parasite-player-profile > div'
+        ? isBeta
+          ? '.FuseModalPortal > div > div > div'
+          : 'parasite-player-profile > div'
+        : isBeta
+        ? '#main-layout-content'
         : '#parasite-container'
     } h5[size="5"]`
   )

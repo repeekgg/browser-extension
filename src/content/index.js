@@ -32,7 +32,9 @@ import addMatchRoomEloEstimation from './features/add-match-room-elo-estimation'
 function addPlayerProfileStatsFeatures(isPlayerProfileModal) {
   const parasiteContainerElement = select(
     isPlayerProfileModal
-      ? 'parasite-player-profile > div'
+      ? isBeta
+        ? '.FuseModalPortal > div > div > div'
+        : 'parasite-player-profile > div'
       : isBeta
       ? '#main-layout-content'
       : '#parasite-container'
@@ -64,7 +66,9 @@ function addPlayerProfileStatsFeatures(isPlayerProfileModal) {
 
 function observeBody() {
   const observer = new MutationObserver(() => {
-    const legacyModalElement = select('.modal-dialog')
+    const legacyModalElement = isBeta
+      ? select('.FuseModalPortal > div > div > div')
+      : select('.modal-dialog')
 
     if (legacyModalElement) {
       if (modals.isMatchQueuing(legacyModalElement)) {
@@ -122,13 +126,15 @@ function observeBody() {
 
     addSidebarMatchesElo()
 
-    const mainContentElement = select('#main-content')
+    const mainContentElement = select(
+      isBeta ? '#main-layout-content' : '#main-content'
+    )
 
     if (mainContentElement) {
       if (pages.isRoomOverview()) {
         addMatchRoomEloEstimation()
-        addMatchRoomPlayerBadges(mainContentElement)
-        addMatchRoomSkinOfTheMatch(mainContentElement)
+        addMatchRoomPlayerBadges()
+        addMatchRoomSkinOfTheMatch()
         runFeatureIf(
           'matchRoomAutoCopyServerData',
           copyMatchRoomCopyServerData,

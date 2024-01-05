@@ -1,6 +1,7 @@
 import select from 'select-dom'
 import * as pages from './pages'
 import { getCurrentPath } from './location'
+import { isBeta } from './is-beta'
 
 export const isInviteToParty = (parent) =>
   select.exists('h3[translate-once="INVITE-TO-PARTY"]', parent)
@@ -31,6 +32,11 @@ export const isInactive = (parent) =>
   select.exists('h3[translate-once="INACTIVE"]', parent)
 
 export const isPlayerProfileStats = () =>
-  /players-modal\/.+\/stats\//.test(getCurrentPath())
+  isBeta
+    ? /players\/.+\/stats\//.test(getCurrentPath())
+    : /players-modal\/.+\/stats\//.test(getCurrentPath())
 
-export const isPlayerProfile = () => /players-modal\/.*$/.test(getCurrentPath())
+export const isPlayerProfile = () =>
+  isBeta
+    ? /players\/.*$/.test(getCurrentPath())
+    : /players-modal\/.*$/.test(getCurrentPath())

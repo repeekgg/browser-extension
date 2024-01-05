@@ -9,12 +9,15 @@ import {
 } from '../helpers/dom-element'
 import { getEloChangesByMatches } from '../helpers/elo'
 import { getIsFreeMember } from '../helpers/membership'
+import { isBeta } from '../helpers/is-beta'
 
 const FEATURE_ATTRIBUTE = 'matches-elo'
 
 export default async () => {
   const matchHistoryElement = select(
-    'parasite-root-container .infinite-scroll-component'
+    isBeta
+      ? '#__next__modal_root__ .infinite-scroll-component'
+      : 'parasite-root-container .infinite-scroll-component'
   )
 
   if (
