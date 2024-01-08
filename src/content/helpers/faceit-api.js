@@ -142,3 +142,12 @@ export const getPlayerSummaries = (userIds) =>
     },
     { exclude: userIds }
   )
+
+export const getPlayerBans = async (userId) => {
+  const limit = 20
+  const offset = 0
+
+  return fetchApiMemoized(
+    `/queue/v1/ban?userId=${userId}&organizerId=faceit&offset=${offset}&limit=${limit}`
+  )
+}
