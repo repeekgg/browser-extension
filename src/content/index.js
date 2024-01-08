@@ -3,6 +3,7 @@ import storage from '../shared/storage'
 import * as modals from './helpers/modals'
 import * as pages from './helpers/pages'
 import { runFeatureIf } from './helpers/user-settings'
+import addPlayerProfileBan from './features/add-player-profile-ban'
 import clickModalPartyInviteAccept from './features/click-modal-party-invite-accept'
 import clickModalMatchQueuingContinue from './features/click-modal-match-queuing-continue'
 import clickModalMatchReady from './features/click-modal-match-ready'
@@ -101,6 +102,7 @@ function observeBody() {
           legacyModalElement
         )
       } else if (modals.isPlayerProfile()) {
+        addPlayerProfileBan(legacyModalElement)
         addPlayerProfileBadge(true)
 
         if (modals.isPlayerProfileStats()) {
@@ -152,6 +154,7 @@ function observeBody() {
           mainContentElement
         )
       } else if (pages.isPlayerProfile()) {
+        addPlayerProfileBan(mainContentElement)
         addPlayerProfileBadge()
 
         if (pages.isPlayerProfileStats()) {
