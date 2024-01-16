@@ -1,6 +1,6 @@
-import React from 'react'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
+import React from 'react'
 import LogoMark from './logo-mark'
 import LogoType from './logo-type'
 
@@ -11,7 +11,7 @@ export default class extends React.Component {
         position="static"
         style={{
           background: '#171717',
-          borderBottom: '1px solid #262626'
+          borderBottom: '1px solid #262626',
         }}
       >
         <Toolbar style={{ paddingLeft: 16, paddingRight: 16 }}>
@@ -19,7 +19,7 @@ export default class extends React.Component {
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: 12
+              gap: 12,
             }}
           >
             <LogoMark style={{ height: 40, width: 'auto' }} />

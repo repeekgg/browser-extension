@@ -1,16 +1,16 @@
 import React from 'dom-chef'
+import createHrElement from '../components/hr'
+import createKeyStatElement from '../components/key-stat'
+import createSectionTitleElement from '../components/section-title'
 import {
   hasFeatureAttribute,
-  setFeatureAttribute
+  setFeatureAttribute,
 } from '../helpers/dom-element'
 import { getPlayer, getPlayerStats } from '../helpers/faceit-api'
 import {
   getPlayerProfileNickname,
-  getPlayerProfileStatsGame
+  getPlayerProfileStatsGame,
 } from '../helpers/player-profile'
-import createSectionTitleElement from '../components/section-title'
-import createKeyStatElement from '../components/key-stat'
-import createHrElement from '../components/hr'
 
 const FEATURE_ATTRIBUTE = 'extended-stats'
 
@@ -47,19 +47,19 @@ export default async (statsContentElement) => {
             <div style={{ display: 'flex', gap: 16 }}>
               {createKeyStatElement({
                 key: 'Average Kills',
-                stat: averageKills
+                stat: averageKills,
               })}
               {createKeyStatElement({
                 key: 'Average Headshots %',
-                stat: averageHeadshots
+                stat: averageHeadshots,
               })}
               {createKeyStatElement({
                 key: 'Average K/D',
-                stat: averageKDRatio
+                stat: averageKDRatio,
               })}
               {createKeyStatElement({
                 key: 'Average K/R',
-                stat: averageKRRatio
+                stat: averageKRRatio,
               })}
             </div>
             <div />
@@ -69,11 +69,11 @@ export default async (statsContentElement) => {
             <div style={{ display: 'flex', gap: 16 }}>
               {createKeyStatElement({
                 key: 'AFK Times',
-                stat: afk
+                stat: afk,
               })}
               {createKeyStatElement({
                 key: 'Leave Times',
-                stat: leaver
+                stat: leaver,
               })}
             </div>
           </div>

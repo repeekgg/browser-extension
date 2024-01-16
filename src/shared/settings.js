@@ -1,11 +1,11 @@
 export const MATCH_ROOM_VETO_LOCATION_ITEMS = {
   EU: ['UK', 'Sweden', 'France', 'Germany', 'Netherlands'],
   US: ['Chicago', 'Dallas', 'Denver', 'LosAngeles', 'NewYork'],
-  Oceania: ['Sydney', 'Melbourne']
+  Oceania: ['Sydney', 'Melbourne'],
 }
 
 export const MATCH_ROOM_VETO_LOCATION_REGIONS = Object.keys(
-  MATCH_ROOM_VETO_LOCATION_ITEMS
+  MATCH_ROOM_VETO_LOCATION_ITEMS,
 )
 
 export const MATCH_ROOM_VETO_MAP_ITEMS = [
@@ -16,7 +16,7 @@ export const MATCH_ROOM_VETO_MAP_ITEMS = [
   'de_mirage',
   'de_nuke',
   'de_overpass',
-  'de_vertigo'
+  'de_vertigo',
 ]
 
 export const DEFAULTS = {
@@ -51,5 +51,5 @@ export const DEFAULTS = {
   notifyMatchRoomAutoVetoLocations: true,
   notifyMatchRoomAutoVetoMaps: true,
   teamRosterPlayersInfo: true,
-  repeekNotificationClosed: false
+  repeekNotificationClosed: false,
 }

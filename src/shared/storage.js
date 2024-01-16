@@ -11,13 +11,13 @@ const storage = new OptionsSync({
       ) {
         savedOptions.matchRoomAutoVetoMapItems =
           savedOptions.matchRoomAutoVetoMapItems.filter(
-            (map) => map !== 'de_cache'
+            (map) => map !== 'de_cache',
           )
         savedOptions.matchRoomAutoVetoMapItems.push('de_ancient')
       }
     },
-    OptionsSync.migrations.removeUnused
-  ]
+    OptionsSync.migrations.removeUnused,
+  ],
 })
 
 export default storage

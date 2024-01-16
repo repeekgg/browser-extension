@@ -1,7 +1,7 @@
+import isNumber from 'lodash/isNumber'
+import round from 'lodash/round'
 /* eslint-disable import/prefer-default-export */
 import mem from 'mem'
-import round from 'lodash/round'
-import isNumber from 'lodash/isNumber'
 import { getMatchmakingQueue } from './faceit-api'
 
 export function normalizeElo(elo) {
@@ -17,7 +17,7 @@ export function estimateRatingChange(elo1, elo2, K = 50) {
 
   return {
     gain: gain || 1,
-    loss: loss || -1
+    loss: loss || -1,
   }
 }
 
@@ -28,7 +28,7 @@ export function predictRatingChange(winProbability, K = 50) {
 
   return {
     gain,
-    loss: -(K - gain)
+    loss: -(K - gain),
   }
 }
 
@@ -43,7 +43,7 @@ export const SKILL_LEVELS_BY_GAME = {
     7: [1551, 1700],
     8: [1701, 1850],
     9: [1851, 2000],
-    10: [2001, null]
+    10: [2001, null],
   },
   cs2: {
     1: [1, 500],
@@ -55,8 +55,8 @@ export const SKILL_LEVELS_BY_GAME = {
     7: [1351, 1530],
     8: [1531, 1750],
     9: [1751, 2000],
-    10: [2001, null]
-  }
+    10: [2001, null],
+  },
 }
 
 export async function getEloChangesByMatches(matches) {
@@ -75,7 +75,7 @@ export async function getEloChangesByMatches(matches) {
 
           return match
         }
-      })
+      }),
     )
   ).filter(Boolean)
 
@@ -108,8 +108,8 @@ export async function getEloChangesByMatches(matches) {
       [match.matchId]: {
         previousElo,
         newElo,
-        eloDiff
-      }
+        eloDiff,
+      },
     }
   }, {})
 

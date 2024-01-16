@@ -1,6 +1,6 @@
-import React from 'react'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
+import React from 'react'
 
 export default ({ href, faceit, steamCommunity, subreddit, ...props }) => {
   let link = href

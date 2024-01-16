@@ -18,7 +18,7 @@ export default ({
   averageKills,
   averageKRRatio,
   averageHeadshots,
-  alignRight = false
+  alignRight = false,
 }) => (
   <div
     className="text-muted"
@@ -27,7 +27,7 @@ export default ({
       'border-top': '1px solid #333',
       'text-align': alignRight && 'right',
       'font-size': 12,
-      'line-height': 12
+      'line-height': 12,
     }}
   >
     <div>

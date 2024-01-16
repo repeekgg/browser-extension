@@ -5,7 +5,7 @@ export default ({ title }) => (
     style={{
       fontWeight: 'bold',
       marginBottom: 16,
-      textTransform: 'uppercase'
+      textTransform: 'uppercase',
     }}
   >
     {title}

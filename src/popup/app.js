@@ -1,29 +1,29 @@
 import React from 'react'
-import storage from '../shared/storage'
 import { MATCH_ROOM_VETO_LOCATION_REGIONS } from '../shared/settings'
+import storage from '../shared/storage'
 import AppBar from './components/app-bar'
 import Drawer from './components/drawer'
-import General, { GENERAL } from './sections/general'
-import Automation, { AUTOMATION } from './sections/automation'
-import Appearance, { APPEARANCE } from './sections/appearance'
-import VetoPreferences, { VETO_PREFERENCES } from './sections/veto-preferences'
-import Notifications, { NOTIFICATIONS } from './sections/notifications'
-import Help, { HELP } from './sections/help'
 import About, { ABOUT } from './sections/about'
+import Appearance, { APPEARANCE } from './sections/appearance'
+import Automation, { AUTOMATION } from './sections/automation'
+import General, { GENERAL } from './sections/general'
+import Help, { HELP } from './sections/help'
+import Notifications, { NOTIFICATIONS } from './sections/notifications'
+import VetoPreferences, { VETO_PREFERENCES } from './sections/veto-preferences'
 
 export default class App extends React.Component {
   state = {
     options: {
-      matchRoomVetoLocationRegion: MATCH_ROOM_VETO_LOCATION_REGIONS[0]
+      matchRoomVetoLocationRegion: MATCH_ROOM_VETO_LOCATION_REGIONS[0],
     },
-    loading: true
+    loading: true,
   }
 
   async componentDidMount() {
     const storageOptions = await storage.getAll()
     this.setState(({ options }) => ({
       options: { ...options, ...storageOptions },
-      loading: false
+      loading: false,
     }))
   }
 
@@ -34,8 +34,8 @@ export default class App extends React.Component {
       return {
         options: {
           ...options,
-          ...updatedOption
-        }
+          ...updatedOption,
+        },
       }
     })
   }
@@ -45,7 +45,7 @@ export default class App extends React.Component {
     return {
       key: option,
       selected: selected ? selected(options) : options[option],
-      onChangeOption: this.getUpdateOption(option)
+      onChangeOption: this.getUpdateOption(option),
     }
   }
 
@@ -57,7 +57,7 @@ export default class App extends React.Component {
       onSorted: onSorted
         ? (newItems) =>
             onSorted(newItems, options, this.getUpdateOption(itemsKey))
-        : this.getUpdateOption(itemsKey)
+        : this.getUpdateOption(itemsKey),
     }
   }
 
@@ -70,7 +70,7 @@ export default class App extends React.Component {
   getSwitchProps = (option) => ({
     key: option,
     checked: this.state.options[option],
-    onClick: this.getHandleSwitchOption(option)
+    onClick: this.getHandleSwitchOption(option),
   })
 
   render() {
@@ -88,13 +88,13 @@ export default class App extends React.Component {
             [VETO_PREFERENCES]: VetoPreferences,
             [NOTIFICATIONS]: Notifications,
             [HELP]: Help,
-            [ABOUT]: About
+            [ABOUT]: About,
           }}
           itemProps={{
             options,
             getSwitchProps: this.getSwitchProps,
             getMenuProps: this.getMenuProps,
-            getSortableProps: this.getSortableProps
+            getSortableProps: this.getSortableProps,
           }}
         />
       </React.Fragment>

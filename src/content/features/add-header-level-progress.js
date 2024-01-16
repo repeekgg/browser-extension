@@ -1,12 +1,12 @@
-import select from 'select-dom'
 import React from 'dom-chef'
-import { getSelf } from '../helpers/faceit-api'
+import select from 'select-dom'
+import createSkillLevelElement from '../components/skill-level'
 import {
   hasFeatureAttribute,
-  setFeatureAttribute
+  setFeatureAttribute,
 } from '../helpers/dom-element'
 import { SKILL_LEVELS_BY_GAME } from '../helpers/elo'
-import createSkillLevelElement from '../components/skill-level'
+import { getSelf } from '../helpers/faceit-api'
 import { createPathname, navigateTo } from '../helpers/navigation'
 
 const FEATURE_ATTRIBUTE = 'level-progress'
@@ -14,7 +14,7 @@ const REFRESH_TIME = 300000 // 5 Minutes
 
 export default async () => {
   const parasiteMainHeaderContainerElement = select(
-    'parasite-main-header-container'
+    'parasite-main-header-container',
   )
 
   const rightHeaderElement =
@@ -79,18 +79,18 @@ export default async () => {
             color: 'rgba(255,255,255,0.6)',
             alignItems: 'center',
             marginRight: 8,
-            marginLeft: 4
+            marginLeft: 4,
           }}
         >
           {createSkillLevelElement({
-            level: skillLevel
+            level: skillLevel,
           })}
           <div style={{ 'margin-left': 4 }}>
             <div
               style={{
                 display: 'flex',
                 'justify-content': 'space-between',
-                alignItems: 'flex-end'
+                alignItems: 'flex-end',
               }}
             >
               <div
@@ -98,7 +98,7 @@ export default async () => {
                   display: 'flex',
                   'align-items': 'center',
                   'justify-content': 'flex-end',
-                  gap: 4
+                  gap: 4,
                 }}
               >
                 <svg
@@ -124,14 +124,14 @@ export default async () => {
                   marginTop: 1,
                   height: 2,
                   width: 120,
-                  background: '#4b4e4e'
+                  background: '#4b4e4e',
                 }}
               >
                 <div
                   style={{
                     height: '100%',
                     width: progressWidth,
-                    background: '#f50'
+                    background: '#f50',
                   }}
                 />
               </div>
@@ -139,7 +139,7 @@ export default async () => {
                 style={{
                   display: 'flex',
                   'justify-content': 'space-between',
-                  fontSize: 10
+                  fontSize: 10,
                 }}
               >
                 {levelMinElo}
@@ -156,7 +156,7 @@ export default async () => {
 
     rightHeaderElement.insertBefore(
       levelElement,
-      rightHeaderElement.children[2]
+      rightHeaderElement.children[2],
     )
 
     setTimeout(() => {

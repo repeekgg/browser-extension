@@ -4,7 +4,7 @@ import { getCurrentPath } from './location'
 export const getTeamId = (path) => {
   const match =
     /teams\/([0-9a-z]+-[0-9a-z]+-[0-9a-z]+-[0-9a-z]+-[0-9a-z]+(?:-[0-9a-z]+)?)/.exec(
-      path || getCurrentPath()
+      path || getCurrentPath(),
     )
 
   return match && match[1]

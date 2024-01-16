@@ -1,20 +1,20 @@
 import React from 'dom-chef'
 import select from 'select-dom'
-import { getMatch, getSelf } from '../helpers/faceit-api'
-import { getRoomId } from '../helpers/match-room'
 import storage from '../../shared/storage'
 import {
   hasFeatureAttribute,
-  setFeatureAttribute
+  setFeatureAttribute,
 } from '../helpers/dom-element'
 import { predictRatingChange } from '../helpers/elo'
+import { getMatch, getSelf } from '../helpers/faceit-api'
 import { isSupportedGame } from '../helpers/games'
+import { getRoomId } from '../helpers/match-room'
 
 const FEATURE_ATTRIBUTE = 'match-room-elo-estimation'
 
 export default async () => {
   const matchFactionsHeaderElement = select(
-    '#MATCHROOM-OVERVIEW > div > div > div:nth-child(2)'
+    '#MATCHROOM-OVERVIEW > div > div > div:nth-child(2)',
   )
 
   if (
@@ -35,7 +35,7 @@ export default async () => {
 
   const matchPlayers = [
     ...match.teams.faction1.roster,
-    ...match.teams.faction2.roster
+    ...match.teams.faction2.roster,
   ]
 
   const { matchRoomFocusMode } = await storage.getAll()
@@ -65,7 +65,7 @@ export default async () => {
   })
 
   const [faction1PredictedEloChange, faction2PredictedEloChange] = factions.map(
-    (faction) => predictRatingChange(match.teams[faction].stats.winProbability)
+    (faction) => predictRatingChange(match.teams[faction].stats.winProbability),
   )
 
   const faction1AverageEloDiff = faction1AverageElo - faction2AverageElo
@@ -75,14 +75,14 @@ export default async () => {
     const faction1HeaderElement =
       select(
         'div:nth-child(1) > a > div:nth-child(1)',
-        matchFactionsHeaderElement
+        matchFactionsHeaderElement,
       ) ||
       select('div:nth-child(1) > div:nth-child(1)', matchFactionsHeaderElement)
 
     const faction2HeaderElement =
       select(
         'div:nth-child(3) > a > div:nth-child(1)',
-        matchFactionsHeaderElement
+        matchFactionsHeaderElement,
       ) ||
       select('div:nth-child(3) > div:nth-child(1)', matchFactionsHeaderElement)
 
@@ -91,14 +91,14 @@ export default async () => {
         faction1HeaderElement,
         faction1AverageElo,
         faction1AverageEloDiff,
-        faction1PredictedEloChange
+        faction1PredictedEloChange,
       ],
       [
         faction2HeaderElement,
         faction2AverageElo,
         faction2AverageEloDiff,
-        faction2PredictedEloChange
-      ]
+        faction2PredictedEloChange,
+      ],
     ]
 
     factionEloEstimations.forEach(
@@ -107,9 +107,9 @@ export default async () => {
           factionHeaderElement,
           factionAverageElo,
           factionAverageEloDiff,
-          factionPredictedEloChange
+          factionPredictedEloChange,
         ],
-        index
+        index,
       ) => {
         const factionFeatureAttribute = `${FEATURE_ATTRIBUTE}-faction${
           index + 1
@@ -130,7 +130,7 @@ export default async () => {
               fontSize: 12,
               color: 'rgba(255,255,255,0.6)',
               marginTop: 2,
-              lineHeight: '14px'
+              lineHeight: '14px',
             }}
           >
             Avg. Elo: {factionAverageElo} / Diff:{' '}
@@ -138,9 +138,9 @@ export default async () => {
             <br />
             <span>Est. Gain: +{factionPredictedEloChange.gain}</span> /{' '}
             <span>Est. Loss: {factionPredictedEloChange.loss}</span>
-          </div>
+          </div>,
         )
-      }
+      },
     )
   }
 
@@ -156,6 +156,6 @@ export default async () => {
 
   observer.observe(matchFactionsHeaderElement, {
     childList: true,
-    subtree: true
+    subtree: true,
   })
 }

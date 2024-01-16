@@ -1,38 +1,38 @@
 import select from 'select-dom'
 import storage from '../shared/storage'
+import addHeaderLevelProgress from './features/add-header-level-progress'
+import addMatchRoomEloEstimation from './features/add-match-room-elo-estimation'
+import addMatchRoomPlayerBadges from './features/add-match-room-player-badges'
+import addMatchRoomSkinOfTheMatch from './features/add-match-room-skin-of-the-match'
+import addPlayerProfileBadge from './features/add-player-profile-badge'
+import addPlayerProfileExtendedStats from './features/add-player-profile-extended-stats'
+import addPlayerProfileLevelProgress from './features/add-player-profile-level-progress'
+import addPlayerProfileMatchesDemo from './features/add-player-profile-matches-demo'
+import addPlayerProfileMatchesElo from './features/add-player-profile-matches-elo'
+import addSidebarMatchesElo from './features/add-sidebar-matches-elo'
+import addTeamPlayerInfo from './features/add-team-player-info'
+import applyMatchRoomFocusMode from './features/apply-match-room-focus-mode'
+import clickMatchRoomConnectToServer from './features/click-match-room-connect-to-server'
+import clickMatchRoomVetoLocations from './features/click-match-room-veto-locations'
+import clickMatchRoomVetoMaps from './features/click-match-room-veto-maps'
+import clickModalClose from './features/click-modal-close'
+import clickModalInactiveCheck from './features/click-modal-inactive-check'
+import clickModalMatchQueuingContinue from './features/click-modal-match-queuing-continue'
+import clickModalMatchReady from './features/click-modal-match-ready'
+import clickModalMatchRoomCaptainOk from './features/click-modal-match-room-captain-ok'
+import clickModalPartyInviteAccept from './features/click-modal-party-invite-accept'
+import closeFaceitClientDownloadBanner from './features/close-faceit-client-download-banner'
+import copyMatchRoomCopyServerData from './features/copy-match-room-copy-server-data'
+import repeekNotification from './features/repeek-notification'
 import * as modals from './helpers/modals'
 import * as pages from './helpers/pages'
 import { runFeatureIf } from './helpers/user-settings'
-import clickModalPartyInviteAccept from './features/click-modal-party-invite-accept'
-import clickModalMatchQueuingContinue from './features/click-modal-match-queuing-continue'
-import clickModalMatchReady from './features/click-modal-match-ready'
-import addMatchRoomPlayerBadges from './features/add-match-room-player-badges'
-import copyMatchRoomCopyServerData from './features/copy-match-room-copy-server-data'
-import clickMatchRoomConnectToServer from './features/click-match-room-connect-to-server'
-import addHeaderLevelProgress from './features/add-header-level-progress'
-import closeFaceitClientDownloadBanner from './features/close-faceit-client-download-banner'
-import addPlayerProfileMatchesElo from './features/add-player-profile-matches-elo'
-import clickMatchRoomVetoLocations from './features/click-match-room-veto-locations'
-import clickMatchRoomVetoMaps from './features/click-match-room-veto-maps'
-import clickModalMatchRoomCaptainOk from './features/click-modal-match-room-captain-ok'
-import addPlayerProfileLevelProgress from './features/add-player-profile-level-progress'
-import addPlayerProfileMatchesDemo from './features/add-player-profile-matches-demo'
-import addPlayerProfileExtendedStats from './features/add-player-profile-extended-stats'
-import addPlayerProfileBadge from './features/add-player-profile-badge'
-import clickModalClose from './features/click-modal-close'
-import clickModalInactiveCheck from './features/click-modal-inactive-check'
-import addSidebarMatchesElo from './features/add-sidebar-matches-elo'
-import applyMatchRoomFocusMode from './features/apply-match-room-focus-mode'
-import addTeamPlayerInfo from './features/add-team-player-info'
-import repeekNotification from './features/repeek-notification'
-import addMatchRoomSkinOfTheMatch from './features/add-match-room-skin-of-the-match'
-import addMatchRoomEloEstimation from './features/add-match-room-elo-estimation'
 
 function addPlayerProfileStatsFeatures(isPlayerProfileModal) {
   const parasiteContainerElement = select(
     isPlayerProfileModal
       ? 'parasite-player-profile > div'
-      : '#parasite-container'
+      : '#parasite-container',
   )
 
   if (parasiteContainerElement?.children.length !== 4) {
@@ -52,7 +52,7 @@ function addPlayerProfileStatsFeatures(isPlayerProfileModal) {
   }
 
   runFeatureIf('playerProfileLevelProgress', () =>
-    addPlayerProfileLevelProgress(statsContentElement)
+    addPlayerProfileLevelProgress(statsContentElement),
   )
   addPlayerProfileMatchesDemo(statsContentElement)
   addPlayerProfileMatchesElo(statsContentElement)
@@ -68,37 +68,37 @@ function observeBody() {
         runFeatureIf(
           'matchQueueAutoReady',
           clickModalMatchQueuingContinue,
-          legacyModalElement
+          legacyModalElement,
         )
       } else if (modals.isMatchRoomCaptain(legacyModalElement)) {
         runFeatureIf(
           ['matchRoomAutoVetoLocations', 'matchRoomAutoVetoMaps'],
           clickModalMatchRoomCaptainOk,
-          legacyModalElement
+          legacyModalElement,
         )
       } else if (modals.isMatchVictory(legacyModalElement)) {
         runFeatureIf(
           'modalCloseMatchVictory',
           clickModalClose,
-          legacyModalElement
+          legacyModalElement,
         )
       } else if (modals.isMatchDefeat(legacyModalElement)) {
         runFeatureIf(
           'modalCloseMatchDefeat',
           clickModalClose,
-          legacyModalElement
+          legacyModalElement,
         )
       } else if (modals.isGlobalRankingUpdate(legacyModalElement)) {
         runFeatureIf(
           'modalCloseGlobalRankingUpdate',
           clickModalClose,
-          legacyModalElement
+          legacyModalElement,
         )
       } else if (modals.isInactive(legacyModalElement)) {
         runFeatureIf(
           'modalClickInactiveCheck',
           clickModalInactiveCheck,
-          legacyModalElement
+          legacyModalElement,
         )
       } else if (modals.isPlayerProfile()) {
         addPlayerProfileBadge(true)
@@ -113,7 +113,7 @@ function observeBody() {
     runFeatureIf('headerShowElo', addHeaderLevelProgress)
     runFeatureIf(
       'hideFaceitClientHasLandedBanner',
-      closeFaceitClientDownloadBanner
+      closeFaceitClientDownloadBanner,
     )
     runFeatureIf('partyAutoAcceptInvite', clickModalPartyInviteAccept)
 
@@ -129,27 +129,27 @@ function observeBody() {
         runFeatureIf(
           'matchRoomAutoCopyServerData',
           copyMatchRoomCopyServerData,
-          mainContentElement
+          mainContentElement,
         )
         runFeatureIf(
           'matchRoomAutoConnectToServer',
           clickMatchRoomConnectToServer,
-          mainContentElement
+          mainContentElement,
         )
         runFeatureIf(
           'matchRoomAutoVetoLocations',
           clickMatchRoomVetoLocations,
-          mainContentElement
+          mainContentElement,
         )
         runFeatureIf(
           'matchRoomAutoVetoMaps',
           clickMatchRoomVetoMaps,
-          mainContentElement
+          mainContentElement,
         )
         runFeatureIf(
           'matchRoomFocusMode',
           applyMatchRoomFocusMode,
-          mainContentElement
+          mainContentElement,
         )
       } else if (pages.isPlayerProfile()) {
         addPlayerProfileBadge()
@@ -161,7 +161,7 @@ function observeBody() {
         runFeatureIf(
           'teamRosterPlayersInfo',
           addTeamPlayerInfo,
-          mainContentElement
+          mainContentElement,
         )
       }
     }

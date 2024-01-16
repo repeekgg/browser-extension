@@ -10,7 +10,7 @@ const logger = {
     if (IS_PRODUCTION === false) {
       console.error(`[${context}] ${message}`)
     }
-  }
+  },
 }
 
 export default logger

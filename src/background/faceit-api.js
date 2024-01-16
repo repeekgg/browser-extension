@@ -14,8 +14,8 @@ export default async function faceitApi(path, options) {
         return res
       }),
     {
-      retries: 3
-    }
+      retries: 3,
+    },
   )
 
   const json = await response.json()

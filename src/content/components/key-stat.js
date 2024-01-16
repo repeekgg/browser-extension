@@ -10,7 +10,7 @@ export default ({ key, stat }) => (
       flexDirection: 'column',
       justifyContent: 'center',
       alignItems: 'center',
-      textAlign: 'center'
+      textAlign: 'center',
     }}
   >
     <div style={{ fontSize: 16, fontWeight: 'bold' }}>{stat}</div>

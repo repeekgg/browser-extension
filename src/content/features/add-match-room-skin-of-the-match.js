@@ -3,16 +3,16 @@ import select from 'select-dom'
 import browser from 'webextension-polyfill'
 import {
   ACTION_FETCH_SKIN_OF_THE_MATCH,
-  ACTION_POST_STATS_EVENT
+  ACTION_POST_STATS_EVENT,
 } from '../../shared/constants'
+import storage from '../../shared/storage'
 import {
   hasFeatureAttribute,
-  setFeatureAttribute
+  setFeatureAttribute,
 } from '../helpers/dom-element'
-import { getRoomId } from '../helpers/match-room'
 import { getMatch, getSelf } from '../helpers/faceit-api'
-import storage from '../../shared/storage'
 import { isSupportedGame } from '../helpers/games'
+import { getRoomId } from '../helpers/match-room'
 
 const FEATURE_ATTRIBUTE = 'skin-of-the-match'
 
@@ -49,13 +49,13 @@ export default async () => {
 
   const players = [
     ...match.teams.faction1.roster,
-    ...match.teams.faction2.roster
+    ...match.teams.faction2.roster,
   ]
 
   const skinOfTheMatch = await browser.runtime.sendMessage({
     action: ACTION_FETCH_SKIN_OF_THE_MATCH,
     steamIds: players.map(({ gameId }) => gameId),
-    organizerId: match.organizerId
+    organizerId: match.organizerId,
   })
 
   if (!skinOfTheMatch) {
@@ -70,7 +70,7 @@ export default async () => {
   }
 
   const skinOfTheMatchPlayer = players.find(
-    ({ gameId }) => gameId === skinOfTheMatch.steam_id
+    ({ gameId }) => gameId === skinOfTheMatch.steam_id,
   )
 
   if (!skinOfTheMatchPlayer) {
@@ -83,7 +83,7 @@ export default async () => {
     /* eslint-disable camelcase */
     match_id: match.id,
     organizer_id: match.organizerId,
-    skin: skinOfTheMatch.skin.skinport_url.split('/').pop()
+    skin: skinOfTheMatch.skin.skinport_url.split('/').pop(),
     /* eslint-enable camelcase */
   }
 
@@ -163,7 +163,7 @@ export default async () => {
       style={{
         position: 'relative',
         fontFamily:
-          'ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji'
+          'ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji',
       }}
     >
       <a
@@ -183,13 +183,13 @@ export default async () => {
           borderRadius: 6,
           border: '1px solid rgb(64 64 64)',
           backgroundImage:
-            'linear-gradient(to left top, rgb(10, 10, 10) 50%, rgb(23, 23, 23))'
+            'linear-gradient(to left top, rgb(10, 10, 10) 50%, rgb(23, 23, 23))',
         }}
         onClick={() => {
           browser.runtime.sendMessage({
             action: ACTION_POST_STATS_EVENT,
             eventName: 'skin_of_the_match_clicked',
-            data: statsEventData
+            data: statsEventData,
           })
         }}
       >
@@ -197,14 +197,14 @@ export default async () => {
           style={{
             padding: 8,
             position: 'relative',
-            zIndex: 2
+            zIndex: 2,
           }}
         >
           <div
             style={{
               display: 'flex',
               justifyContent: 'space-between',
-              marginBottom: 8
+              marginBottom: 8,
             }}
           >
             <div>
@@ -214,7 +214,7 @@ export default async () => {
                   marginBottom: 2,
                   display: 'flex',
                   gap: 4,
-                  alignItems: 'center'
+                  alignItems: 'center',
                 }}
               >
                 <svg
@@ -226,7 +226,7 @@ export default async () => {
                   style={{
                     height: 14,
                     width: 'auto',
-                    fill: 'rgba(255,255,255,0.6)'
+                    fill: 'rgba(255,255,255,0.6)',
                   }}
                 >
                   <path
@@ -251,7 +251,7 @@ export default async () => {
               </div>
               <div
                 style={{
-                  fontWeight: 'bold'
+                  fontWeight: 'bold',
                 }}
               >
                 Skin Of The Match
@@ -261,13 +261,13 @@ export default async () => {
               style={{
                 display: 'flex',
                 flexDirection: 'column',
-                alignItems: 'flex-end'
+                alignItems: 'flex-end',
               }}
             >
               <div
                 style={{
                   color: 'rgba(255,255,255,0.6)',
-                  marginBottom: 2
+                  marginBottom: 2,
                 }}
               >
                 Powered by
@@ -304,7 +304,7 @@ export default async () => {
             style={{
               display: 'flex',
               gap: 10,
-              justifyContent: 'center'
+              justifyContent: 'center',
             }}
           >
             <div style={{ width: '25%', display: 'flex' }}>
@@ -313,7 +313,7 @@ export default async () => {
                 style={{
                   width: '100%',
                   filter:
-                    'saturate(1.25) brightness(1.25) drop-shadow(0px 4px 3px black)'
+                    'saturate(1.25) brightness(1.25) drop-shadow(0px 4px 3px black)',
                 }}
                 className="skinImage"
               />
@@ -324,14 +324,14 @@ export default async () => {
                 justifyContent: 'center',
                 flexDirection: 'column',
                 gap: 2,
-                maxWidth: '50%'
+                maxWidth: '50%',
               }}
             >
               <div
                 style={{
                   display: 'flex',
                   gap: 4,
-                  color: 'rgba(255,255,255,0.6)'
+                  color: 'rgba(255,255,255,0.6)',
                 }}
               >
                 {skinOfTheMatchPlayer.avatar ? (
@@ -340,7 +340,7 @@ export default async () => {
                     style={{
                       width: 14,
                       height: 14,
-                      borderRadius: '50%'
+                      borderRadius: '50%',
                     }}
                   />
                 ) : (
@@ -349,7 +349,7 @@ export default async () => {
                       width: 14,
                       height: 14,
                       borderRadius: '50%',
-                      background: '#303030'
+                      background: '#303030',
                     }}
                   />
                 )}
@@ -357,7 +357,7 @@ export default async () => {
                   style={{
                     color: isSelfSkinOfTheMatchPlayer
                       ? skinOfTheMatch.skin.color
-                      : undefined
+                      : undefined,
                   }}
                 >
                   {skinOfTheMatchPlayer.nickname}
@@ -371,7 +371,7 @@ export default async () => {
                 {skinOfTheMatch.skin.exterior && ' · '}
                 {new Intl.NumberFormat(undefined, {
                   style: 'currency',
-                  currency: skinOfTheMatch.skin.price.currency
+                  currency: skinOfTheMatch.skin.price.currency,
                 }).format(skinOfTheMatch.skin.price.value)}
               </div>
             </div>
@@ -387,7 +387,7 @@ export default async () => {
             borderRadius: 6,
             background: '#0a0a0a',
             padding: 8,
-            maxWidth: 250
+            maxWidth: 250,
           }}
         >
           This feature is provided by Repeek (formerly FACEIT Enhancer) and not
@@ -397,7 +397,7 @@ export default async () => {
           style={{
             border: '8px solid transparent',
             borderTop: '8px solid #0a0a0a',
-            borderBottom: 0
+            borderBottom: 0,
           }}
         />
       </div>
@@ -427,9 +427,9 @@ export default async () => {
             animation: '500ms ease-out spotlightFadeIn',
             zIndex: 1,
             borderRadius: 6,
-            transition: 'opacity 250ms ease-out'
+            transition: 'opacity 250ms ease-out',
           }}
-        />
+        />,
       )
     }, 500)
   }
@@ -437,6 +437,6 @@ export default async () => {
   browser.runtime.sendMessage({
     action: ACTION_POST_STATS_EVENT,
     eventName: 'skin_of_the_match_viewed',
-    data: statsEventData
+    data: statsEventData,
   })
 }

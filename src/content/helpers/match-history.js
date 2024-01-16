@@ -12,7 +12,7 @@ const getMatchHistory = async (playerId, totalMatches, recursionLevel = 0) => {
     matchesResults[playerId] = {
       page: -1,
       matches: [],
-      pageRequests: {}
+      pageRequests: {},
     }
   }
 

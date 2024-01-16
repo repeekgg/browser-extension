@@ -1,20 +1,20 @@
 import React from 'dom-chef'
-import select from 'select-dom'
 import random from 'lodash/random'
-import { getRoomId } from '../helpers/match-room'
-import { getSelf, getPlayerMatches } from '../helpers/faceit-api'
+import select from 'select-dom'
 import {
   hasFeatureAttribute,
-  setFeatureAttribute
+  setFeatureAttribute,
 } from '../helpers/dom-element'
 import { getEloChangesByMatches } from '../helpers/elo'
+import { getPlayerMatches, getSelf } from '../helpers/faceit-api'
+import { getRoomId } from '../helpers/match-room'
 import { getIsFreeMember } from '../helpers/membership'
 
 const FEATURE_ATTRIBUTE = 'matches-elo'
 
 export default async () => {
   const matchHistoryElement = select(
-    'parasite-root-container .infinite-scroll-component'
+    'parasite-root-container .infinite-scroll-component',
   )
 
   if (
@@ -47,7 +47,7 @@ export default async () => {
 
     const resultElement = select(
       'div > div > div:nth-child(2) > span',
-      matchLinkElement
+      matchLinkElement,
     )
 
     const eloChange = eloChangesByMatches[matchId]
@@ -70,7 +70,7 @@ export default async () => {
           gap: 4,
           alignItems: 'center',
           color: '#A0A0A0',
-          cursor: selfIsFreeMember && 'help'
+          cursor: selfIsFreeMember && 'help',
         }}
         title={
           selfIsFreeMember ? 'This feature requires FACEIT Premium' : undefined
@@ -89,13 +89,13 @@ export default async () => {
         <span
           style={{
             filter: selfIsFreeMember && 'blur(4px)',
-            opacity: selfIsFreeMember && 0.33
+            opacity: selfIsFreeMember && 0.33,
           }}
         >
           {selfIsFreeMember ? random(1000, 3000) : newElo}
         </span>
       </div>,
-      matchTypeElement
+      matchTypeElement,
     )
   })
 }

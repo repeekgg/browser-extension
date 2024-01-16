@@ -130,7 +130,7 @@ const divisions = {
         fill="#F50"
       />
     </svg>
-  `
+  `,
 }
 
 export default ({ division, style }) => {

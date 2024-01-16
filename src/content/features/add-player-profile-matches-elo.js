@@ -1,17 +1,17 @@
 import React from 'dom-chef'
-import select from 'select-dom'
 import random from 'lodash/random'
-import { getPlayer, getPlayerMatches, getSelf } from '../helpers/faceit-api'
-import { getEloChangesByMatches } from '../helpers/elo'
-import {
-  getPlayerProfileNickname,
-  getPlayerProfileStatsGame
-} from '../helpers/player-profile'
+import select from 'select-dom'
 import {
   hasFeatureAttribute,
-  setFeatureAttribute
+  setFeatureAttribute,
 } from '../helpers/dom-element'
+import { getEloChangesByMatches } from '../helpers/elo'
+import { getPlayer, getPlayerMatches, getSelf } from '../helpers/faceit-api'
 import { getIsFreeMember } from '../helpers/membership'
+import {
+  getPlayerProfileNickname,
+  getPlayerProfileStatsGame,
+} from '../helpers/player-profile'
 
 const FEATURE_ATTRIBUTE = 'matches-elo'
 
@@ -80,7 +80,7 @@ export default async (statsContentElement) => {
           display: 'flex',
           gap: 4,
           alignItems: 'center',
-          cursor: selfIsFreeMember && 'help'
+          cursor: selfIsFreeMember && 'help',
         }}
         title={
           selfIsFreeMember ? 'This feature requires FACEIT Premium' : undefined
@@ -104,7 +104,7 @@ export default async (statsContentElement) => {
             fontWeight: 'normal',
             textTransform: 'none',
             filter: selfIsFreeMember && 'blur(4px)',
-            opacity: selfIsFreeMember && 0.33
+            opacity: selfIsFreeMember && 0.33,
           }}
         >
           {selfIsFreeMember ? random(1000, 3000) : newElo}

@@ -8,7 +8,7 @@ export default {
     de_mirage: 'Mirage',
     de_nuke: 'Nuke',
     de_overpass: 'Overpass',
-    de_vertigo: 'Vertigo'
-  }
+    de_vertigo: 'Vertigo',
+  },
 }
 /* eslint-enable camelcase */

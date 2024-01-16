@@ -9,5 +9,5 @@ export const hasFeatureAttribute = (featureName, element) =>
 export const setStyle = (element, style) =>
   element.setAttribute(
     'style',
-    typeof style === 'string' ? `${style}` : style.join(';')
+    typeof style === 'string' ? `${style}` : style.join(';'),
   )

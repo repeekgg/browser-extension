@@ -1,7 +1,7 @@
 import React from 'react'
-import ListSubheader from '../components/list-subheader'
-import ListItemSwitch from '../components/list-item-switch'
 import ListItemLink from '../components/list-item-link'
+import ListItemSwitch from '../components/list-item-switch'
+import ListSubheader from '../components/list-subheader'
 
 export const APPEARANCE = 'Appearance'
 

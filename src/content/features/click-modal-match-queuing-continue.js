@@ -3,7 +3,7 @@ import select from 'select-dom'
 export default (parent) => {
   const continueButton = select(
     'button[ng-click="close()"][translate-once="CONTINUE"]',
-    parent
+    parent,
   )
 
   if (continueButton) {

@@ -1,13 +1,13 @@
-import React from 'react'
-import { withStyles } from '@material-ui/core/styles'
 import MUIDrawer from '@material-ui/core/Drawer'
 import List from '@material-ui/core/List'
+import { withStyles } from '@material-ui/core/styles'
+import React from 'react'
 import ListItemText from './list-item-text'
 import Loading from './loading'
 
 class Drawer extends React.Component {
   state = {
-    activeItem: Object.keys(this.props.items)[0]
+    activeItem: Object.keys(this.props.items)[0],
   }
 
   render() {
@@ -44,8 +44,8 @@ const styles = () => ({
     width: 190,
     height: '100%',
     background: '#171717',
-    borderRight: '1px solid #262626'
-  }
+    borderRight: '1px solid #262626',
+  },
 })
 
 export default withStyles(styles)(Drawer)

@@ -11,11 +11,11 @@ module.exports = (_env, argv) => {
     entry: {
       content: './content/index.js',
       popup: './popup/index.js',
-      background: './background/index.js'
+      background: './background/index.js',
     },
     output: {
       path: path.resolve(__dirname, 'dist'),
-      filename: '[name].js'
+      filename: '[name].js',
     },
     module: {
       rules: [
@@ -25,24 +25,24 @@ module.exports = (_env, argv) => {
             loader: 'esbuild-loader',
             options: {
               loader: 'jsx',
-              target: 'es2020'
-            }
-          }
+              target: 'es2020',
+            },
+          },
         },
         {
           test: /\.svg$/,
-          loader: 'svg-inline-loader'
-        }
-      ]
+          loader: 'svg-inline-loader',
+        },
+      ],
     },
     plugins: [
       new CleanWebpackPlugin(),
       new CopyWebpackPlugin({
-        patterns: ['*']
+        patterns: ['*'],
       }),
       new webpack.DefinePlugin({
-        'process.env.NODE_ENV': JSON.stringify(argv.mode)
-      })
+        'process.env.NODE_ENV': JSON.stringify(argv.mode),
+      }),
     ],
     optimization: {
       concatenateModules: true,
@@ -55,12 +55,12 @@ module.exports = (_env, argv) => {
                   mangle: true,
                   output: {
                     beautify: true,
-                    indent_level: 2 // eslint-disable-line camelcase
-                  }
-                }
-              })
+                    indent_level: 2, // eslint-disable-line camelcase
+                  },
+                },
+              }),
             ]
-          : undefined
-    }
+          : undefined,
+    },
   }
 }

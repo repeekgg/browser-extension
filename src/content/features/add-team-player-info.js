@@ -1,20 +1,20 @@
 import React from 'dom-chef'
 import select from 'select-dom'
+import createEloElement from '../components/elo'
+import createFlagElement from '../components/flag'
+import createFeaturedPlayerBadgeElement from '../components/player-badge'
+import createSkillLevelElement from '../components/skill-level'
 import {
   hasFeatureAttribute,
-  setFeatureAttribute
+  setFeatureAttribute,
 } from '../helpers/dom-element'
 import { getPlayer, getTeam } from '../helpers/faceit-api'
-import {
-  getTeamMemberPlayerElements,
-  getTeamMemberNicknameElement,
-  getTeamId
-} from '../helpers/team-page'
-import createFlagElement from '../components/flag'
 import { getPlayerBadges } from '../helpers/player-badges'
-import createFeaturedPlayerBadgeElement from '../components/player-badge'
-import createEloElement from '../components/elo'
-import createSkillLevelElement from '../components/skill-level'
+import {
+  getTeamId,
+  getTeamMemberNicknameElement,
+  getTeamMemberPlayerElements,
+} from '../helpers/team-page'
 
 const FEATURE_ATTRIBUTE = 'team-player-stats'
 
@@ -53,12 +53,12 @@ export default async (parentElement) => {
 
     if (badges[player.id]) {
       const featuredPlayerBadgeElement = createFeaturedPlayerBadgeElement(
-        badges[player.id]
+        badges[player.id],
       )
 
       memberDetailsElement.insertAdjacentElement(
         'afterbegin',
-        <div style={{ 'margin-bottom': 2 }}>{featuredPlayerBadgeElement}</div>
+        <div style={{ 'margin-bottom': 2 }}>{featuredPlayerBadgeElement}</div>,
       )
     }
 
@@ -66,7 +66,7 @@ export default async (parentElement) => {
       memberDetailsElement.appendChild(
         <span className="text-muted" style={{ display: 'block' }}>
           {csgoName}
-        </span>
+        </span>,
       )
     }
 
@@ -77,17 +77,17 @@ export default async (parentElement) => {
         <div
           style={{
             display: 'flex',
-            flexShrink: 0
+            flexShrink: 0,
           }}
         >
           {createEloElement({
             elo,
             className: 'text-muted text-md',
             alignRight: true,
-            style: { 'margin-right': 4 }
+            style: { 'margin-right': 4 },
           })}
           {createSkillLevelElement({ level: csgoSkillLevel || 0 })}
-        </div>
+        </div>,
       )
     }
 

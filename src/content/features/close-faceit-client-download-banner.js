@@ -1,14 +1,14 @@
 import select from 'select-dom'
 import {
   hasFeatureAttribute,
-  setFeatureAttribute
+  setFeatureAttribute,
 } from '../helpers/dom-element'
 
 const FEATURE_ATTRIBUTE = 'close-faceit-client-download-banner'
 
 export default () => {
   const headerMessageBarElement = select(
-    'parasite-main-header-container #header-message-bar'
+    'parasite-main-header-container #header-message-bar',
   )
 
   if (!headerMessageBarElement) {
@@ -17,7 +17,7 @@ export default () => {
 
   const headerMessageBarButtonElements = select.all(
     'button',
-    headerMessageBarElement
+    headerMessageBarElement,
   )
 
   if (headerMessageBarButtonElements.length !== 2) {

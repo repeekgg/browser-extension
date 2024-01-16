@@ -1,5 +1,5 @@
-import select from 'select-dom'
 import copyToClipboard from 'copy-text-to-clipboard'
+import select from 'select-dom'
 import { getRoomId } from '../helpers/match-room'
 import { notifyIf } from '../helpers/user-settings'
 
@@ -34,6 +34,6 @@ export default async (parent) => {
 
   notifyIf('notifyMatchRoomAutoCopyServerData', {
     title: 'Server Connect Data Copied',
-    message: 'Server connect data has been copied to your clipboard.'
+    message: 'Server connect data has been copied to your clipboard.',
   })
 }

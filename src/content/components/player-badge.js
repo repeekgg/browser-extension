@@ -37,7 +37,7 @@ export default ({ level = 0, role, bgColor, textColor, onClick }) => {
           fontWeight: 'bold',
           display: 'inline-flex',
           gap: 2,
-          alignItems: 'center'
+          alignItems: 'center',
         }}
         title={description}
         onClick={onClick}
@@ -50,7 +50,7 @@ export default ({ level = 0, role, bgColor, textColor, onClick }) => {
           viewBox="0 0 107 128"
           style={{
             height: 14,
-            width: 'auto'
+            width: 'auto',
           }}
         >
           <path
