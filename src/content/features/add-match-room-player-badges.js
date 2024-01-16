@@ -37,22 +37,22 @@ export default async () => {
   )
 
   const matchPlayerElements = ['roster1', 'roster2']
-    .reduce(
-      (acc, roster) => [
-        ...acc,
+    .reduce((acc, roster) => {
+      acc.push(
         ...select.all(
           `div[name="${roster}"] div > div:first-child > div > div > div[size="40"]`,
           matchRoomContentElement,
         ),
-      ],
-      [],
-    )
+      )
+
+      return acc
+    }, [])
     .map(
       (avatarElement) =>
         avatarElement.parentElement.parentElement.parentElement.parentElement,
     )
 
-  matchPlayerElements.forEach((matchPlayerElement) => {
+  for (const matchPlayerElement of matchPlayerElements) {
     const matchPlayerNicknameElement = select(
       'div:nth-child(2) > div > div',
       matchPlayerElement,
@@ -76,5 +76,5 @@ export default async () => {
 
       matchPlayerInfoElement.prepend(playerBadgeElement)
     }
-  })
+  }
 }

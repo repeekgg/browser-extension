@@ -50,7 +50,7 @@ export default async () => {
     matchRoomOverviewElement.children[0]?.children[0]?.children[1]?.children[2],
   ]
 
-  teamNameElements.forEach((teamNameElement) => {
+  for (const teamNameElement of teamNameElements) {
     if (
       teamNameElement &&
       !hasFeatureAttribute(FEATURE_ATTRIBUTE, teamNameElement)
@@ -58,19 +58,19 @@ export default async () => {
       setFeatureAttribute(FEATURE_ATTRIBUTE, teamNameElement)
       setStyle(teamNameElement, 'visibility: hidden')
     }
-  })
+  }
 
   const teamElements = [
     select('[name="roster1"]', matchRoomOverviewElement),
     select('[name="roster2"]', matchRoomOverviewElement),
   ]
 
-  teamElements.forEach((teamElement) => {
+  for (const teamElement of teamElements) {
     if (teamElement && !hasFeatureAttribute(FEATURE_ATTRIBUTE, teamElement)) {
       setFeatureAttribute(FEATURE_ATTRIBUTE, teamElement)
       setStyle(teamElement, 'visibility: hidden')
     }
-  })
+  }
 
   if (!hasFeatureAttribute(FEATURE_ATTRIBUTE, matchRoomOverviewElement)) {
     setFeatureAttribute(FEATURE_ATTRIBUTE, matchRoomOverviewElement)

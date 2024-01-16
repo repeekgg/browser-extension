@@ -5,13 +5,11 @@ const TOTAL_STATS_MAP = {
 }
 
 export const mapTotalStats = (stats) =>
-  Object.keys(TOTAL_STATS_MAP).reduce(
-    (acc, curr) => ({
-      ...acc,
-      [TOTAL_STATS_MAP[curr]]: stats[curr],
-    }),
-    {},
-  )
+  Object.keys(TOTAL_STATS_MAP).reduce((acc, curr) => {
+    acc[TOTAL_STATS_MAP[curr]] = stats[curr]
+
+    return acc
+  }, {})
 
 export const mapTotalStatsMemoized = mem(mapTotalStats)
 
@@ -26,10 +24,11 @@ export const mapAverageStats = (stats) =>
   stats
     .map((stat) =>
       Object.keys(AVERAGE_STATS_MAP).reduce(
-        (acc, curr) => ({
-          ...acc,
-          [AVERAGE_STATS_MAP[curr]]: stat[curr],
-        }),
+        (acc, curr) => {
+          acc[AVERAGE_STATS_MAP[curr]] = stat[curr]
+
+          return acc
+        },
         {
           winRate: stat.i2 === stat.teamId ? 'win' : 'loss',
         },
@@ -65,10 +64,9 @@ export const mapAverageStats = (stats) =>
             value = (acc[curr2] || []).concat(curr[curr2])
           }
 
-          return {
-            ...acc2,
-            [curr2]: value,
-          }
+          acc2[curr2] = value
+
+          return acc2
         }, {}),
       {},
     )

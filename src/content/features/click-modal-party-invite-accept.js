@@ -4,7 +4,7 @@ import { notifyIf } from '../helpers/user-settings'
 export default async () => {
   const reactModalPortalElements = select.all('.ReactModalPortal')
 
-  reactModalPortalElements.forEach((reactModalPortalElement) => {
+  for (const reactModalPortalElement of reactModalPortalElements) {
     if (
       ![
         'Click accept to join the party',
@@ -67,5 +67,5 @@ export default async () => {
         })
       }
     }
-  })
+  }
 }

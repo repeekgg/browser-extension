@@ -120,7 +120,7 @@ export const getHubQueue = async (id) =>
 export const getPlayerHistory = async (userId, page = 0) => {
   const size = 50
   const offset = 0
-  const from = encodeURIComponent(`1970-01-01T01:00:00+0000`)
+  const from = encodeURIComponent('1970-01-01T01:00:00+0000')
   const to = encodeURIComponent(
     format(new Date(), `yyyy-MM-dd'T'HH:mm:ss'+0000'`),
   )

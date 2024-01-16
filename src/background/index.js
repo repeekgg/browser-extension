@@ -18,7 +18,8 @@ browser.runtime.onMessage.addListener(async (message) => {
   switch (message.action) {
     case ACTION_NOTIFICATION: {
       const { name } = browser.runtime.getManifest()
-      delete message.action
+
+      message.action = undefined
 
       browser.notifications.create('', {
         type: 'basic',

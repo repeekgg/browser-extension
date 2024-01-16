@@ -27,18 +27,20 @@ const getMatchHistory = async (playerId, totalMatches, recursionLevel = 0) => {
     return matchResult.pageRequests[nextPage]
   }
 
-  const getPagePromise = new Promise(async (resolve, reject) => {
+  const getPagePromise = async () => {
     try {
       const matches = await getPlayerHistory(playerId, nextPage)
+
       matchResult.page = nextPage
       matchResult.matches = matchResult.matches.concat(matches)
 
-      resolve(getMatchHistory(playerId, totalMatches, recursionLevel + 1))
+      return getMatchHistory(playerId, totalMatches, recursionLevel + 1)
     } catch (error) {
       console.error(error)
-      reject(error)
+
+      throw error
     }
-  })
+  }
 
   matchResult.pageRequests[nextPage] = getPagePromise
 

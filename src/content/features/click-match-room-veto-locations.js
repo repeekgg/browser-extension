@@ -34,9 +34,7 @@ export default async (parentElement) => {
   }
 
   const { matchRoomAutoVetoLocationItems } = await storage.getAll()
-  const autoVetoItems =
-    matchRoomAutoVetoLocationItems[region] &&
-    matchRoomAutoVetoLocationItems[region].reverse()
+  const autoVetoItems = matchRoomAutoVetoLocationItems[region]?.reverse()
 
   if (!autoVetoItems) {
     return

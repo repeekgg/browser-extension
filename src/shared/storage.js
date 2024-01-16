@@ -5,10 +5,7 @@ const storage = new OptionsSync({
   defaults: DEFAULTS,
   migrations: [
     (savedOptions) => {
-      if (
-        savedOptions.matchRoomAutoVetoMapItems &&
-        savedOptions.matchRoomAutoVetoMapItems.includes('de_cache')
-      ) {
+      if (savedOptions.matchRoomAutoVetoMapItems?.includes('de_cache')) {
         savedOptions.matchRoomAutoVetoMapItems =
           savedOptions.matchRoomAutoVetoMapItems.filter(
             (map) => map !== 'de_cache',

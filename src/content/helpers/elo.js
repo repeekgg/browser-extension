@@ -10,7 +10,7 @@ export function normalizeElo(elo) {
 
 export function estimateRatingChange(elo1, elo2, K = 50) {
   const eloDiff = elo2 - elo1
-  const percentage = 1 / (1 + Math.pow(10, eloDiff / 400))
+  const percentage = 1 / (1 + 10 ** (eloDiff / 400))
 
   const gain = round(K * (1 - percentage))
   const loss = round(K * (0 - percentage))
@@ -103,14 +103,13 @@ export async function getEloChangesByMatches(matches) {
       return acc
     }
 
-    return {
-      ...acc,
-      [match.matchId]: {
-        previousElo,
-        newElo,
-        eloDiff,
-      },
+    acc[match.matchId] = {
+      previousElo,
+      newElo,
+      eloDiff,
     }
+
+    return acc
   }, {})
 
   return Object.keys(eloHistoryByMatches).length > 0

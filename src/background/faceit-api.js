@@ -8,9 +8,12 @@ export default async function faceitApi(path, options) {
       fetch(`${BASE_URL}${path}`, options).then((res) => {
         if (res.status === 404) {
           throw new pRetry.AbortError(res.statusText)
-        } else if (!res.ok) {
+        }
+
+        if (!res.ok) {
           throw new Error(res.statusText)
         }
+
         return res
       }),
     {

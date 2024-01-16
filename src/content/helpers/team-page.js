@@ -7,7 +7,7 @@ export const getTeamId = (path) => {
       path || getCurrentPath(),
     )
 
-  return match && match[1]
+  return match?.[1]
 }
 
 export const getTeamMemberPlayerElements = (parent) =>

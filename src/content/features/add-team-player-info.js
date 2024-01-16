@@ -31,7 +31,7 @@ export default async (parentElement) => {
 
   const badges = await getPlayerBadges(team.members.map(({ guid }) => guid))
 
-  memberElements.forEach(async (memberElement) => {
+  for (const memberElement of memberElements) {
     if (hasFeatureAttribute(FEATURE_ATTRIBUTE, memberElement)) {
       return
     }
@@ -70,7 +70,7 @@ export default async (parentElement) => {
       )
     }
 
-    if (games && games.csgo) {
+    if (games?.csgo) {
       const elo = games.csgo.faceitElo || '–'
 
       memberElement.children[0].appendChild(
@@ -93,5 +93,5 @@ export default async (parentElement) => {
 
     const flagElement = createFlagElement({ country })
     nicknameElement.prepend(flagElement)
-  })
+  }
 }

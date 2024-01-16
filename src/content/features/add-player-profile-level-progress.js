@@ -85,7 +85,7 @@ export default async (statsContentElement) => {
           })}
           {createKeyStatElement({ key: 'Elo', stat: faceitElo })}
           {currentLevel === 10
-            ? createKeyStatElement({ key: `Maximum level reached`, stat: '🔥' })
+            ? createKeyStatElement({ key: 'Maximum level reached', stat: '🔥' })
             : createKeyStatElement({
                 key: `Points needed to reach level ${currentLevel + 1}`,
                 stat: skillLevels[currentLevel + 1][0] - faceitElo,

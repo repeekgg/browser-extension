@@ -13,7 +13,7 @@ export const getRoomId = (path) => {
       path || getCurrentPath(),
     )
 
-  return match && match[1]
+  return match?.[1]
 }
 
 export const MATCH_TEAM_V1 = 'match-team'
@@ -79,7 +79,7 @@ export function mapPlayersToPartyColors(
   const factionType = match[`${factionName}Type`]
   const isPremade = isTeamV1Element && getFactionIsPremadeV1(factionType)
 
-  const parties = match.entityCustom && match.entityCustom.parties
+  const parties = match.entityCustom?.parties
   const partiesIds = parties && Object.keys(parties)
 
   const availableColors = [...colorPalette]
@@ -121,13 +121,11 @@ export function mapPlayersToPartyColors(
         partyColor,
       })
     }, [])
-    .reduce(
-      (acc, curr) => ({
-        ...acc,
-        [curr.nickname]: curr.partyColor,
-      }),
-      {},
-    )
+    .reduce((acc, curr) => {
+      acc[curr.nickname] = curr.partyColor
+
+      return acc
+    }, {})
 }
 
 export const mapPlayersToPartyColorsMemoized = mem(mapPlayersToPartyColors, {
@@ -148,7 +146,7 @@ const mapMatchFactionRosters = (match) => {
       faction2: match.faction2,
     }
   }
-  if (match.teams && match.teams.faction1 && match.teams.faction2) {
+  if (match.teams?.faction1 && match.teams.faction2) {
     return {
       faction1: match.teams.faction1.roster,
       faction2: match.teams.faction2.roster,
@@ -186,7 +184,7 @@ const mapMatchNicknamesToPlayers = (match) => {
   let allPlayers
   if (match.faction1 && match.faction2) {
     allPlayers = match.faction1.concat(match.faction2)
-  } else if (match.teams && match.teams.faction1 && match.teams.faction2) {
+  } else if (match.teams?.faction1 && match.teams.faction2) {
     allPlayers = match.teams.faction1.roster.concat(match.teams.faction2.roster)
   } else {
     throw new Error(
@@ -194,10 +192,10 @@ const mapMatchNicknamesToPlayers = (match) => {
     )
   }
 
-  allPlayers.forEach((player) => {
+  for (const player of allPlayers) {
     const { nickname } = player
     nicknamesToPlayers[nickname] = player
-  })
+  }
 
   return nicknamesToPlayers
 }

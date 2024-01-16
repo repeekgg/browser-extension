@@ -7,7 +7,7 @@ import {
 } from '../helpers/dom-element'
 import { SKILL_LEVELS_BY_GAME } from '../helpers/elo'
 import { getSelf } from '../helpers/faceit-api'
-import { createPathname, navigateTo } from '../helpers/navigation'
+import { createPathname } from '../helpers/navigation'
 
 const FEATURE_ATTRIBUTE = 'level-progress'
 const REFRESH_TIME = 300000 // 5 Minutes
@@ -64,14 +64,7 @@ export default async () => {
     const selfStatsPathname = `players/${nickname}/stats/${game}`
 
     const levelElement = (
-      <a
-        href={createPathname(selfStatsPathname)}
-        onClick={(event) => {
-          event.preventDefault()
-
-          navigateTo(selfStatsPathname)
-        }}
-      >
+      <a href={createPathname(selfStatsPathname)}>
         <div
           style={{
             display: 'flex',
@@ -109,6 +102,7 @@ export default async () => {
                   color="secondary"
                   viewBox="0 0 24 12"
                 >
+                  <title>Elo Icon</title>
                   <path
                     fill="rgba(255,255,255,0.6)"
                     d="M12 3c0 .463-.105.902-.292 1.293l1.998 2A2.97 2.97 0 0 1 15 6a2.99 2.99 0 0 1 1.454.375l1.921-1.921a3 3 0 1 1 1.5 1.328l-2.093 2.093a3 3 0 1 1-5.49-.168l-1.999-2a2.992 2.992 0 0 1-2.418.074L5.782 7.876a3 3 0 1 1-1.328-1.5l1.921-1.921A3 3 0 1 1 12 3z"

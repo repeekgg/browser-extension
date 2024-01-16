@@ -10,7 +10,7 @@ const FEATURE_NAME = 'click-modal-match-ready'
 export default async () => {
   const fuseModalPortalElements = select.all('.FuseModalPortal')
 
-  fuseModalPortalElements.forEach((fuseModalPortalElement) => {
+  for (const fuseModalPortalElement of fuseModalPortalElements) {
     const matchCheckInModalElement = select(
       'div[class*="MatchCheckInModal"]',
       fuseModalPortalElement,
@@ -35,5 +35,5 @@ export default async () => {
         message: 'A match has been readied up.',
       })
     }
-  })
+  }
 }
