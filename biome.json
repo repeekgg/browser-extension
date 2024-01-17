@@ -12,6 +12,9 @@
       },
       "security": {
         "noDangerouslySetInnerHtml": "off"
+      },
+      "suspicious": {
+        "noConsoleLog": "error"
       }
     }
   },

@@ -92,6 +92,7 @@ browser.runtime.onMessage.addListener(async (message) => {
         }
 
         if (!IS_PRODUCTION) {
+          // biome-ignore lint/suspicious/noConsoleLog: Development only
           console.log('v1/stats', json)
 
           return

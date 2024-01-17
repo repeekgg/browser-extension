@@ -14,6 +14,7 @@ const execa = require('execa')
 
     await writeJsonFile(manifestFile, manifest, { detectIndent: true })
 
+    // biome-ignore lint/suspicious/noConsoleLog:
     console.log(`Bumped to version ${manifest.version}`)
 
     const gitCommitProc = execa('git', ['commit', '-am', manifest.version])
@@ -24,6 +25,7 @@ const execa = require('execa')
     gitTagProc.stdout.pipe(process.stdout)
     await gitTagProc
   } catch (error) {
+    // biome-ignore lint/suspicious/noConsoleLog:
     console.log(error)
   }
 })()

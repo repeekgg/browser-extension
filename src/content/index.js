@@ -10,7 +10,6 @@ import addPlayerProfileLevelProgress from './features/add-player-profile-level-p
 import addPlayerProfileMatchesDemo from './features/add-player-profile-matches-demo'
 import addPlayerProfileMatchesElo from './features/add-player-profile-matches-elo'
 import addSidebarMatchesElo from './features/add-sidebar-matches-elo'
-import addTeamPlayerInfo from './features/add-team-player-info'
 import applyMatchRoomFocusMode from './features/apply-match-room-focus-mode'
 import clickMatchRoomConnectToServer from './features/click-match-room-connect-to-server'
 import clickMatchRoomVetoLocations from './features/click-match-room-veto-locations'
@@ -24,6 +23,7 @@ import clickModalPartyInviteAccept from './features/click-modal-party-invite-acc
 import closeFaceitClientDownloadBanner from './features/close-faceit-client-download-banner'
 import copyMatchRoomCopyServerData from './features/copy-match-room-copy-server-data'
 import repeekNotification from './features/repeek-notification'
+import './globals.css'
 import * as modals from './helpers/modals'
 import * as pages from './helpers/pages'
 import { runFeatureIf } from './helpers/user-settings'
@@ -157,12 +157,6 @@ function observeBody() {
         if (pages.isPlayerProfileStats()) {
           addPlayerProfileStatsFeatures()
         }
-      } else if (pages.isTeamsOverview()) {
-        runFeatureIf(
-          'teamRosterPlayersInfo',
-          addTeamPlayerInfo,
-          mainContentElement,
-        )
       }
     }
   })
