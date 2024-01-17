@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 export default {
   csgo: {
     de_ancient: 'Ancient',
@@ -11,4 +10,3 @@ export default {
     de_vertigo: 'Vertigo',
   },
 }
-/* eslint-enable camelcase */

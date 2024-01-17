@@ -80,11 +80,9 @@ export default async () => {
   const isSelfSkinOfTheMatchPlayer = skinOfTheMatchPlayer.id === self.id
 
   const statsEventData = {
-    /* eslint-disable camelcase */
     match_id: match.id,
     organizer_id: match.organizerId,
     skin: skinOfTheMatch.skin.skinport_url.split('/').pop(),
-    /* eslint-enable camelcase */
   }
 
   const styles = (

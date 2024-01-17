@@ -137,6 +137,5 @@ export default ({ division, style }) => {
   const type = division ? division.divisionType : 'unranked'
   const svgHtml = divisions[type]
 
-  // eslint-disable-next-line react/no-danger
   return <div dangerouslySetInnerHTML={{ __html: svgHtml }} style={style} />
 }

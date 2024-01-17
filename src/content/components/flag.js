@@ -1,5 +1,4 @@
 import { getName } from 'country-list'
-/* eslint-disable react/no-danger */
 import React from 'dom-chef'
 
 const reqFlag = require.context('../assets/flags', false, /\.svg$/)

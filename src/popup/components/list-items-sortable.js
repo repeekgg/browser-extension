@@ -1,5 +1,4 @@
 import List from '@material-ui/core/List'
-/* eslint-disable new-cap */
 import React from 'react'
 import {
   SortableContainer,

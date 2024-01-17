@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 import browser from 'webextension-polyfill'
 import { ACTION_FETCH_VIPS } from '../../shared/constants'
 

@@ -1,6 +1,5 @@
 import isNumber from 'lodash/isNumber'
 import round from 'lodash/round'
-/* eslint-disable import/prefer-default-export */
 import mem from 'mem'
 import { getMatchmakingQueue } from './faceit-api'
 
