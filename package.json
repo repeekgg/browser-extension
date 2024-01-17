@@ -17,7 +17,8 @@
     "release:cws": "chrome-webstore-upload upload --source=dist --auto-publish",
     "release": "run-p release:*",
     "bump-version": "node scripts/bump-version.js",
-    "git-release": "node scripts/git-release.js"
+    "git-release": "node scripts/git-release.js",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@material-ui/core": "^3.9.1",
@@ -62,8 +63,8 @@
     "cross-env": "^5.1.5",
     "esbuild-loader": "^2.21.0",
     "execa": "^1.0.0",
-    "husky": "^0.14.3",
-    "lint-staged": "^7.0.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.2.0",
     "load-json-file": "^6.0.0",
     "npm-run-all": "^4.1.2",
     "semver": "^6.0.0",
@@ -78,10 +79,7 @@
     "write-json-file": "^3.2.0"
   },
   "lint-staged": {
-    "*.{js,json}": [
-      "biome check --apply --no-errors-on-unmatched",
-      "git add"
-    ]
+    "*.{ts,tsx,js,json}": "biome check --apply --no-errors-on-unmatched"
   },
   "ava": {
     "require": [
