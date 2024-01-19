@@ -26,21 +26,14 @@ The Chrome version also works in Opera (using [this](https://addons.opera.com/en
 
 - Ready up for matches automatically
 - Accept party invites automatically
-- See players Elo and country in match rooms
 - See teams Elo in match rooms
 - See how much Elo you'll win or loose
-- See player statistics of the last 20 matches in match rooms
 - See how much Elo you have won and lost in your match history
 - and more!
 
 All features are configurable to your personal preferences.
 
 # Development
-
-Prerequisites:
-
-- Node.js: `>=18.14.2 <19`
-- npm: `>=9.5.0 <10`
 
 Clone repository and install npm dependencies:
 
