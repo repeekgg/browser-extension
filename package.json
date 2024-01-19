@@ -2,8 +2,8 @@
   "name": "@repeek/browser-extension",
   "private": true,
   "engines": {
-    "node": "^20",
-    "npm": "^10"
+    "node": ">=20.11.0",
+    "npm": ">=10.2.4"
   },
   "scripts": {
     "prepare": "husky install",
