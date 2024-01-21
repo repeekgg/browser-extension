@@ -23,7 +23,6 @@ import clickModalPartyInviteAccept from './features/click-modal-party-invite-acc
 import closeFaceitClientDownloadBanner from './features/close-faceit-client-download-banner'
 import copyMatchRoomCopyServerData from './features/copy-match-room-copy-server-data'
 import repeekNotification from './features/repeek-notification'
-import './globals.css'
 import * as modals from './helpers/modals'
 import * as pages from './helpers/pages'
 import { runFeatureIf } from './helpers/user-settings'

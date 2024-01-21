@@ -3,6 +3,7 @@ import path from 'node:path'
 import autoprefixer from 'autoprefixer'
 import chokidar from 'chokidar'
 import * as esbuild from 'esbuild'
+import esbuildInline from 'esbuild-plugin-inline-import'
 import esbuildStyle from 'esbuild-style-plugin'
 import postcss from 'postcss'
 import tailwind from 'tailwindcss'
@@ -57,8 +58,12 @@ async function bundleContext(
   context: string,
   {
     tailwind,
+    tailwindInline,
     ...additionalEsbuildOptions
-  }: { tailwind?: boolean } & esbuild.BuildOptions = {},
+  }: {
+    tailwind?: boolean
+    tailwindInline?: boolean
+  } & esbuild.BuildOptions = {},
 ) {
   const esbuildOptions: esbuild.BuildOptions & { plugins: esbuild.Plugin[] } = {
     entryPoints: [getSrcPath(context, 'index.js')],
@@ -80,6 +85,22 @@ async function bundleContext(
         postcss: {
           plugins: getPostcssPlugins([getSrcPath(`${context}/**/*.js`)]),
         },
+      }),
+    )
+  }
+
+  if (tailwindInline) {
+    esbuildOptions.plugins.push(
+      esbuildInline({
+        filter: /^tailwindInline:/,
+        transform: (content) =>
+          postcss(getPostcssPlugins([getSrcPath(`${context}/**/*.js`)]))
+            .process(content, { from: undefined })
+            .then((result) => result.css)
+            .catch((error) => {
+              console.error(error.message)
+              return ''
+            }),
       }),
     )
   }
@@ -125,7 +146,7 @@ async function build() {
       ),
       bundleContext('background'),
       bundleContext('content', {
-        tailwind: true,
+        tailwindInline: true,
       }),
       bundleContext('popup', { define: { global: 'window' } }),
     ])

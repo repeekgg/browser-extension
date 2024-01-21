@@ -49,6 +49,7 @@
     "chokidar": "^3.5.3",
     "chrome-webstore-upload-cli": "^2.0.1",
     "esbuild": "^0.19.11",
+    "esbuild-plugin-inline-import": "^1.0.2",
     "esbuild-style-plugin": "^1.6.3",
     "execa": "^1.0.0",
     "husky": "^8.0.3",
