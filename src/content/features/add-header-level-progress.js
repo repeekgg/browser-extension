@@ -1,5 +1,6 @@
 import React from 'dom-chef'
 import select from 'select-dom'
+import { IS_FACEIT_BETA } from '../../shared/faceit-beta'
 import createSkillLevelElement from '../components/skill-level'
 import {
   hasFeatureAttribute,
@@ -14,12 +15,15 @@ const REFRESH_TIME = 300000 // 5 Minutes
 
 export default async () => {
   const parasiteMainHeaderContainerElement = select(
-    'parasite-main-header-container',
+    IS_FACEIT_BETA
+      ? '#main-header-height-wrapper div[class*="styles__ProfileContainer"]'
+      : 'parasite-main-header-container',
   )
 
-  const rightHeaderElement =
-    parasiteMainHeaderContainerElement?.firstChild?.firstChild?.lastChild
-      ?.lastChild?.firstChild?.firstChild.lastChild
+  const rightHeaderElement = IS_FACEIT_BETA
+    ? parasiteMainHeaderContainerElement
+    : parasiteMainHeaderContainerElement?.firstChild?.firstChild?.lastChild
+        ?.lastChild?.firstChild?.firstChild.lastChild
 
   if (rightHeaderElement?.parentNode?.childNodes.length !== 3) {
     return

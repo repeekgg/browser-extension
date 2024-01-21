@@ -1,4 +1,5 @@
 import select from 'select-dom'
+import { IS_FACEIT_BETA } from '../shared/faceit-beta'
 import storage from '../shared/storage'
 import addHeaderLevelProgress from './features/add-header-level-progress'
 import addMatchRoomEloEstimation from './features/add-match-room-elo-estimation'
@@ -28,25 +29,33 @@ import * as pages from './helpers/pages'
 import { runFeatureIf } from './helpers/user-settings'
 
 function addPlayerProfileStatsFeatures(isPlayerProfileModal) {
-  const parasiteContainerElement = select(
-    isPlayerProfileModal
-      ? 'parasite-player-profile > div'
-      : '#parasite-container',
-  )
+  let statsContentElement
 
-  if (parasiteContainerElement?.children.length !== 4) {
-    return
+  if (IS_FACEIT_BETA) {
+    statsContentElement = select(
+      '#main-layout-content div[class*="styles__BaseContent"], .FuseModalPortal div[class*="styles__BaseContent"]',
+    )
+  } else {
+    const parasiteContainerElement = select(
+      isPlayerProfileModal
+        ? 'parasite-player-profile > div'
+        : '#parasite-container',
+    )
+
+    if (parasiteContainerElement?.children.length !== 4) {
+      return
+    }
+
+    const statsContentRootElement = parasiteContainerElement.children[2]
+
+    if (statsContentRootElement.children.length !== 1) {
+      return
+    }
+
+    statsContentElement = statsContentRootElement.children[0]
   }
 
-  const statsContentRootElement = parasiteContainerElement.children[2]
-
-  if (statsContentRootElement.children.length !== 1) {
-    return
-  }
-
-  const statsContentElement = statsContentRootElement.children[0]
-
-  if (statsContentElement.children.length < 14) {
+  if (!statsContentElement || statsContentElement.children.length < 14) {
     return
   }
 
@@ -118,7 +127,9 @@ function observeBody() {
 
     addSidebarMatchesElo()
 
-    const mainContentElement = select('#main-content')
+    const mainContentElement = select(
+      IS_FACEIT_BETA ? '#main-layout-content' : '#main-content',
+    )
 
     if (mainContentElement) {
       if (pages.isRoomOverview()) {
@@ -164,9 +175,10 @@ function observeBody() {
 }
 
 async function initContent() {
-  const { extensionEnabled } = await storage.getAll()
+  const { extensionEnabled, extensionEnabledFaceitBeta } =
+    await storage.getAll()
 
-  if (!extensionEnabled) {
+  if (IS_FACEIT_BETA ? !extensionEnabledFaceitBeta : !extensionEnabled) {
     return
   }
 

@@ -7,8 +7,46 @@ import {
   ACTION_POST_STATS_EVENT,
   IS_PRODUCTION,
 } from '../shared/constants'
+import {
+  FACEIT_BETA_CONTENT_SCRIPT_MATCH_PATTERN,
+  getHasFaceitBetaHostPermission,
+  getIsFaceitBetaContentScriptRegistered,
+  registerFaceitBetaContentScript,
+} from '../shared/faceit-beta'
+import storage from '../shared/storage'
 import api, { fetchVips, fetchConfig } from './api'
 import faceitApi from './faceit-api'
+
+browser.runtime.onInstalled.addListener(async ({ reason }) => {
+  if (reason === 'update') {
+    const { extensionEnabledFaceitBeta } = await storage.getAll()
+
+    if (
+      extensionEnabledFaceitBeta &&
+      (await getHasFaceitBetaHostPermission()) &&
+      (await getIsFaceitBetaContentScriptRegistered()) === false
+    ) {
+      await registerFaceitBetaContentScript()
+    }
+  }
+})
+
+browser.permissions.onAdded.addListener(async ({ origins }) => {
+  if (origins) {
+    for (const origin of origins) {
+      if (
+        origin === FACEIT_BETA_CONTENT_SCRIPT_MATCH_PATTERN &&
+        (await getIsFaceitBetaContentScriptRegistered()) === false
+      ) {
+        await registerFaceitBetaContentScript()
+
+        storage.set({
+          extensionEnabledFaceitBeta: true,
+        })
+      }
+    }
+  }
+})
 
 browser.runtime.onMessage.addListener(async (message) => {
   if (!message) {

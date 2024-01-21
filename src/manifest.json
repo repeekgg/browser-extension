@@ -11,8 +11,9 @@
       "strict_min_version": "114.0"
     }
   },
-  "permissions": ["storage", "notifications", "clipboardWrite"],
+  "permissions": ["storage", "notifications", "clipboardWrite", "scripting"],
   "host_permissions": ["https://api.faceit.com/"],
+  "optional_host_permissions": ["https://beta.faceit.com/*"],
   "icons": {
     "16": "icon16.png",
     "48": "icon48.png",

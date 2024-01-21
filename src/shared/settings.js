@@ -21,6 +21,7 @@ export const MATCH_ROOM_VETO_MAP_ITEMS = [
 
 export const DEFAULTS = {
   extensionEnabled: true,
+  extensionEnabledFaceitBeta: false,
   headerShowElo: true,
   hideFaceitClientHasLandedBanner: true,
   playerProfileLevelProgress: true,

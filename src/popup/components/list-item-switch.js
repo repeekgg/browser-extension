@@ -6,7 +6,7 @@ import React from 'react'
 
 export default ({ onClick, checked, ...props }) => (
   <ListItem button onClick={onClick}>
-    <ListItemText {...props} />
+    <ListItemText style={{ marginRight: 32 }} {...props} />
     <ListItemSecondaryAction>
       <Switch checked={checked} onChange={onClick} />
     </ListItemSecondaryAction>

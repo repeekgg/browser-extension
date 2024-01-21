@@ -14,6 +14,8 @@ class Drawer extends React.Component {
     const { classes, loading, items, itemProps } = this.props
     const { activeItem } = this.state
 
+    const ListItems = items[activeItem]
+
     return (
       <div style={{ display: 'flex', overflow: 'hidden', height: '100%' }}>
         <MUIDrawer variant="permanent" classes={{ paper: classes.drawerPaper }}>
@@ -31,7 +33,13 @@ class Drawer extends React.Component {
           </List>
         </MUIDrawer>
         <div style={{ flex: 1, overflowY: 'auto' }}>
-          {loading ? <Loading /> : <List>{items[activeItem](itemProps)}</List>}
+          {loading ? (
+            <Loading />
+          ) : (
+            <List>
+              <ListItems {...itemProps} />
+            </List>
+          )}
         </div>
       </div>
     )
