@@ -37,8 +37,8 @@
     "react-dom": "^16.2.0",
     "react-sortable-hoc": "^0.6.8",
     "select-dom": "^7.1.1",
-    "webext-options-sync": "^4.0.0",
-    "webextension-polyfill": "^0.2.1"
+    "webext-options-sync": "^4.2.1",
+    "webextension-polyfill": "^0.10.0"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.5.2",
@@ -68,6 +68,8 @@
     "*.{ts,tsx,js,json}": "biome check --apply --no-errors-on-unmatched"
   },
   "ava": {
-    "require": ["./test/_setup.js"]
+    "require": [
+      "./test/_setup.js"
+    ]
   }
 }

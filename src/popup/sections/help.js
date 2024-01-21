@@ -1,7 +1,7 @@
 import { detect } from 'detect-browser'
 import capitalize from 'lodash/capitalize'
 import React from 'react'
-import { version } from '../../manifest'
+import browser from 'webextension-polyfill'
 import ListItemLink from '../components/list-item-link'
 import ListSubheader from '../components/list-subheader'
 
@@ -15,9 +15,9 @@ export default () => (
     <ListItemLink
       primary="Report an Issue"
       subreddit={encodeURI(
-        `submit?selftext=true&text=\n\n\n---\n\nVersion: ${version}\nBrowser: ${capitalize(
-          userBrowser.name,
-        )} (${userBrowser.version})`,
+        `submit?selftext=true&text=\n\n\n---\n\nVersion: ${
+          browser.runtime.getManifest().version
+        }\nBrowser: ${capitalize(userBrowser.name)} (${userBrowser.version})`,
       )}
     />
     <ListSubheader divider>Questions?</ListSubheader>
