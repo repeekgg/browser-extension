@@ -1,12 +1,12 @@
 import select from 'select-dom'
+import storage from '../../shared/storage'
 import {
   hasFeatureAttribute,
-  setFeatureAttribute
+  setFeatureAttribute,
 } from '../helpers/dom-element'
-import storage from '../../shared/storage'
-import { notifyIf } from '../helpers/user-settings'
 import { getMatch, getSelf } from '../helpers/faceit-api'
 import { getRoomId } from '../helpers/match-room'
+import { notifyIf } from '../helpers/user-settings'
 
 const FEATURE_ATTRIBUTE = 'veto-locations'
 const VETO_DELAY = 2000
@@ -18,7 +18,7 @@ export default async (parentElement) => {
 
   if (
     ![match.teams.faction1.leader, match.teams.faction2.leader].includes(
-      self.id
+      self.id,
     )
   ) {
     return
@@ -26,7 +26,7 @@ export default async (parentElement) => {
 
   const votingListElement = select(
     'div.match-vs__details > div.match-voting > div > democracy',
-    parentElement
+    parentElement,
   )
 
   if (!votingListElement) {
@@ -34,16 +34,14 @@ export default async (parentElement) => {
   }
 
   const { matchRoomAutoVetoLocationItems } = await storage.getAll()
-  const autoVetoItems =
-    matchRoomAutoVetoLocationItems[region] &&
-    matchRoomAutoVetoLocationItems[region].reverse()
+  const autoVetoItems = matchRoomAutoVetoLocationItems[region]?.reverse()
 
   if (!autoVetoItems) {
     return
   }
 
   const isVetoLocations = autoVetoItems.some((item) =>
-    select.exists(`div[title="${item}"]`, votingListElement)
+    select.exists(`div[title="${item}"]`, votingListElement),
   )
 
   if (
@@ -65,7 +63,7 @@ export default async (parentElement) => {
     autoVetoItems.some((item) => {
       const vetoButtonElement = select(
         `div[title="${item}"] * button`,
-        votingListElement
+        votingListElement,
       )
       if (vetoButtonElement) {
         setTimeout(() => {
@@ -91,6 +89,6 @@ export default async (parentElement) => {
 
   notifyIf('notifyMatchRoomAutoVetoLocations', {
     title: 'Match Server Locations Veto',
-    message: 'Server locations will be vetoed automatically.'
+    message: 'Server locations will be vetoed automatically.',
   })
 }

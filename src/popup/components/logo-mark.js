@@ -10,6 +10,7 @@ export default function LogoMark(props) {
       viewBox="0 0 107 128"
       {...props}
     >
+      <title>Repeek Logo Mark</title>
       <path
         fill="#fff"
         d="m39.343 69.778 4.795 10.993L46.012 63.9l-19.55-10.18v10.31l12.88 5.747Z"

@@ -1,9 +1,9 @@
-import React from 'react'
-import capitalize from 'lodash/capitalize'
 import { detect } from 'detect-browser'
+import capitalize from 'lodash/capitalize'
+import React from 'react'
 import { version } from '../../manifest'
-import ListSubheader from '../components/list-subheader'
 import ListItemLink from '../components/list-item-link'
+import ListSubheader from '../components/list-subheader'
 
 const userBrowser = detect()
 
@@ -16,8 +16,8 @@ export default () => (
       primary="Report an Issue"
       subreddit={encodeURI(
         `submit?selftext=true&text=\n\n\n---\n\nVersion: ${version}\nBrowser: ${capitalize(
-          userBrowser.name
-        )} (${userBrowser.version})`
+          userBrowser.name,
+        )} (${userBrowser.version})`,
       )}
     />
     <ListSubheader divider>Questions?</ListSubheader>

@@ -1,11 +1,11 @@
-import React from 'react'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
+import React from 'react'
 import ListItemText from './list-item-text'
 
 export default class ListItemMenu extends React.Component {
   state = {
-    anchorEl: null
+    anchorEl: null,
   }
 
   onClickListItem = (event) => this.setState({ anchorEl: event.currentTarget })

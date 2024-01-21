@@ -1,12 +1,12 @@
 import React from 'dom-chef'
 import select from 'select-dom'
-import { getRoomId } from '../helpers/match-room'
-import { getSelf, getMatch } from '../helpers/faceit-api'
 import {
-  setStyle,
   hasFeatureAttribute,
-  setFeatureAttribute
+  setFeatureAttribute,
+  setStyle,
 } from '../helpers/dom-element'
+import { getMatch, getSelf } from '../helpers/faceit-api'
+import { getRoomId } from '../helpers/match-room'
 
 const FEATURE_ATTRIBUTE = 'focus-mode'
 
@@ -27,7 +27,7 @@ export default async () => {
   const self = await getSelf()
   const isSelfInMatch = [
     ...teams.faction1.roster,
-    ...teams.faction2.roster
+    ...teams.faction2.roster,
   ].some((player) => player.id === self.id)
 
   if (!isSelfInMatch) {
@@ -47,10 +47,10 @@ export default async () => {
 
   const teamNameElements = [
     matchRoomOverviewElement.children[0]?.children[0]?.children[1]?.children[0],
-    matchRoomOverviewElement.children[0]?.children[0]?.children[1]?.children[2]
+    matchRoomOverviewElement.children[0]?.children[0]?.children[1]?.children[2],
   ]
 
-  teamNameElements.forEach((teamNameElement) => {
+  for (const teamNameElement of teamNameElements) {
     if (
       teamNameElement &&
       !hasFeatureAttribute(FEATURE_ATTRIBUTE, teamNameElement)
@@ -58,19 +58,19 @@ export default async () => {
       setFeatureAttribute(FEATURE_ATTRIBUTE, teamNameElement)
       setStyle(teamNameElement, 'visibility: hidden')
     }
-  })
+  }
 
   const teamElements = [
     select('[name="roster1"]', matchRoomOverviewElement),
-    select('[name="roster2"]', matchRoomOverviewElement)
+    select('[name="roster2"]', matchRoomOverviewElement),
   ]
 
-  teamElements.forEach((teamElement) => {
+  for (const teamElement of teamElements) {
     if (teamElement && !hasFeatureAttribute(FEATURE_ATTRIBUTE, teamElement)) {
       setFeatureAttribute(FEATURE_ATTRIBUTE, teamElement)
       setStyle(teamElement, 'visibility: hidden')
     }
-  })
+  }
 
   if (!hasFeatureAttribute(FEATURE_ATTRIBUTE, matchRoomOverviewElement)) {
     setFeatureAttribute(FEATURE_ATTRIBUTE, matchRoomOverviewElement)
@@ -85,13 +85,13 @@ export default async () => {
           display: 'flex',
           justifyContent: 'center',
           fontSize: 12,
-          color: 'rgba(255, 255, 255, 0.6)'
+          color: 'rgba(255, 255, 255, 0.6)',
         }}
       >
         <div style={{ background: '#1f1f1f', borderRadius: 4, padding: 8 }}>
           Repeek Focus Mode Active
         </div>
-      </div>
+      </div>,
     )
   }
 }

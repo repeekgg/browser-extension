@@ -1,23 +1,23 @@
 import test from 'ava'
 import {
   estimateRatingChange,
-  predictRatingChange
+  predictRatingChange,
 } from '../src/content/helpers/elo'
 
 test('estimateRatingChange', (t) => {
   t.deepEqual(estimateRatingChange(2000, 2000), {
     gain: 25,
-    loss: -25
+    loss: -25,
   })
 
   t.deepEqual(estimateRatingChange(5000, 1000), {
     gain: 1,
-    loss: -50
+    loss: -50,
   })
 
   t.deepEqual(estimateRatingChange(1000, 5000), {
     gain: 50,
-    loss: -1
+    loss: -1,
   })
 
   t.is(estimateRatingChange(1853, 1159).gain, 1)
@@ -45,33 +45,33 @@ test.failing('estimateRatingChange is off by +-1', (t) => {
 test('predictRatingChange', (t) => {
   t.deepEqual(predictRatingChange(0.5), {
     gain: 25,
-    loss: -25
+    loss: -25,
   })
 
   t.deepEqual(predictRatingChange(0.52), {
     gain: 24,
-    loss: -26
+    loss: -26,
   })
   t.deepEqual(predictRatingChange(0.48), {
     gain: 26,
-    loss: -24
+    loss: -24,
   })
 
   t.deepEqual(predictRatingChange(0.44), {
     gain: 28,
-    loss: -22
+    loss: -22,
   })
   t.deepEqual(predictRatingChange(0.56), {
     gain: 22,
-    loss: -28
+    loss: -28,
   })
 
   t.deepEqual(predictRatingChange(0.55), {
     gain: 22,
-    loss: -28
+    loss: -28,
   })
   t.deepEqual(predictRatingChange(0.45), {
     gain: 28,
-    loss: -22
+    loss: -22,
   })
 })

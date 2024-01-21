@@ -1,7 +1,7 @@
-import select from 'select-dom'
-import mem from 'mem'
-import isEmpty from 'lodash/isEmpty'
 import head from 'lodash/head'
+import isEmpty from 'lodash/isEmpty'
+import mem from 'mem'
+import select from 'select-dom'
 import { getCurrentPath } from './location'
 
 export const FACTION_1 = 'faction1'
@@ -10,10 +10,10 @@ export const FACTION_2 = 'faction2'
 export const getRoomId = (path) => {
   const match =
     /room\/([0-9a-z]+-[0-9a-z]+-[0-9a-z]+-[0-9a-z]+-[0-9a-z]+(?:-[0-9a-z]+)?)/.exec(
-      path || getCurrentPath()
+      path || getCurrentPath(),
     )
 
-  return match && match[1]
+  return match?.[1]
 }
 
 export const MATCH_TEAM_V1 = 'match-team'
@@ -33,7 +33,7 @@ export const getTeamElements = (parent) => {
 
   return {
     teamElements,
-    isTeamV1Element
+    isTeamV1Element,
   }
 }
 
@@ -50,7 +50,7 @@ export const getFactionDetails = (element, isTeamV1Element = true) => {
 
   return {
     factionName,
-    isFaction1
+    isFaction1,
   }
 }
 
@@ -70,7 +70,7 @@ export function mapPlayersToPartyColors(
   match,
   isTeamV1Element,
   factionDetails,
-  colorPalette = COLOR_PALETTE
+  colorPalette = COLOR_PALETTE,
 ) {
   const { factionName, isFaction1 } = factionDetails
   const faction = isTeamV1Element
@@ -79,7 +79,7 @@ export function mapPlayersToPartyColors(
   const factionType = match[`${factionName}Type`]
   const isPremade = isTeamV1Element && getFactionIsPremadeV1(factionType)
 
-  const parties = match.entityCustom && match.entityCustom.parties
+  const parties = match.entityCustom?.parties
   const partiesIds = parties && Object.keys(parties)
 
   const availableColors = [...colorPalette]
@@ -96,7 +96,7 @@ export function mapPlayersToPartyColors(
         let partyMember
         if (isTeamV1Element) {
           partyMember = acc.find(
-            ({ activeTeamId }) => activeTeamId === curr.activeTeamId
+            ({ activeTeamId }) => activeTeamId === curr.activeTeamId,
           )
         } else {
           const playerPartyId = partiesIds.find((partyId) => {
@@ -118,16 +118,14 @@ export function mapPlayersToPartyColors(
 
       return acc.concat({
         ...curr,
-        partyColor
+        partyColor,
       })
     }, [])
-    .reduce(
-      (acc, curr) => ({
-        ...acc,
-        [curr.nickname]: curr.partyColor
-      }),
-      {}
-    )
+    .reduce((acc, curr) => {
+      acc[curr.nickname] = curr.partyColor
+
+      return acc
+    }, {})
 }
 
 export const mapPlayersToPartyColorsMemoized = mem(mapPlayersToPartyColors, {
@@ -138,36 +136,36 @@ export const mapPlayersToPartyColorsMemoized = mem(mapPlayersToPartyColors, {
       : match.teams[factionName].roster
 
     return JSON.stringify(faction)
-  }
+  },
 })
 
 const mapMatchFactionRosters = (match) => {
   if (match.faction1 && match.faction2) {
     return {
       faction1: match.faction1,
-      faction2: match.faction2
+      faction2: match.faction2,
     }
   }
-  if (match.teams && match.teams.faction1 && match.teams.faction2) {
+  if (match.teams?.faction1 && match.teams.faction2) {
     return {
       faction1: match.teams.faction1.roster,
-      faction2: match.teams.faction2.roster
+      faction2: match.teams.faction2.roster,
     }
   }
   throw new Error(
-    `Not sure how to handle this match: ${match.guid || match.id}`
+    `Not sure how to handle this match: ${match.guid || match.id}`,
   )
 }
 
 export const mapMatchFactionRostersMemoized = mem(mapMatchFactionRosters, {
-  cacheKey: (match) => JSON.stringify(match.guid || match.id)
+  cacheKey: (match) => JSON.stringify(match.guid || match.id),
 })
 
 export const mapMatchFactionWinRates = (rosters, matches, mapName) => {
   return Object.keys(rosters).map((factionName) => {
     const players = rosters[factionName].map((i) => i.nickname)
     const games = matches.filter(
-      (match) => players.includes(match.nickname) && match.i1 === mapName
+      (match) => players.includes(match.nickname) && match.i1 === mapName,
     )
     const won = games.filter((match) => match.i10 === '1')
 
@@ -176,7 +174,7 @@ export const mapMatchFactionWinRates = (rosters, matches, mapName) => {
 
     return {
       winRate,
-      gamesPlayed
+      gamesPlayed,
     }
   })
 }
@@ -186,18 +184,18 @@ const mapMatchNicknamesToPlayers = (match) => {
   let allPlayers
   if (match.faction1 && match.faction2) {
     allPlayers = match.faction1.concat(match.faction2)
-  } else if (match.teams && match.teams.faction1 && match.teams.faction2) {
+  } else if (match.teams?.faction1 && match.teams.faction2) {
     allPlayers = match.teams.faction1.roster.concat(match.teams.faction2.roster)
   } else {
     throw new Error(
-      `Not sure how to handle this match: ${match.guid || match.id}`
+      `Not sure how to handle this match: ${match.guid || match.id}`,
     )
   }
 
-  allPlayers.forEach((player) => {
+  for (const player of allPlayers) {
     const { nickname } = player
     nicknamesToPlayers[nickname] = player
-  })
+  }
 
   return nicknamesToPlayers
 }
@@ -205,8 +203,8 @@ const mapMatchNicknamesToPlayers = (match) => {
 export const mapMatchNicknamesToPlayersMemoized = mem(
   mapMatchNicknamesToPlayers,
   {
-    cacheKey: (match) => JSON.stringify(match.guid || match.id)
-  }
+    cacheKey: (match) => JSON.stringify(match.guid || match.id),
+  },
 )
 
 export const getMatchState = (element) => {

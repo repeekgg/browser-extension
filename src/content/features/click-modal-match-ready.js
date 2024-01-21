@@ -1,19 +1,19 @@
 import select from 'select-dom'
-import { notifyIf } from '../helpers/user-settings'
 import {
   hasFeatureAttribute,
-  setFeatureAttribute
+  setFeatureAttribute,
 } from '../helpers/dom-element'
+import { notifyIf } from '../helpers/user-settings'
 
 const FEATURE_NAME = 'click-modal-match-ready'
 
 export default async () => {
   const fuseModalPortalElements = select.all('.FuseModalPortal')
 
-  fuseModalPortalElements.forEach((fuseModalPortalElement) => {
+  for (const fuseModalPortalElement of fuseModalPortalElements) {
     const matchCheckInModalElement = select(
       'div[class*="MatchCheckInModal"]',
-      fuseModalPortalElement
+      fuseModalPortalElement,
     )
 
     if (
@@ -32,8 +32,8 @@ export default async () => {
 
       notifyIf('notifyPartyAutoAcceptInvite', {
         title: 'Match Readied Up',
-        message: 'A match has been readied up.'
+        message: 'A match has been readied up.',
       })
     }
-  })
+  }
 }

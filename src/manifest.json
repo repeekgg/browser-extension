@@ -1,22 +1,18 @@
 {
   "name": "Repeek (formerly FACEIT Enhancer)",
   "description": "Repeek enhances your experience on FACEIT and adds useful features",
-  "version": "3.3.8",
-  "manifest_version": 2,
+  "version": "4.0.0",
+  "manifest_version": 3,
   "homepage_url": "https://repeek.gg",
-  "minimum_chrome_version": "51",
+  "minimum_chrome_version": "105.0",
   "applications": {
     "gecko": {
       "id": "{e6fc2bbd-183e-4518-9ea5-04a8a913ab00}",
-      "strict_min_version": "48.0"
+      "strict_min_version": "114.0"
     }
   },
-  "permissions": [
-    "storage",
-    "notifications",
-    "clipboardWrite",
-    "https://api.faceit.com/"
-  ],
+  "permissions": ["storage", "notifications", "clipboardWrite"],
+  "host_permissions": ["https://api.faceit.com/"],
   "icons": {
     "16": "icon16.png",
     "48": "icon48.png",
@@ -29,13 +25,11 @@
       "js": ["content.js"]
     }
   ],
-  "web_accessible_resources": ["content.css"],
   "browser_action": {
     "default_icon": "icon48.png",
     "default_popup": "popup.html"
   },
   "background": {
-    "scripts": ["background.js"],
-    "persistent": false
+    "service_worker": "background.js"
   }
 }

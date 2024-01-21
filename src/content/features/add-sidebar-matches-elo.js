@@ -1,13 +1,13 @@
 import React from 'dom-chef'
-import select from 'select-dom'
 import random from 'lodash/random'
-import { getRoomId } from '../helpers/match-room'
-import { getSelf, getPlayerMatches } from '../helpers/faceit-api'
+import select from 'select-dom'
 import {
   hasFeatureAttribute,
-  setFeatureAttribute
+  setFeatureAttribute,
 } from '../helpers/dom-element'
 import { getEloChangesByMatches } from '../helpers/elo'
+import { getPlayerMatches, getSelf } from '../helpers/faceit-api'
+import { getRoomId } from '../helpers/match-room'
 import { getIsFreeMember } from '../helpers/membership'
 import { isBeta } from '../helpers/is-beta'
 
@@ -45,12 +45,12 @@ export default async () => {
     return
   }
 
-  matchLinkElements.forEach((matchLinkElement) => {
+  for (const matchLinkElement of matchLinkElements) {
     const matchId = getRoomId(matchLinkElement.getAttribute('href'))
 
     const resultElement = select(
       'div > div > div:nth-child(2) > span',
-      matchLinkElement
+      matchLinkElement,
     )
 
     const eloChange = eloChangesByMatches[matchId]
@@ -73,7 +73,7 @@ export default async () => {
           gap: 4,
           alignItems: 'center',
           color: '#A0A0A0',
-          cursor: selfIsFreeMember && 'help'
+          cursor: selfIsFreeMember && 'help',
         }}
         title={
           selfIsFreeMember ? 'This feature requires FACEIT Premium' : undefined
@@ -84,6 +84,7 @@ export default async () => {
           viewBox="0 0 24 12"
           style={{ height: 8 }}
         >
+          <title>Elo Icon</title>
           <path
             fill="currentColor"
             d="M12 3c0 .463-.105.902-.292 1.293l1.998 2A2.97 2.97 0 0 1 15 6a2.99 2.99 0 0 1 1.454.375l1.921-1.921a3 3 0 1 1 1.5 1.328l-2.093 2.093a3 3 0 1 1-5.49-.168l-1.999-2a2.992 2.992 0 0 1-2.418.074L5.782 7.876a3 3 0 1 1-1.328-1.5l1.921-1.921A3 3 0 1 1 12 3z"
@@ -92,13 +93,13 @@ export default async () => {
         <span
           style={{
             filter: selfIsFreeMember && 'blur(4px)',
-            opacity: selfIsFreeMember && 0.33
+            opacity: selfIsFreeMember && 0.33,
           }}
         >
           {selfIsFreeMember ? random(1000, 3000) : newElo}
         </span>
       </div>,
-      matchTypeElement
+      matchTypeElement,
     )
-  })
+  }
 }

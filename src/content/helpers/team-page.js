@@ -4,10 +4,10 @@ import { getCurrentPath } from './location'
 export const getTeamId = (path) => {
   const match =
     /teams\/([0-9a-z]+-[0-9a-z]+-[0-9a-z]+-[0-9a-z]+-[0-9a-z]+(?:-[0-9a-z]+)?)/.exec(
-      path || getCurrentPath()
+      path || getCurrentPath(),
     )
 
-  return match && match[1]
+  return match?.[1]
 }
 
 export const getTeamMemberPlayerElements = (parent) =>

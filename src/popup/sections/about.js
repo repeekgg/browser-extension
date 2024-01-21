@@ -1,7 +1,7 @@
 import React from 'react'
 import { version } from '../../manifest'
-import ListSubheader from '../components/list-subheader'
 import ListItemLink from '../components/list-item-link'
+import ListSubheader from '../components/list-subheader'
 
 export const ABOUT = 'About'
 

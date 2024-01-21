@@ -59,7 +59,7 @@ export default async () => {
           Close and don&apos;t show again
         </span>
       </div>
-    </div>
+    </div>,
   )
 
   document.body.appendChild(rootElement)

@@ -8,15 +8,15 @@ export default ({ elo, className, alignRight = false, style = {} }) => {
       style={{
         display: 'flex',
         'align-items': 'center',
-        ...style
+        ...style,
       }}
     >
       {createIconElement({
         icon: 'ELO-icon',
         style: {
           [`margin-${alignRight ? 'left' : 'right'}`]: 4,
-          'margin-top': 2
-        }
+          'margin-top': 2,
+        },
       })}
     </span>
   )

@@ -18,7 +18,7 @@ export default ({ level = 0, role, bgColor, textColor, onClick }) => {
       break
     }
     default: {
-      description = `Has supported Repeek`
+      description = 'Has supported Repeek'
     }
   }
 
@@ -37,7 +37,7 @@ export default ({ level = 0, role, bgColor, textColor, onClick }) => {
           fontWeight: 'bold',
           display: 'inline-flex',
           gap: 2,
-          alignItems: 'center'
+          alignItems: 'center',
         }}
         title={description}
         onClick={onClick}
@@ -50,9 +50,10 @@ export default ({ level = 0, role, bgColor, textColor, onClick }) => {
           viewBox="0 0 107 128"
           style={{
             height: 14,
-            width: 'auto'
+            width: 'auto',
           }}
         >
+          <title>Repeek Logo</title>
           <path
             fill="currentColor"
             d="m39.343 69.778 4.795 10.993L46.012 63.9l-19.55-10.18v10.31l12.88 5.747Z"

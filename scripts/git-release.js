@@ -1,6 +1,4 @@
-/* eslint-disable import/newline-after-import,unicorn/no-process-exit */
 const execa = require('execa')
-
 ;(async () => {
   try {
     const gitPushMainProc = execa('git', ['push', 'origin', 'main'])

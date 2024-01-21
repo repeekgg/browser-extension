@@ -1,16 +1,16 @@
 import React from 'dom-chef'
-import select from 'select-dom'
 import get from 'lodash/get'
+import select from 'select-dom'
+import createButton from '../components/button'
 import {
   hasFeatureAttribute,
-  setFeatureAttribute
+  setFeatureAttribute,
 } from '../helpers/dom-element'
 import { getMatch, getPlayer, getPlayerMatches } from '../helpers/faceit-api'
 import {
   getPlayerProfileNickname,
-  getPlayerProfileStatsGame
+  getPlayerProfileStatsGame,
 } from '../helpers/player-profile'
-import createButton from '../components/button'
 
 const FEATURE_ATTRIBUTE = 'matches-demo'
 
@@ -36,11 +36,11 @@ export default async (statsContentElement) => {
         padding: 8,
         marginBottom: 8,
         textAlign: 'left',
-        width: 160
+        width: 160,
       }}
     >
       Demo
-    </th>
+    </th>,
   )
 
   const nickname = getPlayerProfileNickname()
@@ -60,7 +60,7 @@ export default async (statsContentElement) => {
         style={{
           borderTop: '1px solid #676767',
           paddingLeft: 8,
-          paddingRight: 8
+          paddingRight: 8,
         }}
       >
         {createButton({
@@ -76,7 +76,7 @@ export default async (statsContentElement) => {
             if (demoUrl) {
               window.open(demoUrl)
             }
-          }
+          },
         })}
       </td>
     )

@@ -1,12 +1,12 @@
 import select from 'select-dom'
-import { getRoomId } from '../helpers/match-room'
-import { notifyIf } from '../helpers/user-settings'
+import storage from '../../shared/storage'
 import {
   hasFeatureAttribute,
-  setFeatureAttribute
+  setFeatureAttribute,
 } from '../helpers/dom-element'
-import storage from '../../shared/storage'
-import { getSelf, getMatch } from '../helpers/faceit-api'
+import { getMatch, getSelf } from '../helpers/faceit-api'
+import { getRoomId } from '../helpers/match-room'
+import { notifyIf } from '../helpers/user-settings'
 
 const FEATURE_ATTRIBUTE = 'connect-to-server'
 
@@ -25,7 +25,7 @@ export default async (parent) => {
   const self = await getSelf()
   const isSelfInMatch = [
     ...teams.faction1.roster,
-    ...teams.faction2.roster
+    ...teams.faction2.roster,
   ].some((player) => player.id === self.id)
 
   if (!isSelfInMatch) {
@@ -53,6 +53,6 @@ export default async (parent) => {
     title: 'Connecting to Server',
     message: `Launching the game and connecting to the server in ${
       DELAY / 1000
-    } seconds.`
+    } seconds.`,
   })
 }

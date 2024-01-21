@@ -1,6 +1,5 @@
-/* eslint-disable react/no-danger */
-import React from 'dom-chef'
 import { getName } from 'country-list'
+import React from 'dom-chef'
 
 const reqFlag = require.context('../assets/flags', false, /\.svg$/)
 
@@ -12,11 +11,11 @@ export default ({ country, alignedRight = false }) => {
       style={{
         width: 14,
         display: 'inline-block',
-        [`margin-${alignedRight ? 'left' : 'right'}`]: 6
+        [`margin-${alignedRight ? 'left' : 'right'}`]: 6,
       }}
       title={countryName}
       dangerouslySetInnerHTML={{
-        __html: reqFlag(`./${country.toLowerCase()}.svg`)
+        __html: reqFlag(`./${country.toLowerCase()}.svg`),
       }}
     />
   )

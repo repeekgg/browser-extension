@@ -1,11 +1,11 @@
 import browser from 'webextension-polyfill'
 import {
-  IS_PRODUCTION,
-  ACTION_NOTIFICATION,
-  ACTION_FETCH_VIPS,
   ACTION_FETCH_FACEIT_API,
   ACTION_FETCH_SKIN_OF_THE_MATCH,
-  ACTION_POST_STATS_EVENT
+  ACTION_FETCH_VIPS,
+  ACTION_NOTIFICATION,
+  ACTION_POST_STATS_EVENT,
+  IS_PRODUCTION,
 } from '../shared/constants'
 import api, { fetchVips, fetchConfig } from './api'
 import faceitApi from './faceit-api'
@@ -18,13 +18,14 @@ browser.runtime.onMessage.addListener(async (message) => {
   switch (message.action) {
     case ACTION_NOTIFICATION: {
       const { name } = browser.runtime.getManifest()
-      delete message.action
+
+      message.action = undefined
 
       browser.notifications.create('', {
         type: 'basic',
         ...message,
         contextMessage: name,
-        iconUrl: 'icon.png'
+        iconUrl: 'icon.png',
       })
       break
     }
@@ -59,20 +60,16 @@ browser.runtime.onMessage.addListener(async (message) => {
         const { steamIds, organizerId } = message
 
         const searchParams = {
-          /* eslint-disable camelcase */
-          steam_ids: steamIds.join(',')
-          /* eslint-enable camelcase */
+          steam_ids: steamIds.join(','),
         }
 
         if (typeof organizerId === 'string') {
-          /* eslint-disable camelcase */
           searchParams.organizer_id = organizerId
-          /* eslint-enable camelcase */
         }
 
         const response = await api('v1/skin_of_the_match', {
           searchParams,
-          timeout: 30000
+          timeout: 30000,
         }).json()
 
         if (IS_PRODUCTION && !features.skinOfTheMatchWidget) {
@@ -91,17 +88,18 @@ browser.runtime.onMessage.addListener(async (message) => {
 
         const json = {
           eventName,
-          data
+          data,
         }
 
         if (!IS_PRODUCTION) {
+          // biome-ignore lint/suspicious/noConsoleLog: Development only
           console.log('v1/stats', json)
 
           return
         }
 
         api.post('v1/stats', {
-          json
+          json,
         })
       } catch (error) {
         console.error(error)

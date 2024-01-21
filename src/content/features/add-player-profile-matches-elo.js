@@ -1,17 +1,17 @@
 import React from 'dom-chef'
-import select from 'select-dom'
 import random from 'lodash/random'
-import { getPlayer, getPlayerMatches, getSelf } from '../helpers/faceit-api'
-import { getEloChangesByMatches } from '../helpers/elo'
-import {
-  getPlayerProfileNickname,
-  getPlayerProfileStatsGame
-} from '../helpers/player-profile'
+import select from 'select-dom'
 import {
   hasFeatureAttribute,
-  setFeatureAttribute
+  setFeatureAttribute,
 } from '../helpers/dom-element'
+import { getEloChangesByMatches } from '../helpers/elo'
+import { getPlayer, getPlayerMatches, getSelf } from '../helpers/faceit-api'
 import { getIsFreeMember } from '../helpers/membership'
+import {
+  getPlayerProfileNickname,
+  getPlayerProfileStatsGame,
+} from '../helpers/player-profile'
 
 const FEATURE_ATTRIBUTE = 'matches-elo'
 
@@ -80,7 +80,7 @@ export default async (statsContentElement) => {
           display: 'flex',
           gap: 4,
           alignItems: 'center',
-          cursor: selfIsFreeMember && 'help'
+          cursor: selfIsFreeMember && 'help',
         }}
         title={
           selfIsFreeMember ? 'This feature requires FACEIT Premium' : undefined
@@ -93,6 +93,7 @@ export default async (statsContentElement) => {
           viewBox="0 0 24 12"
           style={{ height: 8 }}
         >
+          <title>Elo Icon</title>
           <path
             fill="#fff"
             d="M12 3c0 .463-.105.902-.292 1.293l1.998 2A2.97 2.97 0 0 1 15 6a2.99 2.99 0 0 1 1.454.375l1.921-1.921a3 3 0 1 1 1.5 1.328l-2.093 2.093a3 3 0 1 1-5.49-.168l-1.999-2a2.992 2.992 0 0 1-2.418.074L5.782 7.876a3 3 0 1 1-1.328-1.5l1.921-1.921A3 3 0 1 1 12 3z"
@@ -104,7 +105,7 @@ export default async (statsContentElement) => {
             fontWeight: 'normal',
             textTransform: 'none',
             filter: selfIsFreeMember && 'blur(4px)',
-            opacity: selfIsFreeMember && 0.33
+            opacity: selfIsFreeMember && 0.33,
           }}
         >
           {selfIsFreeMember ? random(1000, 3000) : newElo}

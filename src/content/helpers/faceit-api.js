@@ -1,11 +1,11 @@
-import pMemoize from 'p-memoize'
 import camelcaseKeys from 'camelcase-keys'
 import format from 'date-fns/format'
 import Cookies from 'js-cookie'
+import pMemoize from 'p-memoize'
 import browser from 'webextension-polyfill'
 import { ACTION_FETCH_FACEIT_API } from '../../shared/constants'
-import { mapTotalStatsMemoized, mapAverageStatsMemoized } from './stats'
 import { isSupportedGame } from './games'
+import { mapAverageStatsMemoized, mapTotalStatsMemoized } from './stats'
 
 export const CACHE_TIME = 600000
 
@@ -25,13 +25,13 @@ async function fetchApi(path, fetchOptions = {}, camelcaseKeysOptions = {}) {
     const response = await browser.runtime.sendMessage({
       action: ACTION_FETCH_FACEIT_API,
       path,
-      options
+      options,
     })
 
     const {
       result, // Status for old API(?)
       code, // Status for new API(?)
-      payload
+      payload,
     } = response
 
     if (
@@ -43,7 +43,7 @@ async function fetchApi(path, fetchOptions = {}, camelcaseKeysOptions = {}) {
 
     return camelcaseKeys(payload || response, {
       deep: true,
-      ...camelcaseKeysOptions
+      ...camelcaseKeysOptions,
     })
   } catch (err) {
     console.error(err)
@@ -53,7 +53,7 @@ async function fetchApi(path, fetchOptions = {}, camelcaseKeysOptions = {}) {
 }
 
 const fetchApiMemoized = pMemoize(fetchApi, {
-  maxAge: CACHE_TIME
+  maxAge: CACHE_TIME,
 })
 
 export const getUser = (userId) => fetchApiMemoized(`/users/v1/users/${userId}`)
@@ -63,7 +63,7 @@ export const getPlayer = (nickname) =>
 
 export const getPlayerMatches = (userId, game, size = 20) =>
   fetchApiMemoized(
-    `/stats/v1/stats/time/users/${userId}/games/${game}?size=${size}`
+    `/stats/v1/stats/time/users/${userId}/games/${game}?size=${size}`,
   )
 
 export const getPlayerStats = async (userId, game, size = 20) => {
@@ -72,7 +72,7 @@ export const getPlayerStats = async (userId, game, size = 20) => {
   }
 
   let totalStats = await fetchApiMemoized(
-    `/stats/v1/stats/users/${userId}/games/${game}`
+    `/stats/v1/stats/users/${userId}/games/${game}`,
   )
 
   if (!totalStats || Object.keys(totalStats).length === 0) {
@@ -82,7 +82,7 @@ export const getPlayerStats = async (userId, game, size = 20) => {
   totalStats = mapTotalStatsMemoized(totalStats.lifetime)
 
   let averageStats = await fetchApiMemoized(
-    `/stats/v1/stats/time/users/${userId}/games/${game}?size=${size}`
+    `/stats/v1/stats/time/users/${userId}/games/${game}?size=${size}`,
   )
 
   if (!averageStats || !Array.isArray(averageStats)) {
@@ -99,7 +99,7 @@ export const getPlayerStats = async (userId, game, size = 20) => {
 
   return {
     ...totalStats,
-    ...averageStats
+    ...averageStats,
   }
 }
 
@@ -120,13 +120,13 @@ export const getHubQueue = async (id) =>
 export const getPlayerHistory = async (userId, page = 0) => {
   const size = 50
   const offset = 0
-  const from = encodeURIComponent(`1970-01-01T01:00:00+0000`)
+  const from = encodeURIComponent('1970-01-01T01:00:00+0000')
   const to = encodeURIComponent(
-    format(new Date(), `yyyy-MM-dd'T'HH:mm:ss'+0000'`)
+    format(new Date(), `yyyy-MM-dd'T'HH:mm:ss'+0000'`),
   )
 
   return fetchApiMemoized(
-    `/match-history/v5/players/${userId}/history/?from=${from}&to=${to}&page=${page}&size=${size}&offset=${offset}`
+    `/match-history/v5/players/${userId}/history/?from=${from}&to=${to}&page=${page}&size=${size}&offset=${offset}`,
   )
 }
 
@@ -138,7 +138,7 @@ export const getPlayerSummaries = (userIds) =>
     '/user-summary/v2/list',
     {
       method: 'POST',
-      body: JSON.stringify({ ids: userIds })
+      body: JSON.stringify({ ids: userIds }),
     },
-    { exclude: userIds }
+    { exclude: userIds },
   )

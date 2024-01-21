@@ -1,7 +1,7 @@
 import select from 'select-dom'
-import * as pages from './pages'
 import { getCurrentPath } from './location'
 import { isBeta } from './is-beta'
+import * as pages from './pages'
 
 export const isInviteToParty = (parent) =>
   select.exists('h3[translate-once="INVITE-TO-PARTY"]', parent)
@@ -16,7 +16,7 @@ export const isMatchRoomCaptain = (parent) =>
   pages.isRoomOverview() &&
   select.exists(
     `h3[translate="<span class='text-primary'>Action</span> required"]`,
-    parent
+    parent,
   )
 
 export const isMatchDefeat = (parent) =>

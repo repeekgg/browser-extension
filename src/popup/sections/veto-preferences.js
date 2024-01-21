@@ -1,13 +1,13 @@
 import React from 'react'
 import {
   MATCH_ROOM_VETO_LOCATION_REGIONS,
-  MATCH_ROOM_VETO_MAP_ITEMS
+  MATCH_ROOM_VETO_MAP_ITEMS,
 } from '../../shared/settings'
-import ListSubheader from '../components/list-subheader'
 import ListItemMenu from '../components/list-item-menu'
-import ListItemText from '../components/list-item-text'
 import ListItemSwitch from '../components/list-item-switch'
+import ListItemText from '../components/list-item-text'
 import ListItemsSortable from '../components/list-items-sortable'
+import ListSubheader from '../components/list-subheader'
 
 export const VETO_PREFERENCES = 'Veto Preferences'
 
@@ -28,9 +28,9 @@ export default ({ getMenuProps, getSortableProps, getSwitchProps }) => (
         (newItems, options, changeOption) => {
           changeOption({
             ...options.matchRoomAutoVetoLocationItems,
-            [options.matchRoomVetoLocationRegion]: newItems
+            [options.matchRoomVetoLocationRegion]: newItems,
           })
-        }
+        },
       )}
     />
     <ListSubheader divider>Map Preferences</ListSubheader>

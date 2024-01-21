@@ -1,18 +1,18 @@
 import select from 'select-dom'
-import { getRoomId } from '../helpers/match-room'
+import createFeaturedPlayerBadgeElement from '../components/player-badge'
 import {
   hasFeatureAttribute,
-  setFeatureAttribute
+  setFeatureAttribute,
 } from '../helpers/dom-element'
 import { getMatch } from '../helpers/faceit-api'
+import { getRoomId } from '../helpers/match-room'
 import { getPlayerBadges } from '../helpers/player-badges'
-import createFeaturedPlayerBadgeElement from '../components/player-badge'
 
 const FEATURE_ATTRIBUTE = 'match-room-player-badges'
 
 export default async () => {
   const matchRoomContentElement = select(
-    '#MATCHROOM-OVERVIEW > div:nth-child(3)'
+    '#MATCHROOM-OVERVIEW > div:nth-child(3)',
   )
 
   if (
@@ -29,40 +29,40 @@ export default async () => {
 
   const matchPlayers = [
     ...match.teams.faction1.roster,
-    ...match.teams.faction2.roster
+    ...match.teams.faction2.roster,
   ]
 
   const matchPlayerBadges = await getPlayerBadges(
-    matchPlayers.map((matchPlayer) => matchPlayer.id)
+    matchPlayers.map((matchPlayer) => matchPlayer.id),
   )
 
   const matchPlayerElements = ['roster1', 'roster2']
-    .reduce(
-      (acc, roster) => [
-        ...acc,
+    .reduce((acc, roster) => {
+      acc.push(
         ...select.all(
           `div[name="${roster}"] div > div:first-child > div > div > div[size="40"]`,
-          matchRoomContentElement
-        )
-      ],
-      []
-    )
+          matchRoomContentElement,
+        ),
+      )
+
+      return acc
+    }, [])
     .map(
       (avatarElement) =>
-        avatarElement.parentElement.parentElement.parentElement.parentElement
+        avatarElement.parentElement.parentElement.parentElement.parentElement,
     )
 
-  matchPlayerElements.forEach((matchPlayerElement) => {
+  for (const matchPlayerElement of matchPlayerElements) {
     const matchPlayerNicknameElement = select(
       'div:nth-child(2) > div > div',
-      matchPlayerElement
+      matchPlayerElement,
     )
 
     const playerBadge =
       matchPlayerBadges[
         matchPlayers.find(
           (matchPlayer) =>
-            matchPlayer.nickname === matchPlayerNicknameElement.innerText
+            matchPlayer.nickname === matchPlayerNicknameElement.innerText,
         )?.id
       ]
 
@@ -71,10 +71,10 @@ export default async () => {
 
       const matchPlayerInfoElement = select(
         'div:nth-child(2) > div',
-        matchPlayerElement
+        matchPlayerElement,
       )
 
       matchPlayerInfoElement.prepend(playerBadgeElement)
     }
-  })
+  }
 }

@@ -1,7 +1,6 @@
-/* eslint-disable import/prefer-default-export */
-import mem from 'mem'
-import round from 'lodash/round'
 import isNumber from 'lodash/isNumber'
+import round from 'lodash/round'
+import mem from 'mem'
 import { getMatchmakingQueue } from './faceit-api'
 
 export function normalizeElo(elo) {
@@ -10,14 +9,14 @@ export function normalizeElo(elo) {
 
 export function estimateRatingChange(elo1, elo2, K = 50) {
   const eloDiff = elo2 - elo1
-  const percentage = 1 / (1 + Math.pow(10, eloDiff / 400))
+  const percentage = 1 / (1 + 10 ** (eloDiff / 400))
 
   const gain = round(K * (1 - percentage))
   const loss = round(K * (0 - percentage))
 
   return {
     gain: gain || 1,
-    loss: loss || -1
+    loss: loss || -1,
   }
 }
 
@@ -28,7 +27,7 @@ export function predictRatingChange(winProbability, K = 50) {
 
   return {
     gain,
-    loss: -(K - gain)
+    loss: -(K - gain),
   }
 }
 
@@ -43,7 +42,7 @@ export const SKILL_LEVELS_BY_GAME = {
     7: [1551, 1700],
     8: [1701, 1850],
     9: [1851, 2000],
-    10: [2001, null]
+    10: [2001, null],
   },
   cs2: {
     1: [1, 500],
@@ -55,8 +54,8 @@ export const SKILL_LEVELS_BY_GAME = {
     7: [1351, 1530],
     8: [1531, 1750],
     9: [1751, 2000],
-    10: [2001, null]
-  }
+    10: [2001, null],
+  },
 }
 
 export async function getEloChangesByMatches(matches) {
@@ -75,7 +74,7 @@ export async function getEloChangesByMatches(matches) {
 
           return match
         }
-      })
+      }),
     )
   ).filter(Boolean)
 
@@ -103,14 +102,13 @@ export async function getEloChangesByMatches(matches) {
       return acc
     }
 
-    return {
-      ...acc,
-      [match.matchId]: {
-        previousElo,
-        newElo,
-        eloDiff
-      }
+    acc[match.matchId] = {
+      previousElo,
+      newElo,
+      eloDiff,
     }
+
+    return acc
   }, {})
 
   return Object.keys(eloHistoryByMatches).length > 0

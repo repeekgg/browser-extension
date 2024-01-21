@@ -1,10 +1,9 @@
-/* eslint-disable new-cap */
-import React from 'react'
 import List from '@material-ui/core/List'
+import React from 'react'
 import {
   SortableContainer,
   SortableElement,
-  arrayMove
+  arrayMove,
 } from 'react-sortable-hoc'
 
 import ListItemText from './list-item-text'

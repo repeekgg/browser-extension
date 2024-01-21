@@ -1,14 +1,14 @@
-import select from 'select-dom'
 import shuffle from 'lodash/shuffle'
+import select from 'select-dom'
+import storage from '../../shared/storage'
 import {
   hasFeatureAttribute,
-  setFeatureAttribute
+  setFeatureAttribute,
 } from '../helpers/dom-element'
-import storage from '../../shared/storage'
-import { notifyIf } from '../helpers/user-settings'
 import { getMatch, getSelf } from '../helpers/faceit-api'
-import { getRoomId } from '../helpers/match-room'
 import maps from '../helpers/maps'
+import { getRoomId } from '../helpers/match-room'
+import { notifyIf } from '../helpers/user-settings'
 
 const FEATURE_ATTRIBUTE = 'veto-maps'
 const VETO_DELAY = 2000
@@ -20,7 +20,7 @@ export default async (parentElement) => {
 
   if (
     ![match.teams.faction1.leader, match.teams.faction2.leader].includes(
-      self.id
+      self.id,
     )
   ) {
     return
@@ -28,7 +28,7 @@ export default async (parentElement) => {
 
   const votingListElement = select(
     'div.match-vs__details > div.match-voting > div > democracy',
-    parentElement
+    parentElement,
   )
 
   if (!votingListElement) {
@@ -38,7 +38,7 @@ export default async (parentElement) => {
   const {
     matchRoomAutoVetoMapItems,
     matchRoomAutoVetoMapsShuffle: shuffleMaps,
-    matchRoomAutoVetoMapsShuffleAmount: shuffleMapsAmount
+    matchRoomAutoVetoMapsShuffleAmount: shuffleMapsAmount,
   } = await storage.getAll()
   let autoVetoItems = matchRoomAutoVetoMapItems.map((m) => maps.csgo[m] || m)
 
@@ -50,7 +50,7 @@ export default async (parentElement) => {
   autoVetoItems = autoVetoItems.reverse()
 
   const isVetoMaps = autoVetoItems.some((item) =>
-    select.exists(`div[title="${item}"]`, votingListElement)
+    select.exists(`div[title="${item}"]`, votingListElement),
   )
 
   if (
@@ -72,7 +72,7 @@ export default async (parentElement) => {
     autoVetoItems.some((item) => {
       const vetoButtonElement = select(
         `div[title="${item}"] * button`,
-        votingListElement
+        votingListElement,
       )
       if (vetoButtonElement) {
         setTimeout(() => {
@@ -98,6 +98,6 @@ export default async (parentElement) => {
 
   notifyIf('notifyMatchRoomAutoVetoMaps', {
     title: 'Match Maps Veto',
-    message: 'Maps will be vetoed automatically.'
+    message: 'Maps will be vetoed automatically.',
   })
 }

@@ -12,7 +12,7 @@ export default ({ text, style = {}, ...props }) => (
       borderRadius: 4,
       textTransform: 'uppercase',
       cursor: 'pointer',
-      ...style
+      ...style,
     }}
     type="button"
   >
