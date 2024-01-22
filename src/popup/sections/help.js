@@ -11,7 +11,7 @@ export const HELP = 'Help'
 
 export default () => (
   <React.Fragment>
-    <ListSubheader>Issues?</ListSubheader>
+    <ListSubheader>Issues/Questions?</ListSubheader>
     <ListItemLink
       primary="Report an Issue"
       subreddit={encodeURI(
@@ -20,8 +20,7 @@ export default () => (
         }\nBrowser: ${capitalize(userBrowser.name)} (${userBrowser.version})`,
       )}
     />
-    <ListSubheader divider>Questions?</ListSubheader>
     <ListItemLink primary="Ask on Reddit" subreddit="submit?selftext=true" />
-    <ListItemLink primary="Tweet Us" href="https://twitter.com/repeekgg" />
+    <ListItemLink primary="Tweet Us" twitter="repeekgg" />
   </React.Fragment>
 )
