@@ -1,8 +1,5 @@
 import test from 'ava'
-import {
-  estimateRatingChange,
-  predictRatingChange,
-} from '../src/content/helpers/elo'
+import { estimateRatingChange, predictRatingChange } from './elo'
 
 test('estimateRatingChange', (t) => {
   t.deepEqual(estimateRatingChange(2000, 2000), {

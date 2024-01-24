@@ -1,10 +1,10 @@
 import test from 'ava'
 import { parseHTML } from 'linkedom'
 import sinon from 'sinon'
+import { hasFeatureAttribute } from '../helpers/dom-element'
 import clickModalPartyInviteAccept, {
   FEATURE_NAME,
-} from '../src/content/features/click-modal-party-invite-accept'
-import { hasFeatureAttribute } from '../src/content/helpers/dom-element'
+} from './click-modal-party-invite-accept'
 
 const faceitEnvs = [
   {

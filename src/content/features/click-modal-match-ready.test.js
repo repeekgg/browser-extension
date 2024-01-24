@@ -1,10 +1,8 @@
 import test from 'ava'
 import { parseHTML } from 'linkedom'
 import sinon from 'sinon'
-import clickModalMatchReady, {
-  FEATURE_NAME,
-} from '../src/content/features/click-modal-match-ready'
-import { hasFeatureAttribute } from '../src/content/helpers/dom-element'
+import { hasFeatureAttribute } from '../helpers/dom-element'
+import clickModalMatchReady, { FEATURE_NAME } from './click-modal-match-ready'
 
 const faceitEnvs = [
   {

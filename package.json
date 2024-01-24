@@ -74,7 +74,7 @@
   },
   "ava": {
     "require": [
-      "./test/_setup.js"
+      "./ava.setup.js"
     ]
   }
 }
