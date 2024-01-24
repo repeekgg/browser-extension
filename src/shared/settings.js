@@ -53,4 +53,5 @@ export const DEFAULTS = {
   notifyMatchRoomAutoVetoMaps: true,
   teamRosterPlayersInfo: true,
   repeekNotificationClosed: false,
+  faceitBetaNotificationClosed: false,
 }
