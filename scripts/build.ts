@@ -2,6 +2,8 @@ import { cp, mkdir, rm } from 'node:fs/promises'
 import path from 'node:path'
 import autoprefixer from 'autoprefixer'
 import chokidar from 'chokidar'
+// @ts-expect-error: Doesn't come with TS definitions and `@types/dot-json` isn't available
+import DotJson from 'dot-json'
 import * as esbuild from 'esbuild'
 import esbuildInline from 'esbuild-plugin-inline-import'
 import esbuildStyle from 'esbuild-style-plugin'
@@ -26,6 +28,36 @@ async function copyFile(srcFile: string) {
   const distPath = getDistPath(srcPath.replace('src', ''))
 
   await cp(srcPath, distPath, { recursive: true })
+
+  if (distPath.endsWith('manifest.json')) {
+    const manifestJson = new DotJson(distPath)
+
+    if (IS_FIREFOX) {
+      manifestJson
+        // Firefox doesn't support `background.service_worker`, but `background.scripts`:
+        // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json/background#browser_support
+        // TODO: Remove/change this once browsers have come to a common solution
+        .set('background.scripts', [
+          manifestJson.get('background.service_worker'),
+        ])
+        .delete('background.service_worker')
+        // Remove keys not supported by Firefox
+        .delete('minimum_chrome_version')
+        // Firefox only supports `optional_permissions` instead of `optional_host_permissions`:
+        // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/manifest.json/optional_permissions#host_permissions
+        // TODO: Remove once `optional_host_permissions` is supported
+        .set(
+          'optional_permissions',
+          manifestJson.get('optional_host_permissions'),
+        )
+        .delete('optional_host_permissions')
+    } else {
+      // Remove keys not supported by Chrome
+      manifestJson.delete('browser_specific_settings')
+    }
+
+    manifestJson.save()
+  }
 
   // biome-ignore lint/suspicious/noConsoleLog:
   console.log('[info] copied', srcPath.replace('src/', ''))
@@ -132,6 +164,9 @@ async function bundleContext(
 
 async function build() {
   try {
+    // biome-ignore lint/suspicious/noConsoleLog:
+    console.log('[info] building for', IS_FIREFOX ? 'firefox' : 'chrome')
+
     await rm(getDistPath(), { recursive: true, force: true })
 
     await mkdir(getDistPath())
