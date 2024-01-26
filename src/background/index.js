@@ -13,11 +13,22 @@ import {
   getIsFaceitBetaContentScriptRegistered,
   registerFaceitBetaContentScript,
 } from '../shared/faceit-beta'
+import { getHasRequiredPermissions } from '../shared/permissions'
 import storage from '../shared/storage'
 import api, { fetchVips, fetchConfig } from './api'
 import faceitApi from './faceit-api'
 
 browser.runtime.onInstalled.addListener(async ({ reason }) => {
+  if (reason === 'install') {
+    const hasRequiredPermissions = await getHasRequiredPermissions()
+
+    if (!hasRequiredPermissions) {
+      browser.runtime.openOptionsPage()
+
+      return
+    }
+  }
+
   if (reason === 'update') {
     const { extensionEnabledFaceitBeta } = await storage.getAll()
 
