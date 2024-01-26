@@ -1,5 +1,4 @@
 import React from 'dom-chef'
-import get from 'lodash/get'
 import select from 'select-dom'
 import createButton from '../components/button'
 import {
@@ -67,9 +66,15 @@ export default async (statsContentElement) => {
           text: 'Watch Demo',
           onClick: async (e) => {
             e.stopPropagation()
+
             const match = await getMatch(matchId)
+
+            if (!match) {
+              return
+            }
+
             const demoUrl =
-              get(match, 'externalMatches[0].stats.demoFileUrl') ||
+              match.externalMatches?.[0]?.stats?.demoFileUrl ||
               match.demoUrl ||
               match.demoUrLs[0]
 

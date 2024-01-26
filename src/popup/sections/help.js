@@ -1,5 +1,4 @@
 import { detect } from 'detect-browser'
-import capitalize from 'lodash/capitalize'
 import React from 'react'
 import browser from 'webextension-polyfill'
 import ListItemLink from '../components/list-item-link'
@@ -17,7 +16,9 @@ export default () => (
       subreddit={encodeURI(
         `submit?selftext=true&text=\n\n\n---\n\nVersion: ${
           browser.runtime.getManifest().version
-        }\nBrowser: ${capitalize(userBrowser.name)} (${userBrowser.version})`,
+        }\nBrowser: ${userBrowser.name[0].toUpperCase()}${userBrowser.name.slice(
+          1,
+        )} (${userBrowser.version})`,
       )}
     />
     <ListItemLink primary="Ask on Reddit" subreddit="submit?selftext=true" />

@@ -1,5 +1,3 @@
-import head from 'lodash/head'
-import isEmpty from 'lodash/isEmpty'
 import mem from 'mem'
 import select from 'select-dom'
 import { getCurrentPath } from './location'
@@ -91,7 +89,7 @@ export function mapPlayersToPartyColors(
       let partyColor
 
       if (isPremade) {
-        partyColor = isEmpty(acc) ? pickColor() : head(acc).partyColor
+        partyColor = acc.length === 0 ? pickColor() : acc[0].partyColor
       } else if (curr.activeTeamId || !isTeamV1Element) {
         let partyMember
         if (isTeamV1Element) {

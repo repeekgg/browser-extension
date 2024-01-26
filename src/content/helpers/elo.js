@@ -1,5 +1,3 @@
-import isNumber from 'lodash/isNumber'
-import round from 'lodash/round'
 import mem from 'mem'
 import { getMatchmakingQueue } from './faceit-api'
 
@@ -11,8 +9,8 @@ export function estimateRatingChange(elo1, elo2, K = 50) {
   const eloDiff = elo2 - elo1
   const percentage = 1 / (1 + 10 ** (eloDiff / 400))
 
-  const gain = round(K * (1 - percentage))
-  const loss = round(K * (0 - percentage))
+  const gain = Math.round(K * (1 - percentage))
+  const loss = Math.round(K * (0 - percentage))
 
   return {
     gain: gain || 1,
@@ -90,7 +88,9 @@ export async function getEloChangesByMatches(matches) {
     const previousElo = previousMatch.elo && normalizeElo(previousMatch.elo)
     const newElo = match.elo && normalizeElo(match.elo)
     const eloDiff =
-      isNumber(previousElo) && isNumber(newElo) ? newElo - previousElo : null
+      typeof previousElo === 'number' && typeof newElo === 'number'
+        ? newElo - previousElo
+        : null
 
     if (
       !eloDiff ||

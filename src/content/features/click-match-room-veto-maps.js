@@ -1,4 +1,4 @@
-import shuffle from 'lodash/shuffle'
+import arrayShuffle from 'array-shuffle'
 import select from 'select-dom'
 import storage from '../../shared/storage'
 import {
@@ -43,7 +43,9 @@ export default async (parentElement) => {
   let autoVetoItems = matchRoomAutoVetoMapItems.map((m) => maps.csgo[m] || m)
 
   if (shuffleMaps) {
-    const shuffledItems = shuffle(autoVetoItems.splice(0, shuffleMapsAmount))
+    const shuffledItems = arrayShuffle(
+      autoVetoItems.splice(0, shuffleMapsAmount),
+    )
     autoVetoItems.unshift(...shuffledItems)
   }
 

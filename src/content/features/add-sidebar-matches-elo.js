@@ -1,7 +1,7 @@
 import React from 'dom-chef'
-import random from 'lodash/random'
 import select from 'select-dom'
 import { IS_FACEIT_BETA } from '../../shared/faceit-beta'
+import { randomNumber } from '../../shared/utils'
 import {
   hasFeatureAttribute,
   setFeatureAttribute,
@@ -96,7 +96,7 @@ export default async () => {
             opacity: selfIsFreeMember && 0.33,
           }}
         >
-          {selfIsFreeMember ? random(1000, 3000) : newElo}
+          {selfIsFreeMember ? randomNumber(1000, 3000) : newElo}
         </span>
       </div>,
       matchTypeElement,
