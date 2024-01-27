@@ -13,6 +13,7 @@ import {
 import { getMatch, getSelf } from '../helpers/faceit-api'
 import { isSupportedGame } from '../helpers/games'
 import { getRoomId } from '../helpers/match-room'
+import tailwindStyles from 'tailwindInline:../styles.css'
 
 const FEATURE_ATTRIBUTE = 'skin-of-the-match'
 
@@ -156,14 +157,7 @@ export default async () => {
   )
 
   const skinOfTheMatchElement = (
-    <div
-      className="tooltipTrigger spotlightTrigger skinImageTrigger"
-      style={{
-        position: 'relative',
-        fontFamily:
-          'ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji',
-      }}
-    >
+    <div className="relative tooltipTrigger spotlightTrigger skinImageTrigger">
       <span
         onClick={() => {
           browser.runtime.sendMessage({
@@ -254,6 +248,7 @@ export default async () => {
                   style={{
                     fontWeight: 'bold',
                   }}
+                  className="text-white"
                 >
                   Skin Of The Match
                 </div>
@@ -367,7 +362,7 @@ export default async () => {
                     {skinOfTheMatchPlayer.nickname}
                   </div>
                 </div>
-                <div style={{ fontWeight: 'bold' }}>
+                <div style={{ fontWeight: 'bold' }} className="text-white">
                   {skinOfTheMatch.skin.name}
                 </div>
                 <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: 10 }}>
@@ -411,6 +406,11 @@ export default async () => {
 
   const skinOfTheMatchWrapper = document.createElement('div')
   skinOfTheMatchWrapper.attachShadow({ mode: 'open' })
+
+  const tailwindStylesElement = document.createElement('style')
+  tailwindStylesElement.textContent = tailwindStyles
+
+  skinOfTheMatchWrapper.shadowRoot.appendChild(tailwindStylesElement)
 
   skinOfTheMatchWrapper.shadowRoot.appendChild(styles)
 

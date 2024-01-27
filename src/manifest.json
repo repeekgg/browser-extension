@@ -23,7 +23,8 @@
     {
       "run_at": "document_end",
       "matches": ["https://www.faceit.com/*"],
-      "js": ["content.js"]
+      "js": ["content.js"],
+      "css": ["fonts.css"]
     }
   ],
   "action": {

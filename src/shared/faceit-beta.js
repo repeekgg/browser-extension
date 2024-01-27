@@ -47,6 +47,7 @@ export function registerFaceitBetaContentScript() {
       runAt: 'document_start',
       matches: [FACEIT_BETA_CONTENT_SCRIPT_MATCH_PATTERN],
       js: ['content.js'],
+      css: ['fonts.css'],
     },
   ])
 }
