@@ -12,7 +12,7 @@
     }
   },
   "permissions": ["storage", "notifications", "clipboardWrite", "scripting"],
-  "host_permissions": ["https://api.faceit.com/"],
+  "host_permissions": ["https://api.faceit.com/*"],
   "optional_host_permissions": ["https://beta.faceit.com/*"],
   "icons": {
     "16": "icon16.png",
