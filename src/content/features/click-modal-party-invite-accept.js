@@ -32,7 +32,10 @@ const partyInviteModalContentRegExp = new RegExp(
   ].join('|'),
 )
 
-export default async ({ baseElement, isFaceitBeta = IS_FACEIT_BETA } = {}) => {
+export default async ({
+  baseElement = document,
+  isFaceitBeta = IS_FACEIT_BETA,
+} = {}) => {
   const modalElements = select.all(
     isFaceitBeta
       ? '.ReactModalPortal:has(div[class*="modal-next__Container"])'

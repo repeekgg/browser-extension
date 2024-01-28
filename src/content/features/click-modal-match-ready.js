@@ -7,7 +7,7 @@ import { notifyIf } from '../helpers/user-settings'
 
 export const FEATURE_NAME = 'click-modal-match-ready'
 
-export default async ({ baseElement } = {}) => {
+export default async ({ baseElement = document } = {}) => {
   const matchCheckInModalElement = select(
     '.FuseModalPortal:has(div[class*="MatchCheckInModal"])',
     baseElement,
