@@ -1,7 +1,7 @@
 {
   "name": "Repeek (formerly FACEIT Enhancer)",
   "description": "Repeek enhances your experience on FACEIT and adds useful features",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "manifest_version": 3,
   "homepage_url": "https://repeek.gg",
   "minimum_chrome_version": "105.0",
