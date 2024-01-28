@@ -143,7 +143,7 @@ export default async () => {
         title: 'FACEIT Beta support now available',
         description:
           'You can now use Repeek on the new FACEIT Beta platform. Simply enable it in the Repeek settings under <b>General</b> or read our guide to find out more.',
-        link: 'https://repeek.gg/blog/faceit-beta-support-now-available?utm_source=faceit&utm_medium=repeek&utm_campaign=notification',
+        link: 'https://repeek.gg/blog/faceit-beta-support-now-available?utm_source=faceit&utm_medium=repeek&utm_campaign=faceit-beta-support-now-available',
         onClose: () => {
           storage.set({ faceitBetaNotificationClosed: true })
         },
@@ -157,7 +157,7 @@ export default async () => {
       description:
         "Don't worry, nothing really changes for you, right away. Repeek is setting the foundation to be better and faster than ever before.",
       linkLabel: 'Read more',
-      link: 'https://repeek.gg/blog/faceit-enhancer-becomes-repeek?utm_source=faceit&utm_medium=repeek&utm_campaign=repeek-announcement',
+      link: 'https://repeek.gg/blog/faceit-enhancer-is-now-repeek?utm_source=faceit&utm_medium=repeek&utm_campaign=faceit-enhancer-is-now-repeek',
       onClose: () => {
         storage.set({ repeekNotificationClosed: true })
 
