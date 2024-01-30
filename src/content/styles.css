@@ -5,6 +5,6 @@
 @layer base {
   :host {
     all: initial;
-    @apply antialiased font-sans;
+    @apply antialiased font-sans text-neutral-400;
   }
 }

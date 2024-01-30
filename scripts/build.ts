@@ -1,5 +1,6 @@
 import { cp, mkdir, rm } from 'node:fs/promises'
 import path from 'node:path'
+import tailwindConfig from '@/tailwind.config'
 import autoprefixer from 'autoprefixer'
 import chokidar from 'chokidar'
 // @ts-expect-error: Doesn't come with TS definitions and `@types/dot-json` isn't available
@@ -74,18 +75,8 @@ async function copyFiles(...srcFiles: string[]) {
 function getPostcssPlugins(tailwindContent: string[]) {
   return <postcss.AcceptedPlugin[]>[
     tailwind({
-      content: [...tailwindContent],
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: [
-              '"Inter", sans-serif',
-              { fontFeatureSettings: '"liga" 1, "calt" 1' },
-            ],
-          },
-        },
-      },
-      plugins: [],
+      ...tailwindConfig,
+      content: [...tailwindConfig.content, ...tailwindContent],
     }),
     autoprefixer({
       overrideBrowserslist: TARGET_BROWSER,

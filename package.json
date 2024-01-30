@@ -70,6 +70,7 @@
     "sinon": "^17.0.1",
     "sinon-chrome": "^3.0.1",
     "tailwindcss": "^3.4.1",
+    "tailwindcss-animate": "^1.0.7",
     "tsx": "^4.7.0",
     "typescript": "^5.3.3",
     "web-ext": "^4.2.0",
