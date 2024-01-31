@@ -131,16 +131,29 @@ async function bundleContext(
     esbuildOptions.plugins.push(
       esbuildInline({
         filter: /^tailwindInline:/,
-        transform: (content) =>
-          postcss(
-            getPostcssPlugins([getSrcPath(`${context}/**/*.{js,ts,tsx}`)]),
+        transform: async (content) => {
+          const css = await postcss(
+            getPostcssPlugins([getSrcPath(`${context}/**/*.{ts,tsx}`)]),
           )
             .process(content, { from: undefined })
             .then((result) => result.css)
             .catch((error) => {
               console.error(error.message)
               return ''
-            }),
+            })
+
+          if (!IS_DEV) {
+            return (
+              await esbuild.transform(css, {
+                loader: 'css',
+                minify: true,
+                target: TARGET_BROWSER.replace(' ', ''),
+              })
+            ).code
+          }
+
+          return css
+        },
       }),
     )
   }
