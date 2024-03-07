@@ -133,7 +133,7 @@ async function bundleContext(
         filter: /^tailwindInline:/,
         transform: async (content) => {
           const css = await postcss(
-            getPostcssPlugins([getSrcPath(`${context}/**/*.{ts,tsx}`)]),
+            getPostcssPlugins([getSrcPath(`${context}/**/*.{js,ts,tsx}`)]),
           )
             .process(content, { from: undefined })
             .then((result) => result.css)
