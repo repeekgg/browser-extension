@@ -14,7 +14,7 @@
     "lint": "biome check .",
     "types": "tsc",
     "build": "tsx scripts/build.ts",
-    "build:firefox": "tsx scripts/build.ts",
+    "build:firefox": "tsx scripts/build.ts --firefox",
     "bump-version": "node scripts/bump-version.js",
     "git-release": "node scripts/git-release.js",
     "release:amo": "web-ext-submit --source-dir dist",
