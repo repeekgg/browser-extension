@@ -27,17 +27,13 @@ export async function getIsFaceitBetaContentScriptRegistered() {
       ids: [FACEIT_BETA_CONTENT_SCRIPT_ID],
     })
 
-  let isFaceitBetaContentScriptRegistered = false
-
   for (const registeredContentScript of registeredContentScripts) {
     if (registeredContentScript.id === FACEIT_BETA_CONTENT_SCRIPT_ID) {
-      isFaceitBetaContentScriptRegistered = true
+      return true
     }
-
-    break
   }
 
-  return isFaceitBetaContentScriptRegistered
+  return false
 }
 
 export function registerFaceitBetaContentScript() {
