@@ -34,3 +34,6 @@ export const isPlayerProfileStats = () =>
   /players-modal\/.+\/stats\//.test(getCurrentPath())
 
 export const isPlayerProfile = () => /players-modal\/.*$/.test(getCurrentPath())
+
+export const isPlayerProfileOverview = () =>
+  /players-modal\/[^\s\/]+$/.test(getCurrentPath())

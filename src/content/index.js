@@ -10,6 +10,7 @@ import addPlayerProfileExtendedStats from './features/add-player-profile-extende
 import addPlayerProfileLevelProgress from './features/add-player-profile-level-progress'
 import addPlayerProfileMatchesDemo from './features/add-player-profile-matches-demo'
 import addPlayerProfileMatchesElo from './features/add-player-profile-matches-elo'
+import addPlayerProfileSkins from './features/add-player-profile-skins'
 import addSidebarMatchesElo from './features/add-sidebar-matches-elo'
 import applyMatchRoomFocusMode from './features/apply-match-room-focus-mode'
 import clickMatchRoomConnectToServer from './features/click-match-room-connect-to-server'
@@ -111,6 +112,10 @@ function observeBody() {
       } else if (modals.isPlayerProfile()) {
         addPlayerProfileBadge(true)
 
+        if (modals.isPlayerProfileOverview()) {
+          addPlayerProfileSkins()
+        }
+
         if (modals.isPlayerProfileStats()) {
           addPlayerProfileStatsFeatures(true)
         }
@@ -163,6 +168,10 @@ function observeBody() {
         )
       } else if (pages.isPlayerProfile()) {
         addPlayerProfileBadge()
+
+        if (pages.isPlayerProfileOverview()) {
+          addPlayerProfileSkins()
+        }
 
         if (pages.isPlayerProfileStats()) {
           addPlayerProfileStatsFeatures()
