@@ -94,9 +94,10 @@ export default async () => {
       }?r=repeek&utm_source=repeek&utm_medium=browser_extension`}
       target="_blank"
       rel="noreferrer noopener"
+      className="block mt-8 relative rounded-md border border-neutral-700 bg-gradient-to-tl from-neutral-950 from-50% to-neutral-900 animate-in fade-in duration-500 ease-out group"
     >
       <div
-        className="mt-4 relative text-2xs rounded-md border border-neutral-700 bg-gradient-to-tl from-neutral-950 from-50% to-neutral-900 p-2 animate-in fade-in duration-500 ease-out group"
+        className="p-2 text-2xs relative z-10"
         onClick={() => {
           browser.runtime.sendMessage({
             action: ACTION_POST_STATS_EVENT,
@@ -221,10 +222,9 @@ export default async () => {
 
   if (skinOfTheMatch.skin.color) {
     setTimeout(() => {
-      skinOfTheMatchElement.firstElementChild.insertAdjacentElement(
-        'afterbegin',
+      skinOfTheMatchElement.append(
         <div
-          className="rounded-md absolute inset-0 opacity-15 animate-in fade-in duration-1000 ease-out group-hover:opacity-30"
+          className="rounded-md absolute z-0 inset-0 opacity-15 animate-in fade-in duration-1000 ease-out group-hover:opacity-30"
           style={{
             background: `radial-gradient(66% 66% at 50% 100%, ${skinOfTheMatch.skin.color} 0%, transparent 100%)`,
           }}
