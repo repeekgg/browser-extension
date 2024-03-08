@@ -44,7 +44,7 @@ export function registerFaceitBetaContentScript() {
   return browser.scripting.registerContentScripts([
     {
       id: FACEIT_BETA_CONTENT_SCRIPT_ID,
-      runAt: 'document_start',
+      runAt: 'document_end',
       matches: [FACEIT_BETA_CONTENT_SCRIPT_MATCH_PATTERN],
       js: ['content.js'],
       css: ['fonts.css'],
