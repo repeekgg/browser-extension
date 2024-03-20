@@ -2,10 +2,49 @@ import camelcaseKeys from 'camelcase-keys'
 import format from 'date-fns/format'
 import Cookies from 'js-cookie'
 import pMemoize from 'p-memoize'
-import browser from 'webextension-polyfill'
-import { ACTION_FETCH_FACEIT_API } from '../../shared/constants'
+import pRetry from 'p-retry'
 import { isSupportedGame } from './games'
 import { mapAverageStatsMemoized, mapTotalStatsMemoized } from './stats'
+
+const FACEIT_API_DOMAIN_BASE_URL = 'https://api.faceit.com'
+
+const FACEIT_API_ENDPOINT_BASE_URL = 'https://www.faceit.com/api'
+
+async function faceitApi(path, options) {
+  const response = await pRetry(
+    () =>
+      fetch(
+        `${
+          options.headers.Authorization
+            ? FACEIT_API_DOMAIN_BASE_URL
+            : FACEIT_API_ENDPOINT_BASE_URL
+        }${path}`,
+        options.headers.Authorization
+          ? options
+          : {
+              credentials: 'include',
+              ...options,
+            },
+      ).then((res) => {
+        if (res.status === 404) {
+          throw new pRetry.AbortError(res.statusText)
+        }
+
+        if (!res.ok) {
+          throw new Error(res.statusText)
+        }
+
+        return res
+      }),
+    {
+      retries: 3,
+    },
+  )
+
+  const json = await response.json()
+
+  return json
+}
 
 export const CACHE_TIME = 600000
 
@@ -22,11 +61,7 @@ async function fetchApi(path, fetchOptions = {}, camelcaseKeysOptions = {}) {
       options.headers.Authorization = `Bearer ${token}`
     }
 
-    const response = await browser.runtime.sendMessage({
-      action: ACTION_FETCH_FACEIT_API,
-      path,
-      options,
-    })
+    const response = await faceitApi(path, options)
 
     const {
       result, // Status for old API(?)

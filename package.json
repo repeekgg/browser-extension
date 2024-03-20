@@ -30,7 +30,7 @@
     "date-fns": "^2.4.1",
     "detect-browser": "^5.3.0",
     "dom-chef": "^5.1.0",
-    "js-cookie": "^2.2.1",
+    "js-cookie": "^3.0.5",
     "ky": "^0.11.1",
     "lucide-react": "^0.314.0",
     "mem": "^4.0.0",
