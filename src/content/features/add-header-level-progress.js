@@ -22,8 +22,7 @@ export default async () => {
 
   const rightHeaderElement = IS_FACEIT_BETA
     ? parasiteMainHeaderContainerElement
-    : parasiteMainHeaderContainerElement?.firstChild?.firstChild?.lastChild
-        ?.lastChild?.firstChild?.firstChild.lastChild
+    : parasiteMainHeaderContainerElement?.firstChild?.firstChild?.lastChild?.lastChild?.firstChild?.firstChild?.lastChild
 
   if (rightHeaderElement?.parentNode?.childNodes.length !== 3) {
     return

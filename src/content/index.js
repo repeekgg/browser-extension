@@ -28,6 +28,7 @@ import notifications from './features/notifications'
 import * as modals from './helpers/modals'
 import * as pages from './helpers/pages'
 import { runFeatureIf } from './helpers/user-settings'
+import addPlayerProfileBan from "./features/add-player-profile-ban";
 
 function addPlayerProfileStatsFeatures(isPlayerProfileModal) {
   let statsContentElement
@@ -110,9 +111,11 @@ function observeBody() {
           legacyModalElement,
         )
       } else if (modals.isPlayerProfile()) {
+        addPlayerProfileBan(legacyModalElement)
         addPlayerProfileBadge(true)
 
         if (modals.isPlayerProfileOverview()) {
+          addPlayerProfileBan(legacyModalElement)
           addPlayerProfileSkins()
         }
 
@@ -167,9 +170,19 @@ function observeBody() {
           mainContentElement,
         )
       } else if (pages.isPlayerProfile()) {
+        runFeatureIf(
+            'profilePageUserBans',
+            addPlayerProfileBan,
+            select('#parasite-container'),
+        )
         addPlayerProfileBadge()
 
         if (pages.isPlayerProfileOverview()) {
+          runFeatureIf(
+              'profilePageUserBans',
+              addPlayerProfileBan,
+              select('#parasite-container'),
+          )
           addPlayerProfileSkins()
         }
 
