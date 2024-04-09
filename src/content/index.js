@@ -43,7 +43,7 @@ function addPlayerProfileStatsFeatures(isPlayerProfileModal) {
         : '#parasite-container',
     )
 
-    if (parasiteContainerElement?.children.length !== 4) {
+    if (parasiteContainerElement?.children.length !== 3) {
       return
     }
 
