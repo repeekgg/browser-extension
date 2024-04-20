@@ -1,5 +1,6 @@
 import browser from 'webextension-polyfill'
 import {
+  ACTION_FETCH_CONFIG,
   ACTION_FETCH_FACEIT_API,
   ACTION_FETCH_SKIN_OF_THE_MATCH,
   ACTION_FETCH_VIPS,
@@ -78,6 +79,15 @@ browser.runtime.onMessage.addListener(async (message) => {
       })
       break
     }
+    case ACTION_FETCH_CONFIG: {
+      try {
+        const config = await fetchConfig()
+        return config
+      } catch (error) {
+        console.error(error)
+        return null
+      }
+    }
     case ACTION_FETCH_VIPS: {
       try {
         const { guids } = message
@@ -100,30 +110,26 @@ browser.runtime.onMessage.addListener(async (message) => {
     }
     case ACTION_FETCH_SKIN_OF_THE_MATCH: {
       try {
-        const { features } = await fetchConfig()
+        const { steamIds, organizerId, matchId, legacy } = message
 
-        if (IS_PRODUCTION && !features.skinOfTheMatchApi) {
-          return null
+        if (legacy) {
+          const response = await api('v1/skin_of_the_match', {
+            searchParams: {
+              steam_ids: steamIds.join(','),
+              organizer_id: organizerId,
+            },
+            timeout: 30000,
+          }).json()
+
+          return response
         }
 
-        const { steamIds, organizerId } = message
-
-        const searchParams = {
-          steam_ids: steamIds.join(','),
-        }
-
-        if (typeof organizerId === 'string') {
-          searchParams.organizer_id = organizerId
-        }
-
-        const response = await api('v1/skin_of_the_match', {
-          searchParams,
-          timeout: 30000,
+        const response = await api(`v1/faceit/skin_of_the_match/${matchId}`, {
+          searchParams: {
+            steamIds: steamIds.join(','),
+            organizerId,
+          },
         }).json()
-
-        if (IS_PRODUCTION && !features.skinOfTheMatchWidget) {
-          return null
-        }
 
         return response
       } catch (error) {
