@@ -250,6 +250,12 @@ export default async () => {
         )
       }, 500)
     }
+
+    browser.runtime.sendMessage({
+      action: ACTION_POST_STATS_EVENT,
+      eventName: 'skin_of_the_match_viewed',
+      data: statsEventData,
+    })
   } else {
     let skinOfTheMatch = await browser.runtime.sendMessage(
       fetchSkinOfTheMatchMessage,
@@ -442,11 +448,11 @@ export default async () => {
         )
       }, 500)
     }
-  }
 
-  browser.runtime.sendMessage({
-    action: ACTION_POST_STATS_EVENT,
-    eventName: 'skin_of_the_match_viewed',
-    data: statsEventData,
-  })
+    browser.runtime.sendMessage({
+      action: ACTION_POST_STATS_EVENT,
+      eventName: 'skin_of_the_match_viewed',
+      data: statsEventData,
+    })
+  }
 }
