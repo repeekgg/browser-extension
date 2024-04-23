@@ -193,11 +193,9 @@ export default async () => {
                   <div className="size-2.5 rounded-full bg-neutral-400" />
                 )}
                 <div
-                  style={{
-                    color: isSelfSkinOfTheMatchPlayer
-                      ? skinOfTheMatch.skin.color
-                      : undefined,
-                  }}
+                  className={
+                    isSelfSkinOfTheMatchPlayer ? 'text-faceit' : undefined
+                  }
                 >
                   {skinOfTheMatchPlayer.nickname}
                 </div>
@@ -242,7 +240,7 @@ export default async () => {
       setTimeout(() => {
         skinOfTheMatchElement.append(
           <div
-            className="rounded-md absolute z-0 inset-0 opacity-15 animate-in fade-in duration-1000 ease-out group-hover:opacity-30"
+            className="rounded-md absolute z-0 inset-0 opacity-15 animate-in fade-in duration-1000 ease-out group-hover:opacity-25"
             style={{
               background: `radial-gradient(66% 66% at 50% 100%, ${skinOfTheMatch.skin.color} 0%, transparent 100%)`,
             }}
@@ -257,33 +255,11 @@ export default async () => {
       data: statsEventData,
     })
   } else {
-    let skinOfTheMatch = await browser.runtime.sendMessage(
+    const skinOfTheMatch = await browser.runtime.sendMessage(
       fetchSkinOfTheMatchMessage,
     )
 
     if (!skinOfTheMatch) {
-      return
-    }
-
-    let pollingCount = 0
-
-    while (
-      getRoomId() === match.id &&
-      skinOfTheMatch.status !== 'completed' &&
-      pollingCount <= 60
-    ) {
-      pollingCount += 1
-
-      await new Promise((resolve) =>
-        setTimeout(resolve, config.skinOfTheMatch.pollingInterval),
-      )
-
-      skinOfTheMatch = await browser.runtime.sendMessage(
-        fetchSkinOfTheMatchMessage,
-      )
-    }
-
-    if (skinOfTheMatch.status !== 'completed') {
       return
     }
 
@@ -391,11 +367,9 @@ export default async () => {
                   <div className="size-2.5 rounded-full bg-neutral-400" />
                 )}
                 <div
-                  style={{
-                    color: isSelfSkinOfTheMatchPlayer
-                      ? skinOfTheMatch.rarityColor
-                      : undefined,
-                  }}
+                  className={
+                    isSelfSkinOfTheMatchPlayer ? 'text-faceit' : undefined
+                  }
                 >
                   {skinOfTheMatchPlayer.nickname}
                 </div>
@@ -440,7 +414,7 @@ export default async () => {
       setTimeout(() => {
         skinOfTheMatchElement.append(
           <div
-            className="rounded-md absolute z-0 inset-0 opacity-15 animate-in fade-in duration-1000 ease-out group-hover:opacity-30"
+            className="rounded-md absolute z-0 inset-0 opacity-15 animate-in fade-in duration-1000 ease-out group-hover:opacity-25"
             style={{
               background: `radial-gradient(66% 66% at 50% 100%, ${skinOfTheMatch.rarityColor} 0%, transparent 100%)`,
             }}

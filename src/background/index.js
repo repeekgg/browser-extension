@@ -112,24 +112,21 @@ browser.runtime.onMessage.addListener(async (message) => {
       try {
         const { steamIds, organizerId, matchId, legacy } = message
 
-        if (legacy) {
-          const response = await api('v1/skin_of_the_match', {
-            searchParams: {
-              steam_ids: steamIds.join(','),
-              organizer_id: organizerId,
-            },
-            timeout: 30000,
-          }).json()
-
-          return response
-        }
-
-        const response = await api(`v1/faceit/skin_of_the_match/${matchId}`, {
-          searchParams: {
-            steamIds: steamIds.join(','),
-            organizerId,
-          },
-        }).json()
+        const response = legacy
+          ? await api('v1/skin_of_the_match', {
+              searchParams: {
+                steam_ids: steamIds.join(','),
+                organizer_id: organizerId,
+                match_id: matchId,
+              },
+              timeout: 30000,
+            }).json()
+          : await api(`v1/faceit/matches/${matchId}/skin-of-the-match`, {
+              searchParams: {
+                steamIds: steamIds.join(','),
+                organizerId,
+              },
+            }).json()
 
         return response
       } catch (error) {

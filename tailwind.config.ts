@@ -4,6 +4,9 @@ const tailwindConfig = {
   content: [],
   theme: {
     extend: {
+      colors: {
+        faceit: '#ff5500',
+      },
       fontFamily: {
         sans: [
           '"Inter", sans-serif',
