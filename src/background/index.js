@@ -119,12 +119,13 @@ browser.runtime.onMessage.addListener(async (message) => {
                 organizer_id: organizerId,
                 match_id: matchId,
               },
-              timeout: 30000,
+              timeout: 60000,
             }).json()
           : await api(`v1/faceit/matches/${matchId}/skin-of-the-match`, {
               searchParams: {
                 steamIds: steamIds.join(','),
                 organizerId,
+                timeout: 60000,
               },
             }).json()
 
