@@ -110,24 +110,26 @@ browser.runtime.onMessage.addListener(async (message) => {
     }
     case ACTION_FETCH_SKIN_OF_THE_MATCH: {
       try {
-        const { steamIds, organizerId, matchId, legacy } = message
+        const { steamIds, organizerId, matchId, v2 } = message
 
-        const response = legacy
-          ? await api('v1/skin_of_the_match', {
-              searchParams: {
-                steam_ids: steamIds.join(','),
-                organizer_id: organizerId,
-                match_id: matchId,
-              },
-              timeout: 60000,
-            }).json()
-          : await api(`v1/faceit/matches/${matchId}/skin-of-the-match`, {
-              searchParams: {
-                steamIds: steamIds.join(','),
-                organizerId,
-                timeout: 60000,
-              },
-            }).json()
+        const response = await api(
+          v2
+            ? `v1/faceit/matches/${matchId}/skin-of-the-match`
+            : 'v1/skin_of_the_match',
+          {
+            searchParams: v2
+              ? new URLSearchParams([
+                  ['organizerId', organizerId],
+                  ...steamIds.map((steamId) => ['steamId', steamId]),
+                ])
+              : {
+                  steam_ids: steamIds.join(','),
+                  organizer_id: organizerId,
+                  match_id: matchId,
+                },
+            timeout: 60000,
+          },
+        ).json()
 
         return response
       } catch (error) {
