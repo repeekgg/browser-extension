@@ -165,7 +165,7 @@ export default async () => {
             <div className="flex-1 flex justify-end items-center">
               <img
                 src={`${skinOfTheMatch.image}/256x128`}
-                className="h-16 saturate-[1.25] brightness-[1.25] drop-shadow-[0_4px_3px_black] group-hover:animate-[2.5s_ease-in-out_skinOfTheMatchFloat_infinite]"
+                className="h-16 saturate-[1.25] brightness-[1.25] drop-shadow-[0_4px_6px_black] group-hover:animate-[2.5s_ease-in-out_skinOfTheMatchFloat_infinite]"
                 alt={skinOfTheMatch.marketHashName}
               />
             </div>
@@ -210,6 +210,14 @@ export default async () => {
             <span className="border-8 border-transparent border-t-8 border-t-neutral-950 border-b-0" />
           </div>
         </div>
+        {skinOfTheMatch.background && (
+          <div
+            className="rounded-md absolute z-0 inset-0 opacity-15 animate-in fade-in duration-1000 ease-out group-hover:opacity-20"
+            style={{
+              background: skinOfTheMatch.background,
+            }}
+          />
+        )}
       </a>
     )
 
@@ -224,7 +232,7 @@ export default async () => {
     skinOfTheMatchWrapper.shadowRoot.appendChild(skinOfTheMatchElement)
     infoColumnElement.appendChild(skinOfTheMatchWrapper)
 
-    if (skinOfTheMatch.rarityColor) {
+    if (!skinOfTheMatch.background && skinOfTheMatch.rarityColor) {
       setTimeout(() => {
         skinOfTheMatchElement.append(
           <div
@@ -350,7 +358,7 @@ export default async () => {
           <div className="flex-1 flex justify-end items-center">
             <img
               src={`${skinOfTheMatch.skin.image}/256x128`}
-              className="h-16 saturate-[1.25] brightness-[1.25] drop-shadow-[0_4px_3px_black] group-hover:animate-[2.5s_ease-in-out_skinOfTheMatchFloat_infinite]"
+              className="h-16 saturate-[1.25] brightness-[1.25] drop-shadow-[0_4px_6px_black] group-hover:animate-[2.5s_ease-in-out_skinOfTheMatchFloat_infinite]"
               alt={skinOfTheMatch.skin.name}
             />
           </div>

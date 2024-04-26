@@ -21,17 +21,17 @@ const tailwindConfig = {
           '0%': {
             transform: 'translate(0)',
             filter:
-              'saturate(1.25) brightness(1.25) drop-shadow(0px 4px 3px black)',
+              'saturate(1.25) brightness(1.25) drop-shadow(0px 4px 6px black)',
           },
           '50%': {
             transform: 'translate(0, -4px)',
             filter:
-              'saturate(1.25) brightness(1.25) drop-shadow(0px 8px 7px black)',
+              'saturate(1.25) brightness(1.25) drop-shadow(0px 8px 10px black)',
           },
           '100%': {
             transform: 'translate(0)',
             filter:
-              'saturate(1.25) brightness(1.25) drop-shadow(0px 4px 3px black)',
+              'saturate(1.25) brightness(1.25) drop-shadow(0px 4px 6px black)',
           },
         },
       },
