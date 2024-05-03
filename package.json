@@ -9,6 +9,7 @@
     "prepare": "husky install",
     "precommit": "lint-staged",
     "dev": "tsx scripts/build.ts --dev",
+    "dev:local-api": "tsx scripts/build.ts --dev --local-api",
     "dev:firefox": "tsx scripts/build.ts --dev --firefox",
     "test": "NODE_OPTIONS=\"--import=tsx --no-warnings\" ava",
     "lint": "biome check .",

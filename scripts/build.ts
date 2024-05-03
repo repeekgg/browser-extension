@@ -13,6 +13,7 @@ import tailwind from 'tailwindcss'
 
 const IS_FIREFOX = process.argv.includes('--firefox')
 const IS_DEV = process.argv.includes('--dev')
+const LOCAL_API = process.argv.includes('--local-api')
 
 const TARGET_BROWSER = IS_FIREFOX ? 'firefox 114' : 'chrome 105'
 
@@ -202,7 +203,9 @@ async function build() {
         'options.html',
         'fonts.css',
       ),
-      bundleContext('background'),
+      bundleContext('background', {
+        define: { LOCAL_API: LOCAL_API ? 'true' : 'false' },
+      }),
       bundleContext('content', {
         tailwindInline: true,
       }),
