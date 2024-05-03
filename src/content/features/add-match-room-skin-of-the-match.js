@@ -58,8 +58,8 @@ export default async () => {
   }
 
   const players = [
-    ...match.teams.faction1.roster.slice(0, 4),
-    ...match.teams.faction2.roster.slice(0, 4),
+    ...match.teams.faction1.roster.slice(0, 5),
+    ...match.teams.faction2.roster.slice(0, 5),
   ]
 
   const skinOfTheMatch = await browser.runtime.sendMessage({
