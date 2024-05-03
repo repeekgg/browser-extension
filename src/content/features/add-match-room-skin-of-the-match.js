@@ -58,8 +58,8 @@ export default async () => {
   }
 
   const players = [
-    ...match.teams.faction1.roster,
-    ...match.teams.faction2.roster,
+    ...match.teams.faction1.roster.slice(0, 4),
+    ...match.teams.faction2.roster.slice(0, 4),
   ]
 
   const fetchSkinOfTheMatchMessage = {
