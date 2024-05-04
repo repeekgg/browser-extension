@@ -62,9 +62,17 @@ export default async () => {
     ...match.teams.faction2.roster.slice(0, 5),
   ]
 
+  const steamIds = players
+    .map(({ gameId }) => gameId)
+    .filter((steamId) => /^\d{17}$/.test(steamId))
+
+  if (steamIds.length < 2 || steamIds.length > 10) {
+    return
+  }
+
   const skinOfTheMatch = await browser.runtime.sendMessage({
     action: ACTION_FETCH_SKIN_OF_THE_MATCH,
-    steamIds: players.map(({ gameId }) => gameId),
+    steamIds,
     organizerId: match.organizerId,
     matchId: match.id,
   })
