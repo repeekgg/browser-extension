@@ -1,3 +1,4 @@
+import ms from 'ms'
 import browser from 'webextension-polyfill'
 import {
   ACTION_FETCH_CONFIG,
@@ -119,6 +120,7 @@ browser.runtime.onMessage.addListener(async (message) => {
               ['organizerId', organizerId],
               ...steamIds.map((steamId) => ['steamId', steamId]),
             ]),
+            timeout: ms('30s'),
           },
         ).json()
 
