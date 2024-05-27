@@ -48,6 +48,15 @@ async function faceitApi(path, options) {
 
 export const CACHE_TIME = 600000
 
+export const getPlayerBans = async (userId) => {
+  const limit = 20
+  const offset = 0
+
+  return fetchApiMemoized(
+      `/queue/v1/ban?userId=${userId}&organizerId=faceit&offset=${offset}&limit=${limit}`
+  )
+}
+
 async function fetchApi(path, fetchOptions = {}, camelcaseKeysOptions = {}) {
   if (typeof path !== 'string') {
     throw new TypeError(`Expected \`path\` to be a string, got ${typeof path}`)

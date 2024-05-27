@@ -50,6 +50,7 @@ export const DEFAULTS = {
   notifyMatchRoomAutoCopyServerData: true,
   notifyMatchRoomAutoConnectToServer: true,
   notifyMatchRoomAutoVetoLocations: true,
+  profilePageUserBans: true,
   notifyMatchRoomAutoVetoMaps: true,
   teamRosterPlayersInfo: true,
   repeekNotificationClosed: false,
