@@ -94,8 +94,6 @@ export async function getEloChangesByMatches(matches) {
 
     if (
       !eloDiff ||
-      (isWin && eloDiff < 0) ||
-      (!isWin && eloDiff > 0) ||
       eloDiff > 50 ||
       eloDiff < -50
     ) {
