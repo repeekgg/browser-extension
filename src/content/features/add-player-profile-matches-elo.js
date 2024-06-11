@@ -72,7 +72,24 @@ export default async (statsContentElement) => {
 
     const resultElement = select('td:nth-child(3) span', matchElement)
 
-    resultElement.textContent += ` (${eloDiff >= 0 ? '+' : ''}${eloDiff})`
+    const eloDiffRes = ` (${eloDiff >= 0 ? '+' : ''}${eloDiff})`
+
+    const newEloGainElement = 
+    (
+      <a class="kAopAG">{eloDiffRes}</a>
+    )
+
+    const newEloLossElement = 
+    (
+      <a class="gjXBXC">{eloDiffRes}</a>
+    )
+    
+    if(eloDiff > 0) {
+      resultElement.append(newEloGainElement)
+    }
+    else{
+      resultElement.append(newEloLossElement)
+    }
 
     const newEloElement = (
       <div
