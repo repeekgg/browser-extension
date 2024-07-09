@@ -14,7 +14,7 @@ const FEATURE_ATTRIBUTE = 'match-room-elo-estimation'
 
 export default async () => {
   const matchFactionsHeaderElement = select(
-    '#MATCHROOM-OVERVIEW > div > div > div:nth-child(2)',
+    'div[id*="MATCHROOM-OVERVIEW"] > div > div > div:nth-child(2)',
   )
 
   if (

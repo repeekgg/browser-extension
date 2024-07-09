@@ -11,7 +11,7 @@ import { getRoomId } from '../helpers/match-room'
 const FEATURE_ATTRIBUTE = 'focus-mode'
 
 export default async () => {
-  const matchRoomOverviewElement = select('#MATCHROOM-OVERVIEW')
+  const matchRoomOverviewElement = select('div[id*="MATCHROOM-OVERVIEW"]')
 
   if (!matchRoomOverviewElement) {
     return

@@ -12,7 +12,7 @@ const FEATURE_ATTRIBUTE = 'match-room-player-badges'
 
 export default async () => {
   const matchRoomContentElement = select(
-    '#MATCHROOM-OVERVIEW > div:nth-child(3)',
+    'div[id*="MATCHROOM-OVERVIEW"] > div:nth-child(3)',
   )
 
   if (
