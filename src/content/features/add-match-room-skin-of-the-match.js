@@ -25,22 +25,18 @@ export default async () => {
     return
   }
 
-  const matchRoomOverviewElement = select('#MATCHROOM-OVERVIEW')
-
-  if (!matchRoomOverviewElement) {
-    return
-  }
-
-  const infoColumnElement = select('[name="info"]', matchRoomOverviewElement)
+  const matchRoomInfoColumnElement = select(
+    'div[id*="MATCHROOM-OVERVIEW"] div[name*="info"]',
+  )
 
   if (
-    !infoColumnElement ||
-    hasFeatureAttribute(FEATURE_ATTRIBUTE, infoColumnElement)
+    !matchRoomInfoColumnElement ||
+    hasFeatureAttribute(FEATURE_ATTRIBUTE, matchRoomInfoColumnElement)
   ) {
     return
   }
 
-  setFeatureAttribute(FEATURE_ATTRIBUTE, infoColumnElement)
+  setFeatureAttribute(FEATURE_ATTRIBUTE, matchRoomInfoColumnElement)
 
   const config = await browser.runtime.sendMessage({
     action: ACTION_FETCH_CONFIG,
@@ -232,7 +228,11 @@ export default async () => {
   skinOfTheMatchWrapper.shadowRoot.appendChild(stylesElement)
 
   skinOfTheMatchWrapper.shadowRoot.appendChild(skinOfTheMatchElement)
-  infoColumnElement.appendChild(skinOfTheMatchWrapper)
+
+  matchRoomInfoColumnElement.insertAdjacentElement(
+    'beforeend',
+    <div>{skinOfTheMatchWrapper}</div>,
+  )
 
   if (!skinOfTheMatch.background && skinOfTheMatch.rarityColor) {
     setTimeout(() => {
