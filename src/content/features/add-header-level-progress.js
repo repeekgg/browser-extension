@@ -14,26 +14,18 @@ const FEATURE_ATTRIBUTE = 'level-progress'
 const REFRESH_TIME = 300000 // 5 Minutes
 
 export default async () => {
-  const parasiteMainHeaderContainerElement = select(
-    IS_FACEIT_BETA
-      ? '#main-header-height-wrapper div[class*="styles__ProfileContainer"]'
-      : 'parasite-main-header-container',
+  const headerUserElement = select(
+    '#main-header-height-wrapper a:nth-child(3)[href*="/players/"]',
   )
 
-  const rightHeaderElement = IS_FACEIT_BETA
-    ? parasiteMainHeaderContainerElement
-    : parasiteMainHeaderContainerElement?.firstChild?.firstChild?.lastChild
-        ?.lastChild?.firstChild?.firstChild.lastChild
-
-  if (rightHeaderElement?.parentNode?.childNodes.length !== 3) {
+  if (
+    !headerUserElement.parentElement ||
+    hasFeatureAttribute(FEATURE_ATTRIBUTE, headerUserElement.parentElement)
+  ) {
     return
   }
 
-  if (hasFeatureAttribute(FEATURE_ATTRIBUTE, rightHeaderElement)) {
-    return
-  }
-
-  setFeatureAttribute(FEATURE_ATTRIBUTE, rightHeaderElement)
+  setFeatureAttribute(FEATURE_ATTRIBUTE, headerUserElement.parentElement)
 
   const addLevelElement = async ({ memoized } = {}) => {
     const self = await getSelf({ memoized })
@@ -152,10 +144,7 @@ export default async () => {
       </a>
     )
 
-    rightHeaderElement.insertBefore(
-      levelElement,
-      rightHeaderElement.children[2],
-    )
+    headerUserElement.insertAdjacentElement('beforebegin', levelElement)
 
     setTimeout(() => {
       levelElement.remove()
