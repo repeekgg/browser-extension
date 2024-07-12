@@ -6,26 +6,15 @@ import pRetry from 'p-retry'
 import { isSupportedGame } from './games'
 import { mapAverageStatsMemoized, mapTotalStatsMemoized } from './stats'
 
-const FACEIT_API_DOMAIN_BASE_URL = 'https://api.faceit.com'
-
 const FACEIT_API_ENDPOINT_BASE_URL = 'https://www.faceit.com/api'
 
 async function faceitApi(path, options) {
   const response = await pRetry(
     () =>
-      fetch(
-        `${
-          options.headers.Authorization
-            ? FACEIT_API_DOMAIN_BASE_URL
-            : FACEIT_API_ENDPOINT_BASE_URL
-        }${path}`,
-        options.headers.Authorization
-          ? options
-          : {
-              credentials: 'include',
-              ...options,
-            },
-      ).then((res) => {
+      fetch(`${FACEIT_API_ENDPOINT_BASE_URL}${path}`, {
+        credentials: 'include',
+        ...options,
+      }).then((res) => {
         if (res.status === 404) {
           throw new pRetry.AbortError(res.statusText)
         }
@@ -54,14 +43,7 @@ async function fetchApi(path, fetchOptions = {}, camelcaseKeysOptions = {}) {
   }
 
   try {
-    const token = Cookies.get('t') || localStorage.getItem('token')
-    const options = { headers: {}, ...fetchOptions }
-
-    if (token) {
-      options.headers.Authorization = `Bearer ${token}`
-    }
-
-    const response = await faceitApi(path, options)
+    const response = await faceitApi(path, fetchOptions)
 
     const {
       result, // Status for old API(?)
