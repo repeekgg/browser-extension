@@ -19,7 +19,7 @@ export default async () => {
   )
 
   if (
-    !headerUserElement.parentElement ||
+    !headerUserElement?.parentElement ||
     hasFeatureAttribute(FEATURE_ATTRIBUTE, headerUserElement.parentElement)
   ) {
     return
