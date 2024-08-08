@@ -15,7 +15,7 @@ const REFRESH_TIME = 300000 // 5 Minutes
 
 export default async () => {
   const headerUserElement = select(
-    '#main-header-height-wrapper a:nth-child(3)[href*="/players/"]',
+    '#main-header-height-wrapper a[href*="/players/"]:has(div > div:first-child > span + img):has(div > div:last-child > span + div',
   )
 
   if (
