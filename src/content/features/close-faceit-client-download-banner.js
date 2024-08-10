@@ -1,5 +1,5 @@
 import select from 'select-dom'
-import { IS_FACEIT_BETA } from '../../shared/faceit-beta'
+import { isFaceitNext } from '../helpers/dom-element'
 import {
   hasFeatureAttribute,
   setFeatureAttribute,
@@ -9,7 +9,7 @@ const FEATURE_ATTRIBUTE = 'close-faceit-client-download-banner'
 
 export default () => {
   const headerMessageBarElement = select(
-    IS_FACEIT_BETA
+    isFaceitNext()
       ? 'div[class*="MainHeaderContainerImpl__Wrapper"] #header-message-bar'
       : 'parasite-main-header-container #header-message-bar',
   )

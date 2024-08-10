@@ -1,7 +1,7 @@
 import React from 'dom-chef'
 import select from 'select-dom'
-import { IS_FACEIT_BETA } from '../../shared/faceit-beta'
 import createFeaturedPlayerBadgeElement from '../components/player-badge'
+import { isFaceitNext } from '../helpers/dom-element'
 import {
   hasFeatureAttribute,
   setFeatureAttribute,
@@ -14,7 +14,7 @@ const FEATURE_ATTRIBUTE = 'profile-badge'
 
 export default async (isPlayerProfileModal) => {
   const playerNameElement = select(
-    IS_FACEIT_BETA
+    isFaceitNext()
       ? 'h5[class*="PlayerInfo__Nickname"]'
       : `${
           isPlayerProfileModal

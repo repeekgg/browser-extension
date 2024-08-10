@@ -1,7 +1,7 @@
 import React from 'dom-chef'
 import select from 'select-dom'
-import { IS_FACEIT_BETA } from '../../shared/faceit-beta'
 import createSkillLevelElement from '../components/skill-level'
+import { isFaceitNext } from '../helpers/dom-element'
 import {
   hasFeatureAttribute,
   setFeatureAttribute,
@@ -15,7 +15,9 @@ const REFRESH_TIME = 300000 // 5 Minutes
 
 export default async () => {
   const headerUserElement = select(
-    '#main-header-height-wrapper a[href*="/players/"]:has(div > div:nth-child(2) > span + div > i + span',
+    isFaceitNext()
+      ? '#main-header-height-wrapper div[class*="styles__ProfileContainer"]'
+      : '#main-header-height-wrapper a[href*="/players/"]:has(div > div:nth-child(2) > span + div > i + span',
   )
 
   if (

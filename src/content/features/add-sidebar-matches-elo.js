@@ -1,7 +1,7 @@
 import React from 'dom-chef'
 import select from 'select-dom'
-import { IS_FACEIT_BETA } from '../../shared/faceit-beta'
 import { randomNumber } from '../../shared/utils'
+import { isFaceitNext } from '../helpers/dom-element'
 import {
   hasFeatureAttribute,
   setFeatureAttribute,
@@ -15,7 +15,7 @@ const FEATURE_ATTRIBUTE = 'matches-elo'
 
 export default async () => {
   const matchHistoryElement = select(
-    IS_FACEIT_BETA
+    isFaceitNext()
       ? 'div[class*="ActivityList__Holder"] div[class*="ActivityList__SubHolder"]'
       : 'parasite-root-container .infinite-scroll-component',
   )

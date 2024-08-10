@@ -1,5 +1,5 @@
 import select from 'select-dom'
-import { IS_FACEIT_BETA } from '../../shared/faceit-beta'
+import { isFaceitNext } from '../helpers/dom-element'
 import {
   hasFeatureAttribute,
   setFeatureAttribute,
@@ -34,7 +34,7 @@ const partyInviteModalContentRegExp = new RegExp(
 
 export default async ({
   baseElement = document,
-  isFaceitBeta = IS_FACEIT_BETA,
+  isFaceitBeta = isFaceitNext(),
 } = {}) => {
   const modalElements = select.all(
     isFaceitBeta

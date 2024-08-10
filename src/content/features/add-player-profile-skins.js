@@ -1,7 +1,7 @@
 import select from 'select-dom'
 import browser from 'webextension-polyfill'
 import { ACTION_POST_STATS_EVENT } from '../../shared/constants'
-import { IS_FACEIT_BETA } from '../../shared/faceit-beta'
+import { isFaceitNext } from '../helpers/dom-element'
 import {
   hasFeatureAttribute,
   setFeatureAttribute,
@@ -13,7 +13,7 @@ const FEATURE_ATTRIBUTE = 'player-profile-skins'
 
 export default async function addPlayerProfileSkins() {
   const mainContentElement = select(
-    IS_FACEIT_BETA
+    isFaceitNext()
       ? '#main-layout-content:has(div[class*="PlayerInfo"]), div[class*="ModalContent"]:has(div[class*="PlayerInfo"])'
       : '#parasite-container[style*="display: block"], parasite-player-profile > div',
   )

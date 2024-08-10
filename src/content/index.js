@@ -1,5 +1,4 @@
 import select from 'select-dom'
-import { IS_FACEIT_BETA } from '../shared/faceit-beta'
 import storage from '../shared/storage'
 import addHeaderLevelProgress from './features/add-header-level-progress'
 import addMatchRoomEloEstimation from './features/add-match-room-elo-estimation'
@@ -25,6 +24,7 @@ import clickModalPartyInviteAccept from './features/click-modal-party-invite-acc
 import closeFaceitClientDownloadBanner from './features/close-faceit-client-download-banner'
 import copyMatchRoomCopyServerData from './features/copy-match-room-copy-server-data'
 import notifications from './features/notifications'
+import { isFaceitNext } from './helpers/dom-element'
 import * as modals from './helpers/modals'
 import * as pages from './helpers/pages'
 import { runFeatureIf } from './helpers/user-settings'
@@ -32,7 +32,7 @@ import { runFeatureIf } from './helpers/user-settings'
 function addPlayerProfileStatsFeatures(isPlayerProfileModal) {
   let statsContentElement
 
-  if (IS_FACEIT_BETA) {
+  if (isFaceitNext()) {
     statsContentElement = select(
       '#main-layout-content div[class*="styles__BaseContent"], .FuseModalPortal div[class*="styles__BaseContent"]',
     )
@@ -133,7 +133,7 @@ function observeBody() {
     addSidebarMatchesElo()
 
     const mainContentElement = select(
-      IS_FACEIT_BETA ? '#main-layout-content' : '#main-content',
+      isFaceitNext() ? '#main-layout-content' : '#main-content',
     )
 
     if (mainContentElement) {
@@ -187,7 +187,7 @@ async function initContent() {
   const { extensionEnabled, extensionEnabledFaceitBeta } =
     await storage.getAll()
 
-  if (IS_FACEIT_BETA ? !extensionEnabledFaceitBeta : !extensionEnabled) {
+  if (isFaceitNext() ? !extensionEnabledFaceitBeta : !extensionEnabled) {
     return
   }
 

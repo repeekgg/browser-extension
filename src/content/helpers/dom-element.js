@@ -1,3 +1,5 @@
+import select from 'select-dom'
+
 export const ENHANCER_ATTRIBUTE = 'data-repeek'
 
 export const setFeatureAttribute = (featureName, element) =>
@@ -11,3 +13,7 @@ export const setStyle = (element, style) =>
     'style',
     typeof style === 'string' ? `${style}` : style.join(';'),
   )
+
+export function isFaceitNext() {
+  return select.exists('#__next')
+}
