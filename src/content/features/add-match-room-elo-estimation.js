@@ -3,6 +3,7 @@ import select from 'select-dom'
 import storage from '../../shared/storage'
 import {
   hasFeatureAttribute,
+  isFaceitNext,
   setFeatureAttribute,
 } from '../helpers/dom-element'
 import { predictRatingChange } from '../helpers/elo'
@@ -14,7 +15,9 @@ const FEATURE_ATTRIBUTE = 'match-room-elo-estimation'
 
 export default async () => {
   const matchFactionsHeaderElement = select(
-    'div[id*="MATCHROOM-OVERVIEW"] > div > div > div:nth-child(2)',
+    isFaceitNext()
+      ? 'div[class*="FactionsDetails__Container"]'
+      : 'div[id*="MATCHROOM-OVERVIEW"] > div > div > div:nth-child(2)',
   )
 
   if (
@@ -72,19 +75,27 @@ export default async () => {
   const faction2AverageEloDiff = faction2AverageElo - faction1AverageElo
 
   const addFactionEloEstimations = () => {
-    const faction1HeaderElement =
-      select(
-        'div:nth-child(1) > a > div:nth-child(1)',
-        matchFactionsHeaderElement,
-      ) ||
-      select('div:nth-child(1) > div:nth-child(1)', matchFactionsHeaderElement)
+    const faction1HeaderElement = isFaceitNext()
+      ? select.all('div[class*="FactionsDetails__FactionInfo"')[0]
+      : select(
+          'div:nth-child(1) > a > div:nth-child(1)',
+          matchFactionsHeaderElement,
+        ) ||
+        select(
+          'div:nth-child(1) > div:nth-child(1)',
+          matchFactionsHeaderElement,
+        )
 
-    const faction2HeaderElement =
-      select(
-        'div:nth-child(3) > a > div:nth-child(1)',
-        matchFactionsHeaderElement,
-      ) ||
-      select('div:nth-child(3) > div:nth-child(1)', matchFactionsHeaderElement)
+    const faction2HeaderElement = isFaceitNext()
+      ? select.all('div[class*="FactionsDetails__FactionInfo"')[1]
+      : select(
+          'div:nth-child(3) > a > div:nth-child(1)',
+          matchFactionsHeaderElement,
+        ) ||
+        select(
+          'div:nth-child(3) > div:nth-child(1)',
+          matchFactionsHeaderElement,
+        )
 
     const factionEloEstimations = [
       [
