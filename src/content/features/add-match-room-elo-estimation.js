@@ -6,7 +6,7 @@ import {
   isFaceitNext,
   setFeatureAttribute,
 } from '../helpers/dom-element'
-import { predictRatingChange } from '../helpers/elo'
+import { estimateRatingChange, predictRatingChange } from '../helpers/elo'
 import { getMatch, getSelf } from '../helpers/faceit-api'
 import { isSupportedGame } from '../helpers/games'
 import { getRoomId } from '../helpers/match-room'
@@ -32,7 +32,12 @@ export default async () => {
   const roomId = getRoomId()
   const match = await getMatch(roomId)
 
-  if (!match || !isSupportedGame(match.game) || match.state === 'FINISHED') {
+  if (
+    !match ||
+    !match.calculateElo ||
+    !isSupportedGame(match.game) ||
+    match.state === 'FINISHED'
+  ) {
     return
   }
 
@@ -68,7 +73,13 @@ export default async () => {
   })
 
   const [faction1PredictedEloChange, faction2PredictedEloChange] = factions.map(
-    (faction) => predictRatingChange(match.teams[faction].stats.winProbability),
+    (faction) =>
+      match.teams[faction].stats?.winProbability
+        ? predictRatingChange(match.teams[faction].stats.winProbability)
+        : estimateRatingChange(
+            faction === 'faction1' ? faction1AverageElo : faction2AverageElo,
+            faction === 'faction1' ? faction2AverageElo : faction1AverageElo,
+          ),
   )
 
   const faction1AverageEloDiff = faction1AverageElo - faction2AverageElo
