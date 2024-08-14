@@ -184,10 +184,9 @@ function observeBody() {
 }
 
 async function initContent() {
-  const { extensionEnabled, extensionEnabledFaceitBeta } =
-    await storage.getAll()
+  const { extensionEnabled } = await storage.getAll()
 
-  if (isFaceitNext() ? !extensionEnabledFaceitBeta : !extensionEnabled) {
+  if (!extensionEnabled) {
     return
   }
 
