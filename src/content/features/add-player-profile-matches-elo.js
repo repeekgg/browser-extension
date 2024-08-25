@@ -30,9 +30,6 @@ export default async (statsContentElement) => {
 
   setFeatureAttribute(FEATURE_ATTRIBUTE, statsContentElement)
 
-  const self = await getSelf()
-  const selfIsFreeMember = getIsFreeMember(self)
-
   const nickname = getPlayerProfileNickname()
   const game = getPlayerProfileStatsGame()
   const player = await getPlayer(nickname)
@@ -80,11 +77,7 @@ export default async (statsContentElement) => {
           display: 'flex',
           gap: 4,
           alignItems: 'center',
-          cursor: selfIsFreeMember && 'help',
         }}
-        title={
-          selfIsFreeMember ? 'This feature requires FACEIT Premium' : undefined
-        }
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -104,11 +97,9 @@ export default async (statsContentElement) => {
             color: '#fff',
             fontWeight: 'normal',
             textTransform: 'none',
-            filter: selfIsFreeMember && 'blur(4px)',
-            opacity: selfIsFreeMember && 0.33,
           }}
         >
-          {selfIsFreeMember ? randomNumber(1000, 3000) : newElo}
+          {newElo}
         </span>
       </div>
     )

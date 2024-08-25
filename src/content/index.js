@@ -7,7 +7,6 @@ import addMatchRoomSkinOfTheMatch from './features/add-match-room-skin-of-the-ma
 import addPlayerProfileBadge from './features/add-player-profile-badge'
 import addPlayerProfileExtendedStats from './features/add-player-profile-extended-stats'
 import addPlayerProfileLevelProgress from './features/add-player-profile-level-progress'
-import addPlayerProfileMatchesDemo from './features/add-player-profile-matches-demo'
 import addPlayerProfileMatchesElo from './features/add-player-profile-matches-elo'
 import addPlayerProfileSkins from './features/add-player-profile-skins'
 import addSidebarMatchesElo from './features/add-sidebar-matches-elo'
@@ -30,31 +29,15 @@ import * as pages from './helpers/pages'
 import { runFeatureIf } from './helpers/user-settings'
 
 function addPlayerProfileStatsFeatures(isPlayerProfileModal) {
-  let statsContentElement
-
-  if (isFaceitNext()) {
-    statsContentElement = select(
-      '#main-layout-content div[class*="styles__BaseContent"], .FuseModalPortal div[class*="styles__BaseContent"]',
-    )
-  } else {
-    const parasiteContainerElement = select(
-      isPlayerProfileModal
-        ? 'parasite-player-profile > div'
-        : '#parasite-container',
-    )
-
-    if (parasiteContainerElement?.children.length !== 3) {
-      return
-    }
-
-    const statsContentRootElement = parasiteContainerElement.children[2]
-
-    if (statsContentRootElement.children.length !== 1) {
-      return
-    }
-
-    statsContentElement = statsContentRootElement.children[0]
-  }
+  const statsContentElement = isFaceitNext()
+    ? select(
+        '#main-layout-content div[class*="styles__BaseContent"]:nth-child(3), .FuseModalPortal div[class*="styles__BaseContent"]:nth-child(3)',
+      )
+    : select(
+        isPlayerProfileModal
+          ? 'parasite-player-profile > div > div > div:nth-child(3)'
+          : '#parasite-container > div > div:nth-child(3)',
+      )
 
   if (!statsContentElement || statsContentElement.children.length < 14) {
     return
@@ -63,7 +46,6 @@ function addPlayerProfileStatsFeatures(isPlayerProfileModal) {
   runFeatureIf('playerProfileLevelProgress', () =>
     addPlayerProfileLevelProgress(statsContentElement),
   )
-  addPlayerProfileMatchesDemo(statsContentElement)
   addPlayerProfileMatchesElo(statsContentElement)
   addPlayerProfileExtendedStats(statsContentElement)
 }

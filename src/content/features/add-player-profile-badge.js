@@ -13,26 +13,24 @@ import { getPlayerProfileNickname } from '../helpers/player-profile'
 const FEATURE_ATTRIBUTE = 'profile-badge'
 
 export default async (isPlayerProfileModal) => {
-  const playerNameElement = select(
+  const playerInfoElement = select(
     isFaceitNext()
-      ? 'h5[class*="PlayerInfo__Nickname"]'
+      ? 'div[class*="PlayerInfo__Container"]'
       : `${
           isPlayerProfileModal
             ? 'parasite-player-profile > div'
-            : '#parasite-container'
-        } h5[size="5"]`,
+            : '#parasite-container > div > div'
+        } div:has(> span + div > div + div)`,
   )
 
-  const playerMainInfoElement = playerNameElement?.parentElement?.parentElement
-
   if (
-    !playerMainInfoElement ||
-    hasFeatureAttribute(FEATURE_ATTRIBUTE, playerMainInfoElement)
+    !playerInfoElement ||
+    hasFeatureAttribute(FEATURE_ATTRIBUTE, playerInfoElement)
   ) {
     return
   }
 
-  setFeatureAttribute(FEATURE_ATTRIBUTE, playerMainInfoElement)
+  setFeatureAttribute(FEATURE_ATTRIBUTE, playerInfoElement)
 
   const nickname = getPlayerProfileNickname()
   const player = await getPlayer(nickname)
@@ -42,15 +40,7 @@ export default async (isPlayerProfileModal) => {
     return
   }
 
-  const playerBadgeElement = (
-    <div
-      style={{
-        marginBottom: 4,
-      }}
-    >
-      {createFeaturedPlayerBadgeElement(playerBadge)}
-    </div>
-  )
+  const playerBadgeElement = createFeaturedPlayerBadgeElement(playerBadge)
 
-  playerMainInfoElement.prepend(playerBadgeElement)
+  playerInfoElement.insertAdjacentElement('afterbegin', playerBadgeElement)
 }
