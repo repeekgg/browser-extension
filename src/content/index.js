@@ -44,17 +44,17 @@ function addPlayerProfileStatsFeatures(isPlayerProfileModal) {
         : '#parasite-container',
     )
 
-    if (parasiteContainerElement?.children.length !== 3) {
+    if (parasiteContainerElement?.children.length !== 1) {
       return
     }
 
-    const statsContentRootElement = parasiteContainerElement.children[2]
+    const statsContentRootElement = parasiteContainerElement.children[0]
 
-    if (statsContentRootElement.children.length !== 1) {
+    if (statsContentRootElement.children.length !== 3) {
       return
     }
 
-    statsContentElement = statsContentRootElement.children[0]
+    statsContentElement = statsContentRootElement.children[2]
   }
 
   if (!statsContentElement || statsContentElement.children.length < 14) {
