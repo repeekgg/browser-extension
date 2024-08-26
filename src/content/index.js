@@ -35,8 +35,8 @@ function addPlayerProfileStatsFeatures(isPlayerProfileModal) {
       )
     : select(
         isPlayerProfileModal
-          ? 'parasite-player-profile > div > div > div:nth-child(3)'
-          : '#parasite-container > div > div:nth-child(3)',
+          ? 'parasite-player-profile > div > div > div:nth-child(3), parasite-player-profile > div > div:nth-child(3) > div'
+          : '#parasite-container > div > div:nth-child(3), #parasite-container > div:nth-child(3) > div',
       )
 
   if (!statsContentElement || statsContentElement.children.length < 14) {
