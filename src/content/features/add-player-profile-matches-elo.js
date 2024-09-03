@@ -1,13 +1,11 @@
 import React from 'dom-chef'
 import select from 'select-dom'
-import { randomNumber } from '../../shared/utils'
 import {
   hasFeatureAttribute,
   setFeatureAttribute,
 } from '../helpers/dom-element'
 import { getEloChangesByMatches } from '../helpers/elo'
-import { getPlayer, getPlayerMatches, getSelf } from '../helpers/faceit-api'
-import { getIsFreeMember } from '../helpers/membership'
+import { getPlayer, getPlayerMatches } from '../helpers/faceit-api'
 import {
   getPlayerProfileNickname,
   getPlayerProfileStatsGame,
@@ -42,18 +40,7 @@ export default async (statsContentElement) => {
   }
 
   matchElements.forEach((matchElement, i) => {
-    const scoreElement = select('td:nth-child(4) span', matchElement)
-    const mapElement = select('td:nth-child(5) span', matchElement)
-
     const match = matches[i]
-
-    if (
-      !match ||
-      match.i18 !== scoreElement.textContent.trim() ||
-      match.i1.indexOf(mapElement.textContent.trim().toLowerCase()) === -1
-    ) {
-      return
-    }
 
     const eloChange = eloChangesByMatches[match.matchId]
 
