@@ -21,13 +21,13 @@ export default () => (
       href="https://github.com/repeekgg/browser-extension"
     />
     <ListSubheader divider>Community & Social</ListSubheader>
-    <ListItemLink primary="Reddit" secondary="r/repeekgg" subreddit />
+    <ListItemLink primary="Discord" href="https://rpk.gg/discord" />
     <ListItemLink
       primary="Twitter"
       href="https://twitter.com/repeekgg"
       secondary="@repeekgg"
     />
-    <ListItemLink primary="Steam" steamCommunity="groups/repeekdotgg" />
+    <ListItemLink primary="Steam Group" steamCommunity="groups/repeekdotgg" />
     <ListSubheader divider>Team</ListSubheader>
     <ListItemLink
       primary="timche"

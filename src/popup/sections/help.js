@@ -11,17 +11,7 @@ export const HELP = 'Help'
 export default () => (
   <React.Fragment>
     <ListSubheader>Issues/Questions?</ListSubheader>
-    <ListItemLink
-      primary="Report an Issue"
-      subreddit={encodeURI(
-        `submit?selftext=true&text=\n\n\n---\n\nVersion: ${
-          browser.runtime.getManifest().version
-        }\nBrowser: ${userBrowser.name[0].toUpperCase()}${userBrowser.name.slice(
-          1,
-        )} (${userBrowser.version})`,
-      )}
-    />
-    <ListItemLink primary="Ask on Reddit" subreddit="submit?selftext=true" />
+    <ListItemLink primary="Join our Discord" href="https://rpk.gg/discord" />
     <ListItemLink primary="Tweet Us" twitter="repeekgg" />
   </React.Fragment>
 )

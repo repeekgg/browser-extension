@@ -22,7 +22,7 @@ export default ({
       typeof subreddit === 'string' ? subreddit : ''
     }`
   } else if (twitter) {
-    link = `https://www.twitter.com/${twitter}`
+    link = `https://www.x.com/${twitter}`
   }
 
   return (
