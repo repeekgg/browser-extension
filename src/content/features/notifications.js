@@ -134,18 +134,19 @@ function createNotification({
 }
 
 export default async () => {
-  const { repeekNotificationClosed, faceitBetaNotificationClosed } =
+  const { repeekNotificationClosed, discordNotificationClosed } =
     await storage.getAll()
 
-  const createFaceitBetaNotification = () => {
-    if (!faceitBetaNotificationClosed) {
+  const createDiscordNotification = () => {
+    if (!discordNotificationClosed) {
       createNotification({
-        title: 'FACEIT Beta support now available',
+        title: 'Find us now on Discord!',
         description:
-          'You can now use Repeek on the new FACEIT Beta platform. Simply enable it in the Repeek settings under <b>General</b> or read our guide to find out more.',
-        link: 'https://repeek.gg/blog/faceit-beta-support-now-available?utm_source=faceit&utm_medium=repeek&utm_campaign=faceit-beta-support-now-available',
+          "We've created a Discord server for better support, community discussions, and to help shape the future of Repeek!",
+        linkLabel: 'Join server',
+        link: 'https://rpk.gg/discord',
         onClose: () => {
-          storage.set({ faceitBetaNotificationClosed: true })
+          storage.set({ discordNotificationClosed: true })
         },
       })
     }
@@ -161,12 +162,12 @@ export default async () => {
       onClose: () => {
         storage.set({ repeekNotificationClosed: true })
 
-        createFaceitBetaNotification()
+        createDiscordNotification()
       },
     })
 
     return
   }
 
-  createFaceitBetaNotification()
+  createDiscordNotification()
 }
