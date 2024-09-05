@@ -14,6 +14,14 @@ export const setStyle = (element, style) =>
     typeof style === 'string' ? `${style}` : style.join(';'),
   )
 
+let isFaceitNextResult = null
+
 export function isFaceitNext() {
-  return select.exists('#__next')
+  if (isFaceitNextResult !== null) {
+    return isFaceitNextResult
+  }
+
+  isFaceitNextResult = select.exists('#__next')
+
+  return isFaceitNextResult
 }

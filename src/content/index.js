@@ -31,7 +31,7 @@ import { runFeatureIf } from './helpers/user-settings'
 function addPlayerProfileStatsFeatures(isPlayerProfileModal) {
   const statsContentElement = isFaceitNext()
     ? select(
-        '#main-layout-content div[class*="styles__BaseContent"]:nth-child(3), .FuseModalPortal div[class*="styles__BaseContent"]:nth-child(3)',
+        '#main-layout-content div[class*="styles__BaseContent"]:nth-child(3), .FuseModalPortal div[class*="styles__BaseContent"]:nth-child(3), div[class*="ContextualView__Content"] div[class*="styles__BaseContent"]:nth-child(3), #canvas-body div[class*="styles__BaseContent"]:nth-child(3)',
       )
     : select(
         isPlayerProfileModal
@@ -115,7 +115,7 @@ function observeBody() {
     addSidebarMatchesElo()
 
     const mainContentElement = select(
-      isFaceitNext() ? '#main-layout-content' : '#main-content',
+      isFaceitNext() ? '#main-layout-content, #canvas-body' : '#main-content',
     )
 
     if (mainContentElement) {
