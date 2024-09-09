@@ -40,7 +40,19 @@ export default async (statsContentElement) => {
   }
 
   matchElements.forEach((matchElement, i) => {
+    const scoreElement = select('td:nth-child(4) span', matchElement)
+    const mapElement = select('td:nth-child(5) span', matchElement)
+
     const match = matches[i]
+
+    if (
+      !match ||
+      !scoreElement.textContent.trim().includes(match.i18) ||
+      match.i1.replace('de_', '') !==
+        mapElement.textContent.trim().toLowerCase()
+    ) {
+      return
+    }
 
     const eloChange = eloChangesByMatches[match.matchId]
 
