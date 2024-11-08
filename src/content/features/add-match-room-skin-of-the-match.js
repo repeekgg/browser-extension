@@ -26,7 +26,7 @@ export default async () => {
   }
 
   const matchRoomInfoColumnElement = select(
-    'div[id*="MATCHROOM-OVERVIEW"] div[name*="info"]',
+    'div[id*="MATCHROOM-OVERVIEW"] div[name*="info"] div[class*="Overview"]',
   )
 
   if (
