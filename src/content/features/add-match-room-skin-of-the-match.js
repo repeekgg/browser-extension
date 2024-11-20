@@ -26,7 +26,7 @@ export default async () => {
   }
 
   const matchRoomInfoColumnElement = select(
-    'div[id*="MATCHROOM-OVERVIEW"] div[name*="info"] div[class*="Overview"]',
+    'div[id*="MATCHROOM-OVERVIEW"] div[name="info"]',
   )
 
   if (
@@ -231,7 +231,9 @@ export default async () => {
 
   matchRoomInfoColumnElement.insertAdjacentElement(
     'beforeend',
-    <div>{skinOfTheMatchWrapper}</div>,
+    <div>
+      <div>{skinOfTheMatchWrapper}</div>
+    </div>,
   )
 
   if (!skinOfTheMatch.background && skinOfTheMatch.rarityColor) {
