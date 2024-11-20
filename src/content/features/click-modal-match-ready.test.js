@@ -4,40 +4,63 @@ import sinon from 'sinon'
 import { hasFeatureAttribute } from '../helpers/dom-element'
 import clickModalMatchReady, { FEATURE_NAME } from './click-modal-match-ready'
 
-const faceitEnvs = [
-  {
-    name: 'faceit',
-    html: '<div class="FuseModalPortal"><div class="sc-eCzpMH kKNAGI"><div class="sc-ebXIMv eyDWHV"><div class="sc-ixPHmS eCOPlJ"><h5 size="5" class="sc-la-DkbX kQkVBe sc-cjaebs ikNtqh">Match ready</h5><div class="sc-ixPHmS eCOPlJ"><div class="sc-kPpCZy bDlndE"><div class="sc-vDfoV iiQvhx"><span class="sc-blKGMR eJHuoz"><span class="sc-blKGMR jHAoJl">Confirm your match</span><br>for the<span class="sc-blKGMR sc-dJslwX jHAoJl ilwsuI">Repeek</span></span></div><div class="sc-vDfoV iiQvhx"><span class="sc-blKGMR iNaqs">Expires in:</span></div><div class="CircleCountdown__CircleSpinner-sc-r4xxuy-0 gAAWfG"><div class="CircleCountdown__CircleValue-sc-r4xxuy-2 hpeccx"><span class="sc-blKGMR CircleCountdown__StyledText-sc-r4xxuy-3 jHAoJl ixeNii">58</span></div><div class="CircleCountdown__CircleOuter-sc-r4xxuy-1 kAHaiS"></div></div></div></div></div><div class="sc-hGWFOF fWYfV"><div class="sc-NsUQg XngkH"><button class="sc-bypJrT djmUHF sc-ddjGPC NpiYB">Accept</button></div></div></div></div></div>',
-  },
-  {
-    name: 'faceit-next',
-    html: '<div class="FuseModalPortal"><div class="dDwlWp styles__Backdrop-sc-f26c4043-0"><div class="enfnUD styles__ModalWrapper-sc-f26c4043-5"><div class="kwGAng styles__ModalContent-sc-f26c4043-6"><h5 class="HeadingBase-sc-62ac0e39-0 cHIIp hjZbyb styles__ModalTitle-sc-f26c4043-1" size="5">Match ready</h5><div class="kwGAng styles__ModalContent-sc-f26c4043-6"><div class="MatchCheckInModal__Holder-sc-97bdffe6-0 hwbxhV"><div class="MatchCheckInModal__Row-sc-97bdffe6-1 cXxmrZ"><span class="Text-sc-f75cefb7-0 gjVnMO"><span class="Text-sc-f75cefb7-0 kcmOTI">Confirm your match</span><br>for the<span class="Text-sc-f75cefb7-0 kcmOTI MatchCheckInModal__TextPrimary-sc-97bdffe6-3 jhUMpG">Repeek</span></span></div><div class="MatchCheckInModal__Row-sc-97bdffe6-1 cXxmrZ"><span class="Text-sc-f75cefb7-0 fRfakl">Expires in:</span></div><div class="CircleCountdown__CircleSpinner-sc-fdab6df8-0 epBeYb"><div class="CircleCountdown__CircleValue-sc-fdab6df8-2 indqqy"><span class="Text-sc-f75cefb7-0 kcmOTI CircleCountdown__StyledText-sc-fdab6df8-3 kTMQcx">46</span></div><div class="CircleCountdown__CircleOuter-sc-fdab6df8-1 gvtNmS"></div></div></div></div></div><div class="dtRESh styles__ModalActions-sc-f26c4043-3"><div class="fhyimy styles__ModalMainActions-sc-f26c4043-4"><button class="ButtonBase__Wrapper-sc-9fae6077-0 Button__Base-sc-fa9a2084-0 RDbNJ bwdpsX">Accept</button></div></div></div></div></div>',
-  },
-]
+const html = `<div role="dialog" id="radix-:ru:" aria-describedby="radix-:r10:" aria-labelledby="radix-:rv:" data-state="open"
+  class="Content__StyledContentElement-sc-8e714027-0 gcTpz Content__StyledContent-sc-cffbcb94-0 eUlmsN" tabindex="-1"
+  style="pointer-events: auto;">
+  <div class="style__Container-sc-f57d8ccd-0 fkMwmp style__StandardStyledContainer-sc-26e550ba-0 bLJcTI">
+    <div class="style__TitleContainer-sc-26e550ba-2 irDKuK">
+      <div class="style__TitleWrapper-sc-26e550ba-3 dutTAK">
+        <h5 size="5" class="HeadingBase-sc-63d0bc6b-0 kCnezd">Match ready</h5>
+      </div>
+    </div><button type="button"
+      class="ButtonBase__Wrapper-sc-9fae6077-0 bwdpsX Button__Base-sc-1203e5b2-0 fftEKO IconButton__IconButtonOverride-sc-798372ab-0 kmYCGV style__StandardStyledClose-sc-26e550ba-7 cHNGA-D"
+      aria-label="close"><i class="Icon__Holder-sc-f69a6bd-0 eEgeIo"><svg viewBox="0 0 24 24" fill="none"
+          xmlns="http://www.w3.org/2000/svg" height="24" width="24" focusable="false" aria-hidden="true"
+          class="Icon__StyledISvg-sc-f69a6bd-1 dbnjfB">
+          <path
+            d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"
+            fill="currentColor"></path>
+        </svg></i></button>
+  </div>
+  <div
+    class="ScrollableContainer-sc-d3b2175f-0 style__Container-sc-6e38a6d0-0 kesfEf flbCZP styles__ModalContent-sc-442449b9-0 czkJa-D">
+    <div class="styles__Row-sc-442449b9-3 iMbMl"><span class="Text-sc-67635c04-0 lcfixl"><span
+          class="Text-sc-67635c04-0 getdDT">Confirm your match</span> <br> for the <span
+          class="Text-sc-67635c04-0 styles__TextPrimary-sc-442449b9-2 getdDT jxwxil">Repeek</span></span></div>
+    <div class="styles__Row-sc-442449b9-3 iMbMl"><span class="Text-sc-67635c04-0 dzSXae">Expires in:</span></div>
+    <div class="CircleCountdown__CircleSpinner-sc-ee0e2f3c-0 htoyYT">
+      <div class="CircleCountdown__CircleValue-sc-ee0e2f3c-2 gzhSUm"><span
+          class="Text-sc-67635c04-0 CircleCountdown__StyledText-sc-ee0e2f3c-3 getdDT ikihcl">50</span></div>
+      <div class="CircleCountdown__CircleOuter-sc-ee0e2f3c-1 ctHUOm"></div>
+    </div>
+  </div>
+  <div class="style__Container-sc-10839366-0 ioUmRz style__ConfirmationStyledContainer-sc-1cb3a69f-0 fjLYOF"><button
+      class="ButtonBase__Wrapper-sc-9fae6077-0 bwdpsX Button__Base-sc-1203e5b2-0 bUvTBc">Accept</button></div>
+</div>`
 
-for (const faceitEnv of faceitEnvs) {
-  test(`${faceitEnv.name} - sets feature attribute`, async (t) => {
-    const { document } = parseHTML(faceitEnv.html)
+test('sets feature attribute', async (t) => {
+  const { document } = parseHTML(html)
 
-    await clickModalMatchReady({ baseElement: document })
+  await clickModalMatchReady({ baseElement: document })
 
-    t.true(
-      hasFeatureAttribute(
-        FEATURE_NAME,
-        document.querySelector('.FuseModalPortal'),
-      ),
-    )
-  })
+  t.true(
+    hasFeatureAttribute(
+      FEATURE_NAME,
+      document.querySelector('div[role="dialog"]'),
+    ),
+  )
+})
 
-  test(`${faceitEnv.name} - clicks accept button`, async (t) => {
-    const { document } = parseHTML(faceitEnv.html)
+test('clicks accept button', async (t) => {
+  const { document } = parseHTML(html)
 
-    const acceptButton = document.querySelector('button')
+  const acceptButton = document.querySelector(
+    'div[class*="ConfirmationStyledContainer"] button',
+  )
 
-    acceptButton.onclick = sinon.spy()
+  acceptButton.onclick = sinon.spy()
 
-    await clickModalMatchReady({ baseElement: document })
+  await clickModalMatchReady({ baseElement: document })
 
-    t.true(acceptButton.onclick.calledOnce)
-  })
-}
+  t.true(acceptButton.onclick.calledOnce)
+})

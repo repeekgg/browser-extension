@@ -34,7 +34,10 @@ const matchCheckInModalTitleRegExp = new RegExp(
 export default async ({ baseElement = document } = {}) => {
   let matchCheckInModalElement
 
-  const modalElements = select.all('.FuseModalPortal:has(h5)', baseElement)
+  const modalElements = select.all(
+    'div[role="dialog"]:has(div[class*="ConfirmationStyledContainer"])',
+    baseElement,
+  )
 
   for (const modalElement of modalElements) {
     if (matchCheckInModalTitleRegExp.test(modalElement.innerHTML)) {
@@ -53,14 +56,23 @@ export default async ({ baseElement = document } = {}) => {
 
   setFeatureAttribute(FEATURE_NAME, matchCheckInModalElement)
 
-  const acceptButton = select('button', matchCheckInModalElement)
+  const acceptButton = select(
+    'div[class*="ConfirmationStyledContainer"] button',
+    matchCheckInModalElement,
+  )
 
   if (acceptButton) {
-    acceptButton.click()
+    await new Promise((resolve) => {
+      setTimeout(() => {
+        acceptButton.click()
 
-    notifyIf('notifyPartyAutoAcceptInvite', {
-      title: 'Match Readied Up',
-      message: 'A match has been readied up.',
+        resolve()
+
+        notifyIf('notifyPartyAutoAcceptInvite', {
+          title: 'Match Readied Up',
+          message: 'A match has been readied up.',
+        })
+      }, 1000)
     })
   }
 }
