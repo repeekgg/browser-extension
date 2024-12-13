@@ -11,9 +11,9 @@ import { getRoomId } from '../helpers/match-room'
 const FEATURE_ATTRIBUTE = 'focus-mode'
 
 export default async () => {
-  const matchRoomOverviewElement = select('div[id*="MATCHROOM-OVERVIEW"]')
+  const matchRoomContainerElement = select('div[class*="MatchRoom__Container"]')
 
-  if (!matchRoomOverviewElement) {
+  if (!matchRoomContainerElement) {
     return
   }
 
@@ -34,35 +34,37 @@ export default async () => {
     return
   }
 
-  const teamBalanceElement =
-    matchRoomOverviewElement.children[0].children[0].children[3]
+  const matchBalanceElement = select(
+    'div[class*="Header__MatchBalanceContainer"',
+  )
 
   if (
-    teamBalanceElement &&
-    !hasFeatureAttribute(FEATURE_ATTRIBUTE, teamBalanceElement)
+    matchBalanceElement &&
+    !hasFeatureAttribute(FEATURE_ATTRIBUTE, matchBalanceElement)
   ) {
-    setFeatureAttribute(FEATURE_ATTRIBUTE, teamBalanceElement)
-    setStyle(teamBalanceElement, 'display: none')
+    setFeatureAttribute(FEATURE_ATTRIBUTE, matchBalanceElement)
+    setStyle(matchBalanceElement, 'display: none')
   }
 
-  const teamNameElements = [
-    matchRoomOverviewElement.children[0]?.children[0]?.children[1]?.children[0],
-    matchRoomOverviewElement.children[0]?.children[0]?.children[1]?.children[2],
-  ]
+  const factionInfoElements = select.all(
+    'div[class*="FactionsDetails__FactionInfo"]',
+  )
 
-  for (const teamNameElement of teamNameElements) {
-    if (
-      teamNameElement &&
-      !hasFeatureAttribute(FEATURE_ATTRIBUTE, teamNameElement)
-    ) {
-      setFeatureAttribute(FEATURE_ATTRIBUTE, teamNameElement)
-      setStyle(teamNameElement, 'visibility: hidden')
+  if (factionInfoElements.length === 2) {
+    for (const factionInfoElement of factionInfoElements) {
+      if (
+        factionInfoElement &&
+        !hasFeatureAttribute(FEATURE_ATTRIBUTE, factionInfoElement)
+      ) {
+        setFeatureAttribute(FEATURE_ATTRIBUTE, factionInfoElement)
+        setStyle(factionInfoElement, 'visibility: hidden')
+      }
     }
   }
 
   const teamElements = [
-    select('[name="roster1"]', matchRoomOverviewElement),
-    select('[name="roster2"]', matchRoomOverviewElement),
+    select('div[name="roster1"]', matchRoomContainerElement),
+    select('div[name="roster2"]', matchRoomContainerElement),
   ]
 
   for (const teamElement of teamElements) {
@@ -72,10 +74,10 @@ export default async () => {
     }
   }
 
-  if (!hasFeatureAttribute(FEATURE_ATTRIBUTE, matchRoomOverviewElement)) {
-    setFeatureAttribute(FEATURE_ATTRIBUTE, matchRoomOverviewElement)
+  if (!hasFeatureAttribute(FEATURE_ATTRIBUTE, matchRoomContainerElement)) {
+    setFeatureAttribute(FEATURE_ATTRIBUTE, matchRoomContainerElement)
 
-    matchRoomOverviewElement.append(
+    matchRoomContainerElement.append(
       <div
         style={{
           position: 'absolute',
