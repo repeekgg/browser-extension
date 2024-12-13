@@ -26,7 +26,7 @@ export default async () => {
   }
 
   const matchRoomInfoColumnElement = select(
-    'div[id*="MATCHROOM-OVERVIEW"] div[name="info"]',
+    'div[class*="MatchRoom__Container"] div[name="info"]',
   )
 
   if (
@@ -94,12 +94,7 @@ export default async () => {
   }
 
   const skinOfTheMatchElement = (
-    <a
-      href={`${skinOfTheMatch.skinportUrl}?r=repeek&utm_source=repeek&utm_medium=browser_extension`}
-      target="_blank"
-      rel="noreferrer noopener"
-      className="block mt-8 relative rounded-md border border-neutral-700 bg-gradient-to-tl from-neutral-950 from-50% to-neutral-900 animate-in fade-in duration-500 ease-out group"
-    >
+    <div className="block mt-8 relative rounded-md border border-neutral-700 bg-gradient-to-tl from-neutral-950 from-50% to-neutral-900 animate-in fade-in duration-500 ease-out group cursor-pointer">
       <div
         className="p-2 text-2xs relative z-10"
         onClick={() => {
@@ -108,6 +103,10 @@ export default async () => {
             eventName: 'skin_of_the_match_clicked',
             data: statsEventData,
           })
+
+          window.open(
+            `${skinOfTheMatch.skinportUrl}?r=repeek&utm_source=repeek&utm_medium=browser_extension`,
+          )
         }}
       >
         <div className="flex justify-between mb-2">
@@ -216,7 +215,7 @@ export default async () => {
           }}
         />
       )}
-    </a>
+    </div>
   )
 
   const skinOfTheMatchWrapper = document.createElement('div')
