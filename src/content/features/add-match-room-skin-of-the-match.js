@@ -94,7 +94,12 @@ export default async () => {
   }
 
   const skinOfTheMatchElement = (
-    <div className="block mt-8 relative rounded-md border border-neutral-700 bg-gradient-to-tl from-neutral-950 from-50% to-neutral-900 animate-in fade-in duration-500 ease-out group cursor-pointer">
+    <a
+      href={`${skinOfTheMatch.skinportUrl}?r=repeek&utm_source=repeek&utm_medium=browser_extension`}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="block mt-8 relative rounded-md border border-neutral-700 bg-gradient-to-tl from-neutral-950 from-50% to-neutral-900 animate-in fade-in duration-500 ease-out group cursor-pointer"
+    >
       <div
         className="p-2 text-2xs relative z-10"
         onClick={() => {
@@ -103,10 +108,6 @@ export default async () => {
             eventName: 'skin_of_the_match_clicked',
             data: statsEventData,
           })
-
-          window.open(
-            `${skinOfTheMatch.skinportUrl}?r=repeek&utm_source=repeek&utm_medium=browser_extension`,
-          )
         }}
       >
         <div className="flex justify-between mb-2">
@@ -162,7 +163,7 @@ export default async () => {
           <div className="flex-1 flex justify-end items-center">
             <img
               src={`${skinOfTheMatch.image}/256x128`}
-              className="h-16 saturate-[1.25] brightness-[1.25] drop-shadow-[0_4px_6px_black] group-hover:animate-[2.5s_ease-in-out_skinOfTheMatchFloat_infinite]"
+              className="h-16 saturate-[1.25] brightness-[1.25] drop-shadow-[0_4px_6px_black] group-hover:animate-[2.5s_ease-in-out_float_infinite]"
               alt={skinOfTheMatch.marketHashName}
             />
           </div>
@@ -215,24 +216,22 @@ export default async () => {
           }}
         />
       )}
-    </div>
+    </a>
   )
 
   const skinOfTheMatchWrapper = document.createElement('div')
-  skinOfTheMatchWrapper.attachShadow({ mode: 'open' })
+  const shadowRoot = skinOfTheMatchWrapper.attachShadow({ mode: 'closed' })
 
   const stylesElement = document.createElement('style')
   stylesElement.textContent = styles
 
-  skinOfTheMatchWrapper.shadowRoot.appendChild(stylesElement)
+  shadowRoot.appendChild(stylesElement)
 
-  skinOfTheMatchWrapper.shadowRoot.appendChild(skinOfTheMatchElement)
+  shadowRoot.appendChild(skinOfTheMatchElement)
 
   matchRoomInfoColumnElement.insertAdjacentElement(
     'beforeend',
-    <div>
-      <div>{skinOfTheMatchWrapper}</div>
-    </div>,
+    skinOfTheMatchWrapper,
   )
 
   if (!skinOfTheMatch.background && skinOfTheMatch.rarityColor) {

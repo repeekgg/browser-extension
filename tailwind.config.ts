@@ -17,7 +17,7 @@ const tailwindConfig = {
         '2xs': ['0.625rem', '0.875rem'],
       },
       keyframes: {
-        skinOfTheMatchFloat: {
+        float: {
           '0%': {
             transform: 'translate(0)',
             filter:
