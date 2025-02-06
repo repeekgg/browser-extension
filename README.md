@@ -2,6 +2,9 @@
 
 > Browser extension that enhances the FACEIT experience and adds useful features
 
+> [!IMPORTANT]  
+> This is the repository for Repeek v4, which is deprecated. Starting with Repeek v5, the source code won't be open source anymore until further notice.
+
 Originally created to replace the FACEIT HELPER browser extension, that got broken after FACEIT updated their website and FACEIT HELPER wasn't maintained anymore, Repeek became a must-have browser extension with over 700.000 users and growing for FACEIT users.
 
 The goal of Repeek is to make everyone's life easier with automatation and showing additional information that normally only 3rd party websites are exposing from the FACEIT API, but these websites are usually full of ads and other shady stuff to make a profit out of it.
