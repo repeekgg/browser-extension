@@ -54,4 +54,5 @@ export const DEFAULTS = {
   teamRosterPlayersInfo: true,
   repeekNotificationClosed: false,
   discordNotificationClosed: false,
+  repeekV5Closed: false,
 }

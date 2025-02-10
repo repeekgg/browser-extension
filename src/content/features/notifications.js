@@ -134,40 +134,18 @@ function createNotification({
 }
 
 export default async () => {
-  const { repeekNotificationClosed, discordNotificationClosed } =
-    await storage.getAll()
+  const { repeekV5Closed } = await storage.getAll()
 
-  const createDiscordNotification = () => {
-    if (!discordNotificationClosed) {
-      createNotification({
-        title: 'Find us now on Discord!',
-        description:
-          "We've created a Discord server for better support, community discussions, and to help shape the future of Repeek!",
-        linkLabel: 'Join server',
-        link: 'https://rpk.gg/discord',
-        onClose: () => {
-          storage.set({ discordNotificationClosed: true })
-        },
-      })
-    }
-  }
-
-  if (!repeekNotificationClosed) {
+  if (!repeekV5Closed) {
     createNotification({
-      title: 'FACEIT Enhancer is now Repeek',
+      title: 'Switch to Repeek v5',
       description:
-        "Don't worry, nothing really changes for you, right away. Repeek is setting the foundation to be better and faster than ever before.",
-      linkLabel: 'Read more',
-      link: 'https://repeek.gg/blog/faceit-enhancer-is-now-repeek?utm_source=faceit&utm_medium=repeek&utm_campaign=faceit-enhancer-is-now-repeek',
+        "We've recently released Repeek v5 and you're still using v4. We won't release v5 on Firefox Add-ons, but instead provide a self-distributed add-on on our website, which allows us to release updates almost instantly and it's still reviewed and verified by Mozilla.",
+      linkLabel: 'Get Repeek v5 now',
+      link: 'https://repeek.gg',
       onClose: () => {
-        storage.set({ repeekNotificationClosed: true })
-
-        createDiscordNotification()
+        storage.set({ repeekV5Closed: true })
       },
     })
-
-    return
   }
-
-  createDiscordNotification()
 }
